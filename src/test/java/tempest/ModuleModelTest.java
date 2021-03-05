@@ -7,14 +7,13 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class ModuleModelTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
+    private ModuleModelTest i = new ModuleModelTest();
+
     @Test
-    public void shouldAnswerWithTrue()
+    public void addSession()
     {
-        assertTrue( true );
+        
     }
 }
