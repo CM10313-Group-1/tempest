@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 /**
- * Hello world!
+ * Module Model class
  *
  */
 public class Module {
