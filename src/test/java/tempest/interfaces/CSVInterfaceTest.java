@@ -1,16 +1,20 @@
 package tempest.interfaces;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
 public class CSVInterfaceTest {
+
   private CSVInterface i = new CSVInterface();
-  String fixtureLocation = "test.csv";
+  final String fixtureLocation = "test.csv";
+  final String nonExistentFixture = "VvaPjqzkTNvSULkKfBXViw.csv";
 
   @Test
   public void findsExistingFile() {
@@ -23,6 +27,11 @@ public class CSVInterfaceTest {
     } catch (Exception e) {
       fail("File should exist");
     }
+  }
+
+  @Test
+  public void failsToFindNonExistentFile() {
+    assertThrows(FileNotFoundException.class, () -> i.getFile(nonExistentFixture));
   }
 
   @Test
