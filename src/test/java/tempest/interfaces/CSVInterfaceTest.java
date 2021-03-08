@@ -13,8 +13,8 @@ import org.junit.Test;
 public class CSVInterfaceTest {
 
   private CSVInterface i = new CSVInterface();
-  final String fixtureLocation = "test.csv";
-  final String nonExistentFixture = "VvaPjqzkTNvSULkKfBXViw.csv";
+  private final String fixtureLocation = "test.csv";
+  private final String nonExistentFixture = "VvaPjqzkTNvSULkKfBXViw.csv";
 
   @Test
   public void findsExistingFile() {
