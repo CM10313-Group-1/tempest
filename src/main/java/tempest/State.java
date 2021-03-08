@@ -1,7 +1,7 @@
 package tempest;
 
 public class State {
-  // TODO Modules
+  private Object[] modules;
   // TODO Trophies
 
   public void createModule(String moduleName) {
@@ -10,6 +10,10 @@ public class State {
 
   public void deleteModule(String moduleID) {
 
+  }
+
+  public Object[] getModules() {
+    return this.modules;
   }
 
 }
