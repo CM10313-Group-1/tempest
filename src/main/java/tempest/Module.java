@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 /**
- * Module Model class
+ * Module class represents a module and stores its moduleid, name and a list of study sessions 
  *
  */
 public class Module {

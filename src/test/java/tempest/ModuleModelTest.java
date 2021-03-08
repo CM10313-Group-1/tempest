@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * Unit test for simple App.
+ * Unit test for the Module class.
  */
 public class ModuleModelTest {
     @Test
