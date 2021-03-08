@@ -1,4 +1,4 @@
-package DataEntryGUI;
+package ModuleViewGUI;
 
 import org.junit.Test;
 
