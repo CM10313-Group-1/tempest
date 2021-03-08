@@ -11,7 +11,7 @@ import java.util.LinkedList;
 public class Module {
     public String id;
     public String moduleName;
-    public LinkedList<StudySession> studySessionsList;
+    public LinkedList<StudySession> studySessionsList = new LinkedList<StudySession>();
 
     public Module(){}
 
