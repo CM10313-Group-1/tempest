@@ -9,7 +9,7 @@ import javax.swing.*;
 
 public class ModuleView extends JFrame implements ActionListener {
 
-    private State currentModules = new State();
+    private State state = new State();
 
     private int currentCard = 1;
 
@@ -31,8 +31,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
     public ModuleView()
     {
-        State state = new State();
-        modules = new ArrayList<>(Arrays.asList(state.getModules()));
+        getModules();
     }
 
     private void run() {
@@ -40,16 +39,50 @@ public class ModuleView extends JFrame implements ActionListener {
 
         setSize(500, 150);
 
-        cardPanel = new JPanel();
-
         cl = new CardLayout();
 
-        // set the layout
+        cardPanel = new JPanel();
+
         cardPanel.setLayout(cl);
 
-        // **** Home Panel ****
+        // Home Panel
         JPanel home = new JPanel();
+        homePanel(home);
 
+        // Module Panel
+        JPanel addModule = new JPanel();
+        modulePanel(addModule);
+
+        // Session Panel
+        JPanel addSession = new JPanel();
+        sessionPanel(addSession);
+
+        // Adding panels to cardPanel
+        cardPanel.add(home, "1");
+
+        cardPanel.add(addModule, "2");
+
+        cardPanel.add(addSession, "3");
+
+        // Button Panel
+        buttonPanel.setVisible(currentCard != 1);
+
+        cancelButton = new JButton("Cancel");
+        enterButton  = new JButton("Enter");
+
+        buttonPanel.add(cancelButton);
+        buttonPanel.add(enterButton);
+
+        cancelButton.addActionListener(this);
+        enterButton.addActionListener(this);
+
+
+        getContentPane().add(cardPanel, BorderLayout.NORTH);
+
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private void homePanel(JPanel home) {
         home.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton addModuleButton  = new JButton("Add a new module");
@@ -76,11 +109,9 @@ public class ModuleView extends JFrame implements ActionListener {
 
             cancelPanelVisible(currentCard);
         });
+    }
 
-
-        // **** Add Module Panel ****
-        JPanel addModule = new JPanel();
-
+    private void modulePanel(JPanel addModule) {
         JPanel createModulePanel = new JPanel();
 
         JLabel createModuleLabel = new JLabel("Enter module name:");
@@ -91,9 +122,10 @@ public class ModuleView extends JFrame implements ActionListener {
         createModulePanel.setLayout(new FlowLayout());
 
         addModule.add(createModulePanel);
+    }
 
-        // **** Add Session Panel
-        JPanel addSession = new JPanel();
+    private void sessionPanel(JPanel addSession) {
+        addSession = new JPanel();
 
         moduleDropDown = new JComboBox<>();
 
@@ -124,39 +156,15 @@ public class ModuleView extends JFrame implements ActionListener {
         timeInputPanel.setLayout(new FlowLayout());
 
         addSession.add(timeInputPanel);
-
-
-        // Adding the cardPanel on "home"
-        cardPanel.add(home, "1");
-
-        // Adding the cardPanel on "addModule"
-        cardPanel.add(addModule, "2");
-
-        // Adding the cardPanel on "cardPanel"
-        cardPanel.add(addSession, "3");
-
-
-        buttonPanel.setVisible(currentCard != 1);
-
-        cancelButton = new JButton("Cancel");
-        enterButton = new JButton("Enter");
-
-        buttonPanel.add(cancelButton);
-        buttonPanel.add(enterButton);
-
-        cancelButton.addActionListener(this);
-        enterButton.addActionListener(this);
-
-
-        // used to get content pane
-        getContentPane().add(cardPanel, BorderLayout.NORTH);
-
-        // used to get content pane
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    //Hiding the cancel button when on the home page
     private void cancelPanelVisible(int card) {
         buttonPanel.setVisible(card != 1);
+    }
+
+    private void getModules() {
+        modules = new ArrayList<>(Arrays.asList(state.getModules()));
     }
 
     @Override
@@ -173,9 +181,12 @@ public class ModuleView extends JFrame implements ActionListener {
             if (currentCard == 2) {
                 String moduleName = createModuleInput.getText();
 
-                currentModules.createModule(moduleName);
+                state.createModule(moduleName);
 
-                // Update module list???
+                ModuleView module = new ModuleView();
+                module.run();
+
+                getModules(); //Not sure if this will update
             }
             // Adding a new session
             else if (currentCard == 3) {
@@ -204,8 +215,8 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Clear JTextFields when their panels are shown
     // - Call session
     // - Update list of modules when a new module created -> change local list OR call state.getModules() again
     // - Update drop down box when new modules created
+    // - Clear JTextFields when their panels are shown
 }
