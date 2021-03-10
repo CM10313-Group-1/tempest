@@ -72,18 +72,38 @@ public class Module {
         }
     }
 
+    /**
+     * Generates a string representing the module if it has no sessions.
+     * 
+     * @return A string representing the module if it has no sessions.
+     */
     public String toBlankRow() {
         return getID() + CSVInterface.DELIMITER + getName() + CSVInterface.DELIMITER;
     }
 
+    /**
+     * Gets the StudySessions related to this module.
+     * 
+     * @return The StudySessions related to this module.
+     */
     public StudySession[] getStudySessions() {
         return studySessions.toArray(new StudySession[studySessions.size()]);
     }
 
+    /**
+     * Gets the id of the module.
+     * 
+     * @return A string representing the id of the module.
+     */
     public String getID() {
         return id.toString();
     }
 
+    /**
+     * Gets the name of the module.
+     * 
+     * @return The name of the module.
+     */
     public String getName() {
         return name;
     }
