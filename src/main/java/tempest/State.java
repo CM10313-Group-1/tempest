@@ -1,8 +1,16 @@
 package tempest;
 
+import java.util.List;
+
 public class State {
-  private Object[] modules;
+  private List<Module> modules;
   // TODO Trophies
+
+  public State() {
+  }
+
+  public State(Module[] modules) {
+  }
 
   public void createModule(String moduleName) {
 
@@ -12,8 +20,8 @@ public class State {
 
   }
 
-  public Object[] getModules() {
-    return this.modules;
+  public Module[] getModules() {
+    return (Module[]) this.modules.toArray();
   }
 
 }
