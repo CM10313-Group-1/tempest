@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Scanner;
 
+import tempest.Module;
 import tempest.State;
 
 public class CSVInterface {
@@ -73,7 +74,15 @@ public class CSVInterface {
   private void writeState(State state, File destination) throws IOException {
     try (FileWriter fw = new FileWriter(destination)) {
       BufferedWriter writer = new BufferedWriter(fw);
-      writer.append(generateHeaderRow());
+      writer.write(generateHeaderRow());
+      writer.newLine();
+      for (Module m : state.getModules()) {
+        String[] rows = m.toRows();
+        for (String row : rows) {
+          writer.write(row);
+          writer.newLine();
+        }
+      }
       writer.close();
     } catch (IOException e) {
       throw new IOException(destination.getName() + " is a directory.");
@@ -97,11 +106,16 @@ public class CSVInterface {
       return new State();
     } catch (FileNotFoundException e) {
       // TODO: handle exception
+      return null;
     }
   }
 
+  /**
+   * Generates column headers for storage in the CSV file.
+   * 
+   * @return A string of delimited column headers.
+   */
   protected String generateHeaderRow() {
     return String.join(String.valueOf(DELIMITER), HEADINGS);
   }
-
 }
