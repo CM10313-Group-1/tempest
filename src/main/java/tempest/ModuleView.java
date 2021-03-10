@@ -3,8 +3,10 @@ package tempest;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import javax.swing.*;
 
 public class ModuleView extends JFrame implements ActionListener {
@@ -180,9 +182,23 @@ public class ModuleView extends JFrame implements ActionListener {
             // Adding a new session
             else if (currentCard == 3) {
                 Object moduleName = moduleDropDown.getSelectedItem();
+                String moduleNameString = moduleName.toString();
+
+                Date date = new Date();
 
                 String hours = hoursInput.getText();
                 String minutes = minutesInput.getText();
+
+                int hoursInt = Integer.parseInt(hours);
+                int minutesInt = Integer.parseInt(minutes);
+
+                Duration time = Duration.ofMinutes(hoursInt * 60 + minutesInt);
+
+                for(Module module: modules){
+                    if(moduleNameString.equals(module.name)){
+                        module.addSession(date, time);
+                    }
+                }
             }
 
             cl.first(cardPanel); //Changes panel to home panel
