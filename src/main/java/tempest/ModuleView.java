@@ -25,7 +25,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
     private CardLayout cl;
 
-    private ArrayList<Object> modules;
+    private ArrayList<Module> modules;
 
     public ModuleView()
     {
@@ -93,7 +93,12 @@ public class ModuleView extends JFrame implements ActionListener {
         // **** Add Session Panel
         JPanel addSession = new JPanel();
 
-        moduleDropDown = new JComboBox<>(modules.toArray());
+        moduleDropDown = new JComboBox<>();
+
+        for (Module m : modules) {
+            moduleDropDown.addItem(m.name);
+        }
+
         addSession.add(moduleDropDown);
 
         hoursInput = new JTextField(2);
