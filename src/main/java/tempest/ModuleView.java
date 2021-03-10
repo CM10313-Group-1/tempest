@@ -9,6 +9,8 @@ import javax.swing.*;
 
 public class ModuleView extends JFrame implements ActionListener {
 
+    private State currentModules = new State();
+
     private int currentCard = 1;
 
     private JPanel cardPanel;
@@ -95,6 +97,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
         moduleDropDown = new JComboBox<>();
 
+        //Populating drop down with the names of all current modules
         for (Module m : modules) {
             moduleDropDown.addItem(m.name);
         }
@@ -133,7 +136,6 @@ public class ModuleView extends JFrame implements ActionListener {
         cardPanel.add(addSession, "3");
 
 
-
         buttonPanel.setVisible(currentCard != 1);
 
         cancelButton = new JButton("Cancel");
@@ -167,13 +169,13 @@ public class ModuleView extends JFrame implements ActionListener {
             cancelPanelVisible(currentCard);
         } else if (e.getSource() == enterButton) {
 
+            // Creating a new module
             if (currentCard == 2) {
                 String moduleName = createModuleInput.getText();
 
-                State currentModules = new State();
-
                 currentModules.createModule(moduleName);
             }
+            // Adding a new session
             else if (currentCard == 3) {
                 Object module = moduleDropDown.getSelectedItem();
 
@@ -201,8 +203,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
     //TODO:
     // - Clear JTextFields when their panels are shown
-    // - Call module and session
-    // - Get list of modules and populate the drop down with these -> from state class
-    // - The drop down should be of type module
-    // - Should be Module module = moduleDropDown.getSelectedItem();
+    // - Call session
+    // - Update list of modules when a new module created -> change local list OR call state.getModules() again
+    // - Update drop down box when new modules created
 }
