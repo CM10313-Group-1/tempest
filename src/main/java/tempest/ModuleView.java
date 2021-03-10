@@ -188,7 +188,7 @@ public class ModuleView extends JFrame implements ActionListener {
                 ModuleView module = new ModuleView();
                 module.run();
 
-                getModules(); //Not sure if this will update
+                getModules();
             }
             // Adding a new session
             else if (currentCard == 3) {
@@ -203,7 +203,7 @@ public class ModuleView extends JFrame implements ActionListener {
                 int hoursInt = Integer.parseInt(hours);
                 int minutesInt = Integer.parseInt(minutes);
 
-                Duration time = Duration.ofMinutes(hoursInt * 60 + minutesInt);
+                Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
                 for(Module module: modules){
                     if(moduleNameString.equals(module.name)){
@@ -231,6 +231,7 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
+    // - Convert panel code into to classes
     // - Call session
     // - Update list of modules when a new module created -> change local list OR call state.getModules() again
     // - Update drop down box when new modules created
