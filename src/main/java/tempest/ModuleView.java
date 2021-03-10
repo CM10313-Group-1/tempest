@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 
 public class ModuleView extends JFrame implements ActionListener {
@@ -24,8 +25,15 @@ public class ModuleView extends JFrame implements ActionListener {
 
     private CardLayout cl;
 
+    private ArrayList<Object> modules;
+
     public ModuleView()
     {
+        State state = new State();
+        modules = new ArrayList<>(Arrays.asList(state.getModules()));
+    }
+
+    private void run() {
         setTitle("Tempest");
 
         setSize(500, 150);
@@ -84,11 +92,6 @@ public class ModuleView extends JFrame implements ActionListener {
 
         // **** Add Session Panel
         JPanel addSession = new JPanel();
-
-        ArrayList<String> modules = new ArrayList<>();
-        modules.add("Maths");
-        modules.add("PoP");
-        modules.add("Sys Arch");
 
         moduleDropDown = new JComboBox<>(modules.toArray());
         addSession.add(moduleDropDown);
@@ -162,15 +165,12 @@ public class ModuleView extends JFrame implements ActionListener {
             if (currentCard == 2) {
                 String moduleName = createModuleInput.getText();
 
-                //Call Module()
             }
             else if (currentCard == 3) {
                 Object module = moduleDropDown.getSelectedItem();
 
                 String hours = hoursInput.getText();
                 String minutes = minutesInput.getText();
-
-                //Call session???
             }
 
             cl.first(cardPanel); //Changes panel to home panel
@@ -184,6 +184,7 @@ public class ModuleView extends JFrame implements ActionListener {
     public static void main(String[] args)
     {
         ModuleView demo = new ModuleView();
+        demo.run();
 
         demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
