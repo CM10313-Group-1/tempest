@@ -174,10 +174,12 @@ public class ModuleView extends JFrame implements ActionListener {
                 String moduleName = createModuleInput.getText();
 
                 currentModules.createModule(moduleName);
+
+                // Update module list???
             }
             // Adding a new session
             else if (currentCard == 3) {
-                Object module = moduleDropDown.getSelectedItem();
+                Object moduleName = moduleDropDown.getSelectedItem();
 
                 String hours = hoursInput.getText();
                 String minutes = minutesInput.getText();
