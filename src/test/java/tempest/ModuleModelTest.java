@@ -2,10 +2,10 @@ package tempest;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import java.time.Duration;
 import java.util.Date;
+
+import org.junit.Test;
 
 /**
  * Unit test for the Module class.

@@ -2,6 +2,8 @@ package tempest.interfaces;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -9,6 +11,7 @@ import tempest.State;
 
 public class CSVInterface {
   private String loadedFilename;
+  private final String[] HEADINGS = { "id", "moduleName", "date", "duration" };
 
   /**
    * Acquires a given file in the <code>resources</code> directory.
@@ -39,8 +42,8 @@ public class CSVInterface {
    * @throws FileNotFoundException If no file was previously accessed.
    */
   public void saveState(State state) throws FileNotFoundException {
-    if (loadedFilename == null)
-      throw new FileNotFoundException("Could not acquire file to save to.");
+    File destination = getFile(loadedFilename);
+    writeState(state, destination);
   }
 
   /**
@@ -52,5 +55,14 @@ public class CSVInterface {
    */
   public void saveState(State state, String filename) throws FileNotFoundException {
     File destination = getFile(filename);
+    writeState(state, destination);
+  }
+
+  private void writeState(State state, File destination) {
+    try (FileWriter fw = new FileWriter(destination)) {
+
+    } catch (IOException e) {
+      // TODO: handle exception
+    }
   }
 }

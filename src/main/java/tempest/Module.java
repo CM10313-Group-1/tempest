@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.LinkedList;
 
 /**
- * Module class represents a module and stores its moduleid, name and a list of study sessions 
+ * Module class represents a module and stores its moduleid, name and a list of
+ * study sessions
  *
  */
 public class Module {
@@ -13,34 +14,37 @@ public class Module {
     public String moduleName;
     public LinkedList<StudySession> studySessionsList = new LinkedList<StudySession>();
 
-    public Module(){}
+    public Module() {
+    }
 
-    public Module(String id, String moduleName){
+    public Module(String id, String moduleName) {
         this.id = id;
         this.moduleName = moduleName;
     }
 
-    public Module(String id, String moduleName, LinkedList<StudySession> studySessionsList){
+    public Module(String id, String moduleName, LinkedList<StudySession> studySessionsList) {
         this.id = id;
         this.moduleName = moduleName;
         this.studySessionsList = studySessionsList;
     }
-    
+
     /**
-     * This method adds a study session to the sessions list of the module.
-     * It creates a StudySession using the date and duration arguments.
-     * @param date : Date of session
+     * This method adds a study session to the sessions list of the module. It
+     * creates a StudySession using the date and duration arguments.
+     * 
+     * @param date     : Date of session
      * @param duration : Duration of session
      */
-    public void addSession(Date date, Duration duration){
+    public void addSession(Date date, Duration duration) {
         studySessionsList.add(new StudySession(date, duration));
     }
 
     /**
      * This method adds a study session to the sessions list of the module.
+     * 
      * @param session : StudySession created before calling this method
      */
-    public void addSession(StudySession session){
+    public void addSession(StudySession session) {
         studySessionsList.add(session);
     }
 }

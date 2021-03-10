@@ -1,7 +1,7 @@
 package tempest;
 
 public class State {
-  private Object[] modules;
+  private Module[] modules;
   // TODO Trophies
 
   public void createModule(String moduleName) {
@@ -12,7 +12,7 @@ public class State {
 
   }
 
-  public Object[] getModules() {
+  public Module[] getModules() {
     return this.modules;
   }
 
