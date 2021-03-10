@@ -165,12 +165,17 @@ public class ModuleView extends JFrame implements ActionListener {
             if (currentCard == 2) {
                 String moduleName = createModuleInput.getText();
 
+                State currentModules = new State();
+
+                currentModules.createModule(moduleName);
             }
             else if (currentCard == 3) {
                 Object module = moduleDropDown.getSelectedItem();
 
                 String hours = hoursInput.getText();
                 String minutes = minutesInput.getText();
+
+
             }
 
             cl.first(cardPanel); //Changes panel to home panel
