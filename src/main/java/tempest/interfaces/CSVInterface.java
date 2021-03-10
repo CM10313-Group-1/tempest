@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Scanner;
 
 import tempest.State;
 
@@ -79,7 +80,28 @@ public class CSVInterface {
     }
   }
 
+  /**
+   *
+   * @param filename The filename where the state is stored
+   * @return State retrieved from file
+   * @throws FileNotFoundException If filename is invalid or not found
+   */
+  public State getState(String filename) throws FileNotFoundException {
+    File destination = getFile(filename);
+    return readState(destination);
+  }
+
+  private State readState(File destination) {
+    try {
+      Scanner reader = new Scanner(destination);
+      return new State();
+    } catch (FileNotFoundException e) {
+      // TODO: handle exception
+    }
+  }
+
   protected String generateHeaderRow() {
     return String.join(String.valueOf(DELIMITER), HEADINGS);
   }
+
 }
