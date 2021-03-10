@@ -174,8 +174,6 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 String hours = hoursInput.getText();
                 String minutes = minutesInput.getText();
-
-
             }
 
             cl.first(cardPanel); //Changes panel to home panel
