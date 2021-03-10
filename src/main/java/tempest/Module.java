@@ -11,21 +11,21 @@ import java.util.LinkedList;
  */
 public class Module {
     public String id;
-    public String moduleName;
-    public LinkedList<StudySession> studySessionsList = new LinkedList<StudySession>();
+    public String name;
+    public LinkedList<StudySession> studySessions = new LinkedList<StudySession>();
 
     public Module() {
     }
 
-    public Module(String id, String moduleName) {
+    public Module(String id, String name) {
         this.id = id;
-        this.moduleName = moduleName;
+        this.name = name;
     }
 
-    public Module(String id, String moduleName, LinkedList<StudySession> studySessionsList) {
+    public Module(String id, String name, LinkedList<StudySession> studySessions) {
         this.id = id;
-        this.moduleName = moduleName;
-        this.studySessionsList = studySessionsList;
+        this.name = name;
+        this.studySessions = studySessions;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Module {
      * @param duration : Duration of session
      */
     public void addSession(Date date, Duration duration) {
-        studySessionsList.add(new StudySession(date, duration));
+        studySessions.add(new StudySession(date, duration));
     }
 
     /**
@@ -45,6 +45,20 @@ public class Module {
      * @param session : StudySession created before calling this method
      */
     public void addSession(StudySession session) {
-        studySessionsList.add(session);
+        studySessions.add(session);
+    }
+
+    /**
+     * Converts a module to an array corresponding to rows that can be stored in the
+     * CSV file.
+     * 
+     * @return An array of rows.
+     */
+    public String[] toRows() {
+        String[] output = new String[studySessions.size()];
+        for (int i = 0; i < studySessions.size(); i++) {
+            output[i] = studySessions.get(i).toRow(this);
+        }
+        return output;
     }
 }
