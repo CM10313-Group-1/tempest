@@ -159,6 +159,9 @@ public class ModuleView extends JFrame implements ActionListener {
         timeInputPanel.setLayout(new FlowLayout());
 
         addSession.add(timeInputPanel);
+
+        setLocationRelativeTo(null);
+        pack();
     }
 
     //Hiding the cancel button when on the home page
@@ -203,6 +206,7 @@ public class ModuleView extends JFrame implements ActionListener {
                 for(Module module: modules){
                     if(moduleNameString.equals(module.name)){
                         module.addSession(date, time);
+                        break;
                     }
                 }
             }
@@ -226,8 +230,6 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Convert panel code into to classes
-    // - Call session
     // - Update list of modules when a new module created -> change local list OR call state.getModules() again
     // - Update drop down box when new modules created
     // - Clear JTextFields when their panels are shown
