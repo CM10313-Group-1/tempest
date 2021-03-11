@@ -36,9 +36,12 @@ public class ModuleView extends JFrame implements ActionListener {
         getModules();
     }
 
+    private void getModules() {
+        modules = new ArrayList<>(Arrays.asList(state.getModules()));
+    }
+
     private void run() {
         setTitle("Tempest");
-
         setSize(500, 150);
 
         cl = new CardLayout();
@@ -127,8 +130,6 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     private void sessionPanel(JPanel addSession) {
-        addSession = new JPanel();
-
         moduleDropDown = new JComboBox<>();
 
         //Populating drop down with the names of all current modules
@@ -165,10 +166,6 @@ public class ModuleView extends JFrame implements ActionListener {
         buttonPanel.setVisible(card != 1);
     }
 
-    private void getModules() {
-        modules = new ArrayList<>(Arrays.asList(state.getModules()));
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancelButton) {
@@ -185,10 +182,8 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 state.createModule(moduleName);
 
-                ModuleView module = new ModuleView();
-                module.run();
-
-                getModules();
+                dispose();
+                run();
             }
             // Adding a new session
             else if (currentCard == 3) {
