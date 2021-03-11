@@ -16,7 +16,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private int currentCard = 1;
 
     private JPanel cardPanel;
-    private JPanel buttonPanel = new JPanel();
+    private JPanel actionButtonPanel = new JPanel();
 
     private JTextField createModuleInput;
 
@@ -69,22 +69,16 @@ public class ModuleView extends JFrame implements ActionListener {
 
         cardPanel.add(addSession, "3");
 
-        // Button Panel
-        buttonPanel.setVisible(currentCard != 1);
-
-        cancelButton = new JButton("Cancel");
-        enterButton  = new JButton("Enter");
-
-        buttonPanel.add(cancelButton);
-        buttonPanel.add(enterButton);
-
-        cancelButton.addActionListener(this);
-        enterButton.addActionListener(this);
+        //buttonPanel
+        buttonPanel(actionButtonPanel);
 
 
         getContentPane().add(cardPanel, BorderLayout.NORTH);
 
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
+
+        setLocationRelativeTo(null);
+        pack();
     }
 
     private void homePanel(JPanel home) {
@@ -104,7 +98,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
             cl.show(cardPanel, Integer.toString(currentCard));
 
-            cancelPanelVisible(currentCard);
+            buttonPanelVisible(currentCard);
         });
 
         addSessionButton.addActionListener(arg0 -> {
@@ -112,7 +106,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
             cl.show(cardPanel, Integer.toString(currentCard));
 
-            cancelPanelVisible(currentCard);
+            buttonPanelVisible(currentCard);
         });
     }
 
@@ -159,14 +153,24 @@ public class ModuleView extends JFrame implements ActionListener {
         timeInputPanel.setLayout(new FlowLayout());
 
         addSession.add(timeInputPanel);
+    }
 
-        setLocationRelativeTo(null);
-        pack();
+    private void buttonPanel(JPanel actionButtonPanel) {
+        actionButtonPanel.setVisible(currentCard != 1);
+
+        cancelButton = new JButton("Cancel");
+        enterButton  = new JButton("Enter");
+
+        actionButtonPanel.add(cancelButton);
+        actionButtonPanel.add(enterButton);
+
+        cancelButton.addActionListener(this);
+        enterButton.addActionListener(this);
     }
 
     //Hiding the cancel button when on the home page
-    private void cancelPanelVisible(int card) {
-        buttonPanel.setVisible(card != 1);
+    private void buttonPanelVisible(int card) {
+        actionButtonPanel.setVisible(card != 1);
     }
 
     @Override
@@ -176,7 +180,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
             currentCard = 1;
 
-            cancelPanelVisible(currentCard);
+            buttonPanelVisible(currentCard);
         } else if (e.getSource() == enterButton) {
 
             // Creating a new module
@@ -215,7 +219,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
             currentCard = 1;
 
-            cancelPanelVisible(currentCard);
+            buttonPanelVisible(currentCard);
         }
     }
 
