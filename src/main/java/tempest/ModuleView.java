@@ -11,14 +11,14 @@ import javax.swing.*;
 
 public class ModuleView extends JFrame implements ActionListener {
 
-    private State state = new State();
+    private State state;
 
     private int currentCard = 1;
 
     private JPanel cardPanel;
-    private JPanel actionButtonPanel = new JPanel();
+    private JPanel actionButtonPanel;
 
-    private JTextField createModuleInput;
+    private JTextField moduleNameInput;
 
     private JTextField hoursInput;
     private JTextField minutesInput;
@@ -33,6 +33,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
     public ModuleView()
     {
+        state = new State();
         getModules();
     }
 
@@ -70,6 +71,7 @@ public class ModuleView extends JFrame implements ActionListener {
         cardPanel.add(addSession, "3");
 
         //buttonPanel
+        actionButtonPanel = new JPanel();
         buttonPanel(actionButtonPanel);
 
 
@@ -77,7 +79,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
         getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
 
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); //Centering GUI
         pack();
     }
 
@@ -86,6 +88,9 @@ public class ModuleView extends JFrame implements ActionListener {
 
         JButton addModuleButton  = new JButton("Add a new module");
         JButton addSessionButton = new JButton("Add a new session");
+
+        addModuleButton.setFocusable(false);
+        addSessionButton.setFocusable(false);
 
         addModuleButton.addActionListener(this);
         addSessionButton.addActionListener(this);
@@ -111,16 +116,16 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     private void modulePanel(JPanel addModule) {
-        JPanel createModulePanel = new JPanel();
+        JPanel addModulePanel = new JPanel();
 
-        JLabel createModuleLabel = new JLabel("Enter module name:");
-        createModuleInput = new JTextField(20);
+        JLabel addModuleLabel = new JLabel("Enter module name:");
+        moduleNameInput = new JTextField(20);
 
-        createModulePanel.add(createModuleLabel);
-        createModulePanel.add(createModuleInput);
-        createModulePanel.setLayout(new FlowLayout());
+        addModulePanel.add(addModuleLabel);
+        addModulePanel.add(moduleNameInput);
+        addModulePanel.setLayout(new FlowLayout());
 
-        addModule.add(createModulePanel);
+        addModule.add(addModulePanel);
     }
 
     private void sessionPanel(JPanel addSession) {
@@ -161,6 +166,9 @@ public class ModuleView extends JFrame implements ActionListener {
         cancelButton = new JButton("Cancel");
         enterButton  = new JButton("Enter");
 
+        cancelButton.setFocusable(false);
+        enterButton.setFocusable(false);
+
         actionButtonPanel.add(cancelButton);
         actionButtonPanel.add(enterButton);
 
@@ -168,7 +176,7 @@ public class ModuleView extends JFrame implements ActionListener {
         enterButton.addActionListener(this);
     }
 
-    //Hiding the cancel button when on the home page
+    // Hiding the cancel button when on the home page
     private void buttonPanelVisible(int card) {
         actionButtonPanel.setVisible(card != 1);
     }
@@ -176,7 +184,7 @@ public class ModuleView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancelButton) {
-            cl.first(cardPanel); //Changes panel to home panel
+            cl.first(cardPanel); // Changes panel to home panel
 
             currentCard = 1;
 
@@ -185,17 +193,21 @@ public class ModuleView extends JFrame implements ActionListener {
 
             // Creating a new module
             if (currentCard == 2) {
-                String moduleName = createModuleInput.getText();
+                String moduleName = moduleNameInput.getText();
 
                 state.createModule(moduleName);
 
-                dispose();
-                run();
+                getModules(); // Updating local list of modules
+
+                dispose();    // Kills current GUI
+                run();        // Opens a new GUI with updated drop down
+
+                // If want GUI to show same screen then:
+                // cl.show(cardPanel, currentCard) -> instead of code at bottom of this else if;
             }
             // Adding a new session
             else if (currentCard == 3) {
-                Object moduleName = moduleDropDown.getSelectedItem();
-                String moduleNameString = moduleName.toString();
+                String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); //Handles null values in the drop down
 
                 Date date = new Date();
 
@@ -208,14 +220,17 @@ public class ModuleView extends JFrame implements ActionListener {
                 Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
                 for(Module module: modules){
-                    if(moduleNameString.equals(module.name)){
+                    if(moduleName.equals(module.name)){
                         module.addSession(date, time);
                         break;
                     }
                 }
+
+                // In future sprints might need to call getModules(), dispose(), run() to be able to show the updated sessions
+                // Unless the frame showing sessions is its own class
             }
 
-            cl.first(cardPanel); //Changes panel to home panel
+            cl.first(cardPanel); // Changes panel to home panel
 
             currentCard = 1;
 
@@ -234,7 +249,7 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Update list of modules when a new module created -> change local list OR call state.getModules() again
-    // - Update drop down box when new modules created
-    // - Clear JTextFields when their panels are shown
+    // - Check we're meant to addSession using Module and not State
+    // - Get updated classes to check the code works
+    // - Clear JTextFields when their panels are shown -> only for hrs and mins now (do this in cancel? By setting the JText to null?)
 }
