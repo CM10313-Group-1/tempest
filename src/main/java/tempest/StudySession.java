@@ -1,6 +1,5 @@
 package tempest;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -8,6 +7,7 @@ import java.util.Date;
 import tempest.interfaces.CSVInterface;
 
 public class StudySession {
+	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	public Date date;
 	public Duration duration;
 
@@ -24,9 +24,8 @@ public class StudySession {
 	 * @return A string representing the session that can be stored in the CSV file.
 	 */
 	public String toRow(Module parentModule) {
-		DateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd");
 		return parentModule.getID() + CSVInterface.DELIMITER + parentModule.getName() + CSVInterface.DELIMITER
-				+ isoDate.format(date) + CSVInterface.DELIMITER + String.valueOf(duration.toMinutes());
+				+ STORED_DATE_FORMAT.format(date) + CSVInterface.DELIMITER + String.valueOf(duration.toMinutes());
 	}
 
 	@Override

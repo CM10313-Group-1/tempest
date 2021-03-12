@@ -1,18 +1,26 @@
 package tempest.interfaces;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
 
 import tempest.Module;
 import tempest.State;
+import tempest.StudySession;
 
 public class CSVInterface {
+  // TODO move all IO exceptions to InvalidStateExceptions outside of getFile
   private String loadedFilename;
   public static final String[] HEADINGS = { "id", "moduleName", "date", "duration" };
   public static final char DELIMITER = ',';
@@ -72,11 +80,22 @@ public class CSVInterface {
    * @throws IOException If the file provided is a directory.
    */
   private void writeState(State state, File destination) throws IOException {
+    writeModules(state.getModules(), destination);
+  }
+
+  /**
+   * Writes all module data to a given file.
+   * 
+   * @param modules     The modules.
+   * @param destination The destination file.
+   * @throws IOException If the destination file is a directory.
+   */
+  public void writeModules(Module[] modules, File destination) throws IOException {
     try (FileWriter fw = new FileWriter(destination)) {
       BufferedWriter writer = new BufferedWriter(fw);
       writer.write(generateHeaderRow());
       writer.newLine();
-      for (Module m : state.getModules()) {
+      for (Module m : modules) {
         String[] rows = m.toRows();
         for (String row : rows) {
           writer.write(row);
@@ -91,23 +110,88 @@ public class CSVInterface {
 
   /**
    *
-   * @param filename The filename where the state is stored
-   * @return State retrieved from file
-   * @throws FileNotFoundException If filename is invalid or not found
+   * @param filename The filename where the state is stored.
+   * @return State retrieved from file.
+   * @throws FileNotFoundException If filename is invalid or not found.
+   * @throws ParseException        If the file is not compatible with the current
+   *                               version of state.
    */
-  public State getState(String filename) throws FileNotFoundException {
-    File destination = getFile(filename);
-    return readState(destination);
+  public State getState(String filename) throws IOException, ParseException {
+    File source = getFile(filename);
+    return readState(source);
   }
 
-  private State readState(File destination) {
-    try {
-      Scanner reader = new Scanner(destination);
-      return new State();
-    } catch (FileNotFoundException e) {
-      // TODO: handle exception
-      return null;
+  /**
+   * Reads the state stored in the given file.
+   * 
+   * @param source The file containing the state.
+   * @return The state stored in the file.
+   * @throws IOException    If the file provided is a directory.
+   * @throws ParseException If the file cannot be parsed for any reason.
+   */
+  private State readState(File source) throws IOException, ParseException {
+    try (FileReader fr = new FileReader(source)) {
+      BufferedReader reader = new BufferedReader(fr);
+      String header = reader.readLine();
+
+      if (!isCorrectFormat(header)) {
+        reader.close();
+        throw new ParseException("Format of " + source.getName() + " is incompatible.", 0);
+      } else {
+        Module[] modules = parseModules(reader);
+        reader.close();
+        return new State(modules);
+      }
+    } catch (IOException e) {
+      throw new IOException(source.getName() + " is a directory.");
     }
+  }
+
+  /**
+   * Generates modules for all modules stored in the file accessed by a
+   * {@link BufferedReader}.
+   * 
+   * @param reader The reader of the storage file.
+   * @return The modules stored in the file.
+   * @throws IOException    If the reader cannot read the file.
+   * @throws ParseException If the file cannot be parsed.
+   */
+  protected Module[] parseModules(BufferedReader reader) throws IOException, ParseException {
+    HashMap<UUID, Module> modules = new HashMap<UUID, Module>();
+    String line;
+
+    while ((line = reader.readLine()) != null) {
+      String[] attributes = line.split(String.valueOf(DELIMITER));
+      UUID id = UUID.fromString(attributes[0]);
+      if (modules.containsKey(id)) {
+        Module acquired = modules.get(id);
+        StudySession s = new StudySession(StudySession.STORED_DATE_FORMAT.parse(attributes[2]),
+            Duration.ofMinutes(Long.valueOf(attributes[3])));
+        acquired.addSession(s);
+        modules.put(id, acquired);
+      } else {
+        Module newModule = new Module(attributes[0], attributes[1]);
+        if (!attributes[2].isEmpty()) {
+          StudySession s = new StudySession(StudySession.STORED_DATE_FORMAT.parse(attributes[2]),
+              Duration.ofMinutes(Long.valueOf(attributes[3])));
+          newModule.addSession(s);
+        }
+        modules.put(id, newModule);
+      }
+    }
+
+    return modules.values().toArray(new Module[] {});
+  }
+
+  /**
+   * Compares the headers of the stored file with the currently used ones.
+   * 
+   * @param headerRow The headerRow in the database.
+   * @return True if the headers match.
+   */
+  protected boolean isCorrectFormat(String headerRow) {
+    String[] headers = headerRow.split(String.valueOf(DELIMITER));
+    return Arrays.equals(headers, HEADINGS);
   }
 
   /**
