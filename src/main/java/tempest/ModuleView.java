@@ -249,7 +249,6 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Check we're meant to addSession using Module and not State
     // - Get updated classes to check the code works
     // - Clear JTextFields when their panels are shown -> only for hrs and mins now (do this in cancel? By setting the JText to null?)
 }
