@@ -190,20 +190,33 @@ public class ModuleView extends JFrame implements ActionListener {
 
             buttonPanelVisible(currentCard);
         } else if (e.getSource() == enterButton) {
+            boolean uniqueName = true;
 
             // Creating a new module
             if (currentCard == 2) {
                 String moduleName = moduleNameInput.getText();
 
-                state.createModule(moduleName);
+                for (Module module : modules) {
+                    if (moduleName.equals(module.name)) {
+                        System.out.println("Another module already has this name");
+                        uniqueName = false;
+                        break;
+                    }
+                }
 
-                getModules(); // Updating local list of modules
+                if (uniqueName) {
+                    state.createModule(moduleName);
 
-                dispose();    // Kills current GUI
-                run();        // Opens a new GUI with updated drop down
+                    getModules(); // Updating local list of modules
 
-                // If want GUI to show same screen then:
-                // cl.show(cardPanel, currentCard) -> instead of code at bottom of this else if;
+                    dispose();    // Kills current GUI
+                    run();        // Opens a new GUI with updated drop down
+
+                    System.out.println("Module successfully created");
+
+                    // If want GUI to show same screen then:
+                    // cl.show(cardPanel, currentCard) -> instead of code at bottom of this else if;
+                }
             }
             // Adding a new session
             else if (currentCard == 3) {
@@ -225,6 +238,8 @@ public class ModuleView extends JFrame implements ActionListener {
                         break;
                     }
                 }
+
+                System.out.println("Study session successfully added");
 
                 // In future sprints might need to call getModules(), dispose(), run() to be able to show the updated sessions
                 // Unless the frame showing sessions is its own class
@@ -249,6 +264,5 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Get updated classes to check the code works
     // - Clear JTextFields when their panels are shown -> only for hrs and mins now (do this in cancel? By setting the JText to null?)
 }
