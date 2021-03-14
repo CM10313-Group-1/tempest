@@ -4,27 +4,25 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import java.time.Duration;
-import java.util.Date;
+import tempest.helpers.ModuleHelper;
 
 /**
  * Unit test for the Module class.
  */
 public class ModuleModelTest {
     @Test
-    public void addSessionByCreatingSession() {
-        Module module = new Module();
-        StudySession today = new StudySession(new Date(), Duration.ofHours(1));
-        module.addSession(today);
-        assertEquals(today, module.studySessionsList.get(0));
+    public void addSessionWithObject() {
+        Module module = ModuleHelper.createTestModule("Test");
+        StudySession ss = new StudySession(ModuleHelper.TEST_DATE, ModuleHelper.TEST_DURATION);
+        module.addSession(ss);
+        assertEquals(ss, module.getStudySessions()[0]);
     }
 
     @Test
     public void addSessionWithDateDuration() {
-        Module module = new Module();
-        Date date = new Date();
-        module.addSession(date, Duration.ofHours(1));
-        assertEquals(date, module.studySessionsList.get(0).date);
-        assertEquals(Duration.ofHours(1), module.studySessionsList.get(0).duration);
+        Module module = ModuleHelper.createTestModule("Test");
+        module.addSession(ModuleHelper.TEST_DATE, ModuleHelper.TEST_DURATION);
+        assertEquals(ModuleHelper.TEST_DATE, module.getStudySessions()[0].date);
+        assertEquals(ModuleHelper.TEST_DURATION, module.getStudySessions()[0].duration);
     }
 }
