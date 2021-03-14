@@ -35,6 +35,7 @@ public class ModuleView extends JFrame implements ActionListener {
     {
         state = new State();
         getModules();
+        run();
     }
 
     private void getModules() {
@@ -70,17 +71,18 @@ public class ModuleView extends JFrame implements ActionListener {
 
         cardPanel.add(addSession, "3");
 
-        //buttonPanel
+        // Button Panel
         actionButtonPanel = new JPanel();
         buttonPanel(actionButtonPanel);
 
-
         getContentPane().add(cardPanel, BorderLayout.NORTH);
-
         getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
 
+        // Frame Setting
         setLocationRelativeTo(null); //Centering GUI
         pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     private void homePanel(JPanel home) {
@@ -181,6 +183,7 @@ public class ModuleView extends JFrame implements ActionListener {
         actionButtonPanel.setVisible(card != 1);
     }
 
+    // Handling button presses
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancelButton) {
@@ -251,16 +254,6 @@ public class ModuleView extends JFrame implements ActionListener {
 
             buttonPanelVisible(currentCard);
         }
-    }
-
-    public static void main(String[] args)
-    {
-        ModuleView demo = new ModuleView();
-        demo.run();
-
-        demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        demo.setVisible(true);
     }
 
     //TODO:
