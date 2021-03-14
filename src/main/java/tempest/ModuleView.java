@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class ModuleView extends JFrame implements ActionListener {
 
-    private State state;
+    private final State state;
 
     private int currentCard = 1;
 
@@ -29,6 +29,9 @@ public class ModuleView extends JFrame implements ActionListener {
     private JTextField minutesInput;
     private JComboBox<Object> moduleDropDown;
 
+    private JButton addModuleButton;
+    private JButton addSessionButton;
+
     private JButton cancelButton;
     private JButton enterButton;
 
@@ -37,7 +40,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private ArrayList<Module> modules;
 
     /**
-     * Calling the ModuleView constructor creates the GUI
+     * Calling this constructor will execute the GUI code
      */
     public ModuleView()
     {
@@ -109,8 +112,8 @@ public class ModuleView extends JFrame implements ActionListener {
     private void homePanel(JPanel home) {
         home.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton addModuleButton  = new JButton("Add a new module");
-        JButton addSessionButton = new JButton("Add a new session");
+        addModuleButton  = new JButton("Add a new module");
+        addSessionButton = new JButton("Add a new session");
 
         addModuleButton.setFocusable(false);
         addSessionButton.setFocusable(false);
@@ -241,6 +244,7 @@ public class ModuleView extends JFrame implements ActionListener {
             if (currentCard == 2) {
                 String moduleName = moduleNameInput.getText();
 
+                // Checking if module name is unique
                 for (Module m : modules) {
                     if (moduleName.equals(m.getName())) {
                         System.out.println("Another module already has this name");
@@ -301,5 +305,29 @@ public class ModuleView extends JFrame implements ActionListener {
 
             buttonPanelVisible(currentCard);
         }
+    }
+
+    public JButton getAddModuleButton() {
+        return addModuleButton;
+    }
+
+    public JButton getAddSessionButton() {
+        return addSessionButton;
+    }
+
+    public int getDropSize() {
+        return moduleDropDown.getItemCount();
+    }
+
+    public int getCard() {
+        return currentCard;
+    }
+
+    public void setModuleInput(String name) {
+        moduleNameInput.setText(name);
+    }
+
+    public JButton getEnterButton() {
+        return enterButton;
     }
 }
