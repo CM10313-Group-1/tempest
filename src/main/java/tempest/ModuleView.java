@@ -9,9 +9,14 @@ import java.util.Arrays;
 import java.util.Date;
 import javax.swing.*;
 
+/**
+ * ModuleView is responsible for creating the GUIs for the home
+ * page, adding a module page and adding studying sessions page.
+ *
+ */
 public class ModuleView extends JFrame implements ActionListener {
 
-    private final State state;
+    private State state;
 
     private int currentCard = 1;
 
@@ -31,6 +36,9 @@ public class ModuleView extends JFrame implements ActionListener {
 
     private ArrayList<Module> modules;
 
+    /**
+     * Calling the ModuleView constructor creates the GUI
+     */
     public ModuleView()
     {
         state = new State();
@@ -38,10 +46,17 @@ public class ModuleView extends JFrame implements ActionListener {
         run();
     }
 
+    /**
+     * Used to get all the created modules and stores the result
+     * in the modules ArrayList
+     */
     private void getModules() {
         modules = new ArrayList<>(Arrays.asList(state.getModules()));
     }
 
+    /**
+     * Responsible for creating the GUI
+     */
     private void run() {
         setTitle("Tempest");
         setSize(500, 150);
@@ -85,6 +100,12 @@ public class ModuleView extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Creates the home page and provides the code for handling
+     * a user pressing the home page buttons
+     *
+     * @param home : A JPanel that is later added to cardPanel
+     */
     private void homePanel(JPanel home) {
         home.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -117,6 +138,11 @@ public class ModuleView extends JFrame implements ActionListener {
         });
     }
 
+    /**
+     * Creates the add module page
+     *
+     * @param addModule : A JPanel that is later added to cardPanel
+     */
     private void modulePanel(JPanel addModule) {
         JPanel addModulePanel = new JPanel();
 
@@ -130,6 +156,11 @@ public class ModuleView extends JFrame implements ActionListener {
         addModule.add(addModulePanel);
     }
 
+    /**
+     * Creates the add session page
+     *
+     * @param addSession : A JPanel that is later added to cardPanel
+     */
     private void sessionPanel(JPanel addSession) {
         moduleDropDown = new JComboBox<>();
 
@@ -162,6 +193,11 @@ public class ModuleView extends JFrame implements ActionListener {
         addSession.add(timeInputPanel);
     }
 
+    /**
+     * Creates the button panel at the bottom of all GUI pages
+     *
+     * @param actionButtonPanel : A JPanel that is later added to cardPanel
+     */
     private void buttonPanel(JPanel actionButtonPanel) {
         actionButtonPanel.setVisible(currentCard != 1);
 
@@ -178,10 +214,18 @@ public class ModuleView extends JFrame implements ActionListener {
         enterButton.addActionListener(this);
     }
 
+    /**
+     * Hides the action button panel when on the home page
+     *
+     * @param card : An integer storing the current page of the GUI
+     */
     private void buttonPanelVisible(int card) {
         actionButtonPanel.setVisible(card != 1);
     }
 
+    /**
+     * Handles button presses made by the user
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cancelButton) {
