@@ -257,6 +257,9 @@ public class ModuleView extends JFrame implements ActionListener {
                     dispose();    // Kills current GUI
                     run();        // Opens a new GUI with updated drop down
 
+                    hoursInput.setText("");   // Clearing inputted hours
+                    minutesInput.setText(""); // Clearing inputted minutes
+
                     System.out.println("Module successfully created");
 
                     // If want GUI to show same screen then:
@@ -284,6 +287,8 @@ public class ModuleView extends JFrame implements ActionListener {
                     }
                 }
 
+                moduleNameInput.setText(""); // Clearing inputted name
+
                 System.out.println("Study session successfully added");
 
                 // In future sprints might need to call getModules(), dispose(), run() to be able to show the updated sessions
@@ -297,7 +302,4 @@ public class ModuleView extends JFrame implements ActionListener {
             buttonPanelVisible(currentCard);
         }
     }
-
-    //TODO:
-    // - Clear JTextFields when their panels are shown -> only for hrs and mins now (do this in cancel? By setting the JText to null?)
 }
