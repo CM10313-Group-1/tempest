@@ -13,7 +13,7 @@ public class ModuleViewTest {
         assertEquals(gui.getDropSize(), 0);
 
         gui.getAddModuleButton().doClick();
-        gui.setModuleInput("test");
+        gui.setModuleNameInput("test");
         gui.getEnterButton().doClick();
 
         assertEquals(gui.getDropSize(), 1);

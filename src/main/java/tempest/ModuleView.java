@@ -307,6 +307,7 @@ public class ModuleView extends JFrame implements ActionListener {
         }
     }
 
+
     public JButton getAddModuleButton() {
         return addModuleButton;
     }
@@ -315,19 +316,25 @@ public class ModuleView extends JFrame implements ActionListener {
         return addSessionButton;
     }
 
+    public JButton getEnterButton() {
+        return enterButton;
+    }
+
+    /**
+     * @return The size of the module drop box
+     */
     public int getDropSize() {
         return moduleDropDown.getItemCount();
     }
 
+    /**
+     * @return The current card (page) of the GUI
+     */
     public int getCard() {
         return currentCard;
     }
 
-    public void setModuleInput(String name) {
+    public void setModuleNameInput(String name) {
         moduleNameInput.setText(name);
-    }
-
-    public JButton getEnterButton() {
-        return enterButton;
     }
 }
