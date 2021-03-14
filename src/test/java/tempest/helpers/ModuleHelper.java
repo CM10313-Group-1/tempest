@@ -11,7 +11,7 @@ public class ModuleHelper {
   public static final Duration TEST_DURATION = Duration.ofHours(1);
 
   public static Module createTestModule(String name) {
-    return new Module("Test");
+    return new Module(name);
   }
 
   public static StudySession createTestSession() {

@@ -16,6 +16,7 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
+import tempest.helpers.ModuleHelper;
 import tempest.helpers.StateHelper;
 
 public class CSVInterfaceTest {
@@ -110,8 +111,38 @@ public class CSVInterfaceTest {
   }
 
   @Test
-  public void exportsModuleData() {
-    // TODO finish this test.
+  public void exportsEmptyModuleData() {
+    try {
+      Module module = ModuleHelper.createTestModule("Test");
+      File destination = i.getFile(WRITE_FIXTURE);
+      i.exportModule(module, destination);
+      BufferedReader tReader = new BufferedReader(new FileReader(destination));
+      tReader.readLine(); // Skip header
+      String storedModule = tReader.readLine();
+      assertEquals("Stored module should match", module.toBlankRow(), storedModule);
+      tReader.close();
+    } catch (IOException e) {
+      fail("No exceptions should be thrown");
+    }
   }
 
+  @Test
+  public void exportFullModule() {
+    try {
+      Module module = ModuleHelper.createTestModule("Test");
+      StudySession studySession = ModuleHelper.createTestSession();
+      module.addSession(studySession);
+      File destination = i.getFile(WRITE_FIXTURE);
+      i.exportModule(module, destination);
+      BufferedReader tReader = new BufferedReader(new FileReader(destination));
+      tReader.readLine(); // Skip header
+      for (StudySession session : module.getStudySessions()) {
+        String storedSession = tReader.readLine();
+        assertEquals("Session row should match state", session.toRow(module), storedSession);
+      }
+      tReader.close();
+    } catch (IOException e) {
+      fail("No exceptions should be thrown");
+    }
+  }
 }

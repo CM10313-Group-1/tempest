@@ -109,6 +109,31 @@ public class CSVInterface {
   }
 
   /**
+   * Writes a module to a given file.
+   * 
+   * @param module      The module to be written out.
+   * @param destination The destination to write the module to.
+   * @throws IOException If the file provided is a directory.
+   */
+  public void exportModule(Module module, File destination) throws IOException {
+    try (FileWriter fw = new FileWriter(destination)) {
+      BufferedWriter writer = new BufferedWriter(fw);
+      writer.write(generateHeaderRow());
+      writer.newLine();
+
+      String[] rows = module.toRows();
+      for (String row : rows) {
+        writer.write(row);
+        writer.newLine();
+      }
+
+      writer.close();
+    } catch (IOException e) {
+      throw new IOException(destination.getName() + " is a directory.");
+    }
+  }
+
+  /**
    *
    * @param filename The filename where the state is stored.
    * @return State retrieved from file.
