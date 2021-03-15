@@ -6,8 +6,9 @@ import java.text.ParseException;
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor {
-    private static State state;
+    private static State state; // Static so the state made in onStart can be used in onClose
     private CSVInterface csvInterface = new CSVInterface();
+
     // TODO UserInterface
 
     private void onStart() {

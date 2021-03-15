@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * ModuleView is responsible for creating the GUIs for the home page, adding a
@@ -111,10 +112,6 @@ public class ModuleView extends JFrame implements ActionListener {
         // pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new ModuleView(new State());
     }
 
     /**
@@ -299,7 +296,11 @@ public class ModuleView extends JFrame implements ActionListener {
      * Handles the user pressing enter on the add session page
      */
     private void handleAddingSession() {
-        String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); //Handles null values in the drop down
+        if (modules.size() < 1) { // No modules created, so can't add a session
+            return;
+        }
+
+        String moduleName = Objects.requireNonNull(moduleDropDown.getSelectedItem()).toString();
 
         Date date = new Date();
 
@@ -312,7 +313,7 @@ public class ModuleView extends JFrame implements ActionListener {
         try {
             hoursInt   = Integer.parseInt(hours);
             minutesInt = Integer.parseInt(minutes);
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException e) {
             System.out.println("Invalid hours/minutes entered");
             return;
         }

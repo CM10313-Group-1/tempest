@@ -57,7 +57,7 @@ public class ModuleViewTest {
 
         // Adding a module called test
         gui.getAddModuleButton().doClick();
-        gui.setModuleNameInput("testing session");
+        gui.setModuleNameInput("test");
         gui.getEnterButton().doClick();
 
         // Getting the created module
@@ -69,7 +69,12 @@ public class ModuleViewTest {
                 break;
             }
         }
+
+        assert testModule != null;
         int previousSessions = testModule.getStudySessions().length;
+
+        ModuleView gui = new ModuleView(state); // Making a new GUI as the old one was disposed
+
         // Adding a study session to test
         gui.getAddSessionButton().doClick();
         gui.setHours("1");
@@ -77,7 +82,6 @@ public class ModuleViewTest {
         gui.getEnterButton().doClick();
 
         // Checking if this study session has been added
-        assert testModule != null;
         assertEquals(previousSessions + 1, testModule.getStudySessions().length);
     }
 }
