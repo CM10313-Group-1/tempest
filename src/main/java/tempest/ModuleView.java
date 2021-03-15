@@ -1,20 +1,30 @@
 package tempest;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
- * ModuleView is responsible for creating the GUIs for the home
- * page, adding a module page and adding studying sessions page.
+ * ModuleView is responsible for creating the GUIs for the home page, adding a
+ * module page and adding studying sessions page.
  *
  */
 public class ModuleView extends JFrame implements ActionListener {
+    private static final long serialVersionUID = 9089L;
 
     private static final State state = new State(); // Only static if the ArrayList isn't static
 
@@ -42,15 +52,14 @@ public class ModuleView extends JFrame implements ActionListener {
     /**
      * Calling this constructor will execute the GUI code
      */
-    public ModuleView()
-    {
+    public ModuleView() {
         getModules();
         run();
     }
 
     /**
-     * Used to get all the created modules and stores the result
-     * in the modules ArrayList
+     * Used to get all the created modules and stores the result in the modules
+     * ArrayList
      */
     private void getModules() {
         modules = new ArrayList<>(Arrays.asList(state.getModules()));
@@ -96,22 +105,22 @@ public class ModuleView extends JFrame implements ActionListener {
         getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
 
         // Frame Setting
-        setLocationRelativeTo(null); //Centering GUI
-        //pack();
+        setLocationRelativeTo(null); // Centering GUI
+        // pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     /**
-     * Creates the home page and provides the code for handling
-     * a user pressing the home page buttons
+     * Creates the home page and provides the code for handling a user pressing the
+     * home page buttons
      *
      * @param home : A JPanel that is later added to cardPanel
      */
     private void homePanel(JPanel home) {
         home.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        addModuleButton  = new JButton("Add a new module");
+        addModuleButton = new JButton("Add a new module");
         addSessionButton = new JButton("Add a new session");
 
         addModuleButton.setFocusable(false);
@@ -166,7 +175,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private void sessionPanel(JPanel addSession) {
         moduleDropDown = new JComboBox<>();
 
-        //Populating drop down with the names of all current modules
+        // Populating drop down with the names of all current modules
         for (Module m : modules) {
             moduleDropDown.addItem(m.getName());
         }
@@ -204,7 +213,7 @@ public class ModuleView extends JFrame implements ActionListener {
         actionButtonPanel.setVisible(currentCard != 1);
 
         cancelButton = new JButton("Cancel");
-        enterButton  = new JButton("Enter");
+        enterButton = new JButton("Enter");
 
         cancelButton.setFocusable(false);
         enterButton.setFocusable(false);
@@ -236,8 +245,7 @@ public class ModuleView extends JFrame implements ActionListener {
             currentCard = 1;
 
             buttonPanelVisible(currentCard);
-        }
-        else if (e.getSource() == enterButton) {
+        } else if (e.getSource() == enterButton) {
             boolean uniqueName = true;
 
             // Creating a new module
@@ -256,8 +264,8 @@ public class ModuleView extends JFrame implements ActionListener {
                 if (uniqueName) {
                     state.createModule(moduleName);
 
-                    dispose();         // Kills current GUI
-                    new ModuleView();  // Opens a new GUI with updated drop down
+                    dispose(); // Kills current GUI
+                    new ModuleView(); // Opens a new GUI with updated drop down
 
                     System.out.println("Module successfully created");
 
@@ -267,7 +275,8 @@ public class ModuleView extends JFrame implements ActionListener {
             }
             // Adding a new session
             else if (currentCard == 3) {
-                String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); //Handles null values in the drop down
+                String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); // Handles null values in the drop
+                                                                                      // down
 
                 Date date = new Date();
 
@@ -279,8 +288,8 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
-                for(Module m: modules){
-                    if(moduleName.equals(m.getName())){
+                for (Module m : modules) {
+                    if (moduleName.equals(m.getName())) {
                         m.addSession(date, time);
                         break;
                     }
@@ -290,7 +299,8 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 System.out.println("Study session successfully added");
 
-                // In future sprints will need to call dispose() and new ModuleView() to be able to show the updated sessions
+                // In future sprints will need to call dispose() and new ModuleView() to be able
+                // to show the updated sessions
                 // Unless the frame showing sessions is its own class
             }
 
@@ -301,7 +311,6 @@ public class ModuleView extends JFrame implements ActionListener {
             buttonPanelVisible(currentCard);
         }
     }
-
 
     public JButton getAddModuleButton() {
         return addModuleButton;
@@ -338,6 +347,6 @@ public class ModuleView extends JFrame implements ActionListener {
         minutesInput.setText(mins);
     }
 
-    //TODO:
+    // TODO:
     // - Handle user pressing enter if inputted values are empty
 }

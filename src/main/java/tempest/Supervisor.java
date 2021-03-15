@@ -1,13 +1,21 @@
 package tempest;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor {
-    State state;
-    CSVInterface csvInterface = new CSVInterface();
+    private State state;
+    private CSVInterface csvInterface = new CSVInterface();
     // TODO UserInterface
 
     private void onStart() {
+        try {
+            state = csvInterface.getState("store");
+        } catch (IOException | ParseException e) {
+            System.err.println("Failed to retrieve state");
+        }
         // Run CSV code first
         // - Check if CSV empty/nothing to load
         // - Create modules using state
@@ -19,7 +27,16 @@ public class Supervisor {
         // Detect the GUI closing?
     }
 
-    public static void main(String[] args) {
+    public State getState() {
+        return state;
+    }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public static void main(String[] args) {
+        Supervisor s = new Supervisor();
+        s.onStart();
     }
 }
