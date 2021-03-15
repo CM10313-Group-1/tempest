@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class ModuleViewTest {
     State state = new State();
-    ModuleView gui = new ModuleView(state);
+    ModuleView gui = new ModuleView(state, new Supervisor());
 
     /**
      * Needed to stop a headless exception by Maven
@@ -73,7 +73,7 @@ public class ModuleViewTest {
         assert testModule != null;
         int previousSessions = testModule.getStudySessions().length;
 
-        ModuleView gui = new ModuleView(state); // Making a new GUI as the old one was disposed
+        ModuleView gui = new ModuleView(state, new Supervisor()); // Making a new GUI as the old one was disposed
 
         // Adding a study session to test
         gui.getAddSessionButton().doClick();

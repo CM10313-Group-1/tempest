@@ -50,10 +50,12 @@ public class CSVInterface {
   /**
    * Takes a given state and stores it in the last accessed file.
    * 
+   * @deprecated Supplanted by the {@link #saveState(State, String)}.
    * @param state The overall state of the application.
    * @throws FileNotFoundException If no file was previously accessed.
    * @throws IOException           If the previously loaded file is a directory.
    */
+  @Deprecated
   public void saveState(State state) throws FileNotFoundException, IOException {
     File destination = getFile(loadedFilename);
     writeState(state, destination);
@@ -63,12 +65,18 @@ public class CSVInterface {
    * Takes a given state and stores it in the specified file.
    * 
    * @param state    The overall state of the application.
-   * @param filename The filename the state is to be stored in.
+   * @param fallback The filename the state is to be stored in.
    * @throws FileNotFoundException If no file was previously accessed.
    * @throws IOException           If filename is a directory.
    */
-  public void saveState(State state, String filename) throws FileNotFoundException, IOException {
-    File destination = getFile(filename);
+  public void saveState(State state, String fallback) throws FileNotFoundException, IOException {
+    File destination;
+    if (loadedFilename != null) {
+      destination = getFile(loadedFilename);
+    } else {
+      destination = getFile(fallback);
+    }
+
     writeState(state, destination);
   }
 

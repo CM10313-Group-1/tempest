@@ -1,7 +1,9 @@
 package tempest;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +14,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 /**
  * ModuleView is responsible for creating the GUIs for the home page, adding a
  * module page and adding studying sessions page.
@@ -21,6 +30,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private static final long serialVersionUID = 9089L;
 
     private final State state;
+    private final Supervisor supervisor;
 
     private int currentCard = 1;
 
@@ -46,9 +56,9 @@ public class ModuleView extends JFrame implements ActionListener {
     /**
      * Calling this constructor will execute the GUI code
      */
-    public ModuleView(State state)
-    {
+    public ModuleView(State state, Supervisor supervisor) {
         this.state = state;
+        this.supervisor = supervisor;
         getModules();
         run();
     }
@@ -103,7 +113,7 @@ public class ModuleView extends JFrame implements ActionListener {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                new Supervisor().onClose();
+                supervisor.onClose();
             }
         });
 
@@ -122,7 +132,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private void homePanel(JPanel home) {
         home.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        addModuleButton  = new JButton("Add a new module");
+        addModuleButton = new JButton("Add a new module");
         addSessionButton = new JButton("Add a new session");
 
         addModuleButton.setFocusable(false);
@@ -203,7 +213,7 @@ public class ModuleView extends JFrame implements ActionListener {
         actionButtonPanel.setVisible(currentCard != 1);
 
         cancelButton = new JButton("Cancel");
-        enterButton  = new JButton("Enter");
+        enterButton = new JButton("Enter");
 
         cancelButton.setFocusable(false);
         enterButton.setFocusable(false);
@@ -233,20 +243,16 @@ public class ModuleView extends JFrame implements ActionListener {
 
         if (obj == addModuleButton) {
             currentCard = 2;
-        }
-        else if (obj == addSessionButton) {
+        } else if (obj == addSessionButton) {
             currentCard = 3;
-        }
-        else if (obj == enterButton) {
+        } else if (obj == enterButton) {
 
             if (currentCard == 2) {
                 handleCreatingModule();
-            }
-            else if (currentCard == 3) {
+            } else if (currentCard == 3) {
                 handleAddingSession();
             }
-        }
-        else if (obj == cancelButton) {
+        } else if (obj == cancelButton) {
             currentCard = 1;
         }
 
@@ -280,8 +286,8 @@ public class ModuleView extends JFrame implements ActionListener {
         if (uniqueName) {
             state.createModule(moduleName);
 
-            dispose();                   // Kills current GUI
-            new ModuleView(this.state);  // Opens a new GUI with updated drop down
+            dispose(); // Kills current GUI
+            new ModuleView(this.state, this.supervisor); // Opens a new GUI with updated drop down
 
             System.out.println("Module successfully created");
 
@@ -311,7 +317,7 @@ public class ModuleView extends JFrame implements ActionListener {
         int minutesInt;
 
         try {
-            hoursInt   = Integer.parseInt(hours);
+            hoursInt = Integer.parseInt(hours);
             minutesInt = Integer.parseInt(minutes);
         } catch (NumberFormatException e) {
             System.out.println("Invalid hours/minutes entered");
@@ -337,13 +343,14 @@ public class ModuleView extends JFrame implements ActionListener {
 
         System.out.println("Study session successfully added");
 
-        hoursInput.setText("");   // Clearing inputted hours
+        hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
 
         currentCard = 1;
 
         // In future sprints will need to call dispose() and new ModuleView() to be able
-        // to show the updated sessions unless the frame showing sessions is its own class
+        // to show the updated sessions unless the frame showing sessions is its own
+        // class
     }
 
     public JButton getAddModuleButton() {

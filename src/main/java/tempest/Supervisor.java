@@ -6,6 +6,7 @@ import java.text.ParseException;
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor {
+    private static final String STORE = "store.csv";
     private static State state; // Static so the state made in onStart can be used in onClose
     private CSVInterface csvInterface = new CSVInterface();
 
@@ -13,21 +14,25 @@ public class Supervisor {
 
     private void onStart() {
         try {
-            state = csvInterface.getState("store");
+            state = csvInterface.getState(STORE);
         } catch (IOException | ParseException e) {
             System.err.println("Failed to retrieve state");
-            // So create a new state?
+            state = new State();
         }
 
         // Run CSV code first
         // - Check if CSV empty/nothing to load ?
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()
-        new ModuleView(state);
+        new ModuleView(state, this);
     }
 
     public void onClose() {
-
+        try {
+            csvInterface.saveState(state, STORE);
+        } catch (IOException e) {
+            System.err.println("Failed to save state");
+        }
     }
 
     public State getState() {
