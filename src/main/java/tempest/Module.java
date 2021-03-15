@@ -16,7 +16,7 @@ import tempest.interfaces.CSVInterface;
 public class Module {
     private UUID id;
     private String name;
-    private LinkedList<StudySession> studySessions = new LinkedList<StudySession>();
+    private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
         this.id = UUID.randomUUID();
@@ -87,7 +87,7 @@ public class Module {
      * @return The StudySessions related to this module.
      */
     public StudySession[] getStudySessions() {
-        return studySessions.toArray(new StudySession[studySessions.size()]);
+        return studySessions.toArray(new StudySession[0]);
     }
 
     /**

@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class State {
-  private List<Module> modules = new ArrayList<Module>();
+  private static List<Module> modules = new ArrayList<>();
   // TODO Trophies
 
   public State() {
   }
 
   public State(Module[] modules) {
-    this.modules = new ArrayList<Module>(Arrays.asList(modules));
+    State.modules = new ArrayList<>(Arrays.asList(modules));
   }
 
   /**
@@ -35,7 +35,7 @@ public class State {
    * @return All the modules stored.
    */
   public Module[] getModules() {
-    return this.modules.toArray(new Module[this.modules.size()]);
+    return modules.toArray(new Module[modules.size()]);
   }
 
   @Override
