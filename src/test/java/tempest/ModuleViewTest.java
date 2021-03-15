@@ -1,11 +1,22 @@
 package tempest;
 
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ModuleViewTest {
     State state = new State();
     ModuleView gui = new ModuleView(state);
+
+    /**
+     * Needed to stop a headless exception by Maven
+     *
+     * Got this code from: https://www.baeldung.com/java-headless-mode
+     */
+    @Before
+    public void setUpHeadlessMode() {
+        System.setProperty("java.awt.headless", "true");
+    }
 
     @Test
     public void testAddModuleButton() {
