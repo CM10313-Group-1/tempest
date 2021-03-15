@@ -15,12 +15,14 @@ public class Supervisor {
             state = csvInterface.getState("store");
         } catch (IOException | ParseException e) {
             System.err.println("Failed to retrieve state");
+            // So create a new state?
         }
 
         // Run CSV code first
         // - Check if CSV empty/nothing to load ?
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()
+        new ModuleView(state);
     }
 
     public void onClose() {
