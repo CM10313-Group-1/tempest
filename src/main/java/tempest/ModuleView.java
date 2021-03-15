@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class ModuleView extends JFrame implements ActionListener {
 
-    private final State state;
+    private static final State state = new State(); // Only static if the ArrayList isn't static
 
     private int currentCard = 1;
 
@@ -44,7 +44,6 @@ public class ModuleView extends JFrame implements ActionListener {
      */
     public ModuleView()
     {
-        state = new State();
         getModules();
         run();
     }
@@ -98,7 +97,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
         // Frame Setting
         setLocationRelativeTo(null); //Centering GUI
-        pack();
+        //pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -237,7 +236,8 @@ public class ModuleView extends JFrame implements ActionListener {
             currentCard = 1;
 
             buttonPanelVisible(currentCard);
-        } else if (e.getSource() == enterButton) {
+        }
+        else if (e.getSource() == enterButton) {
             boolean uniqueName = true;
 
             // Creating a new module
@@ -256,13 +256,8 @@ public class ModuleView extends JFrame implements ActionListener {
                 if (uniqueName) {
                     state.createModule(moduleName);
 
-                    getModules(); // Updating local list of modules
-
-                    dispose();    // Kills current GUI
-                    run();        // Opens a new GUI with updated drop down
-
-                    hoursInput.setText("");   // Clearing inputted hours
-                    minutesInput.setText(""); // Clearing inputted minutes
+                    dispose();         // Kills current GUI
+                    new ModuleView();  // Opens a new GUI with updated drop down
 
                     System.out.println("Module successfully created");
 
@@ -295,7 +290,7 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 System.out.println("Study session successfully added");
 
-                // In future sprints might need to call getModules(), dispose(), run() to be able to show the updated sessions
+                // In future sprints will need to call dispose() and new ModuleView() to be able to show the updated sessions
                 // Unless the frame showing sessions is its own class
             }
 
@@ -320,11 +315,8 @@ public class ModuleView extends JFrame implements ActionListener {
         return enterButton;
     }
 
-    /**
-     * @return The size of the module drop box
-     */
-    public int getDropSize() {
-        return moduleDropDown.getItemCount();
+    public JButton getCancelButton() {
+        return cancelButton;
     }
 
     /**
@@ -337,4 +329,15 @@ public class ModuleView extends JFrame implements ActionListener {
     public void setModuleNameInput(String name) {
         moduleNameInput.setText(name);
     }
+
+    public void setHours(String hours) {
+        hoursInput.setText(hours);
+    }
+
+    public void setMins(String mins) {
+        minutesInput.setText(mins);
+    }
+
+    //TODO:
+    // - Don't allow enter if inputted values are empty
 }
