@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class ModuleView extends JFrame implements ActionListener {
 
-    private static final State state = new State(); // Only static if the ArrayList isn't static
+    private final State state;
 
     private int currentCard = 1;
 
@@ -42,8 +42,9 @@ public class ModuleView extends JFrame implements ActionListener {
     /**
      * Calling this constructor will execute the GUI code
      */
-    public ModuleView()
+    public ModuleView(State state)
     {
+        this.state = state;
         getModules();
         run();
     }
@@ -256,8 +257,8 @@ public class ModuleView extends JFrame implements ActionListener {
                 if (uniqueName) {
                     state.createModule(moduleName);
 
-                    dispose();         // Kills current GUI
-                    new ModuleView();  // Opens a new GUI with updated drop down
+                    dispose();                   // Kills current GUI
+                    new ModuleView(this.state);  // Opens a new GUI with updated drop down
 
                     System.out.println("Module successfully created");
 
