@@ -339,5 +339,5 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     //TODO:
-    // - Don't allow enter if inputted values are empty
+    // - Handle user pressing enter if inputted values are empty
 }

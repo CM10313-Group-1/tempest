@@ -39,7 +39,7 @@ public class ModuleViewTest {
 
 
     @Test
-    public void testAddingAModule() {
+    public void testAddingAModule() {       // Needs modules arrayList to be static
         ModuleView gui = new ModuleView();
 
         // Creating a new module
@@ -52,7 +52,7 @@ public class ModuleViewTest {
     }
 
     @Test
-    public void testAddingASession() {
+    public void testAddingASession() {      // Needs modules arrayList to be static
         ModuleView gui = new ModuleView();
 
         // Adding a module called test
@@ -70,8 +70,6 @@ public class ModuleViewTest {
             }
         }
 
-        // **** Won't works as new GUI instance created ****
-
         // Adding a study session to test
         gui.getAddSessionButton().doClick();
         gui.setHours("1");
@@ -80,9 +78,9 @@ public class ModuleViewTest {
 
         Duration time = Duration.ofMinutes(116);
 
+        // **** Doesn't work as Date entered by Module has different min/seconds to test ****
+
         // Checking if this study session has been added
         assertEquals(testModule.getStudySessions()[0], new StudySession(new Date(), time));
     }
-
-
 }
