@@ -105,8 +105,7 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     /**
-     * Creates the home page and provides the code for handling a user pressing the
-     * home page buttons
+     * Creates the home page
      *
      * @param home : A JPanel that is later added to cardPanel
      */
@@ -125,21 +124,9 @@ public class ModuleView extends JFrame implements ActionListener {
         home.add(addModuleButton);
         home.add(addSessionButton);
 
-        addModuleButton.addActionListener(arg0 -> {
-            currentCard = 2;
+        addModuleButton.addActionListener(this);
 
-            cl.show(cardPanel, Integer.toString(currentCard));
-
-            buttonPanelVisible(currentCard);
-        });
-
-        addSessionButton.addActionListener(arg0 -> {
-            currentCard = 3;
-
-            cl.show(cardPanel, Integer.toString(currentCard));
-
-            buttonPanelVisible(currentCard);
-        });
+        addSessionButton.addActionListener(this);
     }
 
     /**
@@ -232,75 +219,117 @@ public class ModuleView extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cancelButton) {
-            cl.first(cardPanel); // Changes panel to home panel
+        Object obj = e.getSource();
 
-            currentCard = 1;
-
-            buttonPanelVisible(currentCard);
-        } else if (e.getSource() == enterButton) {
-            boolean uniqueName = true;
-
-            // Creating a new module
-            if (currentCard == 2) {
-                String moduleName = moduleNameInput.getText();
-
-                // Checking if module name is unique
-                for (Module m : modules) {
-                    if (moduleName.equals(m.getName())) {
-                        System.out.println("Another module already has this name");
-                        uniqueName = false;
-                        break;
-                    }
-                }
-
-                if (uniqueName) {
-                    state.createModule(moduleName);
-
-                    dispose();         // Kills current GUI
-                    new ModuleView();  // Opens a new GUI with updated drop down
-
-                    System.out.println("Module successfully created");
-
-                    // If want GUI to show same screen then:
-                    // cl.show(cardPanel, currentCard) -> instead of code at bottom of this else if;
-                }
-            }
-            // Adding a new session
-            else if (currentCard == 3) {
-                String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); //Handles null values in the drop down
-
-                Date date = new Date();
-
-                String hours = hoursInput.getText();
-                String minutes = minutesInput.getText();
-
-                int hoursInt = Integer.parseInt(hours);
-                int minutesInt = Integer.parseInt(minutes);
-
-                Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
-
-                for (Module m : modules) {
-                    if (moduleName.equals(m.getName())) {
-                        m.addSession(date, time);
-                        break;
-                    }
-                }
-
-                moduleNameInput.setText(""); // Clearing inputted name
-
-                System.out.println("Study session successfully added");
-
-                // In future sprints will need to call dispose() and new ModuleView() to be able
-                // to show the updated sessions unless the frame showing sessions is its own class
-            }
-
-            cl.first(cardPanel); // Changes panel to home panel
-
-            currentCard = 1;
-
-            buttonPanelVisible(currentCard);
+        if (obj == addModuleButton) {
+            currentCard = 2;
         }
+        else if (obj == addSessionButton) {
+            currentCard = 3;
+        }
+        else if (obj == enterButton) {
+
+            if (currentCard == 2) {
+                handleCreatingModule();
+            }
+            else if (currentCard == 3) {
+                handleAddingSession();
+            }
+        }
+        else if (obj == cancelButton) {
+            currentCard = 1;
+        }
+
+        cl.show(cardPanel, Integer.toString(currentCard));
+
+        buttonPanelVisible(currentCard);
+    }
+
+    /**
+     * Handles the user pressing enter on the add module page
+     */
+    private void handleCreatingModule() {
+        String moduleName = moduleNameInput.getText();
+
+        if (moduleName.equals("")) {
+            System.out.println("Invalid module name");
+            return;
+        }
+
+        boolean uniqueName = true;
+
+        // Checking if module name is unique
+        for (Module m : modules) {
+            if (moduleName.equals(m.getName())) {
+                System.out.println("Another module already has this name");
+                uniqueName = false;
+                break;
+            }
+        }
+
+        if (uniqueName) {
+            state.createModule(moduleName);
+
+            dispose();                   // Kills current GUI
+            new ModuleView(this.state);  // Opens a new GUI with updated drop down
+
+            System.out.println("Module successfully created");
+
+            currentCard = 1;
+
+            // If want GUI to show same screen then:
+            // cl.show(cardPanel, currentCard) -> instead of code at bottom of this else if;
+        }
+    }
+
+    /**
+     * Handles the user pressing enter on the add session page
+     */
+    private void handleAddingSession() {
+        String moduleName = String.valueOf(moduleDropDown.getSelectedItem()); //Handles null values in the drop down
+
+        Date date = new Date();
+
+        String hours = hoursInput.getText();
+        String minutes = minutesInput.getText();
+
+        int hoursInt;
+        int minutesInt;
+
+        try {
+            hoursInt   = Integer.parseInt(hours);
+            minutesInt = Integer.parseInt(minutes);
+        } catch (NumberFormatException ex) {
+            System.out.println("Invalid hours/minutes entered");
+            return;
+        }
+
+        Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
+
+        boolean foundName = false;
+
+        for (Module m : modules) {
+            if (moduleName.equals(m.getName())) {
+                m.addSession(date, time);
+                foundName = true;
+                break;
+            }
+        }
+
+        if (!foundName) {
+            System.out.println("Unable to find this module");
+            return;
+        }
+
+        System.out.println("Study session successfully added");
+
+        hoursInput.setText("");   // Clearing inputted hours
+        minutesInput.setText(""); // Clearing inputted mins
+
+        currentCard = 1;
+
+        // In future sprints will need to call dispose() and new ModuleView() to be able
+        // to show the updated sessions unless the frame showing sessions is its own class
     }
 
     public JButton getAddModuleButton() {
@@ -337,7 +366,4 @@ public class ModuleView extends JFrame implements ActionListener {
     public void setMins(String mins) {
         minutesInput.setText(mins);
     }
-
-    //TODO:
-    // - Handle user pressing enter if inputted values are empty
 }
