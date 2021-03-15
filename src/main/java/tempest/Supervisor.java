@@ -16,8 +16,9 @@ public class Supervisor {
         } catch (IOException | ParseException e) {
             System.err.println("Failed to retrieve state");
         }
+
         // Run CSV code first
-        // - Check if CSV empty/nothing to load
+        // - Check if CSV empty/nothing to load ?
         // - Create modules using state
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()

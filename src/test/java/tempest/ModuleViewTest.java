@@ -1,14 +1,10 @@
 package tempest;
 
 import org.junit.Test;
-
-import java.time.Duration;
-import java.util.Date;
-
 import static org.junit.Assert.*;
 
 public class ModuleViewTest {
-    State state = new State(); // -> If modules ArrayList is static
+    State state = new State();
     ModuleView gui = new ModuleView(state);
 
     @Test
@@ -33,7 +29,7 @@ public class ModuleViewTest {
 
 
     @Test
-    public void testAddingAModule() {       // Needs modules arrayList to be static
+    public void testAddingAModule() {
 
         // Creating a new module
         gui.getAddModuleButton().doClick();
@@ -45,7 +41,7 @@ public class ModuleViewTest {
     }
 
     @Test
-    public void testAddingASession() {      // Needs modules arrayList to be static
+    public void testAddingASession() {
 
         // Adding a module called test
         gui.getAddModuleButton().doClick();
@@ -68,12 +64,8 @@ public class ModuleViewTest {
         gui.setMins("16");
         gui.getEnterButton().doClick();
 
-        Duration time = Duration.ofMinutes(116);
-
-        // **** Doesn't work as Date entered by Module has different min/seconds to test ****
-        // **** Just test if getStudySessions
-
         // Checking if this study session has been added
+        assert testModule != null;
         assertEquals(testModule.getStudySessions().length, 1);
     }
 }
