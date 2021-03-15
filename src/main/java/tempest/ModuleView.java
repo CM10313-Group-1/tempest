@@ -1,20 +1,21 @@
 package tempest;
 
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import javax.swing.*;
 
 /**
- * ModuleView is responsible for creating the GUIs for the home
- * page, adding a module page and adding studying sessions page.
+ * ModuleView is responsible for creating the GUIs for the home page, adding a
+ * module page and adding studying sessions page.
  *
  */
 public class ModuleView extends JFrame implements ActionListener {
+    private static final long serialVersionUID = 9089L;
 
     private final State state;
 
@@ -50,8 +51,8 @@ public class ModuleView extends JFrame implements ActionListener {
     }
 
     /**
-     * Used to get all the created modules and stores the result
-     * in the modules ArrayList
+     * Used to get all the created modules and stores the result in the modules
+     * ArrayList
      */
     private void getModules() {
         modules = new ArrayList<>(Arrays.asList(state.getModules()));
@@ -97,15 +98,15 @@ public class ModuleView extends JFrame implements ActionListener {
         getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
 
         // Frame Setting
-        setLocationRelativeTo(null); //Centering GUI
-        //pack();
+        setLocationRelativeTo(null); // Centering GUI
+        // pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     /**
-     * Creates the home page and provides the code for handling
-     * a user pressing the home page buttons
+     * Creates the home page and provides the code for handling a user pressing the
+     * home page buttons
      *
      * @param home : A JPanel that is later added to cardPanel
      */
@@ -167,7 +168,7 @@ public class ModuleView extends JFrame implements ActionListener {
     private void sessionPanel(JPanel addSession) {
         moduleDropDown = new JComboBox<>();
 
-        //Populating drop down with the names of all current modules
+        // Populating drop down with the names of all current modules
         for (Module m : modules) {
             moduleDropDown.addItem(m.getName());
         }
@@ -237,8 +238,7 @@ public class ModuleView extends JFrame implements ActionListener {
             currentCard = 1;
 
             buttonPanelVisible(currentCard);
-        }
-        else if (e.getSource() == enterButton) {
+        } else if (e.getSource() == enterButton) {
             boolean uniqueName = true;
 
             // Creating a new module
@@ -257,8 +257,8 @@ public class ModuleView extends JFrame implements ActionListener {
                 if (uniqueName) {
                     state.createModule(moduleName);
 
-                    dispose();                   // Kills current GUI
-                    new ModuleView(this.state);  // Opens a new GUI with updated drop down
+                    dispose();         // Kills current GUI
+                    new ModuleView();  // Opens a new GUI with updated drop down
 
                     System.out.println("Module successfully created");
 
@@ -280,8 +280,8 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
-                for(Module m: modules){
-                    if(moduleName.equals(m.getName())){
+                for (Module m : modules) {
+                    if (moduleName.equals(m.getName())) {
                         m.addSession(date, time);
                         break;
                     }
@@ -291,8 +291,8 @@ public class ModuleView extends JFrame implements ActionListener {
 
                 System.out.println("Study session successfully added");
 
-                // In future sprints will need to call dispose() and new ModuleView() to be able to show the updated sessions
-                // Unless the frame showing sessions is its own class
+                // In future sprints will need to call dispose() and new ModuleView() to be able
+                // to show the updated sessions unless the frame showing sessions is its own class
             }
 
             cl.first(cardPanel); // Changes panel to home panel
@@ -302,7 +302,6 @@ public class ModuleView extends JFrame implements ActionListener {
             buttonPanelVisible(currentCard);
         }
     }
-
 
     public JButton getAddModuleButton() {
         return addModuleButton;
