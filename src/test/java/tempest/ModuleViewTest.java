@@ -1,7 +1,8 @@
 package tempest;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ModuleViewTest {
     State state = new State();
@@ -27,9 +28,9 @@ public class ModuleViewTest {
         assertEquals(gui.getCard(), 1);
     }
 
-
     @Test
     public void testAddingAModule() {
+        int previousModules = state.getModules().length;
 
         // Creating a new module
         gui.getAddModuleButton().doClick();
@@ -37,7 +38,7 @@ public class ModuleViewTest {
         gui.getEnterButton().doClick();
 
         // Seeing if the modules list has been increased
-        assertEquals(state.getModules().length, 1);
+        assertEquals(previousModules + 1, state.getModules().length);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class ModuleViewTest {
                 break;
             }
         }
-
+        int previousSessions = testModule.getStudySessions().length;
         // Adding a study session to test
         gui.getAddSessionButton().doClick();
         gui.setHours("1");
@@ -66,6 +67,6 @@ public class ModuleViewTest {
 
         // Checking if this study session has been added
         assert testModule != null;
-        assertEquals(testModule.getStudySessions().length, 1);
+        assertEquals(previousSessions + 1, testModule.getStudySessions().length);
     }
 }
