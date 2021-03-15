@@ -2,22 +2,14 @@ package tempest;
 
 import org.junit.Test;
 
+import java.time.Duration;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class ModuleViewTest {
-
-    @Test
-    public void testAddingAModule() {
-        ModuleView gui = new ModuleView();
-
-        assertEquals(gui.getDropSize(), 0);
-
-        gui.getAddModuleButton().doClick();
-        gui.setModuleNameInput("test");
-        gui.getEnterButton().doClick();
-
-        assertEquals(gui.getDropSize(), 1);
-    }
+    // State state = State.getInstance(); // -> If state is a singleton
+    State state = new State(); // -> If modules ArrayList is static
 
     @Test
     public void testAddModuleButton() {
@@ -34,4 +26,63 @@ public class ModuleViewTest {
         gui.getAddSessionButton().doClick();
         assertEquals(gui.getCard(), 3);
     }
+
+    @Test
+    public void testCancelButton() {
+        ModuleView gui = new ModuleView();
+
+        gui.getAddSessionButton().doClick();
+
+        gui.getCancelButton().doClick();
+        assertEquals(gui.getCard(), 1);
+    }
+
+
+    @Test
+    public void testAddingAModule() {
+        ModuleView gui = new ModuleView();
+
+        // Creating a new module
+        gui.getAddModuleButton().doClick();
+        gui.setModuleNameInput("test");
+        gui.getEnterButton().doClick();
+
+        // Seeing if the modules list has been increased
+        assertEquals(state.getModules().length, 1);
+    }
+
+    @Test
+    public void testAddingASession() {
+        ModuleView gui = new ModuleView();
+
+        // Adding a module called test
+        gui.getAddModuleButton().doClick();
+        gui.setModuleNameInput("testing session");
+        gui.getEnterButton().doClick();
+
+        // Getting the created module
+        Module testModule = null;
+
+        for (Module m : state.getModules()) {
+            if (m.getName().equals("test")) {
+                testModule = m;
+                break;
+            }
+        }
+
+        // **** Won't works as new GUI instance created ****
+
+        // Adding a study session to test
+        gui.getAddSessionButton().doClick();
+        gui.setHours("1");
+        gui.setMins("16");
+        gui.getEnterButton().doClick();
+
+        Duration time = Duration.ofMinutes(116);
+
+        // Checking if this study session has been added
+        assertEquals(testModule.getStudySessions()[0], new StudySession(new Date(), time));
+    }
+
+
 }
