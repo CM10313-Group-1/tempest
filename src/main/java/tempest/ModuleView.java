@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,11 +99,22 @@ public class ModuleView extends JFrame implements ActionListener {
         getContentPane().add(cardPanel, BorderLayout.NORTH);
         getContentPane().add(actionButtonPanel, BorderLayout.SOUTH);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new Supervisor().onClose();
+            }
+        });
+
         // Frame Setting
         setLocationRelativeTo(null); // Centering GUI
         // pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new ModuleView(new State());
     }
 
     /**

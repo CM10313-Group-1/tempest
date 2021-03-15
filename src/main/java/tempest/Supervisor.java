@@ -6,7 +6,7 @@ import java.text.ParseException;
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor {
-    private State state;
+    private static State state;
     private CSVInterface csvInterface = new CSVInterface();
     // TODO UserInterface
 
@@ -19,13 +19,12 @@ public class Supervisor {
 
         // Run CSV code first
         // - Check if CSV empty/nothing to load ?
-        // - Create modules using state
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()
     }
 
-    private void onClose() {
-        // Detect the GUI closing?
+    public void onClose() {
+
     }
 
     public State getState() {
@@ -33,7 +32,7 @@ public class Supervisor {
     }
 
     public void setState(State state) {
-        this.state = state;
+        Supervisor.state = state;
     }
 
     public static void main(String[] args) {
