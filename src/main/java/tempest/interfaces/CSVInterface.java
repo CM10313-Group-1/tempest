@@ -204,7 +204,7 @@ public class CSVInterface {
         modules.put(id, acquired);
       } else {
         Module newModule = new Module(attributes[0], attributes[1]);
-        if (!attributes[2].isEmpty()) {
+        if (attributes.length > 2) {
           StudySession s = new StudySession(StudySession.STORED_DATE_FORMAT.parse(attributes[2]),
               Duration.ofMinutes(Long.valueOf(attributes[3])));
           newModule.addSession(s);
