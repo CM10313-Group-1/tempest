@@ -1,7 +1,6 @@
 package tempest;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.UUID;
@@ -119,8 +118,7 @@ public class Module {
             Module other = (Module) obj;
             boolean matchingIDs = this.id.equals(other.id);
             boolean matchingNames = this.name.equals(other.name);
-            boolean matchingSessions = Arrays.deepEquals(this.getStudySessions(), other.getStudySessions());
-            return matchingIDs && matchingNames && matchingSessions;
+            return matchingIDs || matchingNames;
         } else {
             return false;
         }
