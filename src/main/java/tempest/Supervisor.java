@@ -10,20 +10,16 @@ public class Supervisor {
     private static State state; // Static so the state made in onStart can be used in onClose
     private CSVInterface csvInterface = new CSVInterface();
 
-    // TODO UserInterface
+    // TODO:
 
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);
         } catch (IOException | ParseException e) {
-            System.err.println("Failed to retrieve state");
+            System.err.println("Failed to retrieve state"); // Want to print an error, what if just the 1st time?
             state = new State();
         }
 
-        // Run CSV code first
-        // - Check if CSV empty/nothing to load ?
-        // - Load all the study session for these modules
-        // Start GUI last - by calling new ModuleView()
         new ModuleView(state, this);
     }
 

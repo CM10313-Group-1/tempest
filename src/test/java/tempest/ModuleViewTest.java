@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+//TODO:
+// - Check if headless mode is needed to pass maven tests
+
 public class ModuleViewTest {
     State state = new State();
     ModuleView gui = new ModuleView(state, new Supervisor());
