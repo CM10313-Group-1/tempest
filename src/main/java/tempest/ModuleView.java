@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 // - Change the code to be dynamic
 // - Add a check so the user can't enter a session > 24hrs
 // - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
+// -
 
 /**
  * ModuleView is responsible for creating the GUIs for the home page, adding a
