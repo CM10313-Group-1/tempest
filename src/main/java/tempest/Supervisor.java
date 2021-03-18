@@ -3,6 +3,7 @@ package tempest;
 import java.io.IOException;
 import java.text.ParseException;
 
+import tempest.GUI.GUIManager;
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor {
@@ -24,7 +25,7 @@ public class Supervisor {
         // - Check if CSV empty/nothing to load ?
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()
-        new ModuleView(state, this);
+        new GUIManager(state);
     }
 
     public void onClose() {
