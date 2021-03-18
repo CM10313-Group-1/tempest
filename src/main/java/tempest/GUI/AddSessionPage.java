@@ -120,13 +120,57 @@ public class AddSessionPage extends JFrame implements ActionListener{
 
         int hoursInt;
         int minutesInt;
+        hoursInt = 0;
+        minutesInt = 0;
 
-        try {
+        /*try {
             hoursInt = Integer.parseInt(hours);
             minutesInt = Integer.parseInt(minutes);
         } catch (NumberFormatException e) {
             System.out.println("Invalid hours/minutes entered");
             return;
+        }*/
+
+        if (hours.strip().equals("") && minutes.strip().equals("")) { // Empty hours and minutes
+            System.out.println("A session needs to be longer >= 1 minute");
+            return;
+        }
+        else if (hours.strip().equals("")) { // Only minutes have been entered
+            try {
+                minutesInt = Integer.parseInt(minutes);
+
+                if (minutesInt <= 0) {
+                    throw new NumberFormatException(); // Negative minutes
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid minutes entered");
+                return;
+            }
+        }
+        else if (minutes.strip().equals("")) { // Only hours have been entered
+            try {
+                hoursInt = Integer.parseInt(hours);
+
+                if (hoursInt <= 0) {
+                    throw new NumberFormatException(); // Negative hours
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid hours entered");
+                return;
+            }
+        }
+        else { // Hours and minutes have been entered
+            try {
+                minutesInt = Integer.parseInt(minutes);
+                hoursInt = Integer.parseInt(hours);
+
+                if (hoursInt <= 0 || minutesInt <= 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid time entered");
+                return;
+            }
         }
 
         Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
