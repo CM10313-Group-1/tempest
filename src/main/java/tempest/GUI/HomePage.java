@@ -6,11 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePage extends JFrame implements ActionListener{
+    private GUIManager guiManager;
+
     private JPanel buttonPanel;
     private JButton addModuleButton;
     private JButton addSessionButton;
 
-    public HomePage(){}
+    public HomePage(GUIManager guiManager){
+        this.guiManager = guiManager;
+    }
 
     public Container getPanel(){
         buttonPanel = new JPanel();
@@ -36,10 +40,10 @@ public class HomePage extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
         if(source == addModuleButton){
-            GUIManager.changeFrame(2);
+            guiManager.changeFrame(2);
         }
         else if(source == addSessionButton){
-            GUIManager.changeFrame(3);
+            guiManager.changeFrame(3);
         }
     }
 }

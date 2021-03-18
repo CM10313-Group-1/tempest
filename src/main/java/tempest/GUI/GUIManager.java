@@ -1,27 +1,34 @@
 package tempest.GUI;
 
 import tempest.State;
+import tempest.Supervisor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIManager extends  JFrame{
     private static JPanel currentPanel;
     private static CardLayout cl;
 
     private State state;
+    private Supervisor supervisor;
 
-    private HomePage home = new HomePage();
-    private AddModulePage addModule = new AddModulePage();
+    private HomePage home;
+    private AddModulePage addModule;
     private AddSessionPage addSession;
 
-    public GUIManager(State state){
+    public GUIManager(State state, Supervisor supervisor){
         this.state = state;
+        this.supervisor = supervisor;
         this.run();
     }
 
     private void run(){
-        addSession = new AddSessionPage(state);
+        home = new HomePage(this);
+        addSession = new AddSessionPage(state, this);
+        addModule = new AddModulePage(state, this);
 
         setSize(500,150);
         setTitle("Tempest");
@@ -40,13 +47,26 @@ public class GUIManager extends  JFrame{
 
         getContentPane().add(currentPanel);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                supervisor.onClose();
+            }
+        });
+
         // Frame Setting
         setLocationRelativeTo(null); // Centering GUI
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    public static void changeFrame(int newPanel){
-        cl.show(currentPanel, Integer.toString(newPanel));
+    public void changeFrame(int newPanel){
+        if(newPanel == 1){
+            dispose();
+            new GUIManager(state, supervisor);
+        }
+        else{
+            cl.show(currentPanel, Integer.toString(newPanel));
+        }
     }
 }

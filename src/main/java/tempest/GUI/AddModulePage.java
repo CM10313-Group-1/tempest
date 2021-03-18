@@ -12,15 +12,18 @@ import java.util.Arrays;
 
 public class AddModulePage extends JFrame implements ActionListener{
     private State state;
+    private GUIManager guiManager;
 
     private ArrayList<Module> modules;
     private JTextField moduleNameInput;
+    private JLabel moduleInputLabel;
     private JPanel buttonPanel;
     private JButton enterButton;
     private JButton cancelButton;
 
-    public AddModulePage(){
-        this.state = new State();
+    public AddModulePage(State state, GUIManager guiManager){
+        this.state = state;
+        this.guiManager = guiManager;
     }
 
     public Container getPanel(){
@@ -29,6 +32,7 @@ public class AddModulePage extends JFrame implements ActionListener{
         buttonPanel = new JPanel();
 
         moduleNameInput = new JTextField(20);
+        moduleInputLabel = new JLabel("Enter module name:");
 
         cancelButton = new JButton("Cancel");
         enterButton = new JButton("Enter");
@@ -43,6 +47,7 @@ public class AddModulePage extends JFrame implements ActionListener{
         buttonPanel.add(cancelButton);
 
         JPanel inputPanel = new JPanel();
+        inputPanel.add(moduleInputLabel);
         inputPanel.add(moduleNameInput);
 
         getContentPane().add(inputPanel, BorderLayout.NORTH);
@@ -73,7 +78,7 @@ public class AddModulePage extends JFrame implements ActionListener{
         if (uniqueName) {
             state.createModule(moduleName);
 
-            GUIManager.changeFrame(2);
+            guiManager.changeFrame(2);
 
             System.out.println("Module successfully created");
         }
@@ -87,7 +92,7 @@ public class AddModulePage extends JFrame implements ActionListener{
             handleCreatingModule();
         }
         else if(source == cancelButton){
-            GUIManager.changeFrame(1);
+            guiManager.changeFrame(1);
         }
     }
 }

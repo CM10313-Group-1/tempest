@@ -7,10 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 public class AddSessionPage extends JFrame implements ActionListener{
+    private GUIManager guiManager;
+
     private ArrayList<Module> modules;
     private State state;
     private JComboBox<Object> moduleDropDown;
@@ -20,7 +25,10 @@ public class AddSessionPage extends JFrame implements ActionListener{
     private JButton cancelButton;
     private JPanel buttonPanel;
 
-    public AddSessionPage(State state){this.state = state;}
+    public AddSessionPage(State state, GUIManager guiManager){
+        this.state = state;
+        this.guiManager = guiManager;
+    }
 
     public Container getPanel(){
         JPanel sessionPanel = new JPanel();
@@ -82,6 +90,66 @@ public class AddSessionPage extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
+        Object source = e.getSource();
 
+        if(source == enterButton){
+            handleAddingSession();
+        }
+        else if(source == cancelButton){
+            guiManager.changeFrame(1);
+        }
+    }
+
+    /**
+     * Handles the user pressing enter on the add session page
+     */
+    private void handleAddingSession() {
+        if (modules.size() < 1) { // No modules created, so can't add a session
+            return;
+        }
+
+        String moduleName = Objects.requireNonNull(moduleDropDown.getSelectedItem()).toString();
+
+        Date date = new Date();
+
+        String hours = hoursInput.getText();
+        String minutes = minutesInput.getText();
+
+        int hoursInt;
+        int minutesInt;
+
+        try {
+            hoursInt = Integer.parseInt(hours);
+            minutesInt = Integer.parseInt(minutes);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid hours/minutes entered");
+            return;
+        }
+
+        Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
+
+        boolean foundName = false;
+
+        for (Module m : modules) {
+            if (moduleName.equals(m.getName())) {
+                m.addSession(date, time);
+                foundName = true;
+                break;
+            }
+        }
+
+        if (!foundName) {
+            System.out.println("Unable to find this module");
+            return;
+        }
+
+        System.out.println("Study session successfully added");
+
+        hoursInput.setText(""); // Clearing inputted hours
+        minutesInput.setText(""); // Clearing inputted mins
+
+        // In future sprints will need to call dispose() and new ModuleView() to be able
+        // to show the updated sessions unless the frame showing sessions is its own
+        // class
     }
 }

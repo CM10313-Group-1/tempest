@@ -25,7 +25,7 @@ public class Supervisor {
         // - Check if CSV empty/nothing to load ?
         // - Load all the study session for these modules
         // Start GUI last - by calling new ModuleView()
-        new GUIManager(state);
+        new GUIManager(state, this);
     }
 
     public void onClose() {
