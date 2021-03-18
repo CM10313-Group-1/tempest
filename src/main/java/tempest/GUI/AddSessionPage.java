@@ -30,6 +30,9 @@ public class AddSessionPage extends JFrame implements ActionListener{
         this.guiManager = guiManager;
     }
 
+    /**
+     * @return returns the container with all of the components for the page
+     */
     public Container getPanel(){
         JPanel sessionPanel = new JPanel();
         JPanel inputPanel = new JPanel();

@@ -56,6 +56,9 @@ public class AddModulePage extends JFrame implements ActionListener{
         return getContentPane();
     }
 
+    /**
+     * Handles creating modules with input validation.
+     */
     private void handleCreatingModule() {
         String moduleName = moduleNameInput.getText();
 

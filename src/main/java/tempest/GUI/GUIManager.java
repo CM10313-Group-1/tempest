@@ -25,6 +25,9 @@ public class GUIManager extends  JFrame{
         this.run();
     }
 
+    /**
+     * Sets up the GUI interface
+     */
     private void run(){
         home = new HomePage(this);
         addSession = new AddSessionPage(state, this);
@@ -60,7 +63,13 @@ public class GUIManager extends  JFrame{
         setVisible(true);
     }
 
+    /**
+     * Switches between pages (panels)
+     *
+     * @param newPanel the number of the panel to switch to
+     */
     public void changeFrame(int newPanel){
+        //just kills it to refresh the combobox
         if(newPanel == 1){
             dispose();
             new GUIManager(state, supervisor);
