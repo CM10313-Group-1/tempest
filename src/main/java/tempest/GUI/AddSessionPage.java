@@ -13,6 +13,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
+//TODO:
+// - Add a check so the user can't enter a session > 24hrs
+// - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
+
 public class AddSessionPage extends JFrame implements ActionListener{
     private GUIManager guiManager;
 
@@ -118,18 +122,8 @@ public class AddSessionPage extends JFrame implements ActionListener{
         String hours = hoursInput.getText();
         String minutes = minutesInput.getText();
 
-        int hoursInt;
-        int minutesInt;
-        hoursInt = 0;
-        minutesInt = 0;
-
-        /*try {
-            hoursInt = Integer.parseInt(hours);
-            minutesInt = Integer.parseInt(minutes);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid hours/minutes entered");
-            return;
-        }*/
+        int hoursInt = 0;
+        int minutesInt = 0;
 
         if (hours.strip().equals("") && minutes.strip().equals("")) { // Empty hours and minutes
             System.out.println("A session needs to be longer >= 1 minute");
@@ -194,9 +188,5 @@ public class AddSessionPage extends JFrame implements ActionListener{
 
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
-
-        // In future sprints will need to call dispose() and new ModuleView() to be able
-        // to show the updated sessions unless the frame showing sessions is its own
-        // class
     }
 }
