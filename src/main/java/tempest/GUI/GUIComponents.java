@@ -19,6 +19,18 @@ public class GUIComponents implements ActionListener {
 
     private GUIManager manager;
 
+    /**
+     * Gets a button panel containing an enter button and a cancel button
+     *
+     * The enter button needs to be retrieved and handled in the class which calls
+     * this method
+     *
+     * The cancel button is handled already
+     *
+     * @param manager Manager instance
+     * @param page this (instance of class calling getButtonPanel)
+     * @return JPanel
+     */
     public JPanel getButtonPanel(GUIManager manager, Page page) {
         this.manager = manager;
 
@@ -39,23 +51,43 @@ public class GUIComponents implements ActionListener {
         return buttonPanel;
     }
 
+    /**
+     * Should only be called once - creating the module drop down
+     *
+     * @param state State instance
+     */
     public void createModuleDropDown(State state) {
         moduleDropDown = new JComboBox<>();
-
         // Populating drop down with the names of all current modules
         for (Module m : state.getModules()) {
             moduleDropDown.addItem(m.getName());
         }
     }
 
+    /**
+     * Returns a centralised module drop down that is updated when the module
+     * list changes
+     *
+     * @return JComboBox containing all created modules
+     */
     public JComboBox<Object> getModuleDropDown() {
         return moduleDropDown;
     }
 
+    /**
+     * Adds a new module to the module drop down
+     *
+     * @param name Name of module
+     */
     public void addModule(String name) {
         moduleDropDown.addItem(name);
     }
 
+    /**
+     * Removes the passed in module from the module drop down
+     *
+     * @param name Name of module
+     */
     public void removeModule(String name) {
         moduleDropDown.removeItem(name);
     }
