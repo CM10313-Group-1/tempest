@@ -7,57 +7,54 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class AddModulePage extends JFrame implements ActionListener{
-    private State state;
-    private GUIManager guiManager;
+//TODO:
+// - Check if entered module name already exists using state equals()
+// - Is the current method of getting the enterButton good???
+// - Better if pressing enter sends user back a screen???
 
-    private ArrayList<Module> modules;
+public class AddModulePage extends Page implements ActionListener{
+    private final State state;
+    private final GUIManager manager;
+
     private JTextField moduleNameInput;
-    private JLabel moduleInputLabel;
-    private JPanel buttonPanel;
     private JButton enterButton;
-    private JButton cancelButton;
 
     public AddModulePage(State state, GUIManager guiManager){
         this.state = state;
-        this.guiManager = guiManager;
+        this.manager = guiManager;
     }
 
-    public Container getPanel(){
-        modules = new ArrayList<>(Arrays.asList(state.getModules()));
+    public JPanel getPanel(){
+        JPanel modulePage = new JPanel();
 
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new GUIComponents().getButtonPanel(manager, this);
+        enterButton = (JButton) buttonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
-        moduleInputLabel = new JLabel("Enter module name:");
-
-        cancelButton = new JButton("Cancel");
-        enterButton = new JButton("Enter");
-
-        cancelButton.setFocusable(false);
-        enterButton.setFocusable(false);
-
-        cancelButton.addActionListener(this);
-        enterButton.addActionListener(this);
-
-        buttonPanel.add(enterButton);
-        buttonPanel.add(cancelButton);
+        JLabel moduleInputLabel = new JLabel("Enter module name:");
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
         inputPanel.add(moduleNameInput);
 
-        getContentPane().add(inputPanel, BorderLayout.NORTH);
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        modulePage.add(inputPanel, BorderLayout.NORTH);
+        modulePage.add(buttonPanel, BorderLayout.SOUTH);
 
-        return getContentPane();
+        return modulePage;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        Object source = e.getSource();
+
+        if(source == enterButton){
+            handleCreatingModule();
+        }
     }
 
     /**
-     * Handles creating modules with input validation.
+     * Handles the user trying to create a module
      */
     private void handleCreatingModule() {
         String moduleName = moduleNameInput.getText();
@@ -70,7 +67,7 @@ public class AddModulePage extends JFrame implements ActionListener{
         boolean uniqueName = true;
 
         // Checking if module name is unique
-        for (Module m : modules) {
+        for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
                 System.out.println("Another module already has this name");
                 uniqueName = false;
@@ -79,23 +76,10 @@ public class AddModulePage extends JFrame implements ActionListener{
         }
 
         if (uniqueName) {
-            state.createModule(moduleName);
-
-            guiManager.changeFrame(2);
+            manager.addModule(moduleName);
+            moduleNameInput.setText(""); // Clearing inputted module name
 
             System.out.println("Module successfully created");
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e){
-        Object source = e.getSource();
-
-        if(source == enterButton){
-            handleCreatingModule();
-        }
-        else if(source == cancelButton){
-            guiManager.changeFrame(1);
         }
     }
 }

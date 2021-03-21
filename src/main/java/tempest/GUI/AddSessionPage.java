@@ -8,63 +8,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
 //TODO:
+// - Is the current method of getting the enterButton good???
 // - Add a check so the user can't enter a session > 24hrs
 // - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
+// - Better if pressing enter sends user back a screen???
 
-public class AddSessionPage extends JFrame implements ActionListener{
-    private GUIManager guiManager;
+public class AddSessionPage extends Page implements ActionListener{
+    private final GUIManager manager;
+    private final State state;
+    private final GUIComponents component = new GUIComponents();
 
-    private ArrayList<Module> modules;
-    private State state;
     private JComboBox<Object> moduleDropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
     private JButton enterButton;
-    private JButton cancelButton;
-    private JPanel buttonPanel;
 
     public AddSessionPage(State state, GUIManager guiManager){
         this.state = state;
-        this.guiManager = guiManager;
+        this.manager = guiManager;
     }
 
-    /**
-     * @return returns the container with all of the components for the page
-     */
-    public Container getPanel(){
+    public JPanel getPanel(){
         JPanel sessionPanel = new JPanel();
+
+        JPanel buttonPanel = component.getButtonPanel(manager, this);
+        enterButton = (JButton) buttonPanel.getComponent(1);
+
         JPanel inputPanel = new JPanel();
 
-        modules = new ArrayList<>(Arrays.asList(state.getModules()));
-
-        moduleDropDown = new JComboBox<>();
-
-        // Populating drop down with the names of all current modules
-        for (Module m : modules) {
-            moduleDropDown.addItem(m.getName());
-        }
-
+        moduleDropDown = component.getModuleDropDown();
         inputPanel.add(moduleDropDown);
-
-        buttonPanel = new JPanel();
-
-        cancelButton = new JButton("Cancel");
-        enterButton = new JButton("Enter");
-
-        cancelButton.setFocusable(false);
-        enterButton.setFocusable(false);
-
-        cancelButton.addActionListener(this);
-        enterButton.addActionListener(this);
-
-        buttonPanel.add(enterButton);
-        buttonPanel.add(cancelButton);
 
         hoursInput = new JTextField(2);
         JLabel hoursInputLabel = new JLabel("Hours");
@@ -102,16 +79,13 @@ public class AddSessionPage extends JFrame implements ActionListener{
         if(source == enterButton){
             handleAddingSession();
         }
-        else if(source == cancelButton){
-            guiManager.changeFrame(1);
-        }
     }
 
     /**
-     * Handles the user pressing enter on the add session page
+     * Handles the user trying to enter a session
      */
     private void handleAddingSession() {
-        if (modules.size() < 1) { // No modules created, so can't add a session
+        if (moduleDropDown.getItemCount() < 1) { // No modules created, so can't add a session
             return;
         }
 
@@ -125,11 +99,14 @@ public class AddSessionPage extends JFrame implements ActionListener{
         int hoursInt = 0;
         int minutesInt = 0;
 
-        if (hours.strip().equals("") && minutes.strip().equals("")) { // Empty hours and minutes
+        hours = hours.strip();
+        minutes = minutes.strip();
+
+        if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
             System.out.println("A session needs to be longer >= 1 minute");
             return;
         }
-        else if (hours.strip().equals("")) { // Only minutes have been entered
+        else if (hours.equals("")) { // Only minutes have been entered
             try {
                 minutesInt = Integer.parseInt(minutes);
 
@@ -141,7 +118,7 @@ public class AddSessionPage extends JFrame implements ActionListener{
                 return;
             }
         }
-        else if (minutes.strip().equals("")) { // Only hours have been entered
+        else if (minutes.equals("")) { // Only hours have been entered
             try {
                 hoursInt = Integer.parseInt(hours);
 
@@ -171,7 +148,7 @@ public class AddSessionPage extends JFrame implements ActionListener{
 
         boolean foundName = false;
 
-        for (Module m : modules) {
+        for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
                 m.addSession(date, time);
                 foundName = true;

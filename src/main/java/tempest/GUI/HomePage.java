@@ -1,23 +1,23 @@
 package tempest.GUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomePage extends JFrame implements ActionListener{
-    private GUIManager guiManager;
+public class HomePage extends Page implements ActionListener{
+    private final GUIManager manager;
 
-    private JPanel buttonPanel;
     private JButton addModuleButton;
     private JButton addSessionButton;
 
     public HomePage(GUIManager guiManager){
-        this.guiManager = guiManager;
+        this.manager = guiManager;
     }
 
-    public Container getPanel(){
-        buttonPanel = new JPanel();
+    public JPanel getPanel(){
+        JPanel homePage = new JPanel();
+
+        JPanel buttonPanel = new JPanel();
 
         addModuleButton = new JButton("Add a new module");
         addSessionButton = new JButton("Add a new session");
@@ -31,19 +31,19 @@ public class HomePage extends JFrame implements ActionListener{
         buttonPanel.add(addModuleButton);
         buttonPanel.add(addSessionButton);
 
-        getContentPane().add(buttonPanel);
+        homePage.add(buttonPanel);
 
-        return getContentPane();
+        return homePage;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
         if(source == addModuleButton){
-            guiManager.changeFrame(2);
+            manager.changePanel(2);
         }
         else if(source == addSessionButton){
-            guiManager.changeFrame(3);
+            manager.changePanel(3);
         }
     }
 }
