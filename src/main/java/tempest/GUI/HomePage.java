@@ -39,11 +39,12 @@ public class HomePage extends Page implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
+
         if(source == addModuleButton){
-            manager.changePanel(2);
+            manager.swapCard("addModule");
         }
         else if(source == addSessionButton){
-            manager.changePanel(3);
+            manager.swapCard("addSession");
         }
     }
 }

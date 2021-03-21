@@ -19,8 +19,7 @@ public abstract class Page implements ActionListener {
     public abstract JPanel getPanel();
 
 
-    // Can't be abstract because there might be a page class that doesn't need this method
-    @Override
+    // Can't be abstract because there might be a page class that doesn't implement ActionListener
     public void actionPerformed(ActionEvent e) {
         System.out.println("One of the page classes your using needs an actionPerformed method");
     }

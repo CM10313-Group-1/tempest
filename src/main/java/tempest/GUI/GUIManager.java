@@ -7,14 +7,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Stack;
 
 //TODO:
 // - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
-// - Don't need to extend JFrame - perhaps just confusing
+// - Do addModule() and deleteModule() need to be in the manager?
 
-public class GUIManager extends JFrame {
+public class GUIManager {
     private static JPanel cardPanel;
     private static CardLayout cl;
+
+    private String currentCard;
+    private final Stack<String> cards = new Stack<>();
 
     private final State state;
     private final Supervisor supervisor;
@@ -31,6 +35,8 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI
      */
     private void run(){
+        JFrame frame = new JFrame();
+
         components = new GUIComponents();
         components.createModuleDropDown(state);
 
@@ -38,24 +44,21 @@ public class GUIManager extends JFrame {
         AddModulePage addModule = new AddModulePage(state, this);
         AddSessionPage addSession = new AddSessionPage(state, this);
 
-        setSize(500,150);
-        setTitle("Tempest");
-
         cardPanel = new JPanel();
         cl = new CardLayout();
 
         cardPanel.setLayout(cl);
 
         // Adding panels to cardPanel
-        cardPanel.add(home.getPanel(), "1");
+        cardPanel.add(home.getPanel(), "home");
+        cardPanel.add(addModule.getPanel(), "addModule");
+        cardPanel.add(addSession.getPanel(), "addSession");
 
-        cardPanel.add(addModule.getPanel(), "2");
+        currentCard = "home"; // 1st Card
 
-        cardPanel.add(addSession.getPanel(), "3");
+        frame.getContentPane().add(cardPanel);
 
-        getContentPane().add(cardPanel);
-
-        addWindowListener(new WindowAdapter() {
+        frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 supervisor.onClose();
@@ -63,19 +66,46 @@ public class GUIManager extends JFrame {
         });
 
         // Frame Settings
-        setLocationRelativeTo(null); // Centering GUI
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        frame.setSize(500,150);
+        frame.setTitle("Tempest");
+        frame.setLocationRelativeTo(null); // Centering GUI
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
     /**
-     * Switches between pages (panels)
+     * Responsible for actually changing what card is showing
      *
-     * @param index the index of the panel to switch to
+     * Should only be called to move down the tree of cards/pages
+     *
+     * @param cardName The name of the card to switch to
      */
-    public void changePanel(int index){
-        cl.show(cardPanel, Integer.toString(index));
+    private void changeCard(String cardName){
+        cl.show(cardPanel, cardName);
     }
+
+    /**
+     * Swaps to the entered card name
+     *
+     * Used to move back up the tree of cards/pages along the path taken on the way down
+     *
+     * @param cardName Name of the card to swap to
+     */
+    public void swapCard(String cardName) {
+        changeCard(cardName);
+        cards.add(currentCard);
+        currentCard = cardName;
+    }
+
+    /**
+     * Switches to the previous card
+     */
+    public void swapToPrevCard() {
+        String prevCard = cards.pop();
+        changeCard(prevCard);
+        currentCard = prevCard;
+    }
+
 
     /**
      * Creates a new module using state and updates the module drop down

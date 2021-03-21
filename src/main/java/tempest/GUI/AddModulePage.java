@@ -9,9 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //TODO:
-// - Check if entered module name already exists using state equals()
-// - Is the current method of getting the enterButton good???
-// - Better if pressing enter sends user back a screen???
+// - Is the current method of getting the enterButton good?
+// - Better if pressing enter sends user back a screen? - Feels more like you've entered something
 
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
