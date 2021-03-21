@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
-    private final GUIComponents components;
+    private final GUIComponents components = new GUIComponents();
 
     private JTextField moduleNameInput;
     private JButton enterButton;
@@ -22,13 +22,12 @@ public class AddModulePage extends Page implements ActionListener{
     public AddModulePage(State state, GUIManager guiManager){
         this.state = state;
         this.manager = guiManager;
-        this.components = new GUIComponents();
     }
 
     public JPanel getPanel(){
         JPanel modulePage = new JPanel();
 
-        JPanel buttonPanel = new GUIComponents().getButtonPanel(manager, this);
+        JPanel buttonPanel = components.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
@@ -103,5 +102,17 @@ public class AddModulePage extends Page implements ActionListener{
     public void removeModule(String moduleName) {
         state.deleteModule(moduleName);
         components.removeModule(moduleName);
+    }
+
+    public GUIComponents getComponents() {
+        return components;
+    }
+
+    public void setModuleNameInput(String name) {
+        moduleNameInput.setText(name);
+    }
+
+    public JButton getEnterButton() {
+        return enterButton;
     }
 }

@@ -47,4 +47,12 @@ public class HomePage extends Page implements ActionListener{
             manager.swapCard("addSession");
         }
     }
+
+    public JButton getAddModuleButton() {
+        return addModuleButton;
+    }
+
+    public JButton getAddSessionButton() {
+        return addSessionButton;
+    }
 }

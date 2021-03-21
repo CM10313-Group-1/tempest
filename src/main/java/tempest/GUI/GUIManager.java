@@ -17,13 +17,15 @@ public class GUIManager {
     private static JPanel cardPanel;
     private static CardLayout cl;
 
+    private HomePage home;
+    private AddModulePage addModule;
+    private AddSessionPage addSession;
+
     private String currentCard;
     private final Stack<String> cards = new Stack<>();
 
     private final State state;
     private final Supervisor supervisor;
-
-    private GUIComponents components;
 
     public GUIManager(State state, Supervisor supervisor){
         this.state = state;
@@ -37,12 +39,12 @@ public class GUIManager {
     private void run(){
         JFrame frame = new JFrame();
 
-        components = new GUIComponents();
+        GUIComponents components = new GUIComponents();
         components.createModuleDropDown(state);
 
-        HomePage home = new HomePage(this);
-        AddModulePage addModule = new AddModulePage(state, this);
-        AddSessionPage addSession = new AddSessionPage(state, this);
+        home = new HomePage(this);
+        addModule = new AddModulePage(state, this);
+        addSession = new AddSessionPage(state, this);
 
         cardPanel = new JPanel();
         cl = new CardLayout();
@@ -104,5 +106,21 @@ public class GUIManager {
         String prevCard = cards.pop();
         changeCard(prevCard);
         currentCard = prevCard;
+    }
+
+    public HomePage getHomePage() {
+        return home;
+    }
+
+    public AddModulePage getModulePage() {
+        return addModule;
+    }
+
+    public AddSessionPage getSessionPage() {
+        return addSession;
+    }
+
+    public String getCurrentCard() {
+        return currentCard;
     }
 }

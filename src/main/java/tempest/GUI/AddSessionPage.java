@@ -14,13 +14,12 @@ import java.util.Objects;
 //TODO:
 // - Add a check so the user can't enter a session > 24hrs
 // - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
-// - Is the current method of getting the enterButton good?
 // - Better if pressing enter sends user back a screen? - Feels more like you've entered something
 
 public class AddSessionPage extends Page implements ActionListener{
     private final GUIManager manager;
     private final State state;
-    private final GUIComponents component = new GUIComponents();
+    private final GUIComponents components = new GUIComponents();
 
     private JComboBox<Object> moduleDropDown;
     private JTextField hoursInput;
@@ -35,12 +34,12 @@ public class AddSessionPage extends Page implements ActionListener{
     public JPanel getPanel(){
         JPanel sessionPanel = new JPanel();
 
-        JPanel buttonPanel = component.getButtonPanel(manager, this);
+        JPanel buttonPanel = components.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
 
         JPanel inputPanel = new JPanel();
 
-        moduleDropDown = component.getModuleDropDown();
+        moduleDropDown = components.getModuleDropDown();
         inputPanel.add(moduleDropDown);
 
         hoursInput = new JTextField(2);
@@ -165,5 +164,21 @@ public class AddSessionPage extends Page implements ActionListener{
 
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
+    }
+
+    public GUIComponents getComponents() {
+        return components;
+    }
+
+    public void setHours(String hours) {
+        hoursInput.setText(hours);
+    }
+
+    public void setMins(String mins) {
+        minutesInput.setText(mins);
+    }
+
+    public JButton getEnterButton() {
+        return enterButton;
     }
 }

@@ -98,4 +98,8 @@ public class GUIComponents implements ActionListener {
             manager.swapToPrevCard();
         }
     }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
 }
