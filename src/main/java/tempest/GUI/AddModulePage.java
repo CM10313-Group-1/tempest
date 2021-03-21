@@ -9,12 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //TODO:
-// - Is the current method of getting the enterButton good?
 // - Better if pressing enter sends user back a screen? - Feels more like you've entered something
 
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
+    private final GUIComponents components;
 
     private JTextField moduleNameInput;
     private JButton enterButton;
@@ -22,6 +22,7 @@ public class AddModulePage extends Page implements ActionListener{
     public AddModulePage(State state, GUIManager guiManager){
         this.state = state;
         this.manager = guiManager;
+        this.components = new GUIComponents();
     }
 
     public JPanel getPanel(){
@@ -75,10 +76,32 @@ public class AddModulePage extends Page implements ActionListener{
         }
 
         if (uniqueName) {
-            manager.addModule(moduleName);
+            addModule(moduleName);
             moduleNameInput.setText(""); // Clearing inputted module name
 
             System.out.println("Module successfully created");
         }
+    }
+
+    /**
+     * Creates a new module using state and updates the module drop down
+     * in GUIComponents
+     *
+     * @param moduleName Name of module to be created
+     */
+    public void addModule(String moduleName) {
+        state.createModule(moduleName);
+        components.addModule(moduleName);
+    }
+
+    /**
+     * Removes the module using state and updates the module drop down
+     * in GUIComponents
+     *
+     * @param moduleName Name of module to be removed
+     */
+    public void removeModule(String moduleName) {
+        state.deleteModule(moduleName);
+        components.removeModule(moduleName);
     }
 }

@@ -105,27 +105,4 @@ public class GUIManager {
         changeCard(prevCard);
         currentCard = prevCard;
     }
-
-
-    /**
-     * Creates a new module using state and updates the module drop down
-     * in GUIComponents
-     *
-     * @param moduleName Name of module to be created
-     */
-    public void addModule(String moduleName) {
-        state.createModule(moduleName);
-        components.addModule(moduleName);
-    }
-
-    /**
-     * Removes the module using state and updates the module drop down
-     * in GUIComponents
-     *
-     * @param moduleName Name of module to be removed
-     */
-    public void removeModule(String moduleName) {
-        state.deleteModule(moduleName);
-        components.removeModule(moduleName);
-    }
 }
