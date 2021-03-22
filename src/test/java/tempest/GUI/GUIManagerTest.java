@@ -2,7 +2,6 @@ package tempest.GUI;
 
 import org.junit.Before;
 import org.junit.Test;
-import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 
@@ -13,13 +12,9 @@ public class GUIManagerTest {
     GUIManager manager = new GUIManager(state, new Supervisor());
 
     HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
     AddSessionPage sessionPage = manager.getSessionPage();
 
-    GUIComponents sessionComponents = sessionPage.getComponents();
-
     // *** Button Tests ***
-
 
     // Turns off the error message popups so the tests are not blocked
     @Before
