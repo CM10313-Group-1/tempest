@@ -8,9 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO:
-// - Better if pressing enter sends user back a screen? - Feels more like you've entered something
-
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
@@ -33,10 +30,12 @@ public class AddModulePage extends Page implements ActionListener{
 
         moduleNameInput = new JTextField(20);
         JLabel moduleInputLabel = new JLabel("Enter module name:");
+        JButton clearButton = components.getClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
         inputPanel.add(moduleNameInput);
+        inputPanel.add(clearButton);
 
         modulePanel.add(inputPanel, BorderLayout.NORTH);
         modulePanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -90,6 +89,11 @@ public class AddModulePage extends Page implements ActionListener{
         moduleNameInput.setText(""); // Clearing inputted module name
     }
 
+    /**
+     * Creates a pop up notifying the user of an error
+     *
+     * @param message The error message to be printed in the pop up
+     */
     public void errorMessage(String message) {
         JOptionPane.showMessageDialog(modulePanel, message);
     }
