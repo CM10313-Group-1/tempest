@@ -22,6 +22,8 @@ public class GUITest {
 
     // *** Button Tests ***
 
+
+    // Turns off the error message popups so the tests are not blocked
     @Before
     public void turnOffErrorMessages(){
         ErrorMessage errorMessage = new ErrorMessage();
