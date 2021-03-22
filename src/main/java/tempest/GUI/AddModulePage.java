@@ -1,6 +1,7 @@
 package tempest.GUI;
 
 import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.GUIComponents;
 import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;

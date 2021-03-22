@@ -1,4 +1,6 @@
-package tempest.GUI;
+package tempest.GUI.components;
+
+import tempest.GUI.Page;
 
 import javax.swing.*;
 
