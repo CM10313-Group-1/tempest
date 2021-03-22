@@ -10,10 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Stack;
 
-//TODO:
-// - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
-//   needs to be done by those doing delete module and delete session pages
-
 public class GUIManager {
     private static JPanel cardPanel;
     private static CardLayout cl;
