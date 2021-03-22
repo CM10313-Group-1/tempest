@@ -20,7 +20,7 @@ public class GUIComponents implements ActionListener {
     private GUIManager manager;
 
     /**
-     * Gets a button panel containing an enter button and a cancel button
+     * Returns a button panel containing an enter button and a cancel button
      *
      * The enter button needs to be retrieved and handled in the class which calls
      * this method
@@ -49,6 +49,25 @@ public class GUIComponents implements ActionListener {
         buttonPanel.add(enterButton);
 
         return buttonPanel;
+    }
+
+    /**
+     * Returns a clear button
+     *
+     * The page calling this needs a clearInput() method
+     *
+     * Just add this button to the page's panel
+     *
+     * @param page this (instance of class calling getButtonPanel)
+     * @return JButton - A 'Clear' button
+     */
+    public JButton getClearButton(Page page) {
+        JButton clearButton = new JButton("Clear");
+        clearButton.setFocusable(false);
+
+        clearButton.addActionListener(e -> page.clearInput());
+
+        return clearButton;
     }
 
     /**
@@ -99,6 +118,13 @@ public class GUIComponents implements ActionListener {
         }
     }
 
+    /**
+     * Returns a cancel button
+     *
+     * Used by the test classes to get a pages cancel button
+     *
+     * @return JButton
+     */
     public JButton getCancelButton() {
         return cancelButton;
     }

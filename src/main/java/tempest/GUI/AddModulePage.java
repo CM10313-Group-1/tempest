@@ -8,14 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO:
-// - Better if pressing enter sends user back a screen? - Feels more like you've entered something
-
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
     private final GUIComponents components = new GUIComponents();
 
+    private JPanel modulePanel;
     private JTextField moduleNameInput;
     private JButton enterButton;
 
@@ -25,22 +23,24 @@ public class AddModulePage extends Page implements ActionListener{
     }
 
     public JPanel getPanel(){
-        JPanel modulePage = new JPanel();
+        modulePanel = new JPanel();
 
         JPanel buttonPanel = components.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
         JLabel moduleInputLabel = new JLabel("Enter module name:");
+        JButton clearButton = components.getClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
         inputPanel.add(moduleNameInput);
+        inputPanel.add(clearButton);
 
-        modulePage.add(inputPanel, BorderLayout.NORTH);
-        modulePage.add(buttonPanel, BorderLayout.SOUTH);
+        modulePanel.add(inputPanel, BorderLayout.NORTH);
+        modulePanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        return modulePage;
+        return modulePanel;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AddModulePage extends Page implements ActionListener{
         String moduleName = moduleNameInput.getText();
 
         if (moduleName.equals("")) {
-            System.out.println("Invalid module name");
+            errorMessage("Invalid module name");
             return;
         }
 
@@ -68,7 +68,7 @@ public class AddModulePage extends Page implements ActionListener{
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                System.out.println("Another module already has this name");
+                errorMessage("Another module already has this name");
                 uniqueName = false;
                 break;
             }
@@ -76,10 +76,26 @@ public class AddModulePage extends Page implements ActionListener{
 
         if (uniqueName) {
             addModule(moduleName);
-            moduleNameInput.setText(""); // Clearing inputted module name
+            clearInput();
 
             System.out.println("Module successfully created");
         }
+    }
+
+    /**
+     * Clears the module name JTextField input
+     */
+    public void clearInput() {
+        moduleNameInput.setText(""); // Clearing inputted module name
+    }
+
+    /**
+     * Creates a pop up notifying the user of an error
+     *
+     * @param message The error message to be printed in the pop up
+     */
+    public void errorMessage(String message) {
+        JOptionPane.showMessageDialog(modulePanel, message);
     }
 
     /**

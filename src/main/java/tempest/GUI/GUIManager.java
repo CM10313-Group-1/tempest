@@ -11,7 +11,6 @@ import java.util.Stack;
 
 //TODO:
 // - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
-// - Do addModule() and deleteModule() need to be in the manager?
 
 public class GUIManager {
     private static JPanel cardPanel;

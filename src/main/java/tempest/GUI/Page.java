@@ -21,6 +21,10 @@ public abstract class Page implements ActionListener {
 
     // Can't be abstract because there might be a page class that doesn't implement ActionListener
     public void actionPerformed(ActionEvent e) {
-        System.out.println("One of the page classes your using needs an actionPerformed method");
+        System.err.println("One of the page classes your using needs an actionPerformed() method");
+    }
+
+    public void clearInput() {
+        System.err.println("One of the page classes your using needs an clearInput() method");
     }
 }
