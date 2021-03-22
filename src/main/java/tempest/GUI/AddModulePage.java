@@ -1,7 +1,7 @@
 package tempest.GUI;
 
 import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.GUIComponents;
+import tempest.GUI.components.ClearButton;
 import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
-    private final GUIComponents components = new GUIComponents();
+    private final ClearButton components = new ClearButton();
     private final ModuleDropDown dropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
     private final ErrorMessage errorMessage = new ErrorMessage();

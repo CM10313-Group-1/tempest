@@ -7,10 +7,6 @@ import java.util.List;
 public class State {
     private List<Module> modules = new ArrayList<>();
 
-    //TODO:
-    // - deleteModule()
-    // - Trophies
-
     public State() {
     }
 

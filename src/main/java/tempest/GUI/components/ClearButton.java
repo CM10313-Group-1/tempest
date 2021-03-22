@@ -4,7 +4,7 @@ import tempest.GUI.Page;
 
 import javax.swing.*;
 
-public class GUIComponents {
+public class ClearButton {
     /**
      * Returns a clear button
      *
