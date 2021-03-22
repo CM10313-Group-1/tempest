@@ -5,7 +5,6 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.ErrorMessage;
 
 import static org.junit.Assert.*;
 
