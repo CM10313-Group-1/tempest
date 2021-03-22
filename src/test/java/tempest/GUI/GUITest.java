@@ -1,6 +1,5 @@
 package tempest.GUI;
 
-import org.junit.Before;
 import org.junit.Test;
 import tempest.Module;
 import tempest.State;
