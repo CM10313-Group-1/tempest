@@ -141,7 +141,12 @@ public class AddSessionPage extends Page implements ActionListener{
                 hoursInt = Integer.parseInt(hours);
 
                 if (hoursInt <= 0 || minutesInt <= 0) {
-                    throw new NumberFormatException();
+                    throw new NumberFormatException(); // At least one is negative
+                }
+
+                if (minutesInt > 59) {
+                    errorMessage("If an hour is entered minutes should be < 60"); // Minutes exceeds 59 with an hour inputted
+                    return;
                 }
             } catch (NumberFormatException e) {
                 errorMessage("Invalid time entered");

@@ -128,6 +128,13 @@ public class AddSessionPageTest{
         assertEquals(result[0], result[1]);
     }
 
+    @Test
+    public void HourMinOver59Session() {
+        Module testModule = createModule("test");
+        int[] result = createSession("2", "67", testModule);
+        assertEquals(result[0], result[1]);
+    }
+
     // > 24 hrs
 
     @Test
