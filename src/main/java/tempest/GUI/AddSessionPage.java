@@ -145,7 +145,7 @@ public class AddSessionPage extends Page implements ActionListener{
 
         // Checks the time is under 24 hours
         if (time.toMinutes() > 24 * 60){
-            System.out.println("Invalid time entered");
+            System.err.println("Invalid time entered");
             return;
         }
 
