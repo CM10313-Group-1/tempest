@@ -1,9 +1,11 @@
 package tempest.GUI;
 
+import org.junit.Before;
 import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
+import tempest.GUI.ErrorMessage;
 
 import static org.junit.Assert.*;
 
@@ -19,6 +21,12 @@ public class GUITest {
     GUIComponents sessionComponents = sessionPage.getComponents();
 
     // *** Button Tests ***
+
+    @Before
+    public void turnOffErrorMessages(){
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setMessagesShown(false);
+    }
 
     @Test
     public void addModuleButton() {

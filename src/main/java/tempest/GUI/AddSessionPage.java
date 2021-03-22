@@ -179,7 +179,8 @@ public class AddSessionPage extends Page implements ActionListener{
      * @param message The error message to be printed in the pop up
      */
     public void errorMessage(String message) {
-        JOptionPane.showMessageDialog(sessionPanel, message);
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.showMessage(sessionPanel, message);
     }
 
     /**
