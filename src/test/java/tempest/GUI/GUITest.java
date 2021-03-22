@@ -206,6 +206,16 @@ public class GUITest {
         assertEquals(result[0], result[1]);
     }
 
+    @Test
+    public void totalSessionsOverADay() {
+        Module testModule = createModule("test");
+
+        int[] result1 = createSession("23", "58", testModule);
+        int[] result2 = createSession("", "3", testModule);
+
+        assertEquals(result1[0] + 1, result2[1]);
+    }
+
     // Non-integer
 
     @Test
