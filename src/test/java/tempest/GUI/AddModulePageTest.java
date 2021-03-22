@@ -2,6 +2,8 @@ package tempest.GUI;
 
 import org.junit.Before;
 import org.junit.Test;
+import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
@@ -15,7 +17,7 @@ public class AddModulePageTest{
     HomePage homePage = manager.getHomePage();
     AddModulePage modulePage = manager.getModulePage();
 
-    GUIComponents moduleComponents = modulePage.getComponents();
+    ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
     @Before
     public void turnOffErrorMessages(){
@@ -26,28 +28,15 @@ public class AddModulePageTest{
     @Test
     public void moduleCancelButton() {
         homePage.getAddModuleButton().doClick();
-        moduleComponents.getCancelButton().doClick();
+        actionButtonPanel.getCancelButton().doClick();
 
         assertEquals(manager.getCurrentCard(), "home");
     }
 
-    public Module createModule(String moduleName){
-        Module testModule = null;
-
-        // Creating a new module called test2
+    public void createModule(String moduleName){
         homePage.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
-
-        // Getting the created module
-        for (Module m : state.getModules()) {
-            if (m.getName().equals(moduleName)) {
-                testModule = m;
-                break;
-            }
-        }
-
-        return testModule;
     }
 
     @Test

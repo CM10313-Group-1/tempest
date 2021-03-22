@@ -2,6 +2,7 @@ package tempest.GUI;
 
 import org.junit.Before;
 import org.junit.Test;
+import tempest.GUI.components.ActionButtonPanel;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
@@ -16,7 +17,7 @@ public class AddSessionPageTest{
     AddModulePage modulePage = manager.getModulePage();
     AddSessionPage sessionPage = manager.getSessionPage();
 
-    GUIComponents sessionComponents = sessionPage.getComponents();
+    ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
     @Before
     public void turnOffErrorMessages(){
@@ -27,7 +28,7 @@ public class AddSessionPageTest{
     @Test
     public void sessionCancelButton() {
         homePage.getAddSessionButton().doClick();
-        sessionComponents.getCancelButton().doClick();
+        actionButtonPanel.getCancelButton().doClick();
 
         assertEquals(manager.getCurrentCard(), "home");
     }

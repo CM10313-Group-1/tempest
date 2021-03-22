@@ -125,8 +125,8 @@ public class AddModulePage extends Page implements ActionListener{
         dropDown.removeModule(moduleName);
     }
 
-    public GUIComponents getComponents() {
-        return components;
+    public ActionButtonPanel getComponents() {
+        return actionButtonPanel;
     }
 
     public void setModuleNameInput(String name) {
