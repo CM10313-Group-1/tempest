@@ -3,8 +3,6 @@ package tempest.GUI;
 import org.junit.Before;
 import org.junit.Test;
 import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ModuleDropDown;
-import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 

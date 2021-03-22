@@ -129,11 +129,11 @@ public class AddModulePage extends Page implements ActionListener{
         return actionButtonPanel;
     }
 
-    public void setModuleNameInput(String name) {
-        moduleNameInput.setText(name);
-    }
-
     public JButton getEnterButton() {
         return enterButton;
+    }
+
+    public void setModuleNameInput(String name) {
+        moduleNameInput.setText(name);
     }
 }

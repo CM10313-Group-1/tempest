@@ -16,6 +16,7 @@ public class ModuleDropDown {
      */
     public void createModuleDropDown(State state) {
         moduleDropDown = new JComboBox<>();
+
         // Populating drop down with the names of all current modules
         for (Module m : state.getModules()) {
             moduleDropDown.addItem(m.getName());

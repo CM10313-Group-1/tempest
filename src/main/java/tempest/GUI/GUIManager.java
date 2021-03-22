@@ -12,9 +12,7 @@ import java.util.Stack;
 
 //TODO:
 // - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
-// - Add a boolean to avoid pop ups for tests
-// - Separate GUIComponents code into separate classes in a components directory
-// - Separate tests into their own classes
+//   needs to be done by those doing delete module and delete session pages
 
 public class GUIManager {
     private static JPanel cardPanel;

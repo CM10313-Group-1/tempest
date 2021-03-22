@@ -213,8 +213,12 @@ public class AddSessionPage extends Page implements ActionListener{
         minutesInput.setText(""); // Clearing inputted mins
     }
 
-    public GUIComponents getComponents() {
-        return components;
+    public JButton getEnterButton() {
+        return enterButton;
+    }
+
+    public ActionButtonPanel getComponents() {
+        return actionButtonPanel;
     }
 
     public void setHours(String hours) {
@@ -223,9 +227,5 @@ public class AddSessionPage extends Page implements ActionListener{
 
     public void setMins(String mins) {
         minutesInput.setText(mins);
-    }
-
-    public JButton getEnterButton() {
-        return enterButton;
     }
 }

@@ -17,7 +17,7 @@ public class AddSessionPageTest{
     AddModulePage modulePage = manager.getModulePage();
     AddSessionPage sessionPage = manager.getSessionPage();
 
-    ActionButtonPanel actionButtonPanel = modulePage.getComponents();
+    ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
     @Before
     public void turnOffErrorMessages(){
