@@ -16,6 +16,7 @@ public class AddModulePage extends Page implements ActionListener{
     private final GUIManager manager;
     private final GUIComponents components = new GUIComponents();
 
+    private JPanel modulePanel;
     private JTextField moduleNameInput;
     private JButton enterButton;
 
@@ -25,7 +26,7 @@ public class AddModulePage extends Page implements ActionListener{
     }
 
     public JPanel getPanel(){
-        JPanel modulePage = new JPanel();
+        modulePanel = new JPanel();
 
         JPanel buttonPanel = components.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
@@ -37,10 +38,10 @@ public class AddModulePage extends Page implements ActionListener{
         inputPanel.add(moduleInputLabel);
         inputPanel.add(moduleNameInput);
 
-        modulePage.add(inputPanel, BorderLayout.NORTH);
-        modulePage.add(buttonPanel, BorderLayout.SOUTH);
+        modulePanel.add(inputPanel, BorderLayout.NORTH);
+        modulePanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        return modulePage;
+        return modulePanel;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class AddModulePage extends Page implements ActionListener{
         String moduleName = moduleNameInput.getText();
 
         if (moduleName.equals("")) {
-            System.out.println("Invalid module name");
+            errorMessage("Invalid module name");
             return;
         }
 
@@ -68,7 +69,7 @@ public class AddModulePage extends Page implements ActionListener{
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                System.out.println("Another module already has this name");
+                errorMessage("Another module already has this name");
                 uniqueName = false;
                 break;
             }
@@ -76,10 +77,21 @@ public class AddModulePage extends Page implements ActionListener{
 
         if (uniqueName) {
             addModule(moduleName);
-            moduleNameInput.setText(""); // Clearing inputted module name
+            clearInput();
 
             System.out.println("Module successfully created");
         }
+    }
+
+    /**
+     * Clears the module name JTextField input
+     */
+    public void clearInput() {
+        moduleNameInput.setText(""); // Clearing inputted module name
+    }
+
+    public void errorMessage(String message) {
+        JOptionPane.showMessageDialog(modulePanel, message);
     }
 
     /**

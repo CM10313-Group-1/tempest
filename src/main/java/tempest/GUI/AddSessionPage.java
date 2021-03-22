@@ -20,6 +20,7 @@ public class AddSessionPage extends Page implements ActionListener{
     private final State state;
     private final GUIComponents components = new GUIComponents();
 
+    private JPanel sessionPanel;
     private JComboBox<Object> moduleDropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
@@ -31,7 +32,7 @@ public class AddSessionPage extends Page implements ActionListener{
     }
 
     public JPanel getPanel(){
-        JPanel sessionPanel = new JPanel();
+        sessionPanel = new JPanel();
 
         JPanel buttonPanel = components.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
@@ -101,7 +102,7 @@ public class AddSessionPage extends Page implements ActionListener{
         minutes = minutes.strip();
 
         if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
-            System.err.println("A session needs to be longer >= 1 minute");
+            errorMessage("A session needs to be longer >= 1 minute");
             return;
         }
         else if (hours.equals("")) { // Only minutes have been entered
@@ -112,7 +113,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException(); // Negative minutes
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid minutes entered");
+                errorMessage("Invalid minutes entered");
                 return;
             }
         }
@@ -124,7 +125,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException(); // Negative hours
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid hours entered");
+                errorMessage("Invalid hours entered");
                 return;
             }
         }
@@ -137,7 +138,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid time entered");
+                errorMessage("Invalid time entered");
                 return;
             }
         }
@@ -146,7 +147,7 @@ public class AddSessionPage extends Page implements ActionListener{
 
         // Checks the session entered is under 24 hours
         if (time.toMinutes() > 24 * 60){
-            System.err.println("Invalid time entered");
+            errorMessage("Invalid time entered");
             return;
         }
 
@@ -161,12 +162,28 @@ public class AddSessionPage extends Page implements ActionListener{
         }
 
         if (!foundName) {
-            System.out.println("Unable to find this module");
+            errorMessage("Unable to find this module");
             return;
         }
 
         System.out.println("Study session successfully added");
 
+        clearInput();
+    }
+
+    /**
+     * Creates a pop up notifying the user of an error
+     *
+     * @param message The error message to be printed in the pop up
+     */
+    public void errorMessage(String message) {
+        JOptionPane.showMessageDialog(sessionPanel, message);
+    }
+
+    /**
+     * Clears the hours and minutes JTextField inputs
+     */
+    public void clearInput() {
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
     }
