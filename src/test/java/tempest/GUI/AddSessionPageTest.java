@@ -43,7 +43,7 @@ public class AddSessionPageTest{
 
         // Getting the created module
         for (Module m : state.getModules()) {
-            if (m.getName().equals(moduleName)) {
+            if (moduleName.equals(m.getName())) {
                 testModule = m;
                 break;
             }
