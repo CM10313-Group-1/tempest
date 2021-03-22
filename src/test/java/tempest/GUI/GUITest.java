@@ -7,7 +7,7 @@ import tempest.Supervisor;
 
 import static org.junit.Assert.*;
 
-public class GUIManagerTest {
+public class GUITest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
@@ -49,7 +49,7 @@ public class GUIManagerTest {
     }
 
     @Test
-    public void addingASession() {
+    public void addingAModule() {
         int prevModulesLen = state.getModules().length;
 
         // Creating a new module called test1
@@ -62,7 +62,7 @@ public class GUIManagerTest {
     }
 
     @Test
-    public void addingAModule() {
+    public void addingASession() {
         // Creating a new module called test2
         homePage.getAddModuleButton().doClick();
         modulePage.setModuleNameInput("test2");
