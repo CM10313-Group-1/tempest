@@ -12,6 +12,7 @@ public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
     private final GUIComponents components = new GUIComponents();
+    private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel modulePanel;
     private JTextField moduleNameInput;
@@ -95,7 +96,6 @@ public class AddModulePage extends Page implements ActionListener{
      * @param message The error message to be printed in the pop up
      */
     public void errorMessage(String message) {
-        ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.showMessage(modulePanel, message);
     }
 
