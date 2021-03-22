@@ -1,6 +1,5 @@
 package tempest.GUI;
 
-import org.junit.Before;
 import org.junit.Test;
 import tempest.Module;
 import tempest.State;
@@ -18,6 +17,8 @@ public class GUITest {
 
     GUIComponents moduleComponents = modulePage.getComponents();
     GUIComponents sessionComponents = sessionPage.getComponents();
+
+    // *** Button Tests ***
 
     @Test
     public void addModuleButton() {
@@ -49,7 +50,9 @@ public class GUITest {
         assertEquals(manager.getCurrentCard(), "home");
     }
 
-    public Module createTestModule(String moduleName){
+    // *** Module Tests ***
+
+    public Module createModule(String moduleName){
         Module testModule = null;
 
         // Creating a new module called test2
@@ -69,28 +72,34 @@ public class GUITest {
     }
 
     @Test
-    public void addingValidModule() {
-        Module testModule = createTestModule("test");
-        assertNotNull(testModule);
-    }
-
-    @Test
-    public void addingNullModule(){
-        Module testModule = createTestModule("");
-        assertNull(testModule);
-    }
-
-    @Test
-    public void addingDuplicateModule(){
+    public void validModule() {
         int prevModuleNum = state.getModules().length;
-        Module testModule = createTestModule("test");
-        Module testModule2 = createTestModule("test");
-        int newModuleNum = state.getModules().length;
+        createModule("test");
 
-        assertEquals(prevModuleNum + 1, newModuleNum);
+        assertEquals(prevModuleNum + 1, state.getModules().length);
     }
 
-    public int[] createTestSession(String hours, String mins, Module testModule){
+    @Test
+    public void nullModule(){
+        int prevModuleNum = state.getModules().length;
+        createModule("");
+
+        assertEquals(prevModuleNum, state.getModules().length);
+    }
+
+    @Test
+    public void duplicateModules(){
+        int prevModuleNum = state.getModules().length;
+
+        createModule("test");
+        createModule("test");
+
+        assertEquals(prevModuleNum + 1, state.getModules().length);
+    }
+
+    // *** Session Tests ***
+
+    public int[] createSession(String hours, String mins, Module testModule){
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
@@ -104,100 +113,118 @@ public class GUITest {
     }
 
     @Test
-    public void addingValidMinHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("1", "47", testModule);
+    public void hourMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("1", "47", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
-    public void addingValidMinSession(){
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("", "51", testModule);
+    public void hourSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("6", "", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
-    public void addingValidHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("6", "", testModule);
+    public void minSession(){
+        Module testModule = createModule("test");
+        int[] result = createSession("", "51", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
-    public void addingEmptySession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("", "", testModule);
+    public void emptySession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingNegativeMinSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("", "-123", testModule);
+    public void negHourSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("-8", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingNegativeHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("-8", "", testModule);
+    public void negMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("", "-123", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingNegativeMinHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("-5", "-41", testModule);
+    public void negHourPosMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("-5", "242", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingNegativeHourPositiveMinSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("-5", "242", testModule);
+    public void posHourNegMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("7", "-35", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingPositiveHourNegativeMinSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("7", "-35", testModule);
+    public void negHourMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("-5", "-41", testModule);
+        assertEquals(result[0], result[1]);
+    }
+
+    // > 24 hrs
+
+    @Test
+    public void hoursSessionOverADay() {
+        Module testModule = createModule("test");
+        int[] result = createSession("25", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingHourSessionOverADay() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("25", "", testModule);
+    public void minsSessionOverADay() {
+        Module testModule = createModule("test");
+        int[] result = createSession("", "1448", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingMinSessionOverADay() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("", "1448", testModule);
+    public void hourMinSessionOverADay() {
+        Module testModule = createModule("test");
+        int[] result = createSession("18", "946", testModule);
+        assertEquals(result[0], result[1]);
+    }
+
+    // Non-integer
+
+    @Test
+    public void nonNumHourSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("a", "42", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingMinHourSessionOverADay() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("18", "946", testModule);
+    public void nonNumMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("12", "ab", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingNonNumberMinHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("a", "b", testModule);
+    public void nonNumHourMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("a", "b", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
-    public void addingDecimalMinHourSession() {
-        Module testModule = createTestModule("test");
-        int[] result = createTestSession("3.5", "24.7", testModule);
+    public void decimalHourMinSession() {
+        Module testModule = createModule("test");
+        int[] result = createSession("3.5", "24.7", testModule);
         assertEquals(result[0], result[1]);
     }
 
