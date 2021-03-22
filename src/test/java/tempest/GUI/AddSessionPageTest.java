@@ -6,9 +6,9 @@ import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class GUITest {
+public class AddSessionPageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
@@ -16,39 +16,12 @@ public class GUITest {
     AddModulePage modulePage = manager.getModulePage();
     AddSessionPage sessionPage = manager.getSessionPage();
 
-    GUIComponents moduleComponents = modulePage.getComponents();
     GUIComponents sessionComponents = sessionPage.getComponents();
 
-    // *** Button Tests ***
-
-
-    // Turns off the error message popups so the tests are not blocked
     @Before
     public void turnOffErrorMessages(){
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
-    }
-
-    @Test
-    public void addModuleButton() {
-        homePage.getAddModuleButton().doClick();
-
-        assertEquals(manager.getCurrentCard(), "addModule");
-    }
-
-    @Test
-    public void addSessionButton() {
-        homePage.getAddSessionButton().doClick();
-
-        assertEquals(manager.getCurrentCard(), "addSession");
-    }
-
-    @Test
-    public void moduleCancelButton() {
-        homePage.getAddModuleButton().doClick();
-        moduleComponents.getCancelButton().doClick();
-
-        assertEquals(manager.getCurrentCard(), "home");
     }
 
     @Test
@@ -58,8 +31,6 @@ public class GUITest {
 
         assertEquals(manager.getCurrentCard(), "home");
     }
-
-    // *** Module Tests ***
 
     public Module createModule(String moduleName){
         Module testModule = null;
@@ -79,34 +50,6 @@ public class GUITest {
 
         return testModule;
     }
-
-    @Test
-    public void validModule() {
-        int prevModuleNum = state.getModules().length;
-        createModule("test");
-
-        assertEquals(prevModuleNum + 1, state.getModules().length);
-    }
-
-    @Test
-    public void nullModule(){
-        int prevModuleNum = state.getModules().length;
-        createModule("");
-
-        assertEquals(prevModuleNum, state.getModules().length);
-    }
-
-    @Test
-    public void duplicateModules(){
-        int prevModuleNum = state.getModules().length;
-
-        createModule("test");
-        createModule("test");
-
-        assertEquals(prevModuleNum + 1, state.getModules().length);
-    }
-
-    // *** Session Tests ***
 
     public int[] createSession(String hours, String mins, Module testModule){
         int prevSessionsLen = testModule.getStudySessions().length;
@@ -246,5 +189,4 @@ public class GUITest {
         int[] result = createSession("3.5", "24.7", testModule);
         assertEquals(result[0], result[1]);
     }
-
 }
