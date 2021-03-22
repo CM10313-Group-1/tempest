@@ -9,7 +9,7 @@ public class ErrorMessage{
 
     public void showMessage(JPanel parent, String message){
         if(messagesShown){
-            JOptionPane.showMessageDialog(parent, message);
+            JOptionPane.showMessageDialog(parent, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
