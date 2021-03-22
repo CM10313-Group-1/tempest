@@ -89,7 +89,31 @@ public class GUIManager {
      * @param cardName The name of the card to switch to
      */
     private void changeCard(String cardName){
+        Component prevPanel = getVisibleCard();
+
         cl.show(cardPanel, cardName);
+
+        Component currentPanel = getVisibleCard();
+
+        if (prevPanel == currentPanel) {
+            System.err.println("The card/page you are trying to swap to doesn't exist");
+        }
+    }
+
+    /**
+     * Used to find which panel is currently showing
+     *
+     * @return Component - The currently showing card
+     */
+    private Component getVisibleCard()
+    {
+        for(Component c: cardPanel.getComponents())
+        {
+            if (c.isVisible())
+                return c;
+        }
+
+        return null;
     }
 
     /**
