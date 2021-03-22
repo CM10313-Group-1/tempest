@@ -2,12 +2,15 @@ package tempest.GUI;
 
 import tempest.Module;
 import tempest.State;
+import tempest.StudySession;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -92,8 +95,6 @@ public class AddSessionPage extends Page implements ActionListener{
 
         String moduleName = Objects.requireNonNull(moduleDropDown.getSelectedItem()).toString();
 
-        Date date = new Date();
-
         String hours = hoursInput.getText();
         String minutes = minutesInput.getText();
 
@@ -153,11 +154,12 @@ public class AddSessionPage extends Page implements ActionListener{
             return;
         }
 
+        Module module = null;
         boolean foundName = false;
 
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                m.addSession(date, time);
+                module = m;
                 foundName = true;
                 break;
             }
@@ -167,6 +169,22 @@ public class AddSessionPage extends Page implements ActionListener{
             errorMessage("Unable to find this module");
             return;
         }
+
+        // Checking if study session in one day add up to be > 24hrs
+
+        int duration = 0;
+
+        for (StudySession s : module.getStudySessions()) {
+            if (s.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now()))
+                duration += s.duration.toMinutes();
+        }
+
+        if (duration + time.toMinutes() > 1440) {
+            errorMessage("Unable to enter a session that will bring total sessions today over 24 hours");
+            return;
+        }
+
+        module.addSession(new Date(), time);
 
         System.out.println("Study session successfully added");
 

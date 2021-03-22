@@ -11,6 +11,9 @@ import java.util.Stack;
 
 //TODO:
 // - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
+// - Add a boolean to avoid pop ups for tests
+// - Separate GUIComponents code into separate classes in a components directory
+// - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
 
 public class GUIManager {
     private static JPanel cardPanel;
