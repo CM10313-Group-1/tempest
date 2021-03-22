@@ -7,11 +7,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO:
-// - Rename getCancelButton()
-// - Have a cancelButton() method/class to be called to get just a cancel button?
-
-
 public class ActionButtonPanel implements ActionListener {
 
     private JButton cancelButton;
@@ -35,19 +30,22 @@ public class ActionButtonPanel implements ActionListener {
 
         JPanel buttonPanel = new JPanel();
 
-        cancelButton = new JButton("Cancel");
         JButton enterButton = new JButton("Enter");
-
-        cancelButton.setFocusable(false);
         enterButton.setFocusable(false);
-
-        cancelButton.addActionListener(this);
         enterButton.addActionListener(page);
 
-        buttonPanel.add(cancelButton);
+        buttonPanel.add(getCancelButton());
         buttonPanel.add(enterButton);
 
         return buttonPanel;
+    }
+
+    public JButton getCancelButton() {
+        cancelButton = new JButton("Cancel");
+        cancelButton.setFocusable(false);
+        cancelButton.addActionListener(this);
+
+        return cancelButton;
     }
 
     @Override
@@ -64,7 +62,7 @@ public class ActionButtonPanel implements ActionListener {
      *
      * @return JButton
      */
-    public JButton getCancelButton() {
+    public JButton getCancelButtonInstance() {
         return cancelButton;
     }
 

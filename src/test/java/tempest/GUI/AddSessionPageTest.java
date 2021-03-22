@@ -28,7 +28,7 @@ public class AddSessionPageTest{
     @Test
     public void sessionCancelButton() {
         homePage.getAddSessionButton().doClick();
-        actionButtonPanel.getCancelButton().doClick();
+        actionButtonPanel.getCancelButtonInstance().doClick();
 
         assertEquals(manager.getCurrentCard(), "home");
     }

@@ -26,7 +26,7 @@ public class AddModulePageTest{
     @Test
     public void moduleCancelButton() {
         homePage.getAddModuleButton().doClick();
-        actionButtonPanel.getCancelButton().doClick();
+        actionButtonPanel.getCancelButtonInstance().doClick();
 
         assertEquals(manager.getCurrentCard(), "home");
     }

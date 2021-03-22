@@ -17,9 +17,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
-//TODO:
-// - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
-
 public class AddSessionPage extends Page implements ActionListener{
     private final GUIManager manager;
     private final State state;
