@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Objects;
 
 //TODO:
+// - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
 // - Better if pressing enter sends user back a screen? - Feels more like you've entered something
 
 public class AddSessionPage extends Page implements ActionListener{
@@ -143,7 +144,7 @@ public class AddSessionPage extends Page implements ActionListener{
 
         Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
-        // Checks the time is under 24 hours
+        // Checks the session entered is under 24 hours
         if (time.toMinutes() > 24 * 60){
             System.err.println("Invalid time entered");
             return;

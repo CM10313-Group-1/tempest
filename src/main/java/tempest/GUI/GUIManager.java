@@ -30,13 +30,13 @@ public class GUIManager {
     public GUIManager(State state, Supervisor supervisor){
         this.state = state;
         this.supervisor = supervisor;
-        run();
+        start();
     }
 
     /**
      * Sets up and runs the GUI
      */
-    private void run(){
+    private void start(){
         JFrame frame = new JFrame();
 
         GUIComponents components = new GUIComponents();
