@@ -36,6 +36,11 @@ public class AddSessionPage extends Page implements ActionListener{
         this.manager = guiManager;
     }
 
+    @Override
+    public String getName() {
+        return "addSessionPage";
+    }
+
     public JPanel getPanel(){
         sessionPanel = new JPanel();
 

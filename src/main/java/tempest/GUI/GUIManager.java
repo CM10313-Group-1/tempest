@@ -8,15 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class GUIManager {
     private static JPanel cardPanel;
     private static CardLayout cl;
 
-    private HomePage home;
-    private AddModulePage addModule;
-    private AddSessionPage addSession;
+    private ArrayList<Page> pages;
 
     private String currentCard;
     private final Stack<String> cards = new Stack<>();
@@ -31,29 +30,39 @@ public class GUIManager {
     }
 
     /**
+     * All new pages should be added to the list here
+     */
+    public void getAllInstances() {
+        pages = new ArrayList<>();
+
+        pages.add(new HomePage(this));
+        pages.add(new AddModulePage(state, this));
+        pages.add(new AddSessionPage(state, this));
+    }
+
+    /**
      * Sets up and runs the GUI
      */
     private void start(){
-        JFrame frame = new JFrame();
-
+        // Creating the module drop down
         ModuleDropDown dropDown = new ModuleDropDown();
         dropDown.createModuleDropDown(state);
 
-        home = new HomePage(this);
-        addModule = new AddModulePage(state, this);
-        addSession = new AddSessionPage(state, this);
+        getAllInstances();
+
+        JFrame frame = new JFrame();
 
         cardPanel = new JPanel();
         cl = new CardLayout();
 
         cardPanel.setLayout(cl);
 
-        // Adding panels to cardPanel
-        cardPanel.add(home.getPanel(), "home");
-        cardPanel.add(addModule.getPanel(), "addModule");
-        cardPanel.add(addSession.getPanel(), "addSession");
+        // Adding each page's panel to cardPanel
+        for (Page p : pages) {
+            cardPanel.add(p.getPanel(), p.getName());
+        }
 
-        currentCard = "home"; // 1st Card
+        currentCard = "homePage"; // 1st Card
 
         frame.getContentPane().add(cardPanel);
 
@@ -105,16 +114,14 @@ public class GUIManager {
         currentCard = prevCard;
     }
 
-    public HomePage getHomePage() {
-        return home;
-    }
-
-    public AddModulePage getModulePage() {
-        return addModule;
-    }
-
-    public AddSessionPage getSessionPage() {
-        return addSession;
+    public Page getPage(String pageName) {
+        for (Page p : pages) {
+            if (pageName.equals(p.getName())) {
+                return p;
+            }
+        }
+        System.err.println("Could not find a page with the name: " + pageName);
+        return null;
     }
 
     public String getCurrentCard() {

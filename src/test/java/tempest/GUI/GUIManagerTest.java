@@ -11,7 +11,7 @@ public class GUIManagerTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
+    HomePage homePage = (HomePage) manager.getPage("homePage");
 
     // *** Button Tests ***
 

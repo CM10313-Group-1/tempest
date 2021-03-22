@@ -28,6 +28,12 @@ public class AddModulePage extends Page implements ActionListener{
         this.manager = guiManager;
     }
 
+    @Override
+    public String getName() {
+        return "addModulePage";
+    }
+
+
     public JPanel getPanel(){
         modulePanel = new JPanel();
 

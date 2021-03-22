@@ -13,9 +13,9 @@ public class AddSessionPageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
-    AddSessionPage sessionPage = manager.getSessionPage();
+    HomePage homePage = (HomePage) manager.getPage("homePage");
+    AddModulePage modulePage = (AddModulePage) manager.getPage("addModulePage");
+    AddSessionPage sessionPage = (AddSessionPage) manager.getPage("addSessionPage");
 
     ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
@@ -30,7 +30,7 @@ public class AddSessionPageTest{
         homePage.getAddSessionButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
     public Module createModule(String moduleName){

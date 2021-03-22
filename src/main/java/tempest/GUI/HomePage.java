@@ -14,6 +14,11 @@ public class HomePage extends Page implements ActionListener{
         this.manager = guiManager;
     }
 
+    @Override
+    public String getName() {
+        return "homePage";
+    }
+
     public JPanel getPanel(){
         JPanel homePage = new JPanel();
 

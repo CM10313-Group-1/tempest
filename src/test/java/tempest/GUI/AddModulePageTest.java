@@ -12,8 +12,8 @@ public class AddModulePageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
+    HomePage homePage = (HomePage) manager.getPage("homePage");
+    AddModulePage modulePage = (AddModulePage) manager.getPage("addModulePage");
 
     ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
@@ -28,7 +28,7 @@ public class AddModulePageTest{
         homePage.getAddModuleButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
     public void createModule(String moduleName){
