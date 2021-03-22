@@ -100,7 +100,7 @@ public class AddSessionPage extends Page implements ActionListener{
         minutes = minutes.strip();
 
         if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
-            System.out.println("A session needs to be longer >= 1 minute");
+            System.err.println("A session needs to be longer >= 1 minute");
             return;
         }
         else if (hours.equals("")) { // Only minutes have been entered
@@ -111,7 +111,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException(); // Negative minutes
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid minutes entered");
+                System.err.println("Invalid minutes entered");
                 return;
             }
         }
@@ -123,7 +123,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException(); // Negative hours
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid hours entered");
+                System.err.println("Invalid hours entered");
                 return;
             }
         }
@@ -136,7 +136,7 @@ public class AddSessionPage extends Page implements ActionListener{
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid time entered");
+                System.err.println("Invalid time entered");
                 return;
             }
         }
