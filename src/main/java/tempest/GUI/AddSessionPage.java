@@ -1,5 +1,7 @@
 package tempest.GUI;
 
+import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
@@ -21,6 +23,8 @@ public class AddSessionPage extends Page implements ActionListener{
     private final GUIManager manager;
     private final State state;
     private final GUIComponents components = new GUIComponents();
+    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel sessionPanel;
@@ -37,12 +41,12 @@ public class AddSessionPage extends Page implements ActionListener{
     public JPanel getPanel(){
         sessionPanel = new JPanel();
 
-        JPanel buttonPanel = components.getButtonPanel(manager, this);
+        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
 
         JPanel inputPanel = new JPanel();
 
-        moduleDropDown = components.getModuleDropDown();
+        moduleDropDown = dropDown.getModuleDropDown();
         inputPanel.add(moduleDropDown);
 
         hoursInput = new JTextField(2);

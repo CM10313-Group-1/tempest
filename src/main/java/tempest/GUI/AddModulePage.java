@@ -1,5 +1,7 @@
 package tempest.GUI;
 
+import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 
@@ -12,6 +14,8 @@ public class AddModulePage extends Page implements ActionListener{
     private final State state;
     private final GUIManager manager;
     private final GUIComponents components = new GUIComponents();
+    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel modulePanel;
@@ -26,7 +30,7 @@ public class AddModulePage extends Page implements ActionListener{
     public JPanel getPanel(){
         modulePanel = new JPanel();
 
-        JPanel buttonPanel = components.getButtonPanel(manager, this);
+        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
         enterButton = (JButton) buttonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
@@ -107,7 +111,7 @@ public class AddModulePage extends Page implements ActionListener{
      */
     public void addModule(String moduleName) {
         state.createModule(moduleName);
-        components.addModule(moduleName);
+        dropDown.addModule(moduleName);
     }
 
     /**
@@ -118,7 +122,7 @@ public class AddModulePage extends Page implements ActionListener{
      */
     public void removeModule(String moduleName) {
         state.deleteModule(moduleName);
-        components.removeModule(moduleName);
+        dropDown.removeModule(moduleName);
     }
 
     public GUIComponents getComponents() {

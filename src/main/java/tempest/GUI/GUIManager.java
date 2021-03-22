@@ -1,5 +1,6 @@
 package tempest.GUI;
 
+import tempest.GUI.components.ModuleDropDown;
 import tempest.State;
 import tempest.Supervisor;
 
@@ -13,7 +14,7 @@ import java.util.Stack;
 // - Change AddModule and AddSession pages to be Modules and Session pages with options to delete, view & add
 // - Add a boolean to avoid pop ups for tests
 // - Separate GUIComponents code into separate classes in a components directory
-// - Add a check so the user can't enter study sessions in a day which add up to be > 24hrs
+// - Separate tests into their own classes
 
 public class GUIManager {
     private static JPanel cardPanel;
@@ -41,8 +42,8 @@ public class GUIManager {
     private void start(){
         JFrame frame = new JFrame();
 
-        GUIComponents components = new GUIComponents();
-        components.createModuleDropDown(state);
+        ModuleDropDown dropDown = new ModuleDropDown();
+        dropDown.createModuleDropDown(state);
 
         home = new HomePage(this);
         addModule = new AddModulePage(state, this);
