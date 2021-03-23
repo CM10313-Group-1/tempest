@@ -46,10 +46,10 @@ public class HomePage extends Page implements ActionListener{
         Object source = e.getSource();
 
         if(source == addModuleButton){
-            manager.swapCard("addModule");
+            manager.swapCard("addModulePage");
         }
         else if(source == addSessionButton){
-            manager.swapCard("addSession");
+            manager.swapCard("addSessionPage");
         }
     }
 
