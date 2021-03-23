@@ -4,14 +4,10 @@ import tempest.GUI.GUIManager;
 import tempest.GUI.Page;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ActionButtonPanel implements ActionListener {
+public class ActionButtonPanel {
 
-    private JButton cancelButton;
-
-    private GUIManager manager;
+    private CancelButton cancelButton;
 
     /**
      * Returns a button panel containing an enter button and a cancel button
@@ -26,7 +22,7 @@ public class ActionButtonPanel implements ActionListener {
      * @return JPanel
      */
     public JPanel getButtonPanel(GUIManager manager, Page page) {
-        this.manager = manager;
+        cancelButton = new CancelButton();
 
         JPanel buttonPanel = new JPanel();
 
@@ -34,39 +30,13 @@ public class ActionButtonPanel implements ActionListener {
         enterButton.setFocusable(false);
         enterButton.addActionListener(page);
 
-        buttonPanel.add(getCancelButton(manager));
+        buttonPanel.add(cancelButton.getCancelButton(manager));
         buttonPanel.add(enterButton);
 
         return buttonPanel;
     }
 
-    public JButton getCancelButton(GUIManager manager) {
-        this.manager = manager;
-
-        cancelButton = new JButton("Cancel");
-        cancelButton.setFocusable(false);
-        cancelButton.addActionListener(this);
-
-        return cancelButton;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cancelButton) {
-            manager.swapToPrevCard();
-        }
-    }
-
-    /**
-     * Returns a cancel button
-     *
-     * Used by the test classes to get a pages cancel button
-     *
-     * @return JButton
-     */
     public JButton getCancelButtonInstance() {
-        return cancelButton;
+        return cancelButton.getCancelButtonInstance();
     }
-
-
 }
