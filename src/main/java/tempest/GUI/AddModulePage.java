@@ -96,6 +96,7 @@ public class AddModulePage extends Page implements ActionListener{
     /**
      * Clears the module name JTextField input
      */
+    @Override
     public void clearInput() {
         moduleNameInput.setText(""); // Clearing inputted module name
     }

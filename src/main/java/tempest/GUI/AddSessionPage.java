@@ -216,6 +216,7 @@ public class AddSessionPage extends Page implements ActionListener{
     /**
      * Clears the hours and minutes JTextField inputs
      */
+    @Override
     public void clearInput() {
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
