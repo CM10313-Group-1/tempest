@@ -1,23 +1,28 @@
 package tempest.GUI;
 
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ClearButton;
-import tempest.GUI.components.ModuleDropDown;
-import tempest.Module;
-import tempest.State;
-import tempest.StudySession;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
-public class AddSessionPage extends Page implements ActionListener{
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import tempest.Module;
+import tempest.State;
+import tempest.StudySession;
+import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.ClearButton;
+import tempest.GUI.components.ModuleDropDown;
+
+public class AddSessionPage extends Page {
     private final GUIManager manager;
     private final State state;
     private final ClearButton components = new ClearButton();
