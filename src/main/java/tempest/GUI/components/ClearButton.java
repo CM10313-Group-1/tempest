@@ -1,10 +1,12 @@
 package tempest.GUI.components;
 
+import javax.swing.JButton;
+
 import tempest.GUI.Page;
 
-import javax.swing.*;
+public class ClearButton extends JButton {
+    private static final long serialVersionUID = -857346759811441764L;
 
-public class ClearButton {
     /**
      * Returns a clear button
      *
@@ -15,12 +17,9 @@ public class ClearButton {
      * @param page this (instance of class calling getButtonPanel)
      * @return JButton - A 'Clear' button
      */
-    public JButton getClearButton(Page page) {
-        JButton clearButton = new JButton("Clear");
-        clearButton.setFocusable(false);
-
-        clearButton.addActionListener(e -> page.clearInput());
-
-        return clearButton;
+    public ClearButton(Page page) {
+        super("Clear");
+        this.setFocusable(false);
+        this.addActionListener(e -> page.clearInput());
     }
 }

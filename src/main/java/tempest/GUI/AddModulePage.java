@@ -17,9 +17,8 @@ import tempest.GUI.components.ModuleDropDown;
 public class AddModulePage extends Page {
     private final State state;
     private final GUIManager manager;
-    private final ClearButton components = new ClearButton();
     private final ModuleDropDown dropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
+    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel modulePanel;
@@ -29,6 +28,7 @@ public class AddModulePage extends Page {
     public AddModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
+        this.actionButtonPanel = new ActionButtonPanel(manager, this);
     }
 
     @Override
@@ -39,12 +39,11 @@ public class AddModulePage extends Page {
     public JPanel getPanel() {
         modulePanel = new JPanel();
 
-        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
-        enterButton = (JButton) buttonPanel.getComponent(1);
+        enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
         JLabel moduleInputLabel = new JLabel("Enter module name:");
-        JButton clearButton = components.getClearButton(this);
+        ClearButton clearButton = new ClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
@@ -52,7 +51,7 @@ public class AddModulePage extends Page {
         inputPanel.add(clearButton);
 
         modulePanel.add(inputPanel, BorderLayout.NORTH);
-        modulePanel.add(buttonPanel, BorderLayout.SOUTH);
+        modulePanel.add(actionButtonPanel, BorderLayout.SOUTH);
 
         return modulePanel;
     }

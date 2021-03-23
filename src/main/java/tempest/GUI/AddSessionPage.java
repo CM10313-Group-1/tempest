@@ -25,9 +25,8 @@ import tempest.GUI.components.ModuleDropDown;
 public class AddSessionPage extends Page {
     private final GUIManager manager;
     private final State state;
-    private final ClearButton components = new ClearButton();
     private final ModuleDropDown dropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
+    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel sessionPanel;
@@ -36,9 +35,10 @@ public class AddSessionPage extends Page {
     private JTextField minutesInput;
     private JButton enterButton;
 
-    public AddSessionPage(State state, GUIManager guiManager){
+    public AddSessionPage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
+        this.actionButtonPanel = new ActionButtonPanel(manager, this);
     }
 
     @Override
@@ -46,11 +46,10 @@ public class AddSessionPage extends Page {
         return "addSessionPage";
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         sessionPanel = new JPanel();
 
-        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
-        enterButton = (JButton) buttonPanel.getComponent(1);
+        enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         JPanel inputPanel = new JPanel();
 
@@ -78,11 +77,11 @@ public class AddSessionPage extends Page {
 
         inputPanel.add(timeInputPanel);
 
-        JButton clearButton = components.getClearButton(this);
+        ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
         sessionPanel.add(inputPanel);
-        sessionPanel.add(buttonPanel);
+        sessionPanel.add(actionButtonPanel);
 
         sessionPanel.setLayout(new BoxLayout(sessionPanel, BoxLayout.Y_AXIS));
 
@@ -90,10 +89,10 @@ public class AddSessionPage extends Page {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == enterButton){
+        if (source == enterButton) {
             handleAddingSession();
         }
     }
@@ -120,8 +119,7 @@ public class AddSessionPage extends Page {
         if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
             errorMessage("A session needs to be >= 1 minute");
             return;
-        }
-        else if (hours.equals("")) { // Only minutes have been entered
+        } else if (hours.equals("")) { // Only minutes have been entered
             try {
                 minutesInt = Integer.parseInt(minutes);
 
@@ -132,8 +130,7 @@ public class AddSessionPage extends Page {
                 errorMessage("Invalid minutes entered");
                 return;
             }
-        }
-        else if (minutes.equals("")) { // Only hours have been entered
+        } else if (minutes.equals("")) { // Only hours have been entered
             try {
                 hoursInt = Integer.parseInt(hours);
 
@@ -144,8 +141,7 @@ public class AddSessionPage extends Page {
                 errorMessage("Invalid hours entered");
                 return;
             }
-        }
-        else { // Hours and minutes have been entered
+        } else { // Hours and minutes have been entered
             try {
                 minutesInt = Integer.parseInt(minutes);
                 hoursInt = Integer.parseInt(hours);
@@ -155,7 +151,8 @@ public class AddSessionPage extends Page {
                 }
 
                 if (minutesInt > 59) {
-                    errorMessage("If an hour is entered minutes should be < 60"); // Minutes exceeds 59 with an hour inputted
+                    errorMessage("If an hour is entered minutes should be < 60"); // Minutes exceeds 59 with an hour
+                                                                                  // inputted
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -167,7 +164,7 @@ public class AddSessionPage extends Page {
         Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
         // Checks the session entered is under 24 hours
-        if (time.toMinutes() > 24 * 60){
+        if (time.toMinutes() > 24 * 60) {
             errorMessage("A study session can't be longer than 24 hours");
             return;
         }

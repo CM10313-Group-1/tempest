@@ -1,13 +1,14 @@
 package tempest.GUI.components;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import tempest.GUI.GUIManager;
 import tempest.GUI.Page;
 
-import javax.swing.*;
-
-public class ActionButtonPanel {
-
-    private CancelButton cancelButton;
+public class ActionButtonPanel extends JPanel {
+    private static final long serialVersionUID = 9196271090552224373L;
+    private BackButton backButton;
 
     /**
      * Returns a button panel containing an enter button and a cancel button
@@ -18,25 +19,22 @@ public class ActionButtonPanel {
      * The cancel button is handled already
      *
      * @param manager Manager instance
-     * @param page this (instance of class calling getButtonPanel)
+     * @param page    this (instance of class calling getButtonPanel)
      * @return JPanel
      */
-    public JPanel getButtonPanel(GUIManager manager, Page page) {
-        cancelButton = new CancelButton();
-
-        JPanel buttonPanel = new JPanel();
-
+    public ActionButtonPanel(GUIManager manager, Page page) {
+        super();
+        this.backButton = new BackButton(manager);
         JButton enterButton = new JButton("Enter");
         enterButton.setFocusable(false);
         enterButton.addActionListener(page);
 
-        buttonPanel.add(cancelButton.getCancelButton(manager));
-        buttonPanel.add(enterButton);
+        this.add(backButton);
+        this.add(enterButton);
 
-        return buttonPanel;
     }
 
     public JButton getCancelButtonInstance() {
-        return cancelButton.getCancelButtonInstance();
+        return backButton;
     }
 }
