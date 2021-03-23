@@ -34,13 +34,15 @@ public class ActionButtonPanel implements ActionListener {
         enterButton.setFocusable(false);
         enterButton.addActionListener(page);
 
-        buttonPanel.add(getCancelButton());
+        buttonPanel.add(getCancelButton(manager));
         buttonPanel.add(enterButton);
 
         return buttonPanel;
     }
 
-    public JButton getCancelButton() {
+    public JButton getCancelButton(GUIManager manager) {
+        this.manager = manager;
+
         cancelButton = new JButton("Cancel");
         cancelButton.setFocusable(false);
         cancelButton.addActionListener(this);
