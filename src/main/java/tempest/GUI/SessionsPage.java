@@ -6,14 +6,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class sessionsPage extends Page implements ActionListener {
+public class SessionsPage extends Page implements ActionListener {
     private final GUIManager manager;
     private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
 
     private JButton deleteSessions;
     private JButton addSessions;
 
-    public sessionsPage(GUIManager guiManager){
+    public SessionsPage(GUIManager guiManager){
         this.manager = guiManager;
     }
 
@@ -52,9 +52,9 @@ public class sessionsPage extends Page implements ActionListener {
         Object source = e.getSource();
 
         if(source == addSessions){
-            manager.swapCard("addSession");
+            manager.swapCard("addSessionPage");
         } else if (source == deleteSessions) {
-            manager.swapCard("deleteSession");
+            manager.swapCard("deleteSessionPage");
         }
     }
 

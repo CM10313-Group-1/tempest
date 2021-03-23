@@ -8,7 +8,7 @@ public class HomePage extends Page implements ActionListener{
     private final GUIManager manager;
 
     private JButton addModuleButton;
-    private JButton addSessionButton;
+    private JButton sessionsButton;
 
     public HomePage(GUIManager guiManager){
         this.manager = guiManager;
@@ -20,16 +20,16 @@ public class HomePage extends Page implements ActionListener{
         JPanel buttonPanel = new JPanel();
 
         addModuleButton = new JButton("Add a new module");
-        addSessionButton = new JButton("Add a new session");
+        sessionsButton = new JButton("Study Sessions");
 
         addModuleButton.setFocusable(false);
-        addSessionButton.setFocusable(false);
+        sessionsButton.setFocusable(false);
 
         addModuleButton.addActionListener(this);
-        addSessionButton.addActionListener(this);
+        sessionsButton.addActionListener(this);
 
         buttonPanel.add(addModuleButton);
-        buttonPanel.add(addSessionButton);
+        buttonPanel.add(sessionsButton);
 
         homePage.add(buttonPanel);
 
@@ -41,10 +41,10 @@ public class HomePage extends Page implements ActionListener{
         Object source = e.getSource();
 
         if(source == addModuleButton){
-            manager.swapCard("addModule");
+            manager.swapCard("addModulePage");
         }
-        else if(source == addSessionButton){
-            manager.swapCard("addSession");
+        else if(source == sessionsButton){
+            manager.swapCard("sessionsPage");
         }
     }
 
@@ -52,7 +52,7 @@ public class HomePage extends Page implements ActionListener{
         return addModuleButton;
     }
 
-    public JButton getAddSessionButton() {
-        return addSessionButton;
+    public JButton getSessionsButton() {
+        return sessionsButton;
     }
 }

@@ -27,7 +27,8 @@ public class AddSessionPageTest{
 
     @Test
     public void sessionCancelButton() {
-        homePage.getAddSessionButton().doClick();
+        //TODO: FIX
+        homePage.getSessionsButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
         assertEquals(manager.getCurrentCard(), "home");
@@ -56,7 +57,8 @@ public class AddSessionPageTest{
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
-        homePage.getAddSessionButton().doClick();
+        //TODO: FIX
+        homePage.getSessionsButton().doClick();
         sessionPage.setHours(hours);
         sessionPage.setMins(mins);
         sessionPage.getEnterButton().doClick();
