@@ -13,14 +13,14 @@ public class AddSessionPageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = (HomePage) manager.getPage("homePage");
-    AddModulePage modulePage = (AddModulePage) manager.getPage("addModulePage");
-    AddSessionPage sessionPage = (AddSessionPage) manager.getPage("addSessionPage");
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddSessionPage sessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -52,7 +52,7 @@ public class AddSessionPageTest{
         return testModule;
     }
 
-    public int[] createSession(String hours, String mins, Module testModule){
+    public int[] createSession(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
@@ -80,7 +80,7 @@ public class AddSessionPageTest{
     }
 
     @Test
-    public void minSession(){
+    public void minSession() {
         Module testModule = createModule("test");
         int[] result = createSession("", "51", testModule);
         assertEquals(result[0] + 1, result[1]);
@@ -152,18 +152,13 @@ public class AddSessionPageTest{
     }
 
     @Test
-    public void hourMinSessionOverADay() {
-        Module testModule = createModule("test");
-        int[] result = createSession("18", "946", testModule);
-        assertEquals(result[0], result[1]);
-    }
-
-    @Test
     public void totalSessionsOverADay() {
-        //TODO: Fix
         Module testModule = createModule("test");
 
         int[] result1 = createSession("23", "58", testModule);
+
+        actionButtonPanel.getCancelButtonInstance().doClick();
+
         int[] result2 = createSession("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);

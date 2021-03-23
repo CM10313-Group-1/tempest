@@ -138,13 +138,34 @@ public class GUIManager {
         currentCard = prevCard;
     }
 
-    public Page getPage(String pageName) {
+    public Page getPage(Class<? extends Page> className) {
         for (Page p : pages) {
-            if (pageName.equals(p.getName())) {
+            if (p.getClass() == className) {
                 return p;
             }
         }
-        System.err.println("Could not find a page with the name: " + pageName);
+
+        System.err.println("Couldn't find a card with an instance of this class");
+        return null;
+    }
+
+    /**
+     * Used to get the name of a page in the cardlayout
+     *
+     * Means that changing a pages name in its getName() method
+     * will not cause any errors
+     *
+     * @param className Class (e.g. HomePage.class)
+     * @return String - The name of the page class
+     */
+    public String getPageName(Class<? extends Page> className) {
+        for (Page p : pages) {
+            if (p.getClass() == className) {
+                return p.getName();
+            }
+        }
+
+        System.err.println("Couldn't find a card with an instance of this class");
         return null;
     }
 

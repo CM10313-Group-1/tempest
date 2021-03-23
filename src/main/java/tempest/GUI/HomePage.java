@@ -10,7 +10,7 @@ public class HomePage extends Page implements ActionListener{
     private JButton addModuleButton;
     private JButton addSessionButton;
 
-    public HomePage(GUIManager guiManager){
+    public HomePage(GUIManager guiManager) {
         this.manager = guiManager;
     }
 
@@ -42,14 +42,14 @@ public class HomePage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == addModuleButton){
-            manager.swapCard("addModulePage");
+        if(source == addModuleButton) {
+            manager.swapCard(manager.getPageName(AddModulePage.class));
         }
-        else if(source == addSessionButton){
-            manager.swapCard("addSessionPage");
+        else if(source == addSessionButton) {
+            manager.swapCard(manager.getPageName(AddSessionPage.class));
         }
     }
 

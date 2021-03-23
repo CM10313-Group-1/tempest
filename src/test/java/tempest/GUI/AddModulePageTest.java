@@ -12,13 +12,13 @@ public class AddModulePageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = (HomePage) manager.getPage("homePage");
-    AddModulePage modulePage = (AddModulePage) manager.getPage("addModulePage");
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -46,7 +46,7 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void nullModule(){
+    public void nullModule() {
         int prevModuleNum = state.getModules().length;
         createModule("");
 
@@ -54,11 +54,13 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void duplicateModules(){
-        //TODO: Fix
+    public void duplicateModules() {
         int prevModuleNum = state.getModules().length;
 
         createModule("test");
+
+        actionButtonPanel.getCancelButtonInstance().doClick();
+
         createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);

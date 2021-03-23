@@ -113,7 +113,7 @@ public class AddSessionPage extends Page implements ActionListener{
         minutes = minutes.strip();
 
         if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
-            errorMessage("A session needs to be longer >= 1 minute");
+            errorMessage("A session needs to be >= 1 minute");
             return;
         }
         else if (hours.equals("")) { // Only minutes have been entered
@@ -163,7 +163,7 @@ public class AddSessionPage extends Page implements ActionListener{
 
         // Checks the session entered is under 24 hours
         if (time.toMinutes() > 24 * 60){
-            errorMessage("Invalid time entered");
+            errorMessage("A study session can't be longer than 24 hours");
             return;
         }
 
