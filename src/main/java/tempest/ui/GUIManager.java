@@ -13,6 +13,7 @@ import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.ChartViewPage;
 import tempest.ui.pages.HomePage;
 
 public class GUIManager {
@@ -22,6 +23,7 @@ public class GUIManager {
     private HomePage home;
     private AddModulePage addModule;
     private AddSessionPage addSession;
+    private ChartViewPage chartView;
 
     private String currentCard;
     private final Stack<String> cards = new Stack<>();
@@ -47,6 +49,7 @@ public class GUIManager {
         home = new HomePage(this);
         addModule = new AddModulePage(state, this);
         addSession = new AddSessionPage(state, this);
+        chartView = new ChartViewPage(state, this);
 
         cardPanel = new JPanel();
         cl = new CardLayout();
@@ -57,6 +60,7 @@ public class GUIManager {
         cardPanel.add(home.getPanel(), "home");
         cardPanel.add(addModule.getPanel(), "addModule");
         cardPanel.add(addSession.getPanel(), "addSession");
+        cardPanel.add(chartView.getPanel(), "chartView");
 
         currentCard = "home"; // 1st Card
 
