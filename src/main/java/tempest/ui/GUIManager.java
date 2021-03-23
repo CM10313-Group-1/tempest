@@ -1,14 +1,19 @@
-package tempest.GUI;
+package tempest.ui;
 
-import tempest.GUI.components.ModuleDropDown;
-import tempest.State;
-import tempest.Supervisor;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Stack;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import tempest.State;
+import tempest.Supervisor;
+import tempest.ui.components.ModuleDropDown;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.HomePage;
 
 public class GUIManager {
     private static JPanel cardPanel;
@@ -24,7 +29,7 @@ public class GUIManager {
     private final State state;
     private final Supervisor supervisor;
 
-    public GUIManager(State state, Supervisor supervisor){
+    public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
         this.supervisor = supervisor;
         start();
@@ -33,7 +38,7 @@ public class GUIManager {
     /**
      * Sets up and runs the GUI
      */
-    private void start(){
+    private void start() {
         JFrame frame = new JFrame();
 
         ModuleDropDown dropDown = new ModuleDropDown();
@@ -65,7 +70,7 @@ public class GUIManager {
         });
 
         // Frame Settings
-        frame.setSize(500,150);
+        frame.setSize(500, 150);
         frame.setTitle("Tempest");
         frame.setLocationRelativeTo(null); // Centering GUI
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,14 +84,15 @@ public class GUIManager {
      *
      * @param cardName The name of the card to switch to
      */
-    private void changeCard(String cardName){
+    private void changeCard(String cardName) {
         cl.show(cardPanel, cardName);
     }
 
     /**
      * Swaps to the entered card name
      *
-     * Used to move back up the tree of cards/pages along the path taken on the way down
+     * Used to move back up the tree of cards/pages along the path taken on the way
+     * down
      *
      * @param cardName Name of the card to swap to
      */

@@ -1,9 +1,9 @@
-package tempest.GUI.components;
+package tempest.ui.components;
+
+import javax.swing.JComboBox;
 
 import tempest.Module;
 import tempest.State;
-
-import javax.swing.*;
 
 public class ModuleDropDown {
 

@@ -1,8 +1,8 @@
-package tempest.GUI.components;
+package tempest.ui.components;
 
-import tempest.GUI.Page;
+import javax.swing.JButton;
 
-import javax.swing.*;
+import tempest.ui.pages.Page;
 
 public class ClearButton {
     /**

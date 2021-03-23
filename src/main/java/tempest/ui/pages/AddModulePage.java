@@ -1,17 +1,22 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ClearButton;
-import tempest.GUI.components.ModuleDropDown;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import tempest.Module;
 import tempest.State;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.components.ClearButton;
+import tempest.ui.components.ModuleDropDown;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class AddModulePage extends Page implements ActionListener{
+public class AddModulePage extends Page {
     private final State state;
     private final GUIManager manager;
     private final ClearButton components = new ClearButton();
@@ -23,12 +28,12 @@ public class AddModulePage extends Page implements ActionListener{
     private JTextField moduleNameInput;
     private JButton enterButton;
 
-    public AddModulePage(State state, GUIManager guiManager){
+    public AddModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         modulePanel = new JPanel();
 
         JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
@@ -50,10 +55,10 @@ public class AddModulePage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == enterButton){
+        if (source == enterButton) {
             handleCreatingModule();
         }
     }
@@ -105,8 +110,8 @@ public class AddModulePage extends Page implements ActionListener{
     }
 
     /**
-     * Creates a new module using state and updates the module drop down
-     * in GUIComponents
+     * Creates a new module using state and updates the module drop down in
+     * GUIComponents
      *
      * @param moduleName Name of module to be created
      */
@@ -116,8 +121,8 @@ public class AddModulePage extends Page implements ActionListener{
     }
 
     /**
-     * Removes the module using state and updates the module drop down
-     * in GUIComponents
+     * Removes the module using state and updates the module drop down in
+     * GUIComponents
      *
      * @param moduleName Name of module to be removed
      */

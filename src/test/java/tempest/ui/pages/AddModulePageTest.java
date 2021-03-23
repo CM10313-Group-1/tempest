@@ -1,14 +1,17 @@
-package tempest.GUI;
-
-import org.junit.Before;
-import org.junit.Test;
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.State;
-import tempest.Supervisor;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddModulePageTest{
+import org.junit.Before;
+import org.junit.Test;
+
+import tempest.State;
+import tempest.Supervisor;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+
+public class AddModulePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
@@ -18,7 +21,7 @@ public class AddModulePageTest{
     ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -31,7 +34,7 @@ public class AddModulePageTest{
         assertEquals(manager.getCurrentCard(), "home");
     }
 
-    public void createModule(String moduleName){
+    public void createModule(String moduleName) {
         homePage.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
@@ -46,7 +49,7 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void nullModule(){
+    public void nullModule() {
         int prevModuleNum = state.getModules().length;
         createModule("");
 
@@ -54,7 +57,7 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void duplicateModules(){
+    public void duplicateModules() {
         int prevModuleNum = state.getModules().length;
 
         createModule("test");

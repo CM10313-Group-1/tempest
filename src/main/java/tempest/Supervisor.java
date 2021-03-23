@@ -3,8 +3,8 @@ package tempest;
 import java.io.IOException;
 import java.text.ParseException;
 
-import tempest.GUI.GUIManager;
 import tempest.interfaces.CSVInterface;
+import tempest.ui.GUIManager;
 
 public class Supervisor {
     private static final String STORE = "store.csv";

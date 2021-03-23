@@ -1,15 +1,18 @@
-package tempest.GUI;
-
-import org.junit.Before;
-import org.junit.Test;
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.Module;
-import tempest.State;
-import tempest.Supervisor;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddSessionPageTest{
+import org.junit.Before;
+import org.junit.Test;
+
+import tempest.Module;
+import tempest.State;
+import tempest.Supervisor;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+
+public class AddSessionPageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
@@ -20,7 +23,7 @@ public class AddSessionPageTest{
     ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -33,7 +36,7 @@ public class AddSessionPageTest{
         assertEquals(manager.getCurrentCard(), "home");
     }
 
-    public Module createModule(String moduleName){
+    public Module createModule(String moduleName) {
         Module testModule = null;
 
         // Creating a new module called test2
@@ -52,7 +55,7 @@ public class AddSessionPageTest{
         return testModule;
     }
 
-    public int[] createSession(String hours, String mins, Module testModule){
+    public int[] createSession(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
@@ -62,7 +65,7 @@ public class AddSessionPageTest{
         sessionPage.getEnterButton().doClick();
 
         // Returns values to test
-        return new int[]{prevSessionsLen, testModule.getStudySessions().length};
+        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
 
     @Test
@@ -80,7 +83,7 @@ public class AddSessionPageTest{
     }
 
     @Test
-    public void minSession(){
+    public void minSession() {
         Module testModule = createModule("test");
         int[] result = createSession("", "51", testModule);
         assertEquals(result[0] + 1, result[1]);

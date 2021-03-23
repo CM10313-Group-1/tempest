@@ -1,23 +1,30 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ClearButton;
-import tempest.GUI.components.ModuleDropDown;
-import tempest.Module;
-import tempest.State;
-import tempest.StudySession;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
-public class AddSessionPage extends Page implements ActionListener{
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import tempest.Module;
+import tempest.State;
+import tempest.StudySession;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.components.ClearButton;
+import tempest.ui.components.ModuleDropDown;
+
+public class AddSessionPage extends Page {
     private final GUIManager manager;
     private final State state;
     private final ClearButton components = new ClearButton();
@@ -31,12 +38,12 @@ public class AddSessionPage extends Page implements ActionListener{
     private JTextField minutesInput;
     private JButton enterButton;
 
-    public AddSessionPage(State state, GUIManager guiManager){
+    public AddSessionPage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         sessionPanel = new JPanel();
 
         JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
@@ -80,10 +87,10 @@ public class AddSessionPage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == enterButton){
+        if (source == enterButton) {
             handleAddingSession();
         }
     }
@@ -110,8 +117,7 @@ public class AddSessionPage extends Page implements ActionListener{
         if (hours.equals("") && minutes.equals("")) { // Empty hours and minutes
             errorMessage("A session needs to be longer >= 1 minute");
             return;
-        }
-        else if (hours.equals("")) { // Only minutes have been entered
+        } else if (hours.equals("")) { // Only minutes have been entered
             try {
                 minutesInt = Integer.parseInt(minutes);
 
@@ -122,8 +128,7 @@ public class AddSessionPage extends Page implements ActionListener{
                 errorMessage("Invalid minutes entered");
                 return;
             }
-        }
-        else if (minutes.equals("")) { // Only hours have been entered
+        } else if (minutes.equals("")) { // Only hours have been entered
             try {
                 hoursInt = Integer.parseInt(hours);
 
@@ -134,8 +139,7 @@ public class AddSessionPage extends Page implements ActionListener{
                 errorMessage("Invalid hours entered");
                 return;
             }
-        }
-        else { // Hours and minutes have been entered
+        } else { // Hours and minutes have been entered
             try {
                 minutesInt = Integer.parseInt(minutes);
                 hoursInt = Integer.parseInt(hours);
@@ -145,7 +149,8 @@ public class AddSessionPage extends Page implements ActionListener{
                 }
 
                 if (minutesInt > 59) {
-                    errorMessage("If an hour is entered minutes should be < 60"); // Minutes exceeds 59 with an hour inputted
+                    errorMessage("If an hour is entered minutes should be < 60"); // Minutes exceeds 59 with an hour
+                                                                                  // inputted
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -157,7 +162,7 @@ public class AddSessionPage extends Page implements ActionListener{
         Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
         // Checks the session entered is under 24 hours
-        if (time.toMinutes() > 24 * 60){
+        if (time.toMinutes() > 24 * 60) {
             errorMessage("Invalid time entered");
             return;
         }

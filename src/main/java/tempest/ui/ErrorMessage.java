@@ -1,6 +1,7 @@
-package tempest.GUI;
+package tempest.ui;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class ErrorMessage{
     private static boolean messagesShown = true;

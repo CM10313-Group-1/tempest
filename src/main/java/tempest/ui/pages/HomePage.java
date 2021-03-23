@@ -1,20 +1,23 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class HomePage extends Page implements ActionListener{
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import tempest.ui.GUIManager;
+
+public class HomePage extends Page {
     private final GUIManager manager;
 
     private JButton addModuleButton;
     private JButton addSessionButton;
 
-    public HomePage(GUIManager guiManager){
+    public HomePage(GUIManager guiManager) {
         this.manager = guiManager;
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         JPanel homePage = new JPanel();
 
         JPanel buttonPanel = new JPanel();
@@ -37,13 +40,12 @@ public class HomePage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == addModuleButton){
+        if (source == addModuleButton) {
             manager.swapCard("addModule");
-        }
-        else if(source == addSessionButton){
+        } else if (source == addSessionButton) {
             manager.swapCard("addSession");
         }
     }

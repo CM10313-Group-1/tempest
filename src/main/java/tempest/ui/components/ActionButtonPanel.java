@@ -1,11 +1,13 @@
-package tempest.GUI.components;
+package tempest.ui.components;
 
-import tempest.GUI.GUIManager;
-import tempest.GUI.Page;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import tempest.ui.GUIManager;
+import tempest.ui.pages.Page;
 
 public class ActionButtonPanel implements ActionListener {
 
@@ -22,7 +24,7 @@ public class ActionButtonPanel implements ActionListener {
      * The cancel button is handled already
      *
      * @param manager Manager instance
-     * @param page this (instance of class calling getButtonPanel)
+     * @param page    this (instance of class calling getButtonPanel)
      * @return JPanel
      */
     public JPanel getButtonPanel(GUIManager manager, Page page) {
@@ -65,6 +67,5 @@ public class ActionButtonPanel implements ActionListener {
     public JButton getCancelButtonInstance() {
         return cancelButton;
     }
-
 
 }
