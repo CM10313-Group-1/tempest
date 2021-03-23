@@ -160,6 +160,7 @@ public class AddSessionPageTest{
 
     @Test
     public void totalSessionsOverADay() {
+        //TODO: Fix
         Module testModule = createModule("test");
 
         int[] result1 = createSession("23", "58", testModule);

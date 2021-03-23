@@ -55,6 +55,7 @@ public class AddModulePageTest{
 
     @Test
     public void duplicateModules(){
+        //TODO: Fix
         int prevModuleNum = state.getModules().length;
 
         createModule("test");

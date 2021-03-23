@@ -26,13 +26,13 @@ public class GUIManagerTest {
     public void addModuleButton() {
         homePage.getAddModuleButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "addModule");
+        assertEquals(manager.getCurrentCard(), "addModulePage");
     }
 
     @Test
     public void addSessionButton() {
         homePage.getAddSessionButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "addSession");
+        assertEquals(manager.getCurrentCard(), "addSessionPage");
     }
 }
