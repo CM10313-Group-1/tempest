@@ -33,7 +33,6 @@ public class AddModulePage extends Page implements ActionListener{
         return "addModulePage";
     }
 
-
     public JPanel getPanel(){
         modulePanel = new JPanel();
 
@@ -106,7 +105,7 @@ public class AddModulePage extends Page implements ActionListener{
      *
      * @param message The error message to be printed in the pop up
      */
-    public void errorMessage(String message) {
+    private void errorMessage(String message) {
         errorMessage.showMessage(modulePanel, message);
     }
 
@@ -116,7 +115,7 @@ public class AddModulePage extends Page implements ActionListener{
      *
      * @param moduleName Name of module to be created
      */
-    public void addModule(String moduleName) {
+    private void addModule(String moduleName) {
         state.createModule(moduleName);
         dropDown.addModule(moduleName);
     }
@@ -127,7 +126,7 @@ public class AddModulePage extends Page implements ActionListener{
      *
      * @param moduleName Name of module to be removed
      */
-    public void removeModule(String moduleName) {
+    private void removeModule(String moduleName) {
         state.deleteModule(moduleName);
         dropDown.removeModule(moduleName);
     }

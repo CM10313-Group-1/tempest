@@ -209,7 +209,7 @@ public class AddSessionPage extends Page implements ActionListener{
      *
      * @param message The error message to be printed in the pop up
      */
-    public void errorMessage(String message) {
+    private void errorMessage(String message) {
         errorMessage.showMessage(sessionPanel, message);
     }
 

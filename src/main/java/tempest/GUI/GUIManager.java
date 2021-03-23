@@ -32,7 +32,7 @@ public class GUIManager {
     /**
      * All new pages should be added to the list here
      */
-    public void getAllInstances() {
+    private void getAllInstances() {
         pages = new ArrayList<>();
 
         pages.add(new HomePage(this));
@@ -103,14 +103,16 @@ public class GUIManager {
     /**
      * Used to find which panel is currently showing
      *
+     * Method from: https://stackoverflow.com/questions/6040989/check-if-a-card-with-a-name-is-present-in-a-cardlayout
+     *
      * @return Component - The currently showing card
      */
     private Component getVisibleCard()
     {
-        for(Component c: cardPanel.getComponents())
-        {
-            if (c.isVisible())
+        for(Component c : cardPanel.getComponents()) {
+            if (c.isVisible()) {
                 return c;
+            }
         }
 
         return null;

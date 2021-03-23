@@ -24,6 +24,9 @@ public abstract class Page implements ActionListener {
         System.err.println("One of the page classes your using needs an actionPerformed() method");
     }
 
+    /**
+     * Used by a clear button to clear input fields in a page
+     */
     public void clearInput() {
         System.err.println("One of the page classes your using needs an clearInput() method");
     }
