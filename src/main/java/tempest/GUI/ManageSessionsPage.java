@@ -1,5 +1,4 @@
 package tempest.GUI;
-import tempest.GUI.components.ActionButtonPanel;
 import tempest.GUI.components.BackButton;
 import tempest.GUI.components.LinkButton;
 
@@ -8,12 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SessionsPage extends Page implements ActionListener {
+public class ManageSessionsPage extends Page implements ActionListener {
     private final GUIManager manager;
 
     private BackButton backButton;
 
-    public SessionsPage(GUIManager guiManager){
+    public ManageSessionsPage(GUIManager guiManager){
         this.manager = guiManager;
     }
 
