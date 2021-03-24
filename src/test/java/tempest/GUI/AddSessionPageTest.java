@@ -43,8 +43,8 @@ public class AddSessionPageTest {
         modulePage.getEnterButton().doClick();
 
         // Getting the created module
-        for (Module m : state.getModules()) {
-            if (moduleName.equals(m.getName())) {
+        for(Module m : state.getModules()) {
+            if(moduleName.equals(m.getName())) {
                 testModule = m;
                 break;
             }
@@ -62,7 +62,7 @@ public class AddSessionPageTest {
         sessionPage.getEnterButton().doClick();
 
         // Returns values to test
-        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
+        return new int[] {prevSessionsLen, testModule.getStudySessions().length};
     }
 
     @Test

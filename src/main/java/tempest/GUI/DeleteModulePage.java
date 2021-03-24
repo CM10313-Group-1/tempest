@@ -1,5 +1,6 @@
 package tempest.GUI;
 
+import tempest.GUI.components.BackButton;
 import tempest.GUI.components.ModuleDropDown;
 import tempest.State;
 
@@ -16,7 +17,7 @@ public class DeleteModulePage extends Page{
     private JPanel buttonPanel;
     private JPanel dropDownPanel;
 
-    private JButton cancelButton;
+    private BackButton backButton;
     private JButton deleteButton;
     private JComboBox<Object> dropDown;
 
@@ -35,13 +36,13 @@ public class DeleteModulePage extends Page{
         buttonPanel = new JPanel();
         dropDownPanel = new JPanel();
 
-        cancelButton = new JButton("Cancel");
+        backButton = new BackButton(manager);
         deleteButton = new JButton("Delete module");
 
         deleteButton.addActionListener(this);
-        cancelButton.addActionListener(this);
+        backButton.addActionListener(this);
 
-        buttonPanel.add(cancelButton);
+        buttonPanel.add(backButton);
         buttonPanel.add(deleteButton);
 
         dropDown = moduleDropDown.getModuleDropDown();
@@ -62,10 +63,6 @@ public class DeleteModulePage extends Page{
 
         if(source == deleteButton){
             handleDeletingSession();
-        }
-
-        else if(source == cancelButton){
-            manager.swapToPrevCard();
         }
     }
 
@@ -91,8 +88,8 @@ public class DeleteModulePage extends Page{
         System.out.println(moduleName + " successfully deleted.");
     }
 
-    public JButton getCancelButton(){
-        return cancelButton;
+    public JButton getBackButton(){
+        return backButton;
     }
 
     public JButton getDeleteButton(){

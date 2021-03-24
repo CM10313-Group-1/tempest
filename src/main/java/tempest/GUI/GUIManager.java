@@ -95,8 +95,8 @@ public class GUIManager {
      */
     private void changeCard(String cardName) {
         // Allows the delete module button to be disabled when no modules to delete
-        for(Page p: pages){
-            if(p.getName().equals("manageModulesPage")){
+        for(Page p: pages) {
+            if(p.getName().equals("manageModulesPage")) {
                 ((ManageModulesPage) p).update();
             }
         }

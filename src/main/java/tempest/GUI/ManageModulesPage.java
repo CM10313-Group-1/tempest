@@ -1,21 +1,22 @@
 package tempest.GUI;
 
+import tempest.GUI.components.BackButton;
 import tempest.GUI.components.ModuleDropDown;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class ManageModulesPage extends Page{
+public class ManageModulesPage extends Page {
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private JPanel manageModulesPanel;
     private JPanel pageSwapPanel;
-    private JPanel cancelPanel;
+    private JPanel backPanel;
 
     private JButton addModuleButton;
     private JButton deleteModuleButton;
-    private JButton cancelButton;
+    private BackButton backButton;
     private JComboBox<Object> dropDown;
 
     public ManageModulesPage(GUIManager guiManager){this.manager = guiManager;}
@@ -25,27 +26,28 @@ public class ManageModulesPage extends Page{
         return "manageModulesPage";
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         manageModulesPanel = new JPanel();
         pageSwapPanel = new JPanel();
-        cancelPanel = new JPanel();
+        backPanel = new JPanel();
 
         dropDown = moduleDropDown.getModuleDropDown();
 
         addModuleButton = new JButton("Add a module");
         deleteModuleButton = new JButton("Delete a module");
-        cancelButton = new JButton("Cancel");
+        backButton = new BackButton(manager);
+
 
         addModuleButton.addActionListener(this);
         deleteModuleButton.addActionListener(this);
-        cancelButton.addActionListener(this);
+        backButton.addActionListener(this);
 
         pageSwapPanel.add(addModuleButton);
         pageSwapPanel.add(deleteModuleButton);
-        cancelPanel.add(cancelButton);
+        backPanel.add(backButton);
 
         manageModulesPanel.add(pageSwapPanel);
-        manageModulesPanel.add(cancelPanel);
+        manageModulesPanel.add(backPanel);
 
         manageModulesPanel.setLayout(new BoxLayout(manageModulesPanel, BoxLayout.Y_AXIS));
 
@@ -56,23 +58,20 @@ public class ManageModulesPage extends Page{
      * Updates the delete module button to be disabled if there are no
      * modules to delete.
      */
-    public void update(){
+    public void update() {
         // If a module/modules have been created then the button is active again
         deleteModuleButton.setEnabled(dropDown.getItemCount() != 0);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == addModuleButton){
+        if(source == addModuleButton) {
             manager.swapCard("addModulePage");
         }
-        else if(source == deleteModuleButton){
+        else if(source == deleteModuleButton) {
             manager.swapCard("deleteModulePage");
-        }
-        else if(source == cancelButton){
-            manager.swapToPrevCard();
         }
     }
 
@@ -84,7 +83,7 @@ public class ManageModulesPage extends Page{
         return deleteModuleButton;
     }
 
-    public JButton getCancelButton(){
-        return cancelButton;
+    public JButton getBackButton(){
+        return backButton;
     }
 }

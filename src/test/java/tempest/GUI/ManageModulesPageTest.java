@@ -8,7 +8,7 @@ import tempest.Supervisor;
 
 import static org.junit.Assert.*;
 
-public class ManageModulesPageTest{
+public class ManageModulesPageTest {
     Supervisor supervisor = Supervisor.getInstance();
     State state = new State();
     GUIManager manager = new GUIManager(state, supervisor);
@@ -22,27 +22,27 @@ public class ManageModulesPageTest{
     Module[] modules = state.getModules();
 
     @Test
-    public void addModuleButton(){
+    public void addModuleButton() {
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getAddModuleButton().doClick();
 
         assertEquals(manager.getCurrentCard(), manager.getPageName(AddModulePage.class));
     }
 
-    public void clearModules(){
-        for(Module module: modules){
+    public void clearModules() {
+        for(Module module : modules) {
             moduleDropDown.removeModule(module.getName());
         }
     }
 
-    public void createModule(String moduleName){
+    public void createModule(String moduleName) {
         // Creating a new module called test
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
     }
 
     @Test
-    public void noModulesDeleteModuleButton(){
+    public void noModulesDeleteModuleButton() {
         clearModules();
 
         homePage.getManageModulesButton().doClick();
@@ -52,7 +52,7 @@ public class ManageModulesPageTest{
     }
 
     @Test
-    public void onePlusModulesDeleteButton(){
+    public void onePlusModulesDeleteButton() {
         createModule("test");
 
         homePage.getManageModulesButton().doClick();
@@ -62,9 +62,9 @@ public class ManageModulesPageTest{
     }
 
     @Test
-    public void cancelButton(){
+    public void backButton() {
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getCancelButton().doClick();
+        manageModulesPage.getBackButton().doClick();
 
         assertEquals(manager.getCurrentCard(), manager.getPageName(HomePage.class));
     }
