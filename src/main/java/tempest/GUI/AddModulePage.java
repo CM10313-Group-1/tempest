@@ -1,42 +1,49 @@
 package tempest.GUI;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import tempest.Module;
+import tempest.State;
 import tempest.GUI.components.ActionButtonPanel;
 import tempest.GUI.components.ClearButton;
 import tempest.GUI.components.ModuleDropDown;
-import tempest.Module;
-import tempest.State;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class AddModulePage extends Page implements ActionListener{
+public class AddModulePage extends Page {
     private final State state;
     private final GUIManager manager;
-    private final ClearButton components = new ClearButton();
     private final ModuleDropDown dropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
+    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel modulePanel;
     private JTextField moduleNameInput;
     private JButton enterButton;
 
-    public AddModulePage(State state, GUIManager guiManager){
+    public AddModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
+        this.actionButtonPanel = new ActionButtonPanel(manager, this);
     }
 
-    public JPanel getPanel(){
+    @Override
+    public String getName() {
+        return "addModulePage";
+    }
+
+    public JPanel getPanel() {
         modulePanel = new JPanel();
 
-        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
-        enterButton = (JButton) buttonPanel.getComponent(1);
+        enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
         JLabel moduleInputLabel = new JLabel("Enter module name:");
-        JButton clearButton = components.getClearButton(this);
+        ClearButton clearButton = new ClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
@@ -44,16 +51,16 @@ public class AddModulePage extends Page implements ActionListener{
         inputPanel.add(clearButton);
 
         modulePanel.add(inputPanel, BorderLayout.NORTH);
-        modulePanel.add(buttonPanel, BorderLayout.SOUTH);
+        modulePanel.add(actionButtonPanel, BorderLayout.SOUTH);
 
         return modulePanel;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == enterButton){
+        if (source == enterButton) {
             handleCreatingModule();
         }
     }
@@ -65,7 +72,7 @@ public class AddModulePage extends Page implements ActionListener{
         String moduleName = moduleNameInput.getText();
 
         if (moduleName.equals("")) {
-            errorMessage("Invalid module name");
+            errorMessage(new Exception("Invalid module name"));
             return;
         }
 
@@ -74,7 +81,7 @@ public class AddModulePage extends Page implements ActionListener{
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                errorMessage("Another module already has this name");
+                errorMessage(new Exception("Another module already has this name"));
                 uniqueName = false;
                 break;
             }
@@ -91,6 +98,7 @@ public class AddModulePage extends Page implements ActionListener{
     /**
      * Clears the module name JTextField input
      */
+    @Override
     public void clearInput() {
         moduleNameInput.setText(""); // Clearing inputted module name
     }
@@ -100,28 +108,28 @@ public class AddModulePage extends Page implements ActionListener{
      *
      * @param message The error message to be printed in the pop up
      */
-    public void errorMessage(String message) {
+    private void errorMessage(Exception message) {
         errorMessage.showMessage(modulePanel, message);
     }
 
     /**
-     * Creates a new module using state and updates the module drop down
-     * in GUIComponents
+     * Creates a new module using state and updates the module drop down in
+     * GUIComponents
      *
      * @param moduleName Name of module to be created
      */
-    public void addModule(String moduleName) {
+    private void addModule(String moduleName) {
         state.createModule(moduleName);
         dropDown.addModule(moduleName);
     }
 
     /**
-     * Removes the module using state and updates the module drop down
-     * in GUIComponents
+     * Removes the module using state and updates the module drop down in
+     * GUIComponents
      *
      * @param moduleName Name of module to be removed
      */
-    public void removeModule(String moduleName) {
+    private void removeModule(String moduleName) {
         state.deleteModule(moduleName);
         dropDown.removeModule(moduleName);
     }

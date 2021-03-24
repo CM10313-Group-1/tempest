@@ -1,24 +1,24 @@
 package tempest.GUI;
 
-import tempest.GUI.components.ModuleDropDown;
-import tempest.State;
-import tempest.Supervisor;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Stack;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import tempest.State;
+import tempest.Supervisor;
+import tempest.GUI.components.ModuleDropDown;
 
 public class GUIManager {
     private static JPanel cardPanel;
     private static CardLayout cl;
 
-    private HomePage home;
-    private AddModulePage addModule;
-    private AddSessionPage addSession;
-    private ManageModulesPage manageModules;
-    private DeleteModulePage deleteModule;
+    private ArrayList<Page> pages;
 
     private String currentCard;
     private final Stack<String> cards = new Stack<>();
@@ -26,40 +26,46 @@ public class GUIManager {
     private final State state;
     private final Supervisor supervisor;
 
-    public GUIManager(State state, Supervisor supervisor){
+    public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
         this.supervisor = supervisor;
         start();
     }
 
     /**
+     * All new pages should be added to the list here
+     */
+    private void getAllInstances() {
+        pages = new ArrayList<>();
+
+        pages.add(new HomePage(this));
+        pages.add(new AddModulePage(state, this));
+        pages.add(new AddSessionPage(state, this));
+    }
+
+    /**
      * Sets up and runs the GUI
      */
-    private void start(){
-        JFrame frame = new JFrame();
-
+    private void start() {
+        // Creating the module drop down
         ModuleDropDown dropDown = new ModuleDropDown();
         dropDown.createModuleDropDown(state);
 
-        home = new HomePage(this);
-        addModule = new AddModulePage(state, this);
-        addSession = new AddSessionPage(state, this);
-        manageModules = new ManageModulesPage(this);
-        deleteModule = new DeleteModulePage(state, this);
+        getAllInstances();
+
+        JFrame frame = new JFrame();
 
         cardPanel = new JPanel();
         cl = new CardLayout();
 
         cardPanel.setLayout(cl);
 
-        // Adding panels to cardPanel
-        cardPanel.add(home.getPanel(), "home");
-        cardPanel.add(addModule.getPanel(), "addModule");
-        cardPanel.add(addSession.getPanel(), "addSession");
-        cardPanel.add(manageModules.getPanel(), "manageModules");
-        cardPanel.add(deleteModule.getPanel(), "deleteModule");
+        // Adding each page's panel to cardPanel
+        for (Page p : pages) {
+            cardPanel.add(p.getPanel(), p.getName());
+        }
 
-        currentCard = "home"; // 1st Card
+        currentCard = "homePage"; // 1st Card
 
         frame.getContentPane().add(cardPanel);
 
@@ -71,7 +77,7 @@ public class GUIManager {
         });
 
         // Frame Settings
-        frame.setSize(500,150);
+        frame.setSize(500, 150);
         frame.setTitle("Tempest");
         frame.setLocationRelativeTo(null); // Centering GUI
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,19 +91,45 @@ public class GUIManager {
      *
      * @param cardName The name of the card to switch to
      */
-    private void changeCard(String cardName){
+    private void changeCard(String cardName) {
+        Component prevPanel = getVisibleCard();
+
         cl.show(cardPanel, cardName);
+
+        Component currentPanel = getVisibleCard();
+
+        if (prevPanel == currentPanel) {
+            System.err.println("The card/page you are trying to swap to doesn't exist");
+        }
+    }
+
+    /**
+     * Used to find which panel is currently showing
+     *
+     * Method from:
+     * https://stackoverflow.com/questions/6040989/check-if-a-card-with-a-name-is-present-in-a-cardlayout
+     *
+     * @return Component - The currently showing card
+     */
+    private Component getVisibleCard() {
+        for (Component c : cardPanel.getComponents()) {
+            if (c.isVisible()) {
+                return c;
+            }
+        }
+
+        return null;
     }
 
     /**
      * Swaps to the entered card name
      *
-     * Used to move back up the tree of cards/pages along the path taken on the way down
+     * Used to move back up the tree of cards/pages along the path taken on the way
+     * down
      *
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        updateDeleteModuleButton();
         changeCard(cardName);
         cards.add(currentCard);
         currentCard = cardName;
@@ -107,35 +139,44 @@ public class GUIManager {
      * Switches to the previous card
      */
     public void swapToPrevCard() {
-        updateDeleteModuleButton();
         String prevCard = cards.pop();
         changeCard(prevCard);
         currentCard = prevCard;
     }
 
     /**
-     * Allows the delete module button to be disabled when there
-     * are no modules to delete and re-enabled when a module is created.
+     * Returns an instance of a page in the cardLayout
+     *
+     * @param className A class extending page (e.g. HomePage.class)
+     * @return Page - The instance of the required class
      */
-    private void updateDeleteModuleButton(){
-        manageModules.update();
+    public Page getPage(Class<? extends Page> className) {
+        for (Page p : pages) {
+            if (p.getClass() == className) {
+                return p;
+            }
+        }
+
+        System.err.println("Couldn't find a card with an instance of this class");
+        return null;
     }
 
-    public HomePage getHomePage() {
-        return home;
+    /**
+     * Returns the name of a page in the cardLayout
+     *
+     * @param className A class extending page (e.g. HomePage.class)
+     * @return String - The name of the page class
+     */
+    public String getPageName(Class<? extends Page> className) {
+        for (Page p : pages) {
+            if (p.getClass() == className) {
+                return p.getName();
+            }
+        }
+
+        System.err.println("Couldn't find a card with an instance of this class");
+        return null;
     }
-
-    public AddModulePage getModulePage() {
-        return addModule;
-    }
-
-    public AddSessionPage getSessionPage() {
-        return addSession;
-    }
-
-    public ManageModulesPage getManageModulesPage(){return manageModules;}
-
-    public DeleteModulePage getDeleteModulePage(){return deleteModule;}
 
     public String getCurrentCard() {
         return currentCard;
