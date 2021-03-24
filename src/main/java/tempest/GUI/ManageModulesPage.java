@@ -47,8 +47,8 @@ public class ManageModulesPage extends Page {
         deleteModuleButton.addActionListener(this);
         backButton.addActionListener(this);
 
-        pageSwapPanel.add(addModuleButton);
         pageSwapPanel.add(deleteModuleButton);
+        pageSwapPanel.add(addModuleButton);
         backPanel.add(backButton);
 
         manageModulesPanel.add(pageSwapPanel);
