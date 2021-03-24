@@ -140,6 +140,12 @@ public class GUIManager {
         currentCard = prevCard;
     }
 
+    /**
+     * Returns an instance of a page in the cardLayout
+     *
+     * @param className A class extending page (e.g. HomePage.class)
+     * @return Page - The instance of the required class
+     */
     public Page getPage(Class<? extends Page> className) {
         for (Page p : pages) {
             if (p.getClass() == className) {
@@ -152,12 +158,9 @@ public class GUIManager {
     }
 
     /**
-     * Used to get the name of a page in the cardlayout
+     * Returns the name of a page in the cardLayout
      *
-     * Means that changing a pages name in its getName() method
-     * will not cause any errors
-     *
-     * @param className Class (e.g. HomePage.class)
+     * @param className A class extending page (e.g. HomePage.class)
      * @return String - The name of the page class
      */
     public String getPageName(Class<? extends Page> className) {

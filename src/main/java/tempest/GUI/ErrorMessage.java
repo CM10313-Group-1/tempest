@@ -5,11 +5,14 @@ import javax.swing.*;
 public class ErrorMessage{
     private static boolean messagesShown = true;
 
-    public void showMessage(JPanel parent, String message){
+    public void showMessage(JPanel parent, Exception message){
+
+        String messageStr = message.getMessage();
+
         if (messagesShown) {
-            JOptionPane.showMessageDialog(parent, message, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, messageStr, "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            System.err.println(message);
+            System.err.println(messageStr);
         }
     }
 

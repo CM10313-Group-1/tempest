@@ -72,7 +72,7 @@ public class AddModulePage extends Page {
         String moduleName = moduleNameInput.getText();
 
         if (moduleName.equals("")) {
-            errorMessage("Invalid module name");
+            errorMessage(new Exception("Invalid module name"));
             return;
         }
 
@@ -81,7 +81,7 @@ public class AddModulePage extends Page {
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                errorMessage("Another module already has this name");
+                errorMessage(new Exception("Another module already has this name"));
                 uniqueName = false;
                 break;
             }
@@ -108,7 +108,7 @@ public class AddModulePage extends Page {
      *
      * @param message The error message to be printed in the pop up
      */
-    private void errorMessage(String message) {
+    private void errorMessage(Exception message) {
         errorMessage.showMessage(modulePanel, message);
     }
 
