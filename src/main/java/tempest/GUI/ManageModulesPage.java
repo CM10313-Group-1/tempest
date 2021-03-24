@@ -8,15 +8,12 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import tempest.GUI.components.BackButton;
+import tempest.GUI.components.LinkButton;
 import tempest.GUI.components.ModuleDropDown;
 
 public class ManageModulesPage extends Page {
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-
-    private JPanel manageModulesPanel;
-    private JPanel pageSwapPanel;
-    private JPanel backPanel;
 
     private JButton addModuleButton;
     private JButton deleteModuleButton;
@@ -33,18 +30,15 @@ public class ManageModulesPage extends Page {
     }
 
     public JPanel getPanel() {
-        manageModulesPanel = new JPanel();
-        pageSwapPanel = new JPanel();
-        backPanel = new JPanel();
+        JPanel manageModulesPanel = new JPanel();
+        JPanel pageSwapPanel = new JPanel();
+        JPanel backPanel = new JPanel();
 
         dropDown = moduleDropDown.getModuleDropDown();
 
-        addModuleButton = new JButton("Add a module");
-        deleteModuleButton = new JButton("Delete a module");
+        addModuleButton = new LinkButton("Add a module", manager.getPageName(AddModulePage.class), this);
+        deleteModuleButton = new LinkButton("Delete a module", manager.getPageName(DeleteModulePage.class), this);
         backButton = new BackButton(manager);
-
-        addModuleButton.addActionListener(this);
-        deleteModuleButton.addActionListener(this);
 
         pageSwapPanel.add(deleteModuleButton);
         pageSwapPanel.add(addModuleButton);
@@ -69,13 +63,8 @@ public class ManageModulesPage extends Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        if (source == addModuleButton) {
-            manager.swapCard("addModulePage");
-        } else if (source == deleteModuleButton) {
-            manager.swapCard("deleteModulePage");
-        }
+        LinkButton source = (LinkButton) e.getSource();
+        manager.swapCard(source.getDestination());
     }
 
     public JButton getAddModuleButton() {

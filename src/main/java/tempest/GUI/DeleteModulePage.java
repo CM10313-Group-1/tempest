@@ -17,10 +17,6 @@ public class DeleteModulePage extends Page {
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
-    private JPanel deleteModulePanel;
-    private JPanel buttonPanel;
-    private JPanel dropDownPanel;
-
     private BackButton backButton;
     private JButton deleteButton;
     private JComboBox<Object> dropDown;
@@ -36,15 +32,14 @@ public class DeleteModulePage extends Page {
     }
 
     public JPanel getPanel() {
-        deleteModulePanel = new JPanel();
-        buttonPanel = new JPanel();
-        dropDownPanel = new JPanel();
+        JPanel deleteModulePanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        JPanel dropDownPanel = new JPanel();
 
         backButton = new BackButton(manager);
         deleteButton = new JButton("Delete module");
 
         deleteButton.addActionListener(this);
-        backButton.addActionListener(this);
 
         buttonPanel.add(backButton);
         buttonPanel.add(deleteButton);
@@ -66,19 +61,14 @@ public class DeleteModulePage extends Page {
         Object source = e.getSource();
 
         if (source == deleteButton) {
-            handleDeletingSession();
+            handleDeletingModule();
         }
     }
 
     /**
-     * Handles deleting the session and updating the module drop down
+     * Handles deleting the module and updating the module drop down
      */
-    private void handleDeletingSession() {
-        // Checks if there are no modules to delete
-        if (dropDown.getItemCount() == 0) {
-            return;
-        }
-
+    private void handleDeletingModule() {
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
 
         state.deleteModule(moduleName);
