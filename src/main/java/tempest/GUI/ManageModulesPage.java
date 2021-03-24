@@ -1,10 +1,14 @@
 package tempest.GUI;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
 import tempest.GUI.components.BackButton;
 import tempest.GUI.components.ModuleDropDown;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 public class ManageModulesPage extends Page {
     private final GUIManager manager;
@@ -19,7 +23,9 @@ public class ManageModulesPage extends Page {
     private BackButton backButton;
     private JComboBox<Object> dropDown;
 
-    public ManageModulesPage(GUIManager guiManager){this.manager = guiManager;}
+    public ManageModulesPage(GUIManager guiManager) {
+        this.manager = guiManager;
+    }
 
     @Override
     public String getName() {
@@ -36,7 +42,6 @@ public class ManageModulesPage extends Page {
         addModuleButton = new JButton("Add a module");
         deleteModuleButton = new JButton("Delete a module");
         backButton = new BackButton(manager);
-
 
         addModuleButton.addActionListener(this);
         deleteModuleButton.addActionListener(this);
@@ -55,8 +60,8 @@ public class ManageModulesPage extends Page {
     }
 
     /**
-     * Updates the delete module button to be disabled if there are no
-     * modules to delete.
+     * Updates the delete module button to be disabled if there are no modules to
+     * delete.
      */
     public void update() {
         // If a module/modules have been created then the button is active again
@@ -67,23 +72,22 @@ public class ManageModulesPage extends Page {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == addModuleButton) {
+        if (source == addModuleButton) {
             manager.swapCard("addModulePage");
-        }
-        else if(source == deleteModuleButton) {
+        } else if (source == deleteModuleButton) {
             manager.swapCard("deleteModulePage");
         }
     }
 
-    public JButton getAddModuleButton(){
+    public JButton getAddModuleButton() {
         return addModuleButton;
     }
 
-    public JButton getDeleteModuleButton(){
+    public JButton getDeleteModuleButton() {
         return deleteModuleButton;
     }
 
-    public JButton getBackButton(){
+    public JButton getBackButton() {
         return backButton;
     }
 }

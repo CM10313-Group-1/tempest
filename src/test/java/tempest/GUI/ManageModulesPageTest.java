@@ -1,12 +1,13 @@
 package tempest.GUI;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import tempest.GUI.components.ModuleDropDown;
+
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-
-import static org.junit.Assert.*;
+import tempest.GUI.components.ModuleDropDown;
 
 public class ManageModulesPageTest {
     Supervisor supervisor = Supervisor.getInstance();
@@ -30,7 +31,7 @@ public class ManageModulesPageTest {
     }
 
     public void clearModules() {
-        for(Module module : modules) {
+        for (Module module : modules) {
             moduleDropDown.removeModule(module.getName());
         }
     }

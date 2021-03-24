@@ -11,8 +11,8 @@ public class ActionButtonPanel extends JPanel {
     private final BackButton backButton;
 
     /**
-     * The created instance of ActionButtonPanel is a JPanel
-     * So just add it to the page's panel
+     * The created instance of ActionButtonPanel is a JPanel So just add it to the
+     * page's panel
      *
      * The panel contains an enter button and a cancel button
      *

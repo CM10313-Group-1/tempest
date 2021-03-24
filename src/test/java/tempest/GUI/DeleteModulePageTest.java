@@ -1,10 +1,11 @@
 package tempest.GUI;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
 import tempest.State;
 import tempest.Supervisor;
-
-import static org.junit.Assert.assertEquals;
 
 public class DeleteModulePageTest {
     State state = new State();

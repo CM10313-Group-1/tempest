@@ -1,14 +1,18 @@
 package tempest.GUI;
 
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.ModuleDropDown;
-import tempest.State;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
 
-public class DeleteModulePage extends Page{
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
+import tempest.State;
+import tempest.GUI.components.BackButton;
+import tempest.GUI.components.ModuleDropDown;
+
+public class DeleteModulePage extends Page {
     private final State state;
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
@@ -21,7 +25,7 @@ public class DeleteModulePage extends Page{
     private JButton deleteButton;
     private JComboBox<Object> dropDown;
 
-    public DeleteModulePage(State state, GUIManager guiManager){
+    public DeleteModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
     }
@@ -31,7 +35,7 @@ public class DeleteModulePage extends Page{
         return "deleteModulePage";
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         deleteModulePanel = new JPanel();
         buttonPanel = new JPanel();
         dropDownPanel = new JPanel();
@@ -58,10 +62,10 @@ public class DeleteModulePage extends Page{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == deleteButton){
+        if (source == deleteButton) {
             handleDeletingSession();
         }
     }
@@ -69,9 +73,9 @@ public class DeleteModulePage extends Page{
     /**
      * Handles deleting the session and updating the module drop down
      */
-    private void handleDeletingSession(){
+    private void handleDeletingSession() {
         // Checks if there are no modules to delete
-        if(dropDown.getItemCount() == 0){
+        if (dropDown.getItemCount() == 0) {
             return;
         }
 
@@ -81,18 +85,18 @@ public class DeleteModulePage extends Page{
         moduleDropDown.removeModule(moduleName);
 
         // Swaps to the previous card if there are no more modules left
-        if(dropDown.getItemCount() == 0){
+        if (dropDown.getItemCount() == 0) {
             manager.swapToPrevCard();
         }
 
         System.out.println(moduleName + " successfully deleted.");
     }
 
-    public JButton getBackButton(){
+    public JButton getBackButton() {
         return backButton;
     }
 
-    public JButton getDeleteButton(){
+    public JButton getDeleteButton() {
         return deleteButton;
     }
 }
