@@ -1,5 +1,6 @@
 package tempest.GUI;
 import tempest.GUI.components.ActionButtonPanel;
+import tempest.GUI.components.BackButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +9,11 @@ import java.awt.event.ActionListener;
 
 public class SessionsPage extends Page implements ActionListener {
     private final GUIManager manager;
-    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
 
     private JButton deleteSessions;
     private JButton addSessions;
+
+    private BackButton backButton;
 
     public SessionsPage(GUIManager guiManager){
         this.manager = guiManager;
@@ -23,10 +25,10 @@ public class SessionsPage extends Page implements ActionListener {
     }
 
     public JPanel getPanel(){
-        JPanel cancelPanel = new JPanel();
+        JPanel backPanel = new JPanel();
 
-        JButton cancelButton = actionButtonPanel.getCancelButton(manager);
-        cancelPanel.add(cancelButton);
+        backButton = new BackButton(manager);
+        backPanel.add(backButton);
 
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new FlowLayout());
@@ -47,7 +49,7 @@ public class SessionsPage extends Page implements ActionListener {
         sessionsPanel.setLayout(new BoxLayout(sessionsPanel, BoxLayout.Y_AXIS));
 
         sessionsPanel.add(optionsPanel);
-        sessionsPanel.add(cancelPanel);
+        sessionsPanel.add(backPanel);
 
         return sessionsPanel;
     }
@@ -64,9 +66,9 @@ public class SessionsPage extends Page implements ActionListener {
     }
 
     /**
-     * Used by tests to get this pages cancel button
+     * Used by tests to get this pages back button
      */
-    public ActionButtonPanel getComponents() {
-        return actionButtonPanel;
+    public BackButton getBackButton() {
+        return backButton;
     }
 }
