@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class GUIManagerTest {
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = manager.getHomePage();
 

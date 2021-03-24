@@ -6,11 +6,12 @@ import java.text.ParseException;
 import tempest.GUI.GUIManager;
 import tempest.interfaces.CSVInterface;
 
-public class Supervisor {
+public class Supervisor{
+
     private static final String STORE = "store.csv";
     private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
-
+    private static Supervisor instance;
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);
@@ -29,17 +30,17 @@ public class Supervisor {
             System.err.println("Failed to save state");
         }
     }
-
-    public State getState() {
-        return state;
+    private Supervisor(){
     }
-
-    public void setState(State state) {
-        Supervisor.state = state;
+    public static Supervisor getInstance(){
+        if(instance == null){
+            instance = new Supervisor();
+        }
+        return instance;
     }
 
     public static void main(String[] args) {
-        Supervisor s = new Supervisor();
+        Supervisor s = new Supervisor().getInstance();
         s.onStart();
     }
 }

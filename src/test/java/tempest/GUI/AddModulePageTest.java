@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AddModulePageTest{
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = manager.getHomePage();
     AddModulePage modulePage = manager.getModulePage();
