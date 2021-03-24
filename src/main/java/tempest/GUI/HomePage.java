@@ -1,32 +1,34 @@
 package tempest.GUI;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class HomePage extends Page implements ActionListener{
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import tempest.GUI.components.LinkButton;
+
+public class HomePage extends Page {
     private final GUIManager manager;
 
     private JButton addModuleButton;
     private JButton addSessionButton;
 
-    public HomePage(GUIManager guiManager){
+    public HomePage(GUIManager guiManager) {
         this.manager = guiManager;
     }
 
-    public JPanel getPanel(){
+    @Override
+    public String getName() {
+        return "homePage";
+    }
+
+    public JPanel getPanel() {
         JPanel homePage = new JPanel();
 
         JPanel buttonPanel = new JPanel();
 
-        addModuleButton = new JButton("Add a new module");
-        addSessionButton = new JButton("Add a new session");
-
-        addModuleButton.setFocusable(false);
-        addSessionButton.setFocusable(false);
-
-        addModuleButton.addActionListener(this);
-        addSessionButton.addActionListener(this);
+        addModuleButton = new LinkButton("Add a new module", manager.getPageName(AddModulePage.class), this);
+        addSessionButton = new LinkButton("Add a new session", manager.getPageName(AddSessionPage.class), this);
 
         buttonPanel.add(addModuleButton);
         buttonPanel.add(addSessionButton);
@@ -37,15 +39,9 @@ public class HomePage extends Page implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
-        Object source = e.getSource();
-
-        if(source == addModuleButton){
-            manager.swapCard("addModule");
-        }
-        else if(source == addSessionButton){
-            manager.swapCard("addSession");
-        }
+    public void actionPerformed(ActionEvent e) {
+        LinkButton source = (LinkButton) e.getSource();
+        manager.swapCard(source.getDestination());
     }
 
     public JButton getAddModuleButton() {

@@ -1,24 +1,25 @@
 package tempest.GUI;
 
-import org.junit.Before;
-import org.junit.Test;
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.State;
-import tempest.Supervisor;
-
 import static org.junit.Assert.assertEquals;
 
-public class AddModulePageTest{
+import org.junit.Before;
+import org.junit.Test;
+
+import tempest.State;
+import tempest.Supervisor;
+import tempest.GUI.components.ActionButtonPanel;
+
+public class AddModulePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -28,10 +29,10 @@ public class AddModulePageTest{
         homePage.getAddModuleButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
-    public void createModule(String moduleName){
+    public void createModule(String moduleName) {
         homePage.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
@@ -46,7 +47,7 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void nullModule(){
+    public void nullModule() {
         int prevModuleNum = state.getModules().length;
         createModule("");
 
@@ -54,10 +55,13 @@ public class AddModulePageTest{
     }
 
     @Test
-    public void duplicateModules(){
+    public void duplicateModules() {
         int prevModuleNum = state.getModules().length;
 
         createModule("test");
+
+        actionButtonPanel.getCancelButtonInstance().doClick();
+
         createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);
