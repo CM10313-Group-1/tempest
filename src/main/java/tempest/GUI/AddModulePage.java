@@ -123,17 +123,6 @@ public class AddModulePage extends Page {
         dropDown.addModule(moduleName);
     }
 
-    /**
-     * Removes the module using state and updates the module drop down in
-     * GUIComponents
-     *
-     * @param moduleName Name of module to be removed
-     */
-    private void removeModule(String moduleName) {
-        state.deleteModule(moduleName);
-        dropDown.removeModule(moduleName);
-    }
-
     public ActionButtonPanel getComponents() {
         return actionButtonPanel;
     }

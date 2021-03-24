@@ -26,14 +26,14 @@ public class AddModulePageTest {
 
     @Test
     public void moduleCancelButton() {
-        homePage.getAddModuleButton().doClick();
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        homePage.getManageModulesButton().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), homePage.getName());
+        assertEquals(homePage.getName(), manager.getCurrentCard());
     }
 
     public void createModule(String moduleName) {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
     }
@@ -60,7 +60,7 @@ public class AddModulePageTest {
 
         createModule("test");
 
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
         createModule("test");
 
