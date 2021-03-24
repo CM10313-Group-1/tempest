@@ -11,7 +11,7 @@ import tempest.GUI.components.ActionButtonPanel;
 
 public class AddModulePageTest {
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);

@@ -5,7 +5,7 @@ import org.junit.Test;
 import tempest.Supervisor;
 
 public class SupervisorTest {
-  Supervisor s = new Supervisor();
+  Supervisor s = Supervisor.getInstance();
 
   @Test
   public void startsCorrectly() {
