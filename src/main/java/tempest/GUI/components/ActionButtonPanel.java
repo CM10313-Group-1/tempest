@@ -8,10 +8,13 @@ import tempest.GUI.Page;
 
 public class ActionButtonPanel extends JPanel {
     private static final long serialVersionUID = 9196271090552224373L;
-    private BackButton backButton;
+    private final BackButton backButton;
 
     /**
-     * Returns a button panel containing an enter button and a cancel button
+     * The created instance of ActionButtonPanel is a JPanel
+     * So just add it to the page's panel
+     *
+     * The panel contains an enter button and a cancel button
      *
      * The enter button needs to be retrieved and handled in the class which calls
      * this method
@@ -20,7 +23,6 @@ public class ActionButtonPanel extends JPanel {
      *
      * @param manager Manager instance
      * @param page    this (instance of class calling getButtonPanel)
-     * @return JPanel
      */
     public ActionButtonPanel(GUIManager manager, Page page) {
         super();
