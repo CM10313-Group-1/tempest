@@ -12,6 +12,18 @@ public class Supervisor{
     private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
     private static Supervisor instance;
+
+    private Supervisor(){
+
+    }
+
+    public static Supervisor getInstance(){
+        if(instance == null){
+            instance = new Supervisor();
+        }
+        return instance;
+    }
+
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);
@@ -29,14 +41,6 @@ public class Supervisor{
         } catch (IOException e) {
             System.err.println("Failed to save state");
         }
-    }
-    private Supervisor(){
-    }
-    public static Supervisor getInstance(){
-        if(instance == null){
-            instance = new Supervisor();
-        }
-        return instance;
     }
 
     public static void main(String[] args) {
