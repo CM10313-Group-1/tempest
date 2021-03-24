@@ -25,12 +25,12 @@ import tempest.GUI.components.ModuleDropDown;
 public class AddSessionPage extends Page {
     private final GUIManager manager;
     private final State state;
-    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel sessionPanel;
-    private JComboBox<Object> moduleDropDown;
+    private JComboBox<Object> dropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
     private JButton enterButton;
@@ -53,8 +53,8 @@ public class AddSessionPage extends Page {
 
         JPanel inputPanel = new JPanel();
 
-        moduleDropDown = dropDown.getModuleDropDown();
-        inputPanel.add(moduleDropDown);
+        dropDown = moduleDropDown.getModuleDropDown();
+        inputPanel.add(dropDown);
 
         hoursInput = new JTextField(2);
         JLabel hoursInputLabel = new JLabel("Hours");
@@ -101,11 +101,11 @@ public class AddSessionPage extends Page {
      * Handles the user trying to enter a session
      */
     private void handleAddingSession() {
-        if (moduleDropDown.getItemCount() < 1) { // No modules created, so can't add a session
+        if (dropDown.getItemCount() < 1) { // No modules created, so can't add a session
             return;
         }
 
-        String moduleName = Objects.requireNonNull(moduleDropDown.getSelectedItem()).toString();
+        String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
 
         String hours = hoursInput.getText();
         String minutes = minutesInput.getText();
