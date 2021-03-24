@@ -25,6 +25,11 @@ public class DeleteModulePage extends Page{
         this.manager = guiManager;
     }
 
+    @Override
+    public String getName() {
+        return "deleteModulePage";
+    }
+
     public JPanel getPanel(){
         deleteModulePanel = new JPanel();
         buttonPanel = new JPanel();

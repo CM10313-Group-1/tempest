@@ -26,14 +26,14 @@ public class AddModulePageTest {
 
     @Test
     public void moduleCancelButton() {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
         assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
     public void createModule(String moduleName) {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
     }

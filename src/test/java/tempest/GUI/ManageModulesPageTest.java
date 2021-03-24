@@ -13,9 +13,9 @@ public class ManageModulesPageTest{
     State state = new State();
     GUIManager manager = new GUIManager(state, supervisor);
 
-    HomePage homePage = manager.getHomePage();
-    ManageModulesPage manageModulesPage = manager.getManageModulesPage();
-    AddModulePage modulePage = manager.getModulePage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     ModuleDropDown moduleDropDown = new ModuleDropDown();
 
@@ -26,7 +26,7 @@ public class ManageModulesPageTest{
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getAddModuleButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "addModule");
+        assertEquals(manager.getCurrentCard(), "addModulePage");
     }
 
     public void clearModules(){
@@ -48,7 +48,7 @@ public class ManageModulesPageTest{
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getDeleteModuleButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "manageModules");
+        assertEquals(manager.getCurrentCard(), "manageModulesPage");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ManageModulesPageTest{
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getDeleteModuleButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "deleteModule");
+        assertEquals(manager.getCurrentCard(), "deleteModulePage");
     }
 
     @Test
@@ -66,6 +66,6 @@ public class ManageModulesPageTest{
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getCancelButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), "homePage");
     }
 }

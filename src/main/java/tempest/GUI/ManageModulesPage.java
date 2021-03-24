@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class ManageModulesPage extends Page{
-    private GUIManager manager;
-    private ModuleDropDown moduleDropDown = new ModuleDropDown();
+    private final GUIManager manager;
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private JPanel manageModulesPanel;
     private JPanel pageSwapPanel;
@@ -19,6 +19,11 @@ public class ManageModulesPage extends Page{
     private JComboBox<Object> dropDown;
 
     public ManageModulesPage(GUIManager guiManager){this.manager = guiManager;}
+
+    @Override
+    public String getName() {
+        return "manageModulesPage";
+    }
 
     public JPanel getPanel(){
         manageModulesPanel = new JPanel();
@@ -52,13 +57,8 @@ public class ManageModulesPage extends Page{
      * modules to delete.
      */
     public void update(){
-        if(dropDown.getItemCount() == 0){
-            deleteModuleButton.setEnabled(false);
-        }
         // If a module/modules have been created then the button is active again
-        else{
-            deleteModuleButton.setEnabled(true);
-        }
+        deleteModuleButton.setEnabled(dropDown.getItemCount() != 0);
     }
 
     @Override
@@ -66,10 +66,10 @@ public class ManageModulesPage extends Page{
         Object source = e.getSource();
 
         if(source == addModuleButton){
-            manager.swapCard("addModule");
+            manager.swapCard("addModulePage");
         }
         else if(source == deleteModuleButton){
-            manager.swapCard("deleteModule");
+            manager.swapCard("deleteModulePage");
         }
         else if(source == cancelButton){
             manager.swapToPrevCard();

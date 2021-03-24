@@ -6,14 +6,13 @@ import tempest.Supervisor;
 import static org.junit.Assert.assertEquals;
 
 public class DeleteModulePageTest{
-    Supervisor supervisor = new Supervisor();
     State state = new State();
-    GUIManager manager = new GUIManager(state, supervisor);
+    GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
-    ManageModulesPage manageModulesPage = manager.getManageModulesPage();
-    DeleteModulePage deleteModulePage = manager.getDeleteModulePage();
-    AddModulePage modulePage = manager.getModulePage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     public void createModule(String moduleName){
         // Creating a new module called test
@@ -29,7 +28,7 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getCancelButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "manageModules");
+        assertEquals(manager.getCurrentCard(), "manageModulesPage");
     }
 
     @Test
@@ -51,7 +50,7 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getDeleteButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "manageModules");
+        assertEquals(manager.getCurrentCard(), "manageModulesPage");
     }
 
     @Test
@@ -63,6 +62,6 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getDeleteButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "deleteModule");
+        assertEquals(manager.getCurrentCard(), "deleteModulePage");
     }
 }
