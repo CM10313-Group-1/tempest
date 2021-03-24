@@ -36,7 +36,7 @@ public class ActionButtonPanel extends JPanel {
 
     }
 
-    public JButton getCancelButtonInstance() {
+    public JButton getBackButtonInstance() {
         return backButton;
     }
 }

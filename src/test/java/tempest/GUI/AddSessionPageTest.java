@@ -29,7 +29,7 @@ public class AddSessionPageTest {
     @Test
     public void sessionCancelButton() {
         homePage.getAddSessionButton().doClick();
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
         assertEquals(manager.getCurrentCard(), homePage.getName());
     }
@@ -157,7 +157,7 @@ public class AddSessionPageTest {
 
         int[] result1 = createSession("23", "58", testModule);
 
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
         int[] result2 = createSession("", "3", testModule);
 
