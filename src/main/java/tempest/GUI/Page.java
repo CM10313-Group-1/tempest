@@ -1,8 +1,9 @@
 package tempest.GUI;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 
 /**
  * All page classes should extend this class
@@ -18,13 +19,27 @@ public abstract class Page implements ActionListener {
      */
     public abstract JPanel getPanel();
 
-
-    // Can't be abstract because there might be a page class that doesn't implement ActionListener
+    // Can't be abstract because there might be a page class that doesn't implement
+    // ActionListener
     public void actionPerformed(ActionEvent e) {
         System.err.println("One of the page classes your using needs an actionPerformed() method");
     }
 
+    /**
+     * Used by a clear button to clear input fields in a page
+     */
     public void clearInput() {
         System.err.println("One of the page classes your using needs an clearInput() method");
     }
+
+    /**
+     * Ensures all pages have a getName() method
+     *
+     * Used when adding all pages to the cardlayout in the manager
+     *
+     * The name of the page is used to identify the page in the cardlayout
+     *
+     * @return String - Name of the page
+     */
+    public abstract String getName();
 }

@@ -1,26 +1,27 @@
 package tempest.GUI;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import tempest.GUI.components.ActionButtonPanel;
+
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
+import tempest.GUI.components.ActionButtonPanel;
 
-import static org.junit.Assert.assertEquals;
-
-public class AddSessionPageTest{
+public class AddSessionPageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
-    HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
-    AddSessionPage sessionPage = manager.getSessionPage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddSessionPage sessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
     @Before
-    public void turnOffErrorMessages(){
+    public void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -30,10 +31,10 @@ public class AddSessionPageTest{
         homePage.getAddSessionButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
-    public Module createModule(String moduleName){
+    public Module createModule(String moduleName) {
         Module testModule = null;
 
         // Creating a new module called test2
@@ -52,7 +53,7 @@ public class AddSessionPageTest{
         return testModule;
     }
 
-    public int[] createSession(String hours, String mins, Module testModule){
+    public int[] createSession(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
@@ -62,7 +63,7 @@ public class AddSessionPageTest{
         sessionPage.getEnterButton().doClick();
 
         // Returns values to test
-        return new int[]{prevSessionsLen, testModule.getStudySessions().length};
+        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
 
     @Test
@@ -80,7 +81,7 @@ public class AddSessionPageTest{
     }
 
     @Test
-    public void minSession(){
+    public void minSession() {
         Module testModule = createModule("test");
         int[] result = createSession("", "51", testModule);
         assertEquals(result[0] + 1, result[1]);
@@ -152,17 +153,13 @@ public class AddSessionPageTest{
     }
 
     @Test
-    public void hourMinSessionOverADay() {
-        Module testModule = createModule("test");
-        int[] result = createSession("18", "946", testModule);
-        assertEquals(result[0], result[1]);
-    }
-
-    @Test
     public void totalSessionsOverADay() {
         Module testModule = createModule("test");
 
         int[] result1 = createSession("23", "58", testModule);
+
+        actionButtonPanel.getCancelButtonInstance().doClick();
+
         int[] result2 = createSession("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);
