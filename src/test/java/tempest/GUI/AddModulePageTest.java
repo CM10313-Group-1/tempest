@@ -29,7 +29,7 @@ public class AddModulePageTest {
         homePage.getManageModulesButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), homePage.getName());
+        assertEquals(homePage.getName(), manager.getCurrentCard());
     }
 
     public void createModule(String moduleName) {

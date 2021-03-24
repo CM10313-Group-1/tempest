@@ -31,7 +31,7 @@ public class AddSessionPageTest {
         homePage.getAddSessionButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), homePage.getName());
+        assertEquals(homePage.getName(), manager.getCurrentCard());
     }
 
     public Module createModule(String moduleName) {
