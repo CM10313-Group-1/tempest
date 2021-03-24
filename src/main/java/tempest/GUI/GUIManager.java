@@ -41,6 +41,8 @@ public class GUIManager {
         pages.add(new HomePage(this));
         pages.add(new AddModulePage(state, this));
         pages.add(new AddSessionPage(state, this));
+        pages.add(new DeleteModulePage(state, this));
+        pages.add(new ManageModulesPage(this));
     }
 
     /**
@@ -92,6 +94,12 @@ public class GUIManager {
      * @param cardName The name of the card to switch to
      */
     private void changeCard(String cardName) {
+        // Allows the delete module button to be disabled when no modules to delete
+        for (Page p : pages) {
+            if (p.getName().equals("manageModulesPage")) {
+                ((ManageModulesPage) p).update();
+            }
+        }
         Component prevPanel = getVisibleCard();
 
         cl.show(cardPanel, cardName);

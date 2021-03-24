@@ -29,16 +29,16 @@ public class AddSessionPageTest {
     @Test
     public void sessionCancelButton() {
         homePage.getAddSessionButton().doClick();
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), homePage.getName());
+        assertEquals(homePage.getName(), manager.getCurrentCard());
     }
 
     public Module createModule(String moduleName) {
         Module testModule = null;
 
         // Creating a new module called test2
-        homePage.getAddModuleButton().doClick();
+        homePage.getAddSessionButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
 
@@ -57,7 +57,6 @@ public class AddSessionPageTest {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
-        homePage.getAddSessionButton().doClick();
         sessionPage.setHours(hours);
         sessionPage.setMins(mins);
         sessionPage.getEnterButton().doClick();
@@ -158,7 +157,7 @@ public class AddSessionPageTest {
 
         int[] result1 = createSession("23", "58", testModule);
 
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
         int[] result2 = createSession("", "3", testModule);
 

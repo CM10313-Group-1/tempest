@@ -25,9 +25,9 @@ public class GUIManagerTest {
 
     @Test
     public void addModuleButton() {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(AddModulePage.class));
+        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
     }
 
     @Test

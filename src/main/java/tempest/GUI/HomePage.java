@@ -10,7 +10,7 @@ import tempest.GUI.components.LinkButton;
 public class HomePage extends Page {
     private final GUIManager manager;
 
-    private JButton addModuleButton;
+    private JButton manageModulesButton;
     private JButton addSessionButton;
 
     public HomePage(GUIManager guiManager) {
@@ -27,10 +27,10 @@ public class HomePage extends Page {
 
         JPanel buttonPanel = new JPanel();
 
-        addModuleButton = new LinkButton("Add a new module", manager.getPageName(AddModulePage.class), this);
+        manageModulesButton = new LinkButton("Manage modules", manager.getPageName(ManageModulesPage.class), this);
         addSessionButton = new LinkButton("Add a new session", manager.getPageName(AddSessionPage.class), this);
 
-        buttonPanel.add(addModuleButton);
+        buttonPanel.add(manageModulesButton);
         buttonPanel.add(addSessionButton);
 
         homePage.add(buttonPanel);
@@ -44,8 +44,8 @@ public class HomePage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    public JButton getAddModuleButton() {
-        return addModuleButton;
+    public JButton getManageModulesButton() {
+        return manageModulesButton;
     }
 
     public JButton getAddSessionButton() {
