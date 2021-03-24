@@ -37,7 +37,6 @@ public class AddSessionPageTest{
         Module testModule = null;
 
         // Creating a new module called test2
-        homePage.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
 
@@ -56,7 +55,6 @@ public class AddSessionPageTest{
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
-        homePage.getAddSessionButton().doClick();
         sessionPage.setHours(hours);
         sessionPage.setMins(mins);
         sessionPage.getEnterButton().doClick();

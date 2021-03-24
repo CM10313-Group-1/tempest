@@ -17,6 +17,8 @@ public class GUIManager {
     private HomePage home;
     private AddModulePage addModule;
     private AddSessionPage addSession;
+    private ManageModulesPage manageModules;
+    private DeleteModulePage deleteModule;
 
     private String currentCard;
     private final Stack<String> cards = new Stack<>();
@@ -42,6 +44,8 @@ public class GUIManager {
         home = new HomePage(this);
         addModule = new AddModulePage(state, this);
         addSession = new AddSessionPage(state, this);
+        manageModules = new ManageModulesPage(this);
+        deleteModule = new DeleteModulePage(state, this);
 
         cardPanel = new JPanel();
         cl = new CardLayout();
@@ -52,6 +56,8 @@ public class GUIManager {
         cardPanel.add(home.getPanel(), "home");
         cardPanel.add(addModule.getPanel(), "addModule");
         cardPanel.add(addSession.getPanel(), "addSession");
+        cardPanel.add(manageModules.getPanel(), "manageModules");
+        cardPanel.add(deleteModule.getPanel(), "deleteModule");
 
         currentCard = "home"; // 1st Card
 
@@ -91,6 +97,7 @@ public class GUIManager {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
+        updateDeleteModuleButton();
         changeCard(cardName);
         cards.add(currentCard);
         currentCard = cardName;
@@ -100,9 +107,18 @@ public class GUIManager {
      * Switches to the previous card
      */
     public void swapToPrevCard() {
+        updateDeleteModuleButton();
         String prevCard = cards.pop();
         changeCard(prevCard);
         currentCard = prevCard;
+    }
+
+    /**
+     * Allows the delete module button to be disabled when there
+     * are no modules to delete and re-enabled when a module is created.
+     */
+    private void updateDeleteModuleButton(){
+        manageModules.update();
     }
 
     public HomePage getHomePage() {
@@ -116,6 +132,10 @@ public class GUIManager {
     public AddSessionPage getSessionPage() {
         return addSession;
     }
+
+    public ManageModulesPage getManageModulesPage(){return manageModules;}
+
+    public DeleteModulePage getDeleteModulePage(){return deleteModule;}
 
     public String getCurrentCard() {
         return currentCard;

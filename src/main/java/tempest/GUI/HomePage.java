@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class HomePage extends Page implements ActionListener{
     private final GUIManager manager;
 
-    private JButton addModuleButton;
+    private JButton manageModulesButton;
     private JButton addSessionButton;
 
     public HomePage(GUIManager guiManager){
@@ -19,16 +19,16 @@ public class HomePage extends Page implements ActionListener{
 
         JPanel buttonPanel = new JPanel();
 
-        addModuleButton = new JButton("Add a new module");
+        manageModulesButton = new JButton("Manage modules");
         addSessionButton = new JButton("Add a new session");
 
-        addModuleButton.setFocusable(false);
+        manageModulesButton.setFocusable(false);
         addSessionButton.setFocusable(false);
 
-        addModuleButton.addActionListener(this);
+        manageModulesButton.addActionListener(this);
         addSessionButton.addActionListener(this);
 
-        buttonPanel.add(addModuleButton);
+        buttonPanel.add(manageModulesButton);
         buttonPanel.add(addSessionButton);
 
         homePage.add(buttonPanel);
@@ -40,16 +40,16 @@ public class HomePage extends Page implements ActionListener{
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
 
-        if(source == addModuleButton){
-            manager.swapCard("addModule");
+        if(source == manageModulesButton){
+            manager.swapCard("manageModules");
         }
         else if(source == addSessionButton){
             manager.swapCard("addSession");
         }
     }
 
-    public JButton getAddModuleButton() {
-        return addModuleButton;
+    public JButton getManageModulesButton() {
+        return manageModulesButton;
     }
 
     public JButton getAddSessionButton() {
