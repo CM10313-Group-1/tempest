@@ -1,22 +1,20 @@
 package tempest.ui.components;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import tempest.ui.GUIManager;
 import tempest.ui.pages.Page;
 
-public class ActionButtonPanel implements ActionListener {
-
-    private JButton cancelButton;
-
-    private GUIManager manager;
+public class ActionButtonPanel extends JPanel {
+    private static final long serialVersionUID = 9196271090552224373L;
+    private final BackButton backButton;
 
     /**
-     * Returns a button panel containing an enter button and a cancel button
+     * The created instance of ActionButtonPanel is a JPanel So just add it to the
+     * page's panel
+     *
+     * The panel contains an enter button and a cancel button
      *
      * The enter button needs to be retrieved and handled in the class which calls
      * this method
@@ -25,47 +23,20 @@ public class ActionButtonPanel implements ActionListener {
      *
      * @param manager Manager instance
      * @param page    this (instance of class calling getButtonPanel)
-     * @return JPanel
      */
-    public JPanel getButtonPanel(GUIManager manager, Page page) {
-        this.manager = manager;
-
-        JPanel buttonPanel = new JPanel();
-
+    public ActionButtonPanel(GUIManager manager, Page page) {
+        super();
+        this.backButton = new BackButton(manager);
         JButton enterButton = new JButton("Enter");
         enterButton.setFocusable(false);
         enterButton.addActionListener(page);
 
-        buttonPanel.add(getCancelButton());
-        buttonPanel.add(enterButton);
+        this.add(backButton);
+        this.add(enterButton);
 
-        return buttonPanel;
     }
 
-    public JButton getCancelButton() {
-        cancelButton = new JButton("Cancel");
-        cancelButton.setFocusable(false);
-        cancelButton.addActionListener(this);
-
-        return cancelButton;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cancelButton) {
-            manager.swapToPrevCard();
-        }
-    }
-
-    /**
-     * Returns a cancel button
-     *
-     * Used by the test classes to get a pages cancel button
-     *
-     * @return JButton
-     */
     public JButton getCancelButtonInstance() {
-        return cancelButton;
+        return backButton;
     }
-
 }

@@ -14,7 +14,7 @@ public class GUIManagerTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
 
     // *** Button Tests ***
 
@@ -29,13 +29,13 @@ public class GUIManagerTest {
     public void addModuleButton() {
         homePage.getAddModuleButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "addModule");
+        assertEquals(manager.getCurrentCard(), manager.getPageName(AddModulePage.class));
     }
 
     @Test
     public void addSessionButton() {
         homePage.getAddSessionButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "addSession");
+        assertEquals(manager.getCurrentCard(), manager.getPageName(AddSessionPage.class));
     }
 }

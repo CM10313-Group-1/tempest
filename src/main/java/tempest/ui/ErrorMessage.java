@@ -3,18 +3,20 @@ package tempest.ui;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class ErrorMessage{
+public class ErrorMessage {
     private static boolean messagesShown = true;
 
-    public ErrorMessage(){}
+    public void showMessage(JPanel parent, Exception exception) {
+        String message = exception.getMessage();
 
-    public void showMessage(JPanel parent, String message){
-        if(messagesShown){
+        if (messagesShown) {
             JOptionPane.showMessageDialog(parent, message, "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            System.err.println(message);
         }
     }
 
-    public void setMessagesShown(boolean show){
+    public void setMessagesShown(boolean show) {
         messagesShown = show;
     }
 }

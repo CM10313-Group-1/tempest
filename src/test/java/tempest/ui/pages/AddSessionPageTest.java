@@ -16,9 +16,9 @@ public class AddSessionPageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
-    HomePage homePage = manager.getHomePage();
-    AddModulePage modulePage = manager.getModulePage();
-    AddSessionPage sessionPage = manager.getSessionPage();
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddSessionPage sessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
 
@@ -33,7 +33,7 @@ public class AddSessionPageTest {
         homePage.getAddSessionButton().doClick();
         actionButtonPanel.getCancelButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), "home");
+        assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
     public Module createModule(String moduleName) {
@@ -155,17 +155,13 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void hourMinSessionOverADay() {
-        Module testModule = createModule("test");
-        int[] result = createSession("18", "946", testModule);
-        assertEquals(result[0], result[1]);
-    }
-
-    @Test
     public void totalSessionsOverADay() {
         Module testModule = createModule("test");
 
         int[] result1 = createSession("23", "58", testModule);
+
+        actionButtonPanel.getCancelButtonInstance().doClick();
+
         int[] result2 = createSession("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);

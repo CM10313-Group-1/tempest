@@ -19,9 +19,8 @@ import tempest.ui.components.ModuleDropDown;
 public class AddModulePage extends Page {
     private final State state;
     private final GUIManager manager;
-    private final ClearButton components = new ClearButton();
     private final ModuleDropDown dropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel = new ActionButtonPanel();
+    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JPanel modulePanel;
@@ -31,17 +30,22 @@ public class AddModulePage extends Page {
     public AddModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
+        this.actionButtonPanel = new ActionButtonPanel(manager, this);
+    }
+
+    @Override
+    public String getName() {
+        return "addModulePage";
     }
 
     public JPanel getPanel() {
         modulePanel = new JPanel();
 
-        JPanel buttonPanel = actionButtonPanel.getButtonPanel(manager, this);
-        enterButton = (JButton) buttonPanel.getComponent(1);
+        enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
         JLabel moduleInputLabel = new JLabel("Enter module name:");
-        JButton clearButton = components.getClearButton(this);
+        ClearButton clearButton = new ClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
@@ -49,7 +53,7 @@ public class AddModulePage extends Page {
         inputPanel.add(clearButton);
 
         modulePanel.add(inputPanel, BorderLayout.NORTH);
-        modulePanel.add(buttonPanel, BorderLayout.SOUTH);
+        modulePanel.add(actionButtonPanel, BorderLayout.SOUTH);
 
         return modulePanel;
     }
@@ -70,7 +74,7 @@ public class AddModulePage extends Page {
         String moduleName = moduleNameInput.getText();
 
         if (moduleName.equals("")) {
-            errorMessage("Invalid module name");
+            errorMessage(new Exception("Invalid module name"));
             return;
         }
 
@@ -79,7 +83,7 @@ public class AddModulePage extends Page {
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
-                errorMessage("Another module already has this name");
+                errorMessage(new Exception("Another module already has this name"));
                 uniqueName = false;
                 break;
             }
@@ -96,6 +100,7 @@ public class AddModulePage extends Page {
     /**
      * Clears the module name JTextField input
      */
+    @Override
     public void clearInput() {
         moduleNameInput.setText(""); // Clearing inputted module name
     }
@@ -105,7 +110,7 @@ public class AddModulePage extends Page {
      *
      * @param message The error message to be printed in the pop up
      */
-    public void errorMessage(String message) {
+    private void errorMessage(Exception message) {
         errorMessage.showMessage(modulePanel, message);
     }
 
@@ -115,7 +120,7 @@ public class AddModulePage extends Page {
      *
      * @param moduleName Name of module to be created
      */
-    public void addModule(String moduleName) {
+    private void addModule(String moduleName) {
         state.createModule(moduleName);
         dropDown.addModule(moduleName);
     }
@@ -126,7 +131,7 @@ public class AddModulePage extends Page {
      *
      * @param moduleName Name of module to be removed
      */
-    public void removeModule(String moduleName) {
+    private void removeModule(String moduleName) {
         state.deleteModule(moduleName);
         dropDown.removeModule(moduleName);
     }
