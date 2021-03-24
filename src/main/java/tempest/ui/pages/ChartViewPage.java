@@ -22,4 +22,9 @@ public class ChartViewPage extends Page {
     return chartPanel;
   }
 
+  @Override
+  public String getName() {
+    return "chartView";
+  }
+
 }
