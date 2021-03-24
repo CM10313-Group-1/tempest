@@ -1,6 +1,7 @@
 package tempest.GUI;
 import tempest.GUI.components.ActionButtonPanel;
 import tempest.GUI.components.BackButton;
+import tempest.GUI.components.LinkButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +11,6 @@ import java.awt.event.ActionListener;
 public class SessionsPage extends Page implements ActionListener {
     private final GUIManager manager;
 
-    private JButton deleteSessions;
-    private JButton addSessions;
-
     private BackButton backButton;
 
     public SessionsPage(GUIManager guiManager){
@@ -21,7 +19,7 @@ public class SessionsPage extends Page implements ActionListener {
 
     @Override
     public String getName() {
-        return null;
+        return "sessionsPage";
     }
 
     public JPanel getPanel(){
@@ -31,19 +29,13 @@ public class SessionsPage extends Page implements ActionListener {
         backPanel.add(backButton);
 
         JPanel optionsPanel = new JPanel();
-        optionsPanel.setLayout(new FlowLayout());
+        optionsPanel.setLayout(new FlowLayout()); // TODO: Layout needed???
 
-        deleteSessions = new JButton("Delete study sessions");
-        addSessions = new JButton("Add study sessions");
+        JButton delSessionsButton = new LinkButton("View and delete study sessions", manager.getPageName(AddSessionPage.class), this);
+        JButton addSessionsButton = new LinkButton("Add study sessions", manager.getPageName(DeleteSessionsPage.class), this);
 
-        deleteSessions.addActionListener(this);
-        addSessions.addActionListener(this);
-
-        deleteSessions.setFocusable(false);
-        addSessions.setFocusable(false);
-
-        optionsPanel.add(deleteSessions);
-        optionsPanel.add(addSessions);
+        optionsPanel.add(delSessionsButton);
+        optionsPanel.add(addSessionsButton);
 
         JPanel sessionsPanel = new JPanel();
         sessionsPanel.setLayout(new BoxLayout(sessionsPanel, BoxLayout.Y_AXIS));
@@ -56,13 +48,8 @@ public class SessionsPage extends Page implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
-        Object source = e.getSource();
-
-        if(source == addSessions){
-            manager.swapCard("addSessionPage");
-        } else if (source == deleteSessions) {
-            manager.swapCard("deleteSessionPage");
-        }
+        LinkButton source = (LinkButton) e.getSource();
+        manager.swapCard(source.getDestination());
     }
 
     /**
