@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DeleteModulePageTest{
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);

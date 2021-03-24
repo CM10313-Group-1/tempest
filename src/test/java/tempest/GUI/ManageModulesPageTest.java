@@ -9,7 +9,7 @@ import tempest.Supervisor;
 import static org.junit.Assert.*;
 
 public class ManageModulesPageTest{
-    Supervisor supervisor = new Supervisor();
+    Supervisor supervisor = Supervisor.getInstance();
     State state = new State();
     GUIManager manager = new GUIManager(state, supervisor);
 

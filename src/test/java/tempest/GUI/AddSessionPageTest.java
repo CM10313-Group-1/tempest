@@ -38,6 +38,7 @@ public class AddSessionPageTest {
         Module testModule = null;
 
         // Creating a new module called test2
+        homePage.getAddSessionButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
 
