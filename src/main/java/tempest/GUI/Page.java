@@ -11,6 +11,17 @@ import javax.swing.JPanel;
 public abstract class Page implements ActionListener {
 
     /**
+     * Ensures all pages have a getName() method
+     *
+     * Used when adding all pages to the cardlayout in the manager
+     *
+     * The name of the page is used to identify the page in the cardlayout
+     *
+     * @return String - Name of the page
+     */
+    public abstract String getName();
+
+    /**
      * Ensures all pages have a getPanel() method
      *
      * May also be useful if need to call page.getPanel()
@@ -31,15 +42,4 @@ public abstract class Page implements ActionListener {
     public void clearInput() {
         System.err.println("One of the page classes your using needs an clearInput() method");
     }
-
-    /**
-     * Ensures all pages have a getName() method
-     *
-     * Used when adding all pages to the cardlayout in the manager
-     *
-     * The name of the page is used to identify the page in the cardlayout
-     *
-     * @return String - Name of the page
-     */
-    public abstract String getName();
 }
