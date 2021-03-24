@@ -40,7 +40,7 @@ public class Supervisor{
     }
 
     public static void main(String[] args) {
-        Supervisor s = new Supervisor().getInstance();
+        Supervisor s = Supervisor.getInstance();
         s.onStart();
     }
 }
