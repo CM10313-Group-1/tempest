@@ -28,7 +28,7 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getCancelButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "manageModulesPage");
+        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getDeleteButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "manageModulesPage");
+        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
     }
 
     @Test
@@ -62,6 +62,6 @@ public class DeleteModulePageTest{
         manageModulesPage.getDeleteModuleButton().doClick();
         deleteModulePage.getDeleteButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), "deleteModulePage");
+        assertEquals(manager.getCurrentCard(), manager.getPageName(DeleteModulePage.class));
     }
 }
