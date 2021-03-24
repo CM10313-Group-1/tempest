@@ -33,7 +33,7 @@ public class GUIManagerTest {
     @Test
     public void addSessionButton() {
         //TODO: FIX
-        homePage.getSessionsButton().doClick();
+        homePage.getAddSessionButton().doClick();
 
         assertEquals(manager.getCurrentCard(), manager.getPageName(AddSessionPage.class));
     }

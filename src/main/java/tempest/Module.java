@@ -123,4 +123,8 @@ public class Module {
             return false;
         }
     }
+
+    public void removeSesison(StudySession session) {
+
+    }
 }
