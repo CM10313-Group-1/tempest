@@ -1,15 +1,18 @@
 package tempest.GUI;
 
-import tempest.GUI.components.ModuleDropDown;
-import tempest.State;
-import tempest.Supervisor;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Stack;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import tempest.State;
+import tempest.Supervisor;
+import tempest.GUI.components.ModuleDropDown;
 
 public class GUIManager {
     private static JPanel cardPanel;
@@ -23,7 +26,7 @@ public class GUIManager {
     private final State state;
     private final Supervisor supervisor;
 
-    public GUIManager(State state, Supervisor supervisor){
+    public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
         this.supervisor = supervisor;
         start();
@@ -43,7 +46,7 @@ public class GUIManager {
     /**
      * Sets up and runs the GUI
      */
-    private void start(){
+    private void start() {
         // Creating the module drop down
         ModuleDropDown dropDown = new ModuleDropDown();
         dropDown.createModuleDropDown(state);
@@ -74,7 +77,7 @@ public class GUIManager {
         });
 
         // Frame Settings
-        frame.setSize(500,150);
+        frame.setSize(500, 150);
         frame.setTitle("Tempest");
         frame.setLocationRelativeTo(null); // Centering GUI
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,7 +91,7 @@ public class GUIManager {
      *
      * @param cardName The name of the card to switch to
      */
-    private void changeCard(String cardName){
+    private void changeCard(String cardName) {
         Component prevPanel = getVisibleCard();
 
         cl.show(cardPanel, cardName);
@@ -103,13 +106,13 @@ public class GUIManager {
     /**
      * Used to find which panel is currently showing
      *
-     * Method from: https://stackoverflow.com/questions/6040989/check-if-a-card-with-a-name-is-present-in-a-cardlayout
+     * Method from:
+     * https://stackoverflow.com/questions/6040989/check-if-a-card-with-a-name-is-present-in-a-cardlayout
      *
      * @return Component - The currently showing card
      */
-    private Component getVisibleCard()
-    {
-        for(Component c : cardPanel.getComponents()) {
+    private Component getVisibleCard() {
+        for (Component c : cardPanel.getComponents()) {
             if (c.isVisible()) {
                 return c;
             }
@@ -121,7 +124,8 @@ public class GUIManager {
     /**
      * Swaps to the entered card name
      *
-     * Used to move back up the tree of cards/pages along the path taken on the way down
+     * Used to move back up the tree of cards/pages along the path taken on the way
+     * down
      *
      * @param cardName Name of the card to swap to
      */

@@ -1,15 +1,16 @@
 package tempest.GUI;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import tempest.GUI.components.ActionButtonPanel;
+
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
+import tempest.GUI.components.ActionButtonPanel;
 
-import static org.junit.Assert.assertEquals;
-
-public class AddSessionPageTest{
+public class AddSessionPageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, new Supervisor());
 
@@ -33,7 +34,7 @@ public class AddSessionPageTest{
         assertEquals(manager.getCurrentCard(), homePage.getName());
     }
 
-    public Module createModule(String moduleName){
+    public Module createModule(String moduleName) {
         Module testModule = null;
 
         // Creating a new module called test2
@@ -62,7 +63,7 @@ public class AddSessionPageTest{
         sessionPage.getEnterButton().doClick();
 
         // Returns values to test
-        return new int[]{prevSessionsLen, testModule.getStudySessions().length};
+        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
 
     @Test

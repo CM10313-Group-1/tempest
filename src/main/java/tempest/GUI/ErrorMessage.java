@@ -1,22 +1,22 @@
 package tempest.GUI;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-public class ErrorMessage{
+public class ErrorMessage {
     private static boolean messagesShown = true;
 
-    public void showMessage(JPanel parent, Exception message){
-
-        String messageStr = message.getMessage();
+    public void showMessage(JPanel parent, Exception exception) {
+        String message = exception.getMessage();
 
         if (messagesShown) {
-            JOptionPane.showMessageDialog(parent, messageStr, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, message, "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            System.err.println(messageStr);
+            System.err.println(message);
         }
     }
 
-    public void setMessagesShown(boolean show){
+    public void setMessagesShown(boolean show) {
         messagesShown = show;
     }
 }

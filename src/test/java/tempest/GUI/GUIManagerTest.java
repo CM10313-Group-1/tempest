@@ -1,11 +1,12 @@
 package tempest.GUI;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import tempest.State;
 import tempest.Supervisor;
-
-import static org.junit.Assert.*;
 
 public class GUIManagerTest {
     State state = new State();

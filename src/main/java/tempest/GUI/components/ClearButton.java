@@ -8,8 +8,8 @@ public class ClearButton extends JButton {
     private static final long serialVersionUID = -857346759811441764L;
 
     /**
-     * The created instance of ClearButton is a clear button
-     * So just it to the page's panel
+     * The created instance of ClearButton is a clear button so just add it to the
+     * page's panel
      *
      * The page calling this needs a clearInput() method
      *

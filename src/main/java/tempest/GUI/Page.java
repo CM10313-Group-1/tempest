@@ -1,8 +1,9 @@
 package tempest.GUI;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 
 /**
  * All page classes should extend this class
@@ -18,8 +19,8 @@ public abstract class Page implements ActionListener {
      */
     public abstract JPanel getPanel();
 
-
-    // Can't be abstract because there might be a page class that doesn't implement ActionListener
+    // Can't be abstract because there might be a page class that doesn't implement
+    // ActionListener
     public void actionPerformed(ActionEvent e) {
         System.err.println("One of the page classes your using needs an actionPerformed() method");
     }
