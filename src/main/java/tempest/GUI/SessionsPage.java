@@ -17,6 +17,11 @@ public class SessionsPage extends Page implements ActionListener {
         this.manager = guiManager;
     }
 
+    @Override
+    public String getName() {
+        return null;
+    }
+
     public JPanel getPanel(){
         JPanel cancelPanel = new JPanel();
 
