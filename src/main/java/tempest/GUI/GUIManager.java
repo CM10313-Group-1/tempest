@@ -44,7 +44,7 @@ public class GUIManager {
         pages.add(new ManageModulesPage(this));
         pages.add(new DeleteModulePage(state, this));
         pages.add(new ManageSessionsPage(this));
-        pages.add(new DeleteSessionsPage(state, this));
+        pages.add(new DeleteSessionPage(state, this));
     }
 
     /**

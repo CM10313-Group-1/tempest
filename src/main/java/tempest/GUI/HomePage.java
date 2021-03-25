@@ -28,7 +28,7 @@ public class HomePage extends Page {
         JPanel buttonPanel = new JPanel();
 
         manageModulesButton = new LinkButton("Manage modules", manager.getPageName(ManageModulesPage.class), this);
-        addSessionButton = new LinkButton("Add a new session", manager.getPageName(AddSessionPage.class), this);
+        addSessionButton = new LinkButton("Manage Sessions", manager.getPageName(ManageSessionsPage.class), this);
 
         buttonPanel.add(manageModulesButton);
         buttonPanel.add(addSessionButton);
