@@ -24,6 +24,7 @@ public class ManageModulesPageTest {
 
     @Test
     public void addModuleButton() {
+        //FIXME
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getAddModuleButton().doClick();
 

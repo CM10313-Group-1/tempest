@@ -10,6 +10,7 @@ public class Supervisor{
 
     private static final String STORE = "store.csv";
     private static State state;
+    private static GUIManager guiManager;
     private final CSVInterface csvInterface = new CSVInterface();
     private static Supervisor instance;
 
@@ -32,7 +33,7 @@ public class Supervisor{
             state = new State();
         }
 
-        new GUIManager(state, this);
+        guiManager = new GUIManager(state, this);
     }
 
     public void onClose() {
@@ -44,6 +45,19 @@ public class Supervisor{
     }
 
     public static void main(String[] args) {
+        Supervisor s = Supervisor.getInstance();
+        s.onStart();
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public GUIManager getManager() {
+        return guiManager;
+    }
+
+    public void start() {
         Supervisor s = Supervisor.getInstance();
         s.onStart();
     }

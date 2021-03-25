@@ -39,12 +39,12 @@ public class GUIManager {
         pages = new ArrayList<>();
 
         pages.add(new HomePage(this));
+        pages.add(new ManageModulesPage(this));
+        pages.add(new ManageSessionsPage(this));
         pages.add(new AddModulePage(state, this));
         pages.add(new AddSessionPage(state, this));
-        pages.add(new ManageModulesPage(this));
-        pages.add(new DeleteModulePage(state, this));
-        pages.add(new ManageSessionsPage(this));
-        pages.add(new DeleteSessionPage(state, this));
+        //pages.add(new DeleteModulePage(state, this));
+        //pages.add(new DeleteSessionPage(state, this));
     }
 
     /**

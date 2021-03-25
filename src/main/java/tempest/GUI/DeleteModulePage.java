@@ -69,6 +69,11 @@ public class DeleteModulePage extends Page {
      * Handles deleting the module and updating the module drop down
      */
     private void handleDeletingModule() {
+        // Checks if there are no modules to delete
+        if (dropDown.getItemCount() == 0) {
+            return;
+        }
+
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
 
         state.deleteModule(moduleName);

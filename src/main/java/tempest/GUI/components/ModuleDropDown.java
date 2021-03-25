@@ -30,6 +30,8 @@ public class ModuleDropDown {
      * @return JComboBox containing all created modules
      */
     public JComboBox<Object> getModuleDropDown() {
+        moduleDropDown.setVisible(true);
+
         return moduleDropDown;
     }
 

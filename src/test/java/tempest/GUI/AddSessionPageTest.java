@@ -11,14 +11,21 @@ import tempest.Supervisor;
 import tempest.GUI.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
+    GUIHelpher helper = new GUIHelpher();
+
+    Supervisor supervisor = Supervisor.getInstance();
+
+    State state = supervisor.getState();
+    GUIManager manager = supervisor.getManager();
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-    AddSessionPage sessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
+    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
+    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddSessionPage addSessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
+
+    ActionButtonPanel actionButtonPanel = addSessionPage.getComponents();
 
     @Before
     public void turnOffErrorMessages() {
@@ -27,19 +34,22 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void sessionCancelButton() {
-        //TODO: FIX
-        homePage.getAddSessionButton().doClick();
+    public void addSessionCancelButton() {
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(homePage.getName(), manager.getCurrentCard());
+        assertEquals(manageSessions.getName(), manager.getCurrentCard());
     }
 
     public Module createModule(String moduleName) {
         Module testModule = null;
 
-        // Creating a new module called test2
-        homePage.getAddSessionButton().doClick();
+        // Creating a new module
+
+        //TODO: Test if need to move to the modules page
+        homePage.getManageModulesButton().doClick();
+        manageModules.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
 
@@ -58,9 +68,9 @@ public class AddSessionPageTest {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Adding a study session to test
-        sessionPage.setHours(hours);
-        sessionPage.setMins(mins);
-        sessionPage.getEnterButton().doClick();
+        addSessionPage.setHours(hours);
+        addSessionPage.setMins(mins);
+        addSessionPage.getEnterButton().doClick();
 
         // Returns values to test
         return new int[] { prevSessionsLen, testModule.getStudySessions().length };

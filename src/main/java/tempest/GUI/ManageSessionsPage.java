@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 public class ManageSessionsPage extends Page implements ActionListener {
     private final GUIManager manager;
 
+    private JButton delSessionsButton;
+    private JButton addSessionsButton;
+
     private BackButton backButton;
 
     public ManageSessionsPage(GUIManager guiManager){
@@ -30,8 +33,8 @@ public class ManageSessionsPage extends Page implements ActionListener {
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new FlowLayout()); // TODO: Layout needed???
 
-        JButton delSessionsButton = new LinkButton("View and delete study sessions", manager.getPageName(DeleteSessionPage.class), this);
-        JButton addSessionsButton = new LinkButton("Add study sessions", manager.getPageName(AddSessionPage.class), this);
+        delSessionsButton = new LinkButton("View and delete study sessions", manager.getPageName(DeleteSessionPage.class), this);
+        addSessionsButton = new LinkButton("Add study sessions", manager.getPageName(AddSessionPage.class), this);
 
         optionsPanel.add(delSessionsButton);
         optionsPanel.add(addSessionsButton);
@@ -49,6 +52,14 @@ public class ManageSessionsPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e){
         LinkButton source = (LinkButton) e.getSource();
         manager.swapCard(source.getDestination());
+    }
+
+    public JButton getAddSessionsButton() {
+        return addSessionsButton;
+    }
+
+    public JButton getDelSessionsButton() {
+        return delSessionsButton;
     }
 
     /**

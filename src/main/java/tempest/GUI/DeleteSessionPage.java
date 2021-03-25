@@ -58,7 +58,6 @@ public class DeleteSessionPage extends Page {
         // Changing the sessions shown in the table when a module is selected
         dropDown.addActionListener(e -> {
             tableModel.setRowCount(0); // Clearing the table
-
             populateTable();
         });
 
@@ -105,7 +104,18 @@ public class DeleteSessionPage extends Page {
     private Module getModule() {
         Module module = null;
 
-        String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
+        String moduleName = (String)dropDown.getSelectedItem();
+
+        System.out.println("Getting Module"); //TODO: Delete
+        System.out.println("Name: " + moduleName);
+
+        if (moduleName == null) {
+            //TODO: Needs a check if drop down empty (no modules)
+
+            System.out.println(state.getModules().length);
+
+            moduleName = dropDown.getItemAt(0).toString();;
+        }
 
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {

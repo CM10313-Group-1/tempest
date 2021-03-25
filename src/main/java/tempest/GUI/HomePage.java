@@ -11,7 +11,7 @@ public class HomePage extends Page {
     private final GUIManager manager;
 
     private JButton manageModulesButton;
-    private JButton addSessionButton;
+    private JButton manageSessionsButton;
 
     public HomePage(GUIManager guiManager) {
         this.manager = guiManager;
@@ -28,10 +28,10 @@ public class HomePage extends Page {
         JPanel buttonPanel = new JPanel();
 
         manageModulesButton = new LinkButton("Manage modules", manager.getPageName(ManageModulesPage.class), this);
-        addSessionButton = new LinkButton("Manage Sessions", manager.getPageName(ManageSessionsPage.class), this);
+        manageSessionsButton = new LinkButton("Manage Sessions", manager.getPageName(ManageSessionsPage.class), this);
 
         buttonPanel.add(manageModulesButton);
-        buttonPanel.add(addSessionButton);
+        buttonPanel.add(manageSessionsButton);
 
         homePage.add(buttonPanel);
 
@@ -48,7 +48,7 @@ public class HomePage extends Page {
         return manageModulesButton;
     }
 
-    public JButton getAddSessionButton() {
-        return addSessionButton;
+    public JButton getManageSessionsButton() {
+        return manageSessionsButton;
     }
 }
