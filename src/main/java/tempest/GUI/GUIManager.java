@@ -39,22 +39,18 @@ public class GUIManager {
         pages = new ArrayList<>();
 
         pages.add(new HomePage(this));
-        pages.add(new ManageModulesPage(this));
+        pages.add(new ManageModulesPage(state, this));
         pages.add(new ManageSessionsPage(this));
         pages.add(new AddModulePage(state, this));
         pages.add(new AddSessionPage(state, this));
-        //pages.add(new DeleteModulePage(state, this));
-        //pages.add(new DeleteSessionPage(state, this));
+        pages.add(new DeleteModulePage(state, this));
+        pages.add(new DeleteSessionPage(state, this));
     }
 
     /**
      * Sets up and runs the GUI
      */
     private void start() {
-        // Creating the module drop down
-        ModuleDropDown dropDown = new ModuleDropDown();
-        dropDown.createModuleDropDown(state);
-
         getAllInstances();
 
         JFrame frame = new JFrame();

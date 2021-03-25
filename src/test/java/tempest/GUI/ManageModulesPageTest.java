@@ -18,7 +18,7 @@ public class ManageModulesPageTest {
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
-    ModuleDropDown moduleDropDown = new ModuleDropDown();
+    ModuleDropDown moduleDropDown = new ModuleDropDown(state);
 
     Module[] modules = state.getModules();
 

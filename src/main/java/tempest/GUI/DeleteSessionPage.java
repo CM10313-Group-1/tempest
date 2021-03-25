@@ -24,7 +24,7 @@ public class DeleteSessionPage extends Page {
     private final GUIManager manager;
 
     private final ErrorMessage errorMessage = new ErrorMessage();
-    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown;
 
     private JPanel pagePanel;
 
@@ -39,6 +39,8 @@ public class DeleteSessionPage extends Page {
     public DeleteSessionPage(State state, GUIManager manager) {
         this.state = state;
         this.manager = manager;
+
+        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override
@@ -57,8 +59,11 @@ public class DeleteSessionPage extends Page {
 
         // Changing the sessions shown in the table when a module is selected
         dropDown.addActionListener(e -> {
-            tableModel.setRowCount(0); // Clearing the table
-            populateTable();
+            // Don't want this activating unless this page is active
+            if (getName().equals(manager.getCurrentCard())) {
+                tableModel.setRowCount(0); // Clearing the table
+                populateTable();
+            }
         });
 
         // Creating the table
@@ -114,7 +119,7 @@ public class DeleteSessionPage extends Page {
 
             System.out.println(state.getModules().length);
 
-            moduleName = dropDown.getItemAt(0).toString();;
+            moduleName = dropDown.getItemAt(0).toString();
         }
 
         for (Module m : state.getModules()) {

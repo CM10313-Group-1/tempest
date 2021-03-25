@@ -10,18 +10,21 @@ import javax.swing.JPanel;
 import tempest.GUI.components.BackButton;
 import tempest.GUI.components.LinkButton;
 import tempest.GUI.components.ModuleDropDown;
+import tempest.State;
 
 public class ManageModulesPage extends Page {
     private final GUIManager manager;
-    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown;
 
     private JButton addModuleButton;
     private JButton deleteModuleButton;
     private BackButton backButton;
     private JComboBox<Object> dropDown;
 
-    public ManageModulesPage(GUIManager guiManager) {
+    public ManageModulesPage(State state, GUIManager guiManager) {
         this.manager = guiManager;
+
+        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override

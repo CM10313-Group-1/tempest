@@ -17,7 +17,7 @@ import tempest.GUI.components.ModuleDropDown;
 public class AddModulePage extends Page {
     private final State state;
     private final GUIManager manager;
-    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown;
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
@@ -29,6 +29,8 @@ public class AddModulePage extends Page {
         this.state = state;
         this.manager = guiManager;
         this.actionButtonPanel = new ActionButtonPanel(manager, this);
+
+        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class AddModulePage extends Page {
      */
     private void addModule(String moduleName) {
         state.createModule(moduleName);
-        dropDown.addModule(moduleName);
+        moduleDropDown.addModule(moduleName);
     }
 
     public ActionButtonPanel getComponents() {

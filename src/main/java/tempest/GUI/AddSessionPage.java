@@ -25,7 +25,7 @@ import tempest.GUI.components.ModuleDropDown;
 public class AddSessionPage extends Page {
     private final GUIManager manager;
     private final State state;
-    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown;
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
@@ -39,6 +39,8 @@ public class AddSessionPage extends Page {
         this.state = state;
         this.manager = guiManager;
         this.actionButtonPanel = new ActionButtonPanel(manager, this);
+
+        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override
@@ -110,8 +112,8 @@ public class AddSessionPage extends Page {
         String hours = hoursInput.getText();
         String minutes = minutesInput.getText();
 
-        int hoursInt = 0;
-        int minutesInt = 0;
+        int hoursInt;
+        int minutesInt;
 
         hours = hours.strip();
         minutes = minutes.strip();
