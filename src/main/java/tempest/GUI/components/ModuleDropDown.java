@@ -48,18 +48,6 @@ public class ModuleDropDown {
     }
 
     /**
-     * Updates all created module drop downs to contain
-     * the updates list of module names
-     */
-    public void updateAllDropDowns() {
-        Module[] modules = state.getModules();
-
-        for (JComboBox<Object> dropDown : dropDowns) {
-            setNames(dropDown, modules);
-        }
-    }
-
-    /**
      * Should be called after creating a new module with state
      *
      * Updates all the drop downs to have this new module
@@ -67,8 +55,6 @@ public class ModuleDropDown {
      * @param name Name of module
      */
     public void addModule(String name) {
-        //updateAllDropDowns();
-
         for (JComboBox<Object> dropDown : dropDowns) {
             dropDown.addItem(name);
         }
@@ -82,8 +68,6 @@ public class ModuleDropDown {
      * @param name Name of module
      */
     public void removeModule(String name) {
-        //updateAllDropDowns();
-
         for (JComboBox<Object> dropDown : dropDowns) {
             dropDown.removeItem(name);
         }

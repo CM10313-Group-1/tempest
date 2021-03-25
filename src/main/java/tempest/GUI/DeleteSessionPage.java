@@ -7,8 +7,8 @@ import tempest.State;
 import tempest.StudySession;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.util.Objects;
 
 public class DeleteSessionPage extends Page {
 
@@ -59,7 +59,8 @@ public class DeleteSessionPage extends Page {
 
         // Changing the sessions shown in the table when a module is selected
         dropDown.addActionListener(e -> {
-            // Don't want this activating unless this page is active
+
+            // Don't want this running unless this page is active
             if (getName().equals(manager.getCurrentCard())) {
                 tableModel.setRowCount(0); // Clearing the table
                 populateTable();
@@ -67,7 +68,7 @@ public class DeleteSessionPage extends Page {
         });
 
         // Creating the table
-        JScrollPane scroll = createTable(); // scroll contains the JTable
+        JScrollPane scroll = createTable(); // Scroll contains the JTable
 
         pagePanel.add(scroll);
 
@@ -85,9 +86,10 @@ public class DeleteSessionPage extends Page {
             int selectedRow = table.getSelectedRow();
 
             if (selectedRow < 0) {
-                errorMessage.showMessage(pagePanel, new Exception("Please select a row to delete"));
+                errorMessage.showMessage(pagePanel, new Exception("Please select a row"));
 
             } else {
+                //TODO: Method not finished
                 getModule().removeSesison(sessions[selectedRow]);
 
                 tableModel.removeRow(selectedRow);
@@ -109,34 +111,35 @@ public class DeleteSessionPage extends Page {
     private Module getModule() {
         Module module = null;
 
-        String moduleName = (String)dropDown.getSelectedItem();
+        String moduleName = (String) dropDown.getSelectedItem();
 
-        System.out.println("Getting Module"); //TODO: Delete
+        //TODO: Delete
+        System.out.println("Getting Module");
         System.out.println("Name: " + moduleName);
 
+        // moduleName is null when there are no modules in the drop down
         if (moduleName == null) {
-            //TODO: Needs a check if drop down empty (no modules)
+            System.err.println("No modules, therefore no sessions to delete");
+            //FIXME: So kick out of this page? Need to add a check where this method returns
 
-            System.out.println(state.getModules().length);
-
-            moduleName = dropDown.getItemAt(0).toString();
-        }
-
-        for (Module m : state.getModules()) {
-            if (moduleName.equals(m.getName())) {
-                module = m;
-                break;
+        } else {
+            for (Module m : state.getModules()) {
+                if (moduleName.equals(m.getName())) {
+                    module = m;
+                    break;
+                }
             }
-        }
-        if (module == null) {
-            System.err.println("Couldn't find a module with the name: " + moduleName);
+
+            if (module == null) {
+                System.err.println("Couldn't find a module with the name: " + moduleName);
+            }
         }
 
         return module;
     }
 
     /**
-     * Populates a table will all the sessions from the currently selected module
+     * Populates a table with all the sessions from the currently selected module
      */
     private void populateTable() {
         sessions = getModule().getStudySessions();
@@ -155,7 +158,7 @@ public class DeleteSessionPage extends Page {
 
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) { // Prevents cells from being editable
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -167,6 +170,11 @@ public class DeleteSessionPage extends Page {
         table.setRowHeight(30);
         table.setFillsViewportHeight(true); // Table uses entire height of the scroll pane
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Prevents user from selecting > 1 row
+
+        // Centering all the cells
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
+        table.setDefaultRenderer(Object.class, centerRenderer);
 
         return new JScrollPane(table);
     }
