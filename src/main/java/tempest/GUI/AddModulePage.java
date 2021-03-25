@@ -3,10 +3,7 @@ package tempest.GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import tempest.Module;
 import tempest.State;
@@ -52,8 +49,10 @@ public class AddModulePage extends Page {
         inputPanel.add(moduleNameInput);
         inputPanel.add(clearButton);
 
-        modulePanel.add(inputPanel, BorderLayout.NORTH);
-        modulePanel.add(actionButtonPanel, BorderLayout.SOUTH);
+        modulePanel.add(inputPanel);
+        modulePanel.add(actionButtonPanel);
+
+        modulePanel.setLayout(new BoxLayout(modulePanel, BoxLayout.Y_AXIS));
 
         return modulePanel;
     }
