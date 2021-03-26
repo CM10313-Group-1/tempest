@@ -1,5 +1,8 @@
 package tempest.ui.components;
 
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import tempest.Module;
@@ -7,47 +10,61 @@ import tempest.State;
 
 public class ModuleDropDown {
 
-    private static JComboBox<Object> moduleDropDown;
+    private static DefaultComboBoxModel<Object> model;
 
     /**
-     * Should only be called once - creating the module drop down
-     *
-     * @param state State instance
+     * This constructor should be used by all classes that need a ModuleDropDown
+     * instance
      */
-    public void createModuleDropDown(State state) {
-        moduleDropDown = new JComboBox<>();
+    public ModuleDropDown() {
 
-        // Populating drop down with the names of all current modules
-        for (Module m : state.getModules()) {
-            moduleDropDown.addItem(m.getName());
-        }
     }
 
     /**
-     * Returns a centralised module drop down that is updated when the module
-     * list changes
+     * This constructor should only be called once and only by the GUIManager
      *
-     * @return JComboBox containing all created modules
+     * Creates the drop down model that all drop downs will use
+     *
+     * @param state Instance of state from the manager
+     */
+    public ModuleDropDown(State state) {
+        ArrayList<Object> names = new ArrayList<>();
+
+        for (Module m : state.getModules()) {
+            names.add(m.getName());
+        }
+
+        model = new DefaultComboBoxModel<>(names.toArray());
+    }
+
+    /**
+     * Returns a module drop down
+     *
+     * @return JComboBox containing all created module's names
      */
     public JComboBox<Object> getModuleDropDown() {
-        return moduleDropDown;
+        return new JComboBox<>(model);
     }
 
     /**
-     * Adds a new module to the module drop down
+     * Should be called after creating a new module with state
      *
-     * @param name Name of module
+     * Updates all the drop downs to have this new module
+     *
+     * @param name Name of the new module
      */
     public void addModule(String name) {
-        moduleDropDown.addItem(name);
+        model.addElement(name);
     }
 
     /**
-     * Removes the passed in module from the module drop down
+     * Should be called after deleting a module with state
      *
-     * @param name Name of module
+     * Updates all the drop downs to no longer have this module
+     *
+     * @param name Name of the deleted module
      */
     public void removeModule(String name) {
-        moduleDropDown.removeItem(name);
+        model.removeElement(name);
     }
 }

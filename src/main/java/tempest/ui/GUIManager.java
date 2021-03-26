@@ -10,10 +10,12 @@ import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.ChartViewPage;
 import tempest.ui.pages.HomePage;
 import tempest.ui.pages.Page;
 
-public class GUIManager {
+public class GUIManager extends JFrame {
+    private static final long serialVersionUID = -4398929329322784483L;
     /** The view manager for the GUI. Handles which page should be visible. */
     private static ViewManager<Page> mv;
     /** All pages that can be displayed by the view manager. */
@@ -22,9 +24,12 @@ public class GUIManager {
     private final Supervisor supervisor;
 
     public GUIManager(State state, Supervisor supervisor) {
+        super();
         this.state = state;
         this.supervisor = supervisor;
-        this.pages = new Page[] { new HomePage(this), new AddModulePage(state, this), new AddSessionPage(state, this)
+        new ModuleDropDown(state);
+        this.pages = new Page[] { new HomePage(this), new AddModulePage(state, this), new AddSessionPage(state, this),
+                new ChartViewPage(state, this)
                 // All new pages should be added here.
         };
         start();
@@ -35,15 +40,10 @@ public class GUIManager {
      */
     private void start() {
         // Creating the module drop down
-        ModuleDropDown dropDown = new ModuleDropDown();
-        dropDown.createModuleDropDown(state);
-
-        JFrame frame = new JFrame();
-
         mv = new ViewManager<Page>(pages, pages[0]);
-        frame.getContentPane().add(mv);
+        this.getContentPane().add(mv);
 
-        frame.addWindowListener(new WindowAdapter() {
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 supervisor.onClose();
@@ -51,11 +51,11 @@ public class GUIManager {
         });
 
         // Frame Settings
-        frame.setSize(500, 150);
-        frame.setTitle("Tempest");
-        frame.setLocationRelativeTo(null); // Centering GUI
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        this.setSize(500, 150);
+        this.setTitle("Tempest");
+        this.setLocationRelativeTo(null); // Centering GUI
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
     /**

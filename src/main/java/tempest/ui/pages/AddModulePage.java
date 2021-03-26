@@ -17,20 +17,22 @@ import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
 public class AddModulePage extends Page {
+    private static final long serialVersionUID = -6175924935345590918L;
     private final State state;
     private final GUIManager manager;
     private final ModuleDropDown dropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private JPanel modulePanel;
     private JTextField moduleNameInput;
     private JButton enterButton;
 
     public AddModulePage(State state, GUIManager guiManager) {
+        super();
         this.state = state;
         this.manager = guiManager;
         this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        setupUI();
     }
 
     @Override
@@ -38,9 +40,7 @@ public class AddModulePage extends Page {
         return "addModulePage";
     }
 
-    public JPanel getPanel() {
-        modulePanel = new JPanel();
-
+    private void setupUI() {
         enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
@@ -52,10 +52,8 @@ public class AddModulePage extends Page {
         inputPanel.add(moduleNameInput);
         inputPanel.add(clearButton);
 
-        modulePanel.add(inputPanel, BorderLayout.NORTH);
-        modulePanel.add(actionButtonPanel, BorderLayout.SOUTH);
-
-        return modulePanel;
+        this.add(inputPanel, BorderLayout.NORTH);
+        this.add(actionButtonPanel, BorderLayout.SOUTH);
     }
 
     @Override
@@ -111,7 +109,7 @@ public class AddModulePage extends Page {
      * @param message The error message to be printed in the pop up
      */
     private void errorMessage(Exception message) {
-        errorMessage.showMessage(modulePanel, message);
+        errorMessage.showMessage(this, message);
     }
 
     /**
@@ -136,7 +134,7 @@ public class AddModulePage extends Page {
         dropDown.removeModule(moduleName);
     }
 
-    public ActionButtonPanel getComponents() {
+    public ActionButtonPanel getActionButtons() {
         return actionButtonPanel;
     }
 

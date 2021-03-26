@@ -1,34 +1,29 @@
 package tempest.ui.pages;
 
-import java.awt.CardLayout;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JPanel;
-
-import org.jfree.chart.ChartPanel;
-
 import tempest.State;
 import tempest.ui.GUIManager;
+import tempest.ui.ViewManager;
+import tempest.ui.components.charts.BarChart;
 import tempest.ui.components.charts.Chart;
+import tempest.ui.components.charts.LineChart;
+import tempest.ui.components.charts.PieChart;
 
 public class ChartViewPage extends Page {
+  private static final long serialVersionUID = -7397536728116537358L;
   private final GUIManager manager;
   private final State state;
-  private final Map<String, Chart> charts = new HashMap<String, Chart>();
-  private String activeChart;
+  private Chart[] charts;
+  private ViewManager<Chart> vm;
 
-  private ChartPanel chartPanel;
-  private CardLayout cardLayout;
 
   public ChartViewPage(State state, GUIManager guiManager) {
+    super();
     this.state = state;
     this.manager = guiManager;
-  }
 
-  @Override
-  public JPanel getPanel() {
-    return chartPanel;
+    this.charts = new Chart[]{new BarChart(), new LineChart(), new PieChart()};
+    vm = new ViewManager<Chart>(charts, charts[0]);
+    this.add(vm);
   }
 
   @Override

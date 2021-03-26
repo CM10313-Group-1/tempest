@@ -11,6 +11,10 @@ public class Supervisor {
     private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
 
+    public Supervisor() {
+
+    }
+
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);

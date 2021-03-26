@@ -10,4 +10,9 @@ public class PieChart extends Chart {
     return null;
   }
 
+  @Override
+  public String getName() {
+    return "PieChart";
+  }
+
 }

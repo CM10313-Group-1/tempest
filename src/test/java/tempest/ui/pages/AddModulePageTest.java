@@ -13,12 +13,13 @@ import tempest.ui.components.ActionButtonPanel;
 
 public class AddModulePageTest {
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    Supervisor supervisor = new Supervisor();
+    GUIManager manager = new GUIManager(state, supervisor);
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
-    ActionButtonPanel actionButtonPanel = modulePage.getComponents();
+    ActionButtonPanel actionButtonPanel = modulePage.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {

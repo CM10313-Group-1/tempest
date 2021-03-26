@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class State {
-    private List<Module> modules = new ArrayList<>();
+    private List<Module> modules;
 
     public State() {
+        this.modules = new ArrayList<>();
     }
 
     public State(Module[] modules) {

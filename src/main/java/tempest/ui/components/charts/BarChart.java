@@ -12,8 +12,7 @@ public class BarChart extends Chart {
 
   @Override
   public String getName() {
-    // TODO Auto-generated method stub
-    return null;
+    return "BarChart";
   }
 
 }

@@ -2,7 +2,9 @@ package tempest.ui;
 
 import javax.swing.JPanel;
 
-public abstract class View {
+public abstract class View extends JPanel {
+    private static final long serialVersionUID = -917650974601474363L;
+
     /**
      * Ensures all views have a getName() method
      *
@@ -11,13 +13,4 @@ public abstract class View {
      * @return String - Name of the view
      */
     public abstract String getName();
-
-    /**
-     * Ensures all views have a getPanel() method
-     *
-     * May also be useful if need to call view.getPanel()
-     *
-     * @return A JPanel holding all the necessary components for that specific view
-     */
-    public abstract JPanel getPanel();
 }
