@@ -13,9 +13,9 @@ public abstract class Page implements ActionListener {
     /**
      * Ensures all pages have a getName() method
      *
-     * Used when adding all pages to the cardlayout in the manager
+     * Used when adding all pages to the cardLayout in the manager
      *
-     * The name of the page is used to identify the page in the cardlayout
+     * The name of the page is used to identify the page in the cardLayout
      *
      * @return String - Name of the page
      */

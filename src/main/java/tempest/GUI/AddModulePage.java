@@ -1,6 +1,5 @@
 package tempest.GUI;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -13,7 +12,6 @@ import tempest.GUI.components.ModuleDropDown;
 
 public class AddModulePage extends Page {
     private final State state;
-    private final GUIManager manager;
     private final ModuleDropDown moduleDropDown;
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
@@ -24,8 +22,7 @@ public class AddModulePage extends Page {
 
     public AddModulePage(State state, GUIManager guiManager) {
         this.state = state;
-        this.manager = guiManager;
-        this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
 
         moduleDropDown = new ModuleDropDown(state);
     }

@@ -23,7 +23,6 @@ import tempest.GUI.components.ClearButton;
 import tempest.GUI.components.ModuleDropDown;
 
 public class AddSessionPage extends Page {
-    private final GUIManager manager;
     private final State state;
     private final ModuleDropDown moduleDropDown;
     private final ActionButtonPanel actionButtonPanel;
@@ -37,8 +36,7 @@ public class AddSessionPage extends Page {
 
     public AddSessionPage(State state, GUIManager guiManager) {
         this.state = state;
-        this.manager = guiManager;
-        this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
 
         moduleDropDown = new ModuleDropDown(state);
     }

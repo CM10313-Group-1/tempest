@@ -55,7 +55,7 @@ public class DeleteSessionPage extends Page {
         // Changing the sessions shown in the table when a module is selected
         dropDown.addActionListener(e -> {
 
-            // Don't want this running unless this page is active
+            // Only want this running when this page is active
             if (getName().equals(manager.getCurrentCard())) {
                 tableModel.setRowCount(0); // Clearing the table
                 populateTable();
@@ -64,7 +64,6 @@ public class DeleteSessionPage extends Page {
 
         // Creating the table
         JScrollPane scroll = createTable(); // Scroll contains the JTable
-
         pagePanel.add(scroll);
 
         // Back Button
@@ -118,7 +117,7 @@ public class DeleteSessionPage extends Page {
         // moduleName is null when there are no modules in the drop down
         if (moduleName == null) {
             System.err.println("No modules, therefore no sessions to delete");
-            //FIXME: So kick out of this page? Need to add a check where this method returns
+            manager.swapToPrevCard();
 
         } else {
             for (Module m : state.getModules()) {
@@ -137,7 +136,7 @@ public class DeleteSessionPage extends Page {
     }
 
     /**
-     * Populates a table with all the sessions from the currently selected module
+     * Populates the table model with all the sessions from the currently selected module
      */
     private void populateTable() {
         sessions = getModule().getStudySessions();
@@ -151,6 +150,11 @@ public class DeleteSessionPage extends Page {
         }
     }
 
+    /**
+     * Creates the JTable
+     *
+     * @return JScrollPane - Containing the created JTable
+     */
     private JScrollPane createTable() {
         String[] columns = new String[]{"Date", "Duration"};
 
@@ -162,7 +166,10 @@ public class DeleteSessionPage extends Page {
             }
         };
 
-        populateTable();
+        // Stopping population if there aren't any modules
+        if (dropDown.getItemCount() != 0) {
+            populateTable();
+        }
 
         table = new JTable(tableModel);
 
