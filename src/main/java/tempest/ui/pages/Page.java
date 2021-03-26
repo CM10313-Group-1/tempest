@@ -9,6 +9,8 @@ import tempest.ui.View;
  * All page classes should extend this class
  */
 public abstract class Page extends View implements ActionListener {
+    private static final long serialVersionUID = -7384127634444815527L;
+
     // Can't be abstract because there might be a page class that doesn't implement
     // ActionListener
     public void actionPerformed(ActionEvent e) {

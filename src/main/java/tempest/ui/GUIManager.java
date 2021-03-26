@@ -20,12 +20,10 @@ public class GUIManager extends JFrame {
     private static ViewManager<Page> mv;
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
-    private final State state;
     private final Supervisor supervisor;
 
     public GUIManager(State state, Supervisor supervisor) {
         super();
-        this.state = state;
         this.supervisor = supervisor;
         new ModuleDropDown(state);
         this.pages = new Page[] { new HomePage(this), new AddModulePage(state, this), new AddSessionPage(state, this),
