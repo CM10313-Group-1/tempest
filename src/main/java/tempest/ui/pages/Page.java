@@ -3,22 +3,12 @@ package tempest.ui.pages;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
+import tempest.ui.View;
 
 /**
  * All page classes should extend this class
  */
-public abstract class Page implements ActionListener {
-
-    /**
-     * Ensures all pages have a getPanel() method
-     *
-     * May also be useful if need to call page.getPanel()
-     *
-     * @return A JPanel holding all the necessary components for that specific page
-     */
-    public abstract JPanel getPanel();
-
+public abstract class Page extends View implements ActionListener {
     // Can't be abstract because there might be a page class that doesn't implement
     // ActionListener
     public void actionPerformed(ActionEvent e) {
@@ -32,14 +22,4 @@ public abstract class Page implements ActionListener {
         System.err.println("One of the page classes your using needs an clearInput() method");
     }
 
-    /**
-     * Ensures all pages have a getName() method
-     *
-     * Used when adding all pages to the cardlayout in the manager
-     *
-     * The name of the page is used to identify the page in the cardlayout
-     *
-     * @return String - Name of the page
-     */
-    public abstract String getName();
 }
