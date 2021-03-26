@@ -10,9 +10,9 @@ import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ModuleDropDown;
 
 public class GUIManager {
     private static JPanel cardPanel;
@@ -25,6 +25,10 @@ public class GUIManager {
 
     private final State state;
     private final Supervisor supervisor;
+    
+    private ManageModulesPage manageModulesPage;
+    private ManageSessionsPage manageSessionsPage;
+    private DeleteSessionPage deleteSessionPage;
 
     public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
@@ -38,13 +42,18 @@ public class GUIManager {
     private void getAllInstances() {
         pages = new ArrayList<>();
 
+        manageModulesPage = new ManageModulesPage(state, this);
+        manageSessionsPage = new ManageSessionsPage(this);
+
+        deleteSessionPage = new DeleteSessionPage(state, this);
+
         pages.add(new HomePage(this));
-        pages.add(new ManageModulesPage(state, this));
-        pages.add(new ManageSessionsPage(this));
+        pages.add(manageModulesPage);
+        pages.add(manageSessionsPage);
         pages.add(new AddModulePage(state, this));
         pages.add(new AddSessionPage(state, this));
         pages.add(new DeleteModulePage(state, this));
-        pages.add(new DeleteSessionPage(state, this));
+        pages.add(deleteSessionPage);
     }
 
     /**
@@ -92,12 +101,25 @@ public class GUIManager {
      * @param cardName The name of the card to switch to
      */
     private void changeCard(String cardName) {
-        // Allows the delete module button to be disabled when no modules to delete
-        for (Page p : pages) {
-            if (p.getName().equals("manageModulesPage")) {
-                ((ManageModulesPage) p).update();
-            }
+        if (currentCard.equals(cardName)) {
+            System.err.println("You are trying to swap to the same card");
         }
+
+        Module[] modules = state.getModules();
+
+        if (cardName.equals(getPageName(ManageModulesPage.class))) {
+            // Toggling "delete a module" button
+            manageModulesPage.update(modules);
+
+        } else if (cardName.equals(getPageName(ManageSessionsPage.class))) {
+            // Toggling "View and delete sessions" button
+            manageSessionsPage.setDeleteButton(modules);
+
+        } else if (cardName.equals(getPageName(DeleteSessionPage.class))) {
+            // Updating the table when its page is active
+            deleteSessionPage.updateTable();
+        }
+
         Component prevPanel = getVisibleCard();
 
         cl.show(cardPanel, cardName);
