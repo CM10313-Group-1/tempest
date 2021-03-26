@@ -7,7 +7,12 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ActionButtonPanel;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.HomePage;
+import tempest.ui.pages.ManageModulesPage;
 
 public class AddModulePageTest {
     State state = new State();

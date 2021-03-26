@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -10,10 +10,11 @@ import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
+import tempest.ui.pages.*;
 
 public class GUIManager {
     private static JPanel cardPanel;

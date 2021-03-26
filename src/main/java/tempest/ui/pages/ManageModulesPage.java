@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
@@ -6,8 +6,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.LinkButton;
+import tempest.ui.components.BackButton;
+import tempest.ui.GUIManager;
+import tempest.ui.components.LinkButton;
 import tempest.Module;
 
 public class ManageModulesPage extends Page {

@@ -8,7 +8,10 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ActionButtonPanel;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.pages.*;
 
 public class AddSessionPageTest {
     GUIHelpher helper = new GUIHelpher();

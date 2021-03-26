@@ -7,7 +7,12 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ModuleDropDown;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.DeleteModulePage;
+import tempest.ui.pages.HomePage;
+import tempest.ui.pages.ManageModulesPage;
 
 public class ManageModulesPageTest {
     Supervisor supervisor = Supervisor.getInstance();

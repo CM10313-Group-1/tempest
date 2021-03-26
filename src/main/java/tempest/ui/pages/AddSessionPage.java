@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -18,9 +18,10 @@ import javax.swing.JTextField;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ClearButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.*;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.components.ClearButton;
+import tempest.ui.components.ModuleDropDown;
 
 public class AddSessionPage extends Page {
     private final State state;

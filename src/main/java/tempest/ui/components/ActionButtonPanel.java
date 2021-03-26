@@ -1,10 +1,10 @@
-package tempest.GUI.components;
+package tempest.ui.components;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import tempest.GUI.GUIManager;
-import tempest.GUI.Page;
+import tempest.ui.pages.Page;
+import tempest.ui.GUIManager;
 
 public class ActionButtonPanel extends JPanel {
     private static final long serialVersionUID = 9196271090552224373L;

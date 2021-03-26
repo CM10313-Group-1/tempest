@@ -1,11 +1,12 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import tempest.GUI.components.LinkButton;
+import tempest.ui.GUIManager;
+import tempest.ui.components.LinkButton;
 
 public class HomePage extends Page {
     private final GUIManager manager;

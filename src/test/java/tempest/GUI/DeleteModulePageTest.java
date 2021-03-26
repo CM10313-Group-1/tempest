@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
+import tempest.ui.GUIManager;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.DeleteModulePage;
+import tempest.ui.pages.HomePage;
+import tempest.ui.pages.ManageModulesPage;
 
 public class DeleteModulePageTest {
     State state = new State();

@@ -3,7 +3,7 @@ package tempest;
 import java.io.IOException;
 import java.text.ParseException;
 
-import tempest.GUI.GUIManager;
+import tempest.ui.GUIManager;
 import tempest.interfaces.CSVInterface;
 
 public class Supervisor{
@@ -15,7 +15,6 @@ public class Supervisor{
     private static Supervisor instance;
 
     private Supervisor(){
-
     }
 
     public static Supervisor getInstance(){

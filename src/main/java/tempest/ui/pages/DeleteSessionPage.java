@@ -1,7 +1,9 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.components.BackButton;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;

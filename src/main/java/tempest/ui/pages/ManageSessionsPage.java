@@ -1,6 +1,7 @@
-package tempest.GUI;
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.LinkButton;
+package tempest.ui.pages;
+import tempest.ui.components.BackButton;
+import tempest.ui.GUIManager;
+import tempest.ui.components.LinkButton;
 import tempest.Module;
 
 import javax.swing.*;

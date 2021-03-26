@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 import java.util.Objects;
@@ -9,8 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import tempest.State;
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.components.BackButton;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ModuleDropDown;
 
 public class DeleteModulePage extends Page {
     private final State state;

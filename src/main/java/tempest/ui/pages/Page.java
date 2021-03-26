@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
