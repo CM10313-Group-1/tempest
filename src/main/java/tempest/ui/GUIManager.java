@@ -19,7 +19,7 @@ import tempest.ui.pages.Page;
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
     /** The view manager for the GUI. Handles which page should be visible. */
-    private static ViewManager<Page> mv;
+    private static ViewManager<Page> vm;
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
     private final Supervisor supervisor;
@@ -40,8 +40,8 @@ public class GUIManager extends JFrame {
      */
     private void start() {
         // Creating the module drop down
-        mv = new ViewManager<Page>(pages, pages[0]);
-        this.getContentPane().add(mv);
+        vm = new ViewManager<Page>(pages, pages[0]);
+        this.getContentPane().add(vm);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -71,14 +71,14 @@ public class GUIManager extends JFrame {
             ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
             p.update();
         }
-        mv.changeView(cardName);
+        vm.changeView(cardName);
     }
 
     /**
      * Switches to the previous card
      */
     public void swapToPrevCard() {
-        mv.changeToPrevious();
+        vm.changeToPrevious();
     }
 
     /**
@@ -88,7 +88,7 @@ public class GUIManager extends JFrame {
      * @return Page - The instance of the required class
      */
     public Page getPage(Class<? extends Page> classObject) {
-        return mv.getView(classObject);
+        return vm.getView(classObject);
     }
 
     /**
@@ -98,10 +98,10 @@ public class GUIManager extends JFrame {
      * @return String - The name of the page class
      */
     public String getPageName(Class<? extends Page> classObject) {
-        return mv.getViewName(classObject);
+        return vm.getViewName(classObject);
     }
 
     public String getCurrentCard() {
-        return mv.getVisible();
+        return vm.getVisible();
     }
 }
