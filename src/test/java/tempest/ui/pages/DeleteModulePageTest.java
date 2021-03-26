@@ -67,4 +67,16 @@ public class DeleteModulePageTest {
 
         assertEquals(deleteModulePage.getName(), manager.getCurrentCard());
     }
+
+    @Test
+    public void buttonCorrectlyDisables(){
+        createModule("test");
+
+        homePage.getManageModulesButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getDeleteButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+
+        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+    }
 }

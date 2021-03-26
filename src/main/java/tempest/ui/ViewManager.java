@@ -1,5 +1,7 @@
 package tempest.ui;
 
+import tempest.ui.pages.ManageModulesPage;
+
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Stack;
@@ -45,6 +47,11 @@ public class ViewManager<T extends View> extends JPanel {
   public void changeToPrevious() {
     history.pop();
     String lastView = history.peek();
+    // Updates the delete module button
+    if (lastView.equals("manageModulesPage")) {
+      ManageModulesPage p = (ManageModulesPage) views.get(lastView);
+      p.update();
+    }
     if (!viewExists(lastView))
       System.err.println("Invalid State");
     layout.show(this, lastView);
