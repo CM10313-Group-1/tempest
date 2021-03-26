@@ -15,6 +15,7 @@ public class AddModulePageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
     ActionButtonPanel actionButtonPanel = modulePage.getComponents();
 
@@ -27,13 +28,14 @@ public class AddModulePageTest {
     @Test
     public void moduleCancelButton() {
         homePage.getManageModulesButton().doClick();
+        manageModulesPage.getAddModuleButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(homePage.getName(), manager.getCurrentCard());
+        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
     }
 
     public void createModule(String moduleName) {
-        homePage.getManageModulesButton().doClick();
+        manageModulesPage.getAddModuleButton().doClick(); // Needed for the back button in the duplicate test to work
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
     }
@@ -50,6 +52,14 @@ public class AddModulePageTest {
     public void nullModule() {
         int prevModuleNum = state.getModules().length;
         createModule("");
+
+        assertEquals(prevModuleNum, state.getModules().length);
+    }
+
+    @Test
+    public void spaceModule() {
+        int prevModuleNum = state.getModules().length;
+        createModule(" ");
 
         assertEquals(prevModuleNum, state.getModules().length);
     }

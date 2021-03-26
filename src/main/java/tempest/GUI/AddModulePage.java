@@ -69,6 +69,8 @@ public class AddModulePage extends Page {
     private void handleCreatingModule() {
         String moduleName = moduleNameInput.getText();
 
+        moduleName = moduleName.strip();
+
         if (moduleName.equals("")) {
             errorMessage(new Exception("Invalid module name"));
             return;
