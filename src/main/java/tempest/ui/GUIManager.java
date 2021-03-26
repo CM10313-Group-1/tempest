@@ -11,7 +11,9 @@ import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
 import tempest.ui.pages.ChartViewPage;
+import tempest.ui.pages.DeleteModulePage;
 import tempest.ui.pages.HomePage;
+import tempest.ui.pages.ManageModulesPage;
 import tempest.ui.pages.Page;
 
 public class GUIManager extends JFrame {
@@ -27,7 +29,7 @@ public class GUIManager extends JFrame {
         this.supervisor = supervisor;
         new ModuleDropDown(state);
         this.pages = new Page[] { new HomePage(this), new AddModulePage(state, this), new AddSessionPage(state, this),
-                new ChartViewPage(state, this)
+                new ChartViewPage(state, this), new DeleteModulePage(state, this), new ManageModulesPage(this)
                 // All new pages should be added here.
         };
         start();
@@ -65,6 +67,10 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
+        if (cardName.equals("manageModulesPage")) {
+            ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
+            p.update();
+        }
         mv.changeView(cardName);
     }
 

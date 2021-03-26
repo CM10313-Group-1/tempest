@@ -1,8 +1,5 @@
 package tempest.ui.components;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 
 import tempest.ui.GUIManager;
@@ -13,16 +10,11 @@ public class BackButton extends JButton {
     /**
      * Navigation button that sends the user back to the previous page.
      * 
-     * @param manager
+     * @param manager The instance of manager passed into the page class
      */
     public BackButton(GUIManager manager) {
         super("Back");
         this.setFocusable(false);
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manager.swapToPrevCard();
-            }
-        });
+        this.addActionListener(e -> manager.swapToPrevCard());
     }
 }

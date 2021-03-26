@@ -12,7 +12,7 @@ import tempest.ui.GUIManager;
 
 public class GUIManagerTest {
     State state = new State();
-    GUIManager manager = new GUIManager(state, new Supervisor());
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
 
@@ -27,9 +27,9 @@ public class GUIManagerTest {
 
     @Test
     public void addModuleButton() {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(AddModulePage.class));
+        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
     }
 
     @Test

@@ -13,7 +13,7 @@ public class HomePage extends Page {
 
     private final GUIManager manager;
 
-    private JButton addModuleButton;
+    private JButton manageModulesButton;
     private JButton addSessionButton;
 
     public HomePage(GUIManager guiManager) {
@@ -21,9 +21,10 @@ public class HomePage extends Page {
         this.manager = guiManager;
 
         JPanel buttonPanel = new JPanel();
-        addModuleButton = new LinkButton("Add a new module", "addModulePage", this);
+        manageModulesButton = new LinkButton("Add a new module", "manageModulesPage", this);
         addSessionButton = new LinkButton("Add a new session", "addSessionPage", this);
-        buttonPanel.add(addModuleButton);
+
+        buttonPanel.add(manageModulesButton);
         buttonPanel.add(addSessionButton);
         this.add(buttonPanel);
     }
@@ -39,8 +40,8 @@ public class HomePage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    public JButton getAddModuleButton() {
-        return addModuleButton;
+    public JButton getManageModulesButton() {
+        return manageModulesButton;
     }
 
     public JButton getAddSessionButton() {

@@ -13,8 +13,7 @@ import tempest.ui.components.ActionButtonPanel;
 
 public class AddModulePageTest {
     State state = new State();
-    Supervisor supervisor = new Supervisor();
-    GUIManager manager = new GUIManager(state, supervisor);
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
@@ -29,14 +28,14 @@ public class AddModulePageTest {
 
     @Test
     public void moduleCancelButton() {
-        homePage.getAddModuleButton().doClick();
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        homePage.getManageModulesButton().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manager.getCurrentCard(), homePage.getName());
+        assertEquals(homePage.getName(), manager.getCurrentCard());
     }
 
     public void createModule(String moduleName) {
-        homePage.getAddModuleButton().doClick();
+        homePage.getManageModulesButton().doClick();
         modulePage.setModuleNameInput(moduleName);
         modulePage.getEnterButton().doClick();
     }
@@ -63,7 +62,7 @@ public class AddModulePageTest {
 
         createModule("test");
 
-        actionButtonPanel.getCancelButtonInstance().doClick();
+        actionButtonPanel.getBackButtonInstance().doClick();
 
         createModule("test");
 

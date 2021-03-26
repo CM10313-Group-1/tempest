@@ -25,8 +25,13 @@ public class State {
         modules.add(newModule);
     }
 
-    public void deleteModule(String moduleID) {
-
+    /**
+     * Removes the given module from the list
+     *
+     * @param moduleName The name of the module.
+     */
+    public void deleteModule(String moduleName) {
+        modules.removeIf(module -> module.getName().equals(moduleName));
     }
 
     /**

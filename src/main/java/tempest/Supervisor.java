@@ -10,9 +10,9 @@ public class Supervisor {
     private static final String STORE = "store.csv";
     private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
+    private static Supervisor instance;
 
-    public Supervisor() {
-
+    private Supervisor() {
     }
 
     private void onStart() {
@@ -34,16 +34,15 @@ public class Supervisor {
         }
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        Supervisor.state = state;
+    public static Supervisor getInstance() {
+        if (instance == null) {
+            instance = new Supervisor();
+        }
+        return instance;
     }
 
     public static void main(String[] args) {
-        Supervisor s = new Supervisor();
+        Supervisor s = Supervisor.getInstance();
         s.onStart();
     }
 }
