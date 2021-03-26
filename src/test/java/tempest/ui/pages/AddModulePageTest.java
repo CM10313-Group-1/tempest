@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,9 +7,10 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
-import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.HomePage;
 import tempest.ui.pages.ManageModulesPage;
@@ -22,7 +23,7 @@ public class AddModulePageTest {
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    ActionButtonPanel actionButtonPanel = modulePage.getComponents();
+    ActionButtonPanel actionButtonPanel = modulePage.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {

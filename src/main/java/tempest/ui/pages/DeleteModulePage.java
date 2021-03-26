@@ -9,11 +9,13 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import tempest.State;
-import tempest.ui.components.BackButton;
 import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
 public class DeleteModulePage extends Page {
+    private static final long serialVersionUID = 2589222088607882971L;
+
     private final State state;
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
@@ -23,8 +25,10 @@ public class DeleteModulePage extends Page {
     private JComboBox<Object> dropDown;
 
     public DeleteModulePage(State state, GUIManager guiManager) {
+        super();
         this.state = state;
         this.manager = guiManager;
+        setupUI();
     }
 
     @Override
@@ -32,8 +36,7 @@ public class DeleteModulePage extends Page {
         return "deleteModulePage";
     }
 
-    public JPanel getPanel() {
-        JPanel deleteModulePanel = new JPanel();
+    private void setupUI() {
         JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
@@ -49,12 +52,9 @@ public class DeleteModulePage extends Page {
 
         dropDownPanel.add(dropDown);
 
-        deleteModulePanel.add(dropDownPanel);
-        deleteModulePanel.add(buttonPanel);
-
-        deleteModulePanel.setLayout(new BoxLayout(deleteModulePanel, BoxLayout.Y_AXIS));
-
-        return deleteModulePanel;
+        this.add(dropDownPanel);
+        this.add(buttonPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class DeleteModulePage extends Page {
      * Handles deleting the module and updating the module drop down
      */
     private void handleDeletingModule() {
-        // Checks if there are no modules to delete
+        // Swaps to prev card if no modules to delete
         if (dropDown.getItemCount() == 0) {
             System.err.println("Attempting to delete modules when there are none");
             return;
@@ -80,11 +80,6 @@ public class DeleteModulePage extends Page {
 
         state.deleteModule(moduleName);
         moduleDropDown.removeModule(moduleName);
-
-        // Swaps to the previous card if there are no more modules left
-        if (dropDown.getItemCount() == 0) {
-            manager.swapToPrevCard();
-        }
 
         System.out.println(moduleName + " successfully deleted.");
     }

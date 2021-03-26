@@ -9,13 +9,18 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.LinkButton;
 
 public class HomePage extends Page {
+    private static final long serialVersionUID = -6085163013456560971L;
+
     private final GUIManager manager;
 
     private JButton manageModulesButton;
     private JButton manageSessionsButton;
 
     public HomePage(GUIManager guiManager) {
+        super();
         this.manager = guiManager;
+
+        setupUI();
     }
 
     @Override
@@ -23,20 +28,16 @@ public class HomePage extends Page {
         return "homePage";
     }
 
-    public JPanel getPanel() {
-        JPanel homePage = new JPanel();
-
+    private void setupUI() {
         JPanel buttonPanel = new JPanel();
 
-        manageModulesButton = new LinkButton("Manage modules", manager.getPageName(ManageModulesPage.class), this);
-        manageSessionsButton = new LinkButton("Manage Sessions", manager.getPageName(ManageSessionsPage.class), this);
+        manageModulesButton = new LinkButton("Manage modules", "manageModulesPage", this);
+        manageSessionsButton = new LinkButton("Manage sessions", "manageSessionsPage", this);
 
         buttonPanel.add(manageModulesButton);
         buttonPanel.add(manageSessionsButton);
 
-        homePage.add(buttonPanel);
-
-        return homePage;
+        this.add(buttonPanel);
     }
 
     @Override

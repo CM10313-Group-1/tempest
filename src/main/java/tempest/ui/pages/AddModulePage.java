@@ -2,28 +2,36 @@ package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import tempest.Module;
 import tempest.State;
-import tempest.ui.*;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
 public class AddModulePage extends Page {
+    private static final long serialVersionUID = -6175924935345590918L;
+
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private JPanel modulePanel;
     private JTextField moduleNameInput;
     private JButton enterButton;
 
     public AddModulePage(State state, GUIManager guiManager) {
+        super();
+
         this.state = state;
         this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
+        setupUI();
     }
 
     @Override
@@ -31,9 +39,7 @@ public class AddModulePage extends Page {
         return "addModulePage";
     }
 
-    public JPanel getPanel() {
-        modulePanel = new JPanel();
-
+    private void setupUI() {
         enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         moduleNameInput = new JTextField(20);
@@ -45,12 +51,10 @@ public class AddModulePage extends Page {
         inputPanel.add(moduleNameInput);
         inputPanel.add(clearButton);
 
-        modulePanel.add(inputPanel);
-        modulePanel.add(actionButtonPanel);
+        this.add(inputPanel);
+        this.add(actionButtonPanel);
 
-        modulePanel.setLayout(new BoxLayout(modulePanel, BoxLayout.Y_AXIS));
-
-        return modulePanel;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override
@@ -108,7 +112,7 @@ public class AddModulePage extends Page {
      * @param message The error message to be printed in the pop up
      */
     private void errorMessage(Exception message) {
-        errorMessage.showMessage(modulePanel, message);
+        errorMessage.showMessage(this, message);
     }
 
     /**
@@ -122,7 +126,7 @@ public class AddModulePage extends Page {
         moduleDropDown.addModule(moduleName);
     }
 
-    public ActionButtonPanel getComponents() {
+    public ActionButtonPanel getActionButtons() {
         return actionButtonPanel;
     }
 

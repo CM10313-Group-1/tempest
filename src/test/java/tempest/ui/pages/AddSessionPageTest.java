@@ -1,25 +1,21 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import tempest.Module;
 import tempest.State;
+import tempest.Module;
 import tempest.Supervisor;
-import tempest.ui.components.ActionButtonPanel;
-import tempest.ui.ErrorMessage;
-import tempest.ui.GUIManager;
 import tempest.ui.pages.*;
+import tempest.ui.GUIManager;
+import tempest.ui.ErrorMessage;
+import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
-    GUIHelpher helper = new GUIHelpher();
-
-    Supervisor supervisor = Supervisor.getInstance();
-
-    State state = supervisor.getState();
-    GUIManager manager = supervisor.getManager();
+    State state = new State();
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);

@@ -3,8 +3,8 @@ package tempest;
 import java.io.IOException;
 import java.text.ParseException;
 
-import tempest.ui.GUIManager;
 import tempest.interfaces.CSVInterface;
+import tempest.ui.GUIManager;
 
 public class Supervisor{
 

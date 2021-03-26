@@ -1,46 +1,25 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.DeleteModulePage;
 import tempest.ui.pages.HomePage;
 import tempest.ui.pages.ManageModulesPage;
 
-public class ManageModulesPageTest {
-    Supervisor supervisor = Supervisor.getInstance();
+public class DeleteModulePageTest {
     State state = new State();
-    GUIManager manager = new GUIManager(state, supervisor);
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-
-    ModuleDropDown moduleDropDown = new ModuleDropDown();
-
-    Module[] modules = state.getModules();
-
-    @Test
-    public void addModuleButton() {
-        //FIXME
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getAddModuleButton().doClick();
-
-        assertEquals(modulePage.getName(), manager.getCurrentCard());
-    }
-
-    public void clearModules() {
-        for (Module module : modules) {
-            moduleDropDown.removeModule(module.getName());
-        }
-    }
 
     public void createModule(String moduleName) {
         // Creating a new module called test
@@ -49,30 +28,47 @@ public class ManageModulesPageTest {
     }
 
     @Test
-    public void noModulesDeleteModuleButton() {
-        clearModules();
+    public void cancelButton() {
+        createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getBackButton().doClick();
 
         assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
     }
 
     @Test
-    public void onePlusModulesDeleteButton() {
+    public void deleteModule() {
         createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getDeleteButton().doClick();
 
-        assertEquals(manager.getPageName(DeleteModulePage.class), manager.getCurrentCard());
+        assertEquals(0, state.getModules().length);
     }
 
     @Test
-    public void backButton() {
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getBackButton().doClick();
+    public void swapToPrevIfNoModules() {
+        createModule("test");
 
-        assertEquals(homePage.getName(), manager.getCurrentCard());
+        homePage.getManageModulesButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getDeleteButton().doClick();
+
+        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+    }
+
+    @Test
+    public void stayIfMoreModules() {
+        createModule("test");
+        createModule("test2");
+
+        homePage.getManageModulesButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getDeleteButton().doClick();
+
+        assertEquals(deleteModulePage.getName(), manager.getCurrentCard());
     }
 }
