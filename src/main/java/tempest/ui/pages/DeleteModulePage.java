@@ -38,15 +38,15 @@ public class DeleteModulePage extends Page {
         JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
-        backButton = new BackButton(manager);
-        deleteButton = new JButton("Delete module");
+        this.backButton = new BackButton(manager);
+        this.deleteButton = new JButton("Delete module");
 
         deleteButton.addActionListener(this);
 
         buttonPanel.add(backButton);
         buttonPanel.add(deleteButton);
 
-        dropDown = moduleDropDown.getModuleDropDown();
+        this.dropDown = moduleDropDown.getModuleDropDown();
 
         dropDownPanel.add(dropDown);
 

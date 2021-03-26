@@ -39,8 +39,8 @@ public class ManageModulesPage extends Page {
 
         dropDown = moduleDropDown.getModuleDropDown();
 
-        addModuleButton = new LinkButton("Add a module", manager.getPageName(AddModulePage.class), this);
-        deleteModuleButton = new LinkButton("Delete a module", manager.getPageName(DeleteModulePage.class), this);
+        addModuleButton = new LinkButton("Add a module", "addModulePage", this);
+        deleteModuleButton = new LinkButton("Delete a module", "deleteModulePage", this);
         backButton = new BackButton(manager);
 
         pageSwapPanel.add(deleteModuleButton);
