@@ -48,12 +48,12 @@ public class ViewManager<T extends View> extends JPanel {
     history.pop();
     String lastView = history.peek();
     // Updates the delete module button
-    if (lastView.equals("manageModulesPage")) {
+    if (!viewExists(lastView))
+      System.err.println("Invalid State");
+    else if (lastView.equals("manageModulesPage")) {
       ManageModulesPage p = (ManageModulesPage) views.get(lastView);
       p.update();
     }
-    if (!viewExists(lastView))
-      System.err.println("Invalid State");
     layout.show(this, lastView);
   }
 
