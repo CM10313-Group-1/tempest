@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
@@ -7,11 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.LinkButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.components.LinkButton;
+import tempest.ui.components.ModuleDropDown;
 
 public class ManageModulesPage extends Page {
+    private static final long serialVersionUID = -3556076472382354523L;
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
@@ -21,7 +23,9 @@ public class ManageModulesPage extends Page {
     private JComboBox<Object> dropDown;
 
     public ManageModulesPage(GUIManager guiManager) {
+        super();
         this.manager = guiManager;
+        setupUI();
     }
 
     @Override
@@ -29,27 +33,23 @@ public class ManageModulesPage extends Page {
         return "manageModulesPage";
     }
 
-    public JPanel getPanel() {
-        JPanel manageModulesPanel = new JPanel();
+    private void setupUI() {
         JPanel pageSwapPanel = new JPanel();
         JPanel backPanel = new JPanel();
 
         dropDown = moduleDropDown.getModuleDropDown();
 
-        addModuleButton = new LinkButton("Add a module", manager.getPageName(AddModulePage.class), this);
-        deleteModuleButton = new LinkButton("Delete a module", manager.getPageName(DeleteModulePage.class), this);
+        addModuleButton = new LinkButton("Add a module", "addModulePage", this);
+        deleteModuleButton = new LinkButton("Delete a module", "deleteModulePage", this);
         backButton = new BackButton(manager);
 
         pageSwapPanel.add(deleteModuleButton);
         pageSwapPanel.add(addModuleButton);
         backPanel.add(backButton);
 
-        manageModulesPanel.add(pageSwapPanel);
-        manageModulesPanel.add(backPanel);
-
-        manageModulesPanel.setLayout(new BoxLayout(manageModulesPanel, BoxLayout.Y_AXIS));
-
-        return manageModulesPanel;
+        this.add(pageSwapPanel);
+        this.add(backPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     /**

@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
 
 public class GUIManagerTest {
     State state = new State();

@@ -1,8 +1,8 @@
-package tempest.GUI.components;
+package tempest.ui.components;
 
 import javax.swing.JButton;
 
-import tempest.GUI.GUIManager;
+import tempest.ui.GUIManager;
 
 public class BackButton extends JButton {
     private static final long serialVersionUID = -349591108764334577L;

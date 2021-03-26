@@ -3,15 +3,18 @@ package tempest;
 import java.io.IOException;
 import java.text.ParseException;
 
-import tempest.GUI.GUIManager;
 import tempest.interfaces.CSVInterface;
+import tempest.ui.GUIManager;
 
-public class Supervisor{
-
+public class Supervisor {
     private static final String STORE = "store.csv";
     private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
     private static Supervisor instance;
+
+    private Supervisor() {
+    }
+
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);
@@ -30,10 +33,9 @@ public class Supervisor{
             System.err.println("Failed to save state");
         }
     }
-    private Supervisor(){
-    }
-    public static Supervisor getInstance(){
-        if(instance == null){
+
+    public static Supervisor getInstance() {
+        if (instance == null) {
             instance = new Supervisor();
         }
         return instance;

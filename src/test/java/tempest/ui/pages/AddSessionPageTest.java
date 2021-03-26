@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,9 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ActionButtonPanel;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
     State state = new State();
@@ -18,7 +20,7 @@ public class AddSessionPageTest {
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
     AddSessionPage sessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
-    ActionButtonPanel actionButtonPanel = sessionPage.getComponents();
+    ActionButtonPanel actionButtonPanel = sessionPage.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {

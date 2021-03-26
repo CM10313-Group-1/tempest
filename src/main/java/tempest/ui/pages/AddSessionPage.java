@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -18,27 +18,32 @@ import javax.swing.JTextField;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.GUI.components.ActionButtonPanel;
-import tempest.GUI.components.ClearButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.components.ClearButton;
+import tempest.ui.components.ModuleDropDown;
 
 public class AddSessionPage extends Page {
+    private static final long serialVersionUID = 6738660438220363619L;
     private final GUIManager manager;
     private final State state;
     private final ModuleDropDown dropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private JPanel sessionPanel;
     private JComboBox<Object> moduleDropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
     private JButton enterButton;
 
     public AddSessionPage(State state, GUIManager guiManager) {
+        super();
+
         this.state = state;
         this.manager = guiManager;
         this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        setupUI();
     }
 
     @Override
@@ -46,9 +51,7 @@ public class AddSessionPage extends Page {
         return "addSessionPage";
     }
 
-    public JPanel getPanel() {
-        sessionPanel = new JPanel();
-
+    private void setupUI() {
         enterButton = (JButton) actionButtonPanel.getComponent(1);
 
         JPanel inputPanel = new JPanel();
@@ -80,12 +83,9 @@ public class AddSessionPage extends Page {
         ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
-        sessionPanel.add(inputPanel);
-        sessionPanel.add(actionButtonPanel);
-
-        sessionPanel.setLayout(new BoxLayout(sessionPanel, BoxLayout.Y_AXIS));
-
-        return sessionPanel;
+        this.add(inputPanel);
+        this.add(actionButtonPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override
@@ -190,7 +190,7 @@ public class AddSessionPage extends Page {
      * @param message The error message to be printed in the pop up
      */
     private void errorMessage(Exception message) {
-        errorMessage.showMessage(sessionPanel, message);
+        errorMessage.showMessage(this, message);
     }
 
     /**
@@ -206,7 +206,7 @@ public class AddSessionPage extends Page {
         return enterButton;
     }
 
-    public ActionButtonPanel getComponents() {
+    public ActionButtonPanel getActionButtons() {
         return actionButtonPanel;
     }
 

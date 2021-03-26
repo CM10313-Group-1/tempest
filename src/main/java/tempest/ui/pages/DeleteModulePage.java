@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 import java.util.Objects;
@@ -9,10 +9,12 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import tempest.State;
-import tempest.GUI.components.BackButton;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.components.ModuleDropDown;
 
 public class DeleteModulePage extends Page {
+    private static final long serialVersionUID = 2589222088607882971L;
     private final State state;
     private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
@@ -22,8 +24,10 @@ public class DeleteModulePage extends Page {
     private JComboBox<Object> dropDown;
 
     public DeleteModulePage(State state, GUIManager guiManager) {
+        super();
         this.state = state;
         this.manager = guiManager;
+        setupUI();
     }
 
     @Override
@@ -31,29 +35,25 @@ public class DeleteModulePage extends Page {
         return "deleteModulePage";
     }
 
-    public JPanel getPanel() {
-        JPanel deleteModulePanel = new JPanel();
+    private void setupUI() {
         JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
-        backButton = new BackButton(manager);
-        deleteButton = new JButton("Delete module");
+        this.backButton = new BackButton(manager);
+        this.deleteButton = new JButton("Delete module");
 
         deleteButton.addActionListener(this);
 
         buttonPanel.add(backButton);
         buttonPanel.add(deleteButton);
 
-        dropDown = moduleDropDown.getModuleDropDown();
+        this.dropDown = moduleDropDown.getModuleDropDown();
 
         dropDownPanel.add(dropDown);
 
-        deleteModulePanel.add(dropDownPanel);
-        deleteModulePanel.add(buttonPanel);
-
-        deleteModulePanel.setLayout(new BoxLayout(deleteModulePanel, BoxLayout.Y_AXIS));
-
-        return deleteModulePanel;
+        this.add(dropDownPanel);
+        this.add(buttonPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override

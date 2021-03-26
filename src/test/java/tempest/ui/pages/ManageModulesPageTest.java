@@ -1,4 +1,4 @@
-package tempest.GUI;
+package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,7 +7,8 @@ import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.GUI.components.ModuleDropDown;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ModuleDropDown;
 
 public class ManageModulesPageTest {
     Supervisor supervisor = Supervisor.getInstance();
