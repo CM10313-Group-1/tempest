@@ -19,7 +19,7 @@ public class DeleteSessionPage extends Page {
     private final GUIManager manager;
 
     private final ErrorMessage errorMessage = new ErrorMessage();
-    private final ModuleDropDown moduleDropDown;
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private JPanel pagePanel;
 
@@ -34,8 +34,6 @@ public class DeleteSessionPage extends Page {
     public DeleteSessionPage(State state, GUIManager manager) {
         this.state = state;
         this.manager = manager;
-
-        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override

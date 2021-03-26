@@ -15,7 +15,7 @@ import tempest.GUI.components.ModuleDropDown;
 public class DeleteModulePage extends Page {
     private final State state;
     private final GUIManager manager;
-    private final ModuleDropDown moduleDropDown;
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private BackButton backButton;
     private JButton deleteButton;
@@ -24,8 +24,6 @@ public class DeleteModulePage extends Page {
     public DeleteModulePage(State state, GUIManager guiManager) {
         this.state = state;
         this.manager = guiManager;
-
-        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override

@@ -7,6 +7,8 @@ import tempest.Supervisor;
 public class SupervisorTest {
   Supervisor s = Supervisor.getInstance();
 
+  //TODO: This is a sad test class :(
+
   @Test
   public void startsCorrectly() {
 

@@ -10,6 +10,7 @@ import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import tempest.GUI.components.ModuleDropDown;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
@@ -33,6 +34,9 @@ public class GUIManager {
     public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
         this.supervisor = supervisor;
+
+        new ModuleDropDown(state); // Creating the DefaultComboBoxModel
+
         start();
     }
 
