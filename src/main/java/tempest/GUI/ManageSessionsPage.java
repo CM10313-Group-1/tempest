@@ -22,7 +22,7 @@ public class ManageSessionsPage extends Page implements ActionListener {
 
     @Override
     public String getName() {
-        return "sessionsPage";
+        return "manageSessionsPage";
     }
 
     public JPanel getPanel(){

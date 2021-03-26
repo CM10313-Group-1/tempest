@@ -26,7 +26,7 @@ public class AddModulePageTest {
     }
 
     @Test
-    public void moduleCancelButton() {
+    public void moduleBackButton() {
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getAddModuleButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();

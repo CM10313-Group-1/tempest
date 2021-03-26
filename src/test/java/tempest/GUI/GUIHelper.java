@@ -2,9 +2,9 @@ package tempest.GUI;
 
 import tempest.Supervisor;
 
-public class GUIHelpher {
+public class GUIHelper {
 
-    public GUIHelpher() {
+    public GUIHelper() {
         Supervisor supervisor = Supervisor.getInstance();
         supervisor.start();
     }

@@ -27,13 +27,13 @@ public class GUIManagerTest {
     public void manageModulesButton() {
         homePage.getManageModulesButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
+        assertEquals(manager.getPageName(ManageModulesPage.class), manager.getCurrentCard());
     }
 
     @Test
     public void manageSessionsButton() {
         homePage.getManageSessionsButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageSessionsPage.class));
+        assertEquals(manager.getPageName(ManageSessionsPage.class), manager.getCurrentCard());
     }
 }

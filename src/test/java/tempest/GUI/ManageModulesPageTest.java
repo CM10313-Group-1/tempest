@@ -10,13 +10,12 @@ import tempest.Supervisor;
 import tempest.GUI.components.ModuleDropDown;
 
 public class ManageModulesPageTest {
-    Supervisor supervisor = Supervisor.getInstance();
     State state = new State();
-    GUIManager manager = new GUIManager(state, supervisor);
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddModulePage addModulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     ModuleDropDown moduleDropDown = new ModuleDropDown();
 
@@ -28,7 +27,7 @@ public class ManageModulesPageTest {
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getAddModuleButton().doClick();
 
-        assertEquals(modulePage.getName(), manager.getCurrentCard());
+        assertEquals(addModulePage.getName(), manager.getCurrentCard());
     }
 
     public void clearModules() {
@@ -39,8 +38,8 @@ public class ManageModulesPageTest {
 
     public void createModule(String moduleName) {
         // Creating a new module called test
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
+        addModulePage.setModuleNameInput(moduleName);
+        addModulePage.getEnterButton().doClick();
     }
 
     @Test

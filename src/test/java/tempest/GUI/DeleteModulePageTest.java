@@ -14,16 +14,16 @@ public class DeleteModulePageTest {
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddModulePage addModulePage = (AddModulePage) manager.getPage(AddModulePage.class);
 
     public void createModule(String moduleName) {
         // Creating a new module called test
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
+        addModulePage.setModuleNameInput(moduleName);
+        addModulePage.getEnterButton().doClick();
     }
 
     @Test
-    public void cancelButton() {
+    public void backButton() {
         createModule("test");
 
         homePage.getManageModulesButton().doClick();

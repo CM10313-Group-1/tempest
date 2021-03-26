@@ -40,7 +40,7 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void addSessionCancelButton() {
+    public void addSessionBackButton() {
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();

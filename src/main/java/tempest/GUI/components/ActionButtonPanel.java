@@ -14,12 +14,12 @@ public class ActionButtonPanel extends JPanel {
      * The created instance of ActionButtonPanel is a JPanel So just add it to the
      * page's panel
      *
-     * The panel contains an enter button and a cancel button
+     * The panel contains an enter button and a back button
      *
      * The enter button needs to be retrieved and handled in the class which calls
      * this method
      *
-     * The cancel button is handled already
+     * The back button is handled already
      *
      * @param manager Manager instance
      * @param page    this (instance of class calling getButtonPanel)
