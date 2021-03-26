@@ -13,12 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class DeleteSessionPage extends Page {
 
     //TODO:
-    // - Fix module drop down problem when adding a session & deleting a module
-    // - Can the table be updated when first loaded???
-    // - Grey out button if no sessions in any modules???
     // - Convert date to local date - or do we need to store all of date to be able to see time session entered not just day
-    // - Scrap all option in drop down???
-    // - Add Module Page -> add another panel to allow for resizing
 
     private final State state;
     private final GUIManager manager;
@@ -53,7 +48,7 @@ public class DeleteSessionPage extends Page {
         pagePanel = new JPanel();
         JPanel optionsPanel = new JPanel();
 
-        // Drop down -> w/ "all" options as well???
+        // Drop down
         dropDown = moduleDropDown.getModuleDropDown();
         pagePanel.add(dropDown);
 
@@ -87,15 +82,22 @@ public class DeleteSessionPage extends Page {
 
             if (selectedRow < 0) {
                 errorMessage.showMessage(pagePanel, new Exception("Please select a row"));
-
-            } else {
-                //TODO: Method not finished
-                getModule().removeSesison(sessions[selectedRow]);
-
-                tableModel.removeRow(selectedRow);
-
-                // Need to update session???
+                return;
             }
+
+            //TODO: Waiting for this method
+            getModule().removeSesison(sessions[selectedRow]);
+
+            tableModel.removeRow(selectedRow);
+
+            for (Module m : state.getModules()) {
+                if (m.getStudySessions().length > 0) {
+                    return; // Still sessions that can be deleted
+                }
+            }
+
+            // No more study sessions for any modules
+            manager.swapToPrevCard();
         });
 
         pagePanel.add(optionsPanel);
@@ -112,10 +114,6 @@ public class DeleteSessionPage extends Page {
         Module module = null;
 
         String moduleName = (String) dropDown.getSelectedItem();
-
-        //TODO: Delete
-        System.out.println("Getting Module");
-        System.out.println("Name: " + moduleName);
 
         // moduleName is null when there are no modules in the drop down
         if (moduleName == null) {
@@ -159,6 +157,7 @@ public class DeleteSessionPage extends Page {
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
+                // Setting all cells to be uneditable
                 return false;
             }
         };
@@ -177,6 +176,17 @@ public class DeleteSessionPage extends Page {
         table.setDefaultRenderer(Object.class, centerRenderer);
 
         return new JScrollPane(table);
+    }
+
+    /**
+     * Called when the delete and view sessions button is pressed
+     *
+     * Without this if the first module in the drop down has had its
+     * sessions changed they wouldn't be seen
+     */
+    public void updateTable() {
+        tableModel.setRowCount(0); // Clearing the table
+        populateTable();
     }
 
     public BackButton getBackButton() {
