@@ -4,27 +4,21 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import tempest.GUI.components.BackButton;
 import tempest.GUI.components.LinkButton;
-import tempest.GUI.components.ModuleDropDown;
-import tempest.State;
+import tempest.Module;
 
 public class ManageModulesPage extends Page {
     private final GUIManager manager;
-    private final ModuleDropDown moduleDropDown;
 
     private JButton addModuleButton;
     private JButton deleteModuleButton;
     private BackButton backButton;
-    private JComboBox<Object> dropDown;
 
-    public ManageModulesPage(State state, GUIManager guiManager) {
+    public ManageModulesPage(GUIManager guiManager) {
         this.manager = guiManager;
-
-        moduleDropDown = new ModuleDropDown(state);
     }
 
     @Override
@@ -36,8 +30,6 @@ public class ManageModulesPage extends Page {
         JPanel manageModulesPanel = new JPanel();
         JPanel pageSwapPanel = new JPanel();
         JPanel backPanel = new JPanel();
-
-        dropDown = moduleDropDown.getModuleDropDown();
 
         addModuleButton = new LinkButton("Add a module", manager.getPageName(AddModulePage.class), this);
         deleteModuleButton = new LinkButton("Delete a module", manager.getPageName(DeleteModulePage.class), this);
@@ -56,12 +48,14 @@ public class ManageModulesPage extends Page {
     }
 
     /**
-     * Updates the delete module button to be disabled if there are no modules to
-     * delete.
+     * Disables the delete button if there are no modules, otherwise the
+     * button is enabled
+     *
+     * @param modules Array containing all the modules
      */
-    public void update() {
+    public void update(Module[] modules) {
         // If a module/modules have been created then the button is active again
-        deleteModuleButton.setEnabled(dropDown.getItemCount() != 0);
+        deleteModuleButton.setEnabled(modules.length != 0);
     }
 
     @Override

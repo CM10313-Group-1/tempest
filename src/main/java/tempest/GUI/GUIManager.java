@@ -25,7 +25,7 @@ public class GUIManager {
 
     private final State state;
     private final Supervisor supervisor;
-    
+
     private ManageModulesPage manageModulesPage;
     private ManageSessionsPage manageSessionsPage;
     private DeleteSessionPage deleteSessionPage;
@@ -42,7 +42,7 @@ public class GUIManager {
     private void getAllInstances() {
         pages = new ArrayList<>();
 
-        manageModulesPage = new ManageModulesPage(state, this);
+        manageModulesPage = new ManageModulesPage(this);
         manageSessionsPage = new ManageSessionsPage(this);
 
         deleteSessionPage = new DeleteSessionPage(state, this);

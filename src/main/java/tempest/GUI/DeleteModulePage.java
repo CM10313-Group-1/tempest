@@ -73,6 +73,7 @@ public class DeleteModulePage extends Page {
     private void handleDeletingModule() {
         // Checks if there are no modules to delete
         if (dropDown.getItemCount() == 0) {
+            System.err.println("Attempting to delete modules when there are none");
             return;
         }
 
