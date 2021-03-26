@@ -8,9 +8,4 @@ public class GUIHelpher {
         Supervisor supervisor = Supervisor.getInstance();
         supervisor.start();
     }
-
-    public void getState() {
-
-    }
-
 }

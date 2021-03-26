@@ -11,12 +11,18 @@ import tempest.Supervisor;
 import tempest.GUI.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
-    GUIHelpher helper = new GUIHelpher();
 
-    Supervisor supervisor = Supervisor.getInstance();
+    // Running with no store file - no modules or study sessions
+    State state = new State();
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
-    State state = supervisor.getState();
-    GUIManager manager = supervisor.getManager();
+    // Running with store file
+//    GUIHelpher helper = new GUIHelpher();
+//
+//    Supervisor supervisor = Supervisor.getInstance();
+//
+//    State state = supervisor.getState();
+//    GUIManager manager = supervisor.getManager();
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
@@ -47,7 +53,6 @@ public class AddSessionPageTest {
 
         // Creating a new module
 
-        //TODO: Test if need to move to the modules page
         homePage.getManageModulesButton().doClick();
         manageModules.getAddModuleButton().doClick();
         modulePage.setModuleNameInput(moduleName);
@@ -67,7 +72,10 @@ public class AddSessionPageTest {
     public int[] createSession(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
-        // Adding a study session to test
+        // Selecting the  module in the drop down
+        addSessionPage.setDropDown(testModule.getName());
+
+        // Adding a study session
         addSessionPage.setHours(hours);
         addSessionPage.setMins(mins);
         addSessionPage.getEnterButton().doClick();

@@ -126,7 +126,7 @@ public class AddSessionPage extends Page {
             minutesInt = Integer.parseInt(minutes);
 
             if (hoursInt < 0 || minutesInt < 0) {
-                throw new Exception("Input must be greater than 0");
+                throw new NumberFormatException();
 
             } else if (hoursInt == 0 && minutesInt == 0) {
                 throw new Exception("A study session must be >= 1 minutes");
@@ -214,5 +214,9 @@ public class AddSessionPage extends Page {
 
     public void setMins(String mins) {
         minutesInput.setText(mins);
+    }
+
+    public void setDropDown(String name) {
+        dropDown.setSelectedItem(name);
     }
 }
