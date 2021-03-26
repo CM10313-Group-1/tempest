@@ -1,6 +1,7 @@
 package tempest.GUI;
 import tempest.GUI.components.BackButton;
 import tempest.GUI.components.LinkButton;
+import tempest.Module;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,6 +53,18 @@ public class ManageSessionsPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent e){
         LinkButton source = (LinkButton) e.getSource();
         manager.swapCard(source.getDestination());
+    }
+
+    // Disable delete button if no sessions
+    public void toggleDeleteButton(Module[] modules) {
+        for (Module m : modules) {
+            if (m.getStudySessions().length > 0) {
+                delSessionsButton.setEnabled(true);
+                return;
+            }
+        }
+
+        delSessionsButton.setEnabled(false);
     }
 
     public JButton getAddSessionsButton() {

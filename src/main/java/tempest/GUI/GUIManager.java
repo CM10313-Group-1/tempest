@@ -109,11 +109,11 @@ public class GUIManager {
 
         if (cardName.equals(getPageName(ManageModulesPage.class))) {
             // Toggling "delete a module" button
-            manageModulesPage.update(modules);
+            manageModulesPage.toggleDeleteButton(modules);
 
         } else if (cardName.equals(getPageName(ManageSessionsPage.class))) {
             // Toggling "View and delete sessions" button
-            manageSessionsPage.setDeleteButton(modules);
+            manageSessionsPage.toggleDeleteButton(modules);
 
         } else if (cardName.equals(getPageName(DeleteSessionPage.class))) {
             // Updating the table when its page is active
