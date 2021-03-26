@@ -82,9 +82,9 @@ public class DeleteSessionPage extends Page {
                 return;
             }
 
-            //TODO: Waiting for this method
-            getModule().removeSesison(sessions[selectedRow]);
+            getModule().removeSession(sessions[selectedRow]);
 
+            sessions = getModule().getStudySessions();
             tableModel.removeRow(selectedRow);
 
             for (Module m : state.getModules()) {
