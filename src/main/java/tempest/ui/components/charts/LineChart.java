@@ -13,7 +13,7 @@ public class LineChart extends Chart {
 
   @Override
   public String getName() {
-    return "LineChart";
+    return ChartTypes.LINE;
   }
 
 }

@@ -21,8 +21,8 @@ public class HomePage extends Page {
         this.manager = guiManager;
 
         JPanel buttonPanel = new JPanel();
-        manageModulesButton = new LinkButton("Add a new module", "manageModulesPage", this);
-        addSessionButton = new LinkButton("Add a new session", "addSessionPage", this);
+        manageModulesButton = new LinkButton("Add a new module", PageNames.MANAGE_MODULES, this);
+        addSessionButton = new LinkButton("Add a new session", PageNames.ADD_SESSION, this);
 
         buttonPanel.add(manageModulesButton);
         buttonPanel.add(addSessionButton);
@@ -31,7 +31,7 @@ public class HomePage extends Page {
 
     @Override
     public String getName() {
-        return "homePage";
+        return PageNames.HOME;
     }
 
     @Override
