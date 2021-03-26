@@ -27,6 +27,7 @@ public class DeleteModulePage extends Page {
         super();
         this.state = state;
         this.manager = guiManager;
+        setupUI();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class DeleteModulePage extends Page {
         return "deleteModulePage";
     }
 
-    public void setupUI() {
+    private void setupUI() {
         JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
