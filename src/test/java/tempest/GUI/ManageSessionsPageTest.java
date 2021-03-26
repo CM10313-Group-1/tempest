@@ -36,17 +36,18 @@ public class ManageSessionsPageTest {
     }
 
     @Test
-    public void deleteSessionButton() {
+    public void deleteSessionButtonNoSessions() {
         homePage.getManageSessionsButton().doClick();
 
-        //FIXME: Not working as button disabled
         manageSessionsPage.getDelSessionsButton().doClick();
 
-        assertEquals(manager.getPageName(DeleteSessionPage.class), manager.getCurrentCard());
+        // Delete sessions button is disabled as no sessions so current page is still manage sessions
+
+        assertEquals(manager.getPageName(ManageSessionsPage.class), manager.getCurrentCard());
     }
 
     @Test
-    public void deleteSessionButton2() {
+    public void deleteSessionButtonSessions() {
         // Add a module
 
         // Add a session for this module

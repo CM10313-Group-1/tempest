@@ -8,4 +8,12 @@ public class GUIHelper {
         Supervisor supervisor = Supervisor.getInstance();
         supervisor.start();
     }
+
+    public Module createModule() {
+
+    }
+
+    public int[] createSession() {
+
+    }
 }
