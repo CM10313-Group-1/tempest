@@ -42,7 +42,7 @@ public class AddSessionPage extends Page {
 
         this.state = state;
         this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
-        setUpUI();
+        setupUI();
     }
 
     @Override
@@ -215,5 +215,9 @@ public class AddSessionPage extends Page {
 
     public void setMins(String mins) {
         minutesInput.setText(mins);
+    }
+
+    public void setDropDown(String name) {
+        dropDown.setSelectedItem(name);
     }
 }

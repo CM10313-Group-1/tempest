@@ -14,8 +14,18 @@ import tempest.ui.ErrorMessage;
 import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
+
+    // Running with no store file - no modules or study sessions
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
+
+    // Running with store file
+//    GUIHelper helper = new GUIHelper();
+//
+//    Supervisor supervisor = Supervisor.getInstance();
+//
+//    State state = supervisor.getState();
+//    GUIManager manager = supervisor.getManager();
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
@@ -24,7 +34,7 @@ public class AddSessionPageTest {
     AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
     AddSessionPage addSessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
-    ActionButtonPanel actionButtonPanel = addSessionPage.getComponents();
+    ActionButtonPanel actionButtonPanel = addSessionPage.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {
@@ -33,7 +43,7 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void addSessionCancelButton() {
+    public void addSessionBackButton() {
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
@@ -66,7 +76,10 @@ public class AddSessionPageTest {
     public int[] createSession(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
-        // Adding a study session to test
+        // Selecting the  module in the drop down
+        addSessionPage.setDropDown(testModule.getName());
+
+        // Adding a study session
         addSessionPage.setHours(hours);
         addSessionPage.setMins(mins);
         addSessionPage.getEnterButton().doClick();

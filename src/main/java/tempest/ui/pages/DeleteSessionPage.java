@@ -23,8 +23,6 @@ public class DeleteSessionPage extends Page {
     private final ErrorMessage errorMessage = new ErrorMessage();
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
-    private JPanel pagePanel;
-
     private BackButton backButton;
     private JComboBox<Object> dropDown;
 
@@ -36,6 +34,8 @@ public class DeleteSessionPage extends Page {
     public DeleteSessionPage(State state, GUIManager manager) {
         this.state = state;
         this.manager = manager;
+
+        setupUI();
     }
 
     @Override
@@ -43,14 +43,12 @@ public class DeleteSessionPage extends Page {
         return "deleteSessionPage";
     }
 
-    @Override
-    public JPanel getPanel() {
-        pagePanel = new JPanel();
+    public void setupUI() {
         JPanel optionsPanel = new JPanel();
 
         // Drop down
         dropDown = moduleDropDown.getModuleDropDown();
-        pagePanel.add(dropDown);
+        this.add(dropDown);
 
         // Changing the sessions shown in the table when a module is selected
         dropDown.addActionListener(e -> {
@@ -64,7 +62,7 @@ public class DeleteSessionPage extends Page {
 
         // Creating the table
         JScrollPane scroll = createTable(); // Scroll contains the JTable
-        pagePanel.add(scroll);
+        this.add(scroll);
 
         // Back Button
         backButton = new BackButton(manager);
@@ -80,13 +78,13 @@ public class DeleteSessionPage extends Page {
             int selectedRow = table.getSelectedRow();
 
             if (selectedRow < 0) {
-                errorMessage.showMessage(pagePanel, new Exception("Please select a row"));
+                errorMessage.showMessage(this, new Exception("Please select a row"));
                 return;
             }
 
-            //TODO: Waiting for this method
-            getModule().removeSesison(sessions[selectedRow]);
+            getModule().removeSession(sessions[selectedRow]);
 
+            sessions = getModule().getStudySessions();
             tableModel.removeRow(selectedRow);
 
             for (Module m : state.getModules()) {
@@ -99,11 +97,9 @@ public class DeleteSessionPage extends Page {
             manager.swapToPrevCard();
         });
 
-        pagePanel.add(optionsPanel);
+        this.add(optionsPanel);
 
-        pagePanel.setLayout(new BoxLayout(pagePanel, BoxLayout.Y_AXIS));
-
-        return pagePanel;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     /**
@@ -191,6 +187,7 @@ public class DeleteSessionPage extends Page {
      * Without this if the first module in the drop down has had its
      * sessions changed they wouldn't be seen
      */
+    //TODO: Use this
     public void updateTable() {
         tableModel.setRowCount(0); // Clearing the table
         populateTable();

@@ -2,10 +2,7 @@ package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import tempest.Module;
 import tempest.State;

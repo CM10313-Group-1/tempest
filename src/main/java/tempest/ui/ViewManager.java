@@ -31,6 +31,7 @@ public class ViewManager<T extends View> extends JPanel {
    * @param name The name of the view to be switched to.
    */
   public void changeView(String name) {
+    //TODO: No check if change of card successful
     if (viewExists(name)) {
       layout.show(this, name);
       history.push(name);
