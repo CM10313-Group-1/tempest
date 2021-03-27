@@ -1,8 +1,13 @@
 package tempest.ui.pages;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JPanel;
+
 import tempest.State;
 import tempest.ui.GUIManager;
 import tempest.ui.ViewManager;
+import tempest.ui.components.LinkButton;
 import tempest.ui.components.charts.BarChart;
 import tempest.ui.components.charts.Chart;
 import tempest.ui.components.charts.LineChart;
@@ -15,24 +20,30 @@ public class ChartViewPage extends Page {
   private Chart[] charts;
   private ViewManager<Chart> vm;
 
-
   public ChartViewPage(State state, GUIManager guiManager) {
     super();
     this.state = state;
     this.manager = guiManager;
 
-    this.charts = new Chart[]{new BarChart(), new LineChart(), new PieChart()};
+    this.charts = new Chart[] { new BarChart(), new LineChart(), new PieChart() };
     vm = new ViewManager<Chart>(charts, charts[0]);
     this.add(vm);
+    addNavButtons();
   }
 
   @Override
   public String getName() {
-    return "chartView";
+    return PageNames.CHART_VIEW;
   }
 
   private void addNavButtons() {
-    // TODO add buttons for changing charts
+    JPanel buttonPanel = new JPanel();
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    LinkButton source = (LinkButton) e.getSource();
+    vm.changeView(source.getDestination());
   }
 
 }

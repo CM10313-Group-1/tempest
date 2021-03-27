@@ -30,7 +30,7 @@ public class ManageModulesPage extends Page {
 
     @Override
     public String getName() {
-        return "manageModulesPage";
+        return PageNames.MANAGE_MODULES;
     }
 
     private void setupUI() {
@@ -39,8 +39,8 @@ public class ManageModulesPage extends Page {
 
         dropDown = moduleDropDown.getModuleDropDown();
 
-        addModuleButton = new LinkButton("Add a module", "addModulePage", this);
-        deleteModuleButton = new LinkButton("Delete a module", "deleteModulePage", this);
+        addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
+        deleteModuleButton = new LinkButton("Delete a module", PageNames.DELETE_MODULE, this);
         backButton = new BackButton(manager);
 
         pageSwapPanel.add(deleteModuleButton);
