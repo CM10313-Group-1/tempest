@@ -23,6 +23,7 @@ public class ViewManager<T extends View> extends JPanel {
       this.views.put(view.getName(), view);
       this.add(view, view.getName());
     }
+
     layout.show(this, initialView.getName());
     history.push(initialView.getName());
   }

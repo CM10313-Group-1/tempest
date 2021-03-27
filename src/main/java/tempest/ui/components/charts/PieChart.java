@@ -13,7 +13,7 @@ public class PieChart extends Chart {
 
   @Override
   public String getName() {
-    return "PieChart";
+    return ChartTypes.PIE;
   }
 
 }

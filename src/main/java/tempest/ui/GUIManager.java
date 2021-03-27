@@ -8,13 +8,7 @@ import javax.swing.JFrame;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.AddSessionPage;
-import tempest.ui.pages.ChartViewPage;
-import tempest.ui.pages.DeleteModulePage;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
-import tempest.ui.pages.Page;
+import tempest.ui.pages.*;
 
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
@@ -67,7 +61,7 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        if (cardName.equals("manageModulesPage")) {
+        if (cardName.equals(PageNames.MANAGE_MODULES)) {
             ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
             p.update();
         }
