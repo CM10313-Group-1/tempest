@@ -13,7 +13,7 @@ import tempest.ui.pages.HomePage;
 import tempest.ui.pages.ManageModulesPage;
 import tempest.ui.pages.ManageSessionsPage;
 
-public class GUIManagerTest {
+public class HomePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
@@ -41,4 +41,6 @@ public class GUIManagerTest {
 
         assertEquals(manager.getPageName(ManageSessionsPage.class), manager.getCurrentCard());
     }
+
+    //TODO: Chart Test
 }

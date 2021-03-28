@@ -10,6 +10,8 @@ import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.*;
 
+//TODO: Tidy
+
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
