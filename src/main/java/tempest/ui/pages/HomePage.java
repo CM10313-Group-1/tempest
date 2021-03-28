@@ -2,7 +2,6 @@ package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import tempest.ui.GUIManager;
@@ -13,19 +12,21 @@ public class HomePage extends Page {
 
     private final GUIManager manager;
 
-    private final JButton manageModulesButton;
-    private final JButton addSessionButton;
+    private final LinkButton manageModulesLink = new LinkButton("Add a new module", PageNames.MANAGE_MODULES, this);
+    private final LinkButton addSessionLink = new LinkButton("Add a new session", PageNames.ADD_SESSION, this);
+    private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
 
     public HomePage(GUIManager guiManager) {
         super();
         this.manager = guiManager;
+        addNavButtons();
+    }
 
+    private void addNavButtons() {
         JPanel buttonPanel = new JPanel();
-        manageModulesButton = new LinkButton("Add a new module", PageNames.MANAGE_MODULES, this);
-        addSessionButton = new LinkButton("Add a new session", PageNames.ADD_SESSION, this);
-
-        buttonPanel.add(manageModulesButton);
-        buttonPanel.add(addSessionButton);
+        buttonPanel.add(manageModulesLink);
+        buttonPanel.add(addSessionLink);
+        buttonPanel.add(chartsLink);
         this.add(buttonPanel);
     }
 
@@ -40,11 +41,11 @@ public class HomePage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    public JButton getManageModulesButton() {
-        return manageModulesButton;
+    public LinkButton getManageModulesButton() {
+        return manageModulesLink;
     }
 
-    public JButton getAddSessionButton() {
-        return addSessionButton;
+    public LinkButton getAddSessionButton() {
+        return addSessionLink;
     }
 }
