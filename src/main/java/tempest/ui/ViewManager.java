@@ -35,14 +35,6 @@ public class ViewManager<T extends View> extends JPanel {
       return;
     }
 
-    if (name.equals(PageNames.MANAGE_MODULES)) {
-      ManageModulesPage mmp = (ManageModulesPage) views.get(name);
-      mmp.update();
-
-    } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
-      //I'll put my code here when i push my branch
-    }
-
     layout.show(this, name);
   }
 

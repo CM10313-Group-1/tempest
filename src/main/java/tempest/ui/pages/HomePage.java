@@ -27,6 +27,7 @@ public class HomePage extends Page {
         buttonPanel.add(manageModulesLink);
         buttonPanel.add(addSessionLink);
         buttonPanel.add(chartsLink);
+
         this.add(buttonPanel);
     }
 

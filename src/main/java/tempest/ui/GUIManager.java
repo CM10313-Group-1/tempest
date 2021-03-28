@@ -60,6 +60,23 @@ public class GUIManager extends JFrame {
     }
 
     /**
+     * Responsible for calling certain page's methods when they are visible
+     *
+     * @param name Page's name
+     */
+    public void checkPage(String name) {
+        System.out.println(name);
+
+        if (name.equals(PageNames.MANAGE_MODULES)) {
+            ManageModulesPage mmp = (ManageModulesPage) getPage(ManageModulesPage.class);
+            mmp.update();
+
+        } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
+            //I'll put my code here when i push my branch
+        }
+    }
+
+    /**
      * Swaps to the entered card name
      *
      * Used to move back up the tree of cards/pages along the path taken on the way
@@ -69,6 +86,7 @@ public class GUIManager extends JFrame {
      */
     public void swapCard(String cardName) {
         vm.changeView(cardName);
+        checkPage(vm.getVisible());
     }
 
     /**
@@ -76,6 +94,7 @@ public class GUIManager extends JFrame {
      */
     public void swapToPrevCard() {
         vm.changeToPrevious();
+        checkPage(vm.getVisible());
     }
 
     /**
