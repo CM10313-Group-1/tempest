@@ -32,7 +32,7 @@ public class DeleteModulePage extends Page {
 
     @Override
     public String getName() {
-        return "deleteModulePage";
+        return PageNames.DELETE_MODULE;
     }
 
     private void setupUI() {
