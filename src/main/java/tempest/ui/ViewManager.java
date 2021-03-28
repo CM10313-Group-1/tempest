@@ -11,10 +11,9 @@ import javax.swing.JPanel;
 
 public class ViewManager<T extends View> extends JPanel {
   private static final long serialVersionUID = -7163717383346091663L;
-
   private final CardLayout layout = new CardLayout();
-  private HashMap<String, T> views = new HashMap<>();
-  private Stack<String> history = new Stack<>();
+  private final HashMap<String, T> views = new HashMap<>();
+  private final Stack<String> history = new Stack<>();
 
   public ViewManager(T[] views, T initialView) {
     super();
@@ -42,10 +41,6 @@ public class ViewManager<T extends View> extends JPanel {
 
     } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
       //I'll put my code here when i push my branch
-    }
-
-    if (name.equals(getVisible())) {
-      System.err.println("Still showing the same change");
     }
 
     layout.show(this, name);
