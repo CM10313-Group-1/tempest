@@ -25,14 +25,14 @@ public class HomePage extends Page {
 
     @Override
     public String getName() {
-        return "homePage";
+        return PageNames.HOME;
     }
 
     private void setupUI() {
         JPanel buttonPanel = new JPanel();
 
-        manageModulesButton = new LinkButton("Manage modules", "manageModulesPage", this);
-        manageSessionsButton = new LinkButton("Manage sessions", "manageSessionsPage", this);
+        manageModulesButton = new LinkButton("Manage modules", PageNames.MANAGE_MODULES, this);
+        manageSessionsButton = new LinkButton("Manage sessions", PageNames.ADD_SESSION, this);
 
         buttonPanel.add(manageModulesButton);
         buttonPanel.add(manageSessionsButton);

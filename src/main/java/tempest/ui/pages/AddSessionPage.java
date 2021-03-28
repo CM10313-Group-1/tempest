@@ -47,7 +47,7 @@ public class AddSessionPage extends Page {
 
     @Override
     public String getName() {
-        return "addSessionPage";
+        return PageNames.ADD_SESSION;
     }
 
     private void setupUI() {

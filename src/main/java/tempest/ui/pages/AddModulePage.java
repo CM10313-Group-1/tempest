@@ -33,7 +33,7 @@ public class AddModulePage extends Page {
 
     @Override
     public String getName() {
-        return "addModulePage";
+        return PageNames.ADD_MODULE;
     }
 
     private void setupUI() {

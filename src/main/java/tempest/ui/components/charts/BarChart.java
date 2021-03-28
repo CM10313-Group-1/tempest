@@ -13,7 +13,7 @@ public class BarChart extends Chart {
 
   @Override
   public String getName() {
-    return "BarChart";
+    return ChartTypes.BAR;
   }
 
 }
