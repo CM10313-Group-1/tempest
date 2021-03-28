@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 public class ViewManager<T extends View> extends JPanel {
   private static final long serialVersionUID = -7163717383346091663L;
 
-  private CardLayout layout = new CardLayout();
-  private HashMap<String, T> views = new HashMap<String, T>();
-  private Stack<String> history = new Stack<String>();
+  private final CardLayout layout = new CardLayout();
+  private HashMap<String, T> views = new HashMap<>();
+  private Stack<String> history = new Stack<>();
 
   public ViewManager(T[] views, T initialView) {
     super();
@@ -29,18 +29,37 @@ public class ViewManager<T extends View> extends JPanel {
     history.push(initialView.getName());
   }
 
+  private void pageChanger(String name) {
+
+    if (!viewExists(name)) {
+      System.err.println("The card/page you are trying to swap to doesn't exist");
+      return;
+    }
+
+    if (name.equals(PageNames.MANAGE_MODULES)) {
+      ManageModulesPage mmp = (ManageModulesPage) views.get(name);
+      mmp.update();
+
+    } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
+      //I'll put my code here when i push my branch
+    }
+
+    if (name.equals(getVisible())) {
+      System.err.println("Still showing the same change");
+    }
+
+    layout.show(this, name);
+  }
+
   /**
    * Changes the visible {@link View} to the one named.
    * 
    * @param name The name of the view to be switched to.
    */
   public void changeView(String name) {
-    if (viewExists(name)) {
-      layout.show(this, name);
-      history.push(name);
-    } else {
-      System.err.println("The card/page you are trying to swap to doesn't exist");
-    }
+    pageChanger(name);
+
+    history.push(name);
   }
 
   /**
@@ -49,14 +68,8 @@ public class ViewManager<T extends View> extends JPanel {
   public void changeToPrevious() {
     history.pop();
     String lastView = history.peek();
-    // Updates the delete module button
-    if (!viewExists(lastView))
-      System.err.println("Invalid State");
-    else if (lastView.equals(PageNames.MANAGE_MODULES)) {
-      ManageModulesPage p = (ManageModulesPage) views.get(lastView);
-      p.update();
-    }
-    layout.show(this, lastView);
+
+    pageChanger(lastView);
   }
 
   /**

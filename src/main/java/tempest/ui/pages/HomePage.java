@@ -13,8 +13,8 @@ public class HomePage extends Page {
 
     private final GUIManager manager;
 
-    private JButton manageModulesButton;
-    private JButton addSessionButton;
+    private final JButton manageModulesButton;
+    private final JButton addSessionButton;
 
     public HomePage(GUIManager guiManager) {
         super();

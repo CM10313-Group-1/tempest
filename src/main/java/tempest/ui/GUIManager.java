@@ -34,7 +34,7 @@ public class GUIManager extends JFrame {
      */
     private void start() {
         // Creating the module drop down
-        vm = new ViewManager<Page>(pages, pages[0]);
+        vm = new ViewManager<>(pages, pages[0]);
         this.getContentPane().add(vm);
 
         this.addWindowListener(new WindowAdapter() {
@@ -61,10 +61,6 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        if (cardName.equals(PageNames.MANAGE_MODULES)) {
-            ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
-            p.update();
-        }
         vm.changeView(cardName);
     }
 

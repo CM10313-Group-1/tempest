@@ -7,4 +7,6 @@ public class PageNames {
   public static final String DELETE_MODULE = "DeleteModule";
   public static final String HOME = "Home";
   public static final String MANAGE_MODULES = "ManageModules";
+  public static final String MANAGE_SESSIONS = "ManageSessions";
+  public static final String DELETE_SESSIONS = "DeleteSessions";
 }
