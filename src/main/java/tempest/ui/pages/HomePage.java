@@ -32,7 +32,7 @@ public class HomePage extends Page {
         JPanel buttonPanel = new JPanel();
 
         manageModulesButton = new LinkButton("Manage modules", PageNames.MANAGE_MODULES, this);
-        manageSessionsButton = new LinkButton("Manage sessions", PageNames.ADD_SESSION, this);
+        manageSessionsButton = new LinkButton("Manage sessions", PageNames.MANAGE_SESSIONS, this);
 
         buttonPanel.add(manageModulesButton);
         buttonPanel.add(manageSessionsButton);

@@ -25,7 +25,7 @@ public class ManageSessionsPage extends Page implements ActionListener {
 
     @Override
     public String getName() {
-        return "manageSessionsPage";
+        return PageNames.MANAGE_SESSIONS;
     }
 
     public void setupUI(){
@@ -37,8 +37,8 @@ public class ManageSessionsPage extends Page implements ActionListener {
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new FlowLayout()); // TODO: Layout needed???
 
-        delSessionsButton = new LinkButton("View and delete study sessions", "deleteSessionPage", this);
-        addSessionsButton = new LinkButton("Add study sessions", "addSessionPage", this);
+        delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
+        addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 
         optionsPanel.add(delSessionsButton);
         optionsPanel.add(addSessionsButton);
@@ -56,7 +56,7 @@ public class ManageSessionsPage extends Page implements ActionListener {
     }
 
     // Disable delete button if no sessions
-    //TODO: Use
+    //TODO: Change back to update()???
     public void toggleDeleteButton(Module[] modules) {
         for (Module m : modules) {
             if (m.getStudySessions().length > 0) {

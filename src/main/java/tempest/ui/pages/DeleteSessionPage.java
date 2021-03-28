@@ -40,7 +40,7 @@ public class DeleteSessionPage extends Page {
 
     @Override
     public String getName() {
-        return "deleteSessionPage";
+        return PageNames.DELETE_SESSION;
     }
 
     public void setupUI() {

@@ -79,7 +79,7 @@ public class GUIManager extends JFrame {
 
         if (cardName.equals(PageNames.MANAGE_MODULES)) {
             ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
-            p.update();
+            //p.update();
         }
         vm.changeView(cardName);
 
