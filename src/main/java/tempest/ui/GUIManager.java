@@ -81,16 +81,6 @@ public class GUIManager extends JFrame {
         return vm.getView(classObject);
     }
 
-    /**
-     * Returns the name of a page in the cardLayout
-     *
-     * @param classObject A class extending page (e.g. HomePage.class)
-     * @return String - The name of the page class
-     */
-    public String getPageName(Class<? extends Page> classObject) {
-        return vm.getViewName(classObject);
-    }
-
     public String getCurrentCard() {
         return vm.getVisible();
     }
