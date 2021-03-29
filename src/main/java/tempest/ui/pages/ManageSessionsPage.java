@@ -55,9 +55,21 @@ public class ManageSessionsPage extends Page implements ActionListener {
         manager.swapCard(source.getDestination());
     }
 
-    // Disable delete button if no sessions
-    //TODO: Change back to update()???
-    public void toggleDeleteButton(Module[] modules) {
+    /**
+     * Disables the add sessions button if there are no modules
+     *
+     * @param modules Modules array
+     */
+    public void setAddButtonActivity(Module[] modules) {
+        addSessionsButton.setEnabled(modules.length != 0);
+    }
+
+    /**
+     * Disables the delete sessions button if there are no sessions
+     *
+     * @param modules Modules array
+     */
+    public void setDeleteButtonActivity(Module[] modules) {
         for (Module m : modules) {
             if (m.getStudySessions().length > 0) {
                 delSessionsButton.setEnabled(true);
@@ -82,4 +94,6 @@ public class ManageSessionsPage extends Page implements ActionListener {
     public BackButton getBackButton() {
         return backButton;
     }
+
+
 }

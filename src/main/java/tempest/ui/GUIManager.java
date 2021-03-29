@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
@@ -20,20 +21,27 @@ public class GUIManager extends JFrame {
     private final Page[] pages;
     private final Supervisor supervisor;
 
+    private final State state;
+
+    private final ManageSessionsPage manageSessions;
+    private final ManageModulesPage manageModules;
+    private final DeleteSessionPage deleteSession;
+
     public GUIManager(State state, Supervisor supervisor) {
         super();
+        this.state = state;
         this.supervisor = supervisor;
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
         this.pages = new Page[]{
                 new HomePage(this),
-                new ManageModulesPage(this),
-                new AddModulePage(state, this),
-                new DeleteModulePage(state, this),
-                new ManageSessionsPage(this),
+                manageModules  = new ManageModulesPage(this),
+                new AddModulePage(state,this),
+                new DeleteModulePage(state,this),
+                manageSessions = new ManageSessionsPage(this),
                 new AddSessionPage(state, this),
-                new DeleteSessionPage(state, this),
+                deleteSession  = new DeleteSessionPage(state, this),
                 new ChartViewPage(state, this),
 
                 // All new pages should be added here.
@@ -69,14 +77,19 @@ public class GUIManager extends JFrame {
      * @param name Page's name
      */
     public void checkPage(String name) {
-        System.out.println(name);
+        Module[] modules = state.getModules();
 
-        if (name.equals(PageNames.MANAGE_MODULES)) {
-            ManageModulesPage mmp = (ManageModulesPage) getPage(ManageModulesPage.class);
-            mmp.update();
-
-        } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
-            //I'll put my code here when i push my branch
+        switch (name) {
+            case PageNames.MANAGE_SESSIONS:
+                manageSessions.setDeleteButtonActivity(modules);
+                manageSessions.setAddButtonActivity(modules);
+                break;
+            case PageNames.MANAGE_MODULES:
+                manageModules.setButtonActivity(modules);
+                break;
+            case PageNames.DELETE_SESSION:
+                deleteSession.updateTable();
+                break;
         }
     }
 

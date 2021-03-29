@@ -21,9 +21,9 @@ public class ChartViewPage extends Page {
   private Chart[] charts;
   private ViewManager<Chart> vm;
 
-  private LinkButton barChartLink = new LinkButton("Bar Chart", ChartTypes.BAR, this);
-  private LinkButton lineChartLink = new LinkButton("Line Chart", ChartTypes.LINE, this);
-  private LinkButton pieChartLink = new LinkButton("Pie Chart", ChartTypes.PIE, this);
+  private final LinkButton barChartLink = new LinkButton("Bar Chart", ChartTypes.BAR, this);
+  private final LinkButton lineChartLink = new LinkButton("Line Chart", ChartTypes.LINE, this);
+  private final LinkButton pieChartLink = new LinkButton("Pie Chart", ChartTypes.PIE, this);
   private BackButton backButton;
 
   public ChartViewPage(State state, GUIManager guiManager) {

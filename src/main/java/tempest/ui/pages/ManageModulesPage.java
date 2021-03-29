@@ -53,7 +53,7 @@ public class ManageModulesPage extends Page {
      *
      * @param modules Array containing all the modules
      */
-    public void update(Module[] modules) {
+    public void setButtonActivity(Module[] modules) {
         // If a module/modules have been created then the button is active again
         deleteModuleButton.setEnabled(modules.length != 0);
     }
