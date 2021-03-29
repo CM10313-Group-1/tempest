@@ -9,7 +9,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import tempest.Module;
 import tempest.State;
+import tempest.StudySession;
 import tempest.ui.ViewManager;
 
 public class LineChart extends Chart {
@@ -23,38 +25,19 @@ public class LineChart extends Chart {
 
   @Override
   public JFreeChart getChart() {
-
-    JFreeChart chart = ChartFactory.createLineChart("Line Chart", "Modules", "Cumulative Time / mins",
-        generateDataset(this.state), PlotOrientation.HORIZONTAL, true, false, false);
+    JFreeChart chart = ChartFactory.createLineChart("Line Chart", "Date", "Time / mins", generateDataset(this.state),
+        PlotOrientation.VERTICAL, true, false, false);
     return chart;
   }
 
   @Override
   public CategoryDataset generateDataset(State state) {
-    final String fiat = "FIAT";
-    final String audi = "AUDI";
-    final String ford = "FORD";
-    final String speed = "Speed";
-    final String mileage = "Mileage";
-    final String userRating = "User Rating";
-    final String safety = "safety";
     final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-    dataset.addValue(1.0, fiat, speed);
-    dataset.addValue(3.0, fiat, userRating);
-    dataset.addValue(5.0, fiat, mileage);
-    dataset.addValue(5.0, fiat, safety);
-
-    dataset.addValue(5.0, audi, speed);
-    dataset.addValue(6.0, audi, userRating);
-    dataset.addValue(10.0, audi, mileage);
-    dataset.addValue(4.0, audi, safety);
-
-    dataset.addValue(4.0, ford, speed);
-    dataset.addValue(2.0, ford, userRating);
-    dataset.addValue(3.0, ford, mileage);
-    dataset.addValue(6.0, ford, safety);
-
+    for (Module m : state.getModules()) {
+      for (StudySession s : m.getStudySessions()) {
+        dataset.addValue(s.duration.toMinutes(), m.getName(), StudySession.STORED_DATE_FORMAT.format(s.date));
+      }
+    }
     return dataset;
   }
 
