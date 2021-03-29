@@ -76,7 +76,7 @@ public class GUIManager extends JFrame {
      *
      * @param name Page's name
      */
-    public void checkPage(String name) {
+    private void checkPage(String name) {
         Module[] modules = state.getModules();
 
         switch (name) {
