@@ -34,8 +34,13 @@ public class HomePageTest {
     public void manageSessionsButton() {
         homePage.getManageSessionsButton().doClick();
 
-        assertEquals(PageNames.ADD_SESSION, manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
-    //TODO: Chart Test
+    @Test
+    public void chartViewButton() {
+        homePage.getChartViewButton().doClick();
+
+        assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());
+    }
 }

@@ -8,33 +8,23 @@ import org.junit.Test;
 import tempest.State;
 import tempest.Module;
 import tempest.Supervisor;
-import tempest.ui.pages.*;
 import tempest.ui.GUIManager;
 import tempest.ui.ErrorMessage;
 import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
 
-    // Running with no store file - no modules or study sessions
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    // Running with store file
-//    GUIHelper helper = new GUIHelper();
-//
-//    Supervisor supervisor = Supervisor.getInstance();
-//
-//    State state = supervisor.getState();
-//    GUIManager manager = supervisor.getManager();
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
     ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-    AddSessionPage addSessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
+    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+    AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
-    ActionButtonPanel actionButtonPanel = addSessionPage.getActionButtons();
+    ActionButtonPanel actionButtonPanel = addSession.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {
@@ -43,49 +33,14 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void addSessionBackButton() {
+    public void backButton() {
+        createModule("test");
+
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manageSessions.getName(), manager.getCurrentCard());
-    }
-
-    public Module createModule(String moduleName) {
-        Module testModule = null;
-
-        // Creating a new module
-
-        //TODO: Test if need to move to the modules page
-        homePage.getManageModulesButton().doClick();
-        manageModules.getAddModuleButton().doClick();
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
-
-        // Getting the created module
-        for (Module m : state.getModules()) {
-            if (moduleName.equals(m.getName())) {
-                testModule = m;
-                break;
-            }
-        }
-
-        return testModule;
-    }
-
-    public int[] createSession(String hours, String mins, Module testModule) {
-        int prevSessionsLen = testModule.getStudySessions().length;
-
-        // Selecting the  module in the drop down
-        addSessionPage.setDropDown(testModule.getName());
-
-        // Adding a study session
-        addSessionPage.setHours(hours);
-        addSessionPage.setMins(mins);
-        addSessionPage.getEnterButton().doClick();
-
-        // Returns values to test
-        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
+        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
@@ -215,5 +170,42 @@ public class AddSessionPageTest {
         Module testModule = createModule("test");
         int[] result = createSession("3.5", "24.7", testModule);
         assertEquals(result[0], result[1]);
+    }
+
+    public Module createModule(String moduleName) {
+        Module testModule = null;
+
+        // Creating a new module
+
+        //TODO: Test if need to move to the modules page
+        homePage.getManageModulesButton().doClick();
+        manageModules.getAddModuleButton().doClick();
+        addModule.setModuleNameInput(moduleName);
+        addModule.getEnterButton().doClick();
+
+        // Getting the created module
+        for (Module m : state.getModules()) {
+            if (moduleName.equals(m.getName())) {
+                testModule = m;
+                break;
+            }
+        }
+
+        return testModule;
+    }
+
+    public int[] createSession(String hours, String mins, Module testModule) {
+        int prevSessionsLen = testModule.getStudySessions().length;
+
+        // Selecting the  module in the drop down
+        addSession.setDropDown(testModule.getName());
+
+        // Adding a study session
+        addSession.setHours(hours);
+        addSession.setMins(mins);
+        addSession.getEnterButton().doClick();
+
+        // Returns values to test
+        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
 }

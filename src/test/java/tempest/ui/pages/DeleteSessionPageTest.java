@@ -17,7 +17,8 @@ public class DeleteSessionPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    ManageSessionsPage manageSessionsPage = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+    AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
     DeleteSessionPage deleteSession = (DeleteSessionPage) manager.getPage(DeleteSessionPage.class);
 
     AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
@@ -34,8 +35,10 @@ public class DeleteSessionPageTest {
 
     @Test
     public void backButton() {
+        createSession("1", "", createModule("test"));
+
         homePage.getManageSessionsButton().doClick();
-        manageSessionsPage.getDelSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
         deleteSession.getBackButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
@@ -43,55 +46,68 @@ public class DeleteSessionPageTest {
 
     @Test
     public void deleteSession() {
-        //Create module
+        Module test = createModule("test");
 
-        //Create a session
+        createSession("4", "25", test);
+        createSession("", "15", test);
 
-        //Create another session
+        int prevLen = test.getStudySessions().length;
 
-        //Select module
+        // Deleting one of the sessions
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.selectRow(1);
+        deleteSession.getDeleteButton().doClick();
 
-        //Delete one session
-
-        //assert session length of module = -1
+        assertEquals(prevLen - 1, test.getStudySessions().length);
     }
 
     @Test
     public void deleteLastSession() {
-        //Create module
+        Module test = createModule("test");
 
-        //Create a session
+        createSession("4", "25", test);
 
-        //Select module
+        int prevLen = test.getStudySessions().length;
 
-        //Delete session
+        // Deleting this session
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.selectRow(0);
+        deleteSession.getDeleteButton().doClick();
 
-        //assert session length of module = -1 (or 0)
+        assertEquals(prevLen - 1, test.getStudySessions().length);
 
-        //assert current page == PageNames.MANAGE_SESSIONS
+        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
     public void changeTableDisplay() {
-        //Create module
+        Module test = createModule("test");
 
-        //Add a session
+        createSession("", "25", test);
 
-        //Create module
+        //int prevLen = test.getStudySessions().length;
 
-        //Add session
-        //Add session
+        Module test2 = createModule("test2");
 
-        //assert table rows w/ 1st module = 1
+        createSession("4", "", test2);
+        createSession("2", "12", test2);
 
-        //assert table rows w/ 2nd module = 1
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
+
+        deleteSession.setDropDown(test.getName());
+        assertEquals(test.getStudySessions().length, deleteSession.getRowCount());
+
+        deleteSession.setDropDown(test2.getName());
+        assertEquals(test2.getStudySessions().length, deleteSession.getRowCount());
     }
 
     public Module createModule(String moduleName) {
         Module testModule = null;
 
-        // Creating a new module
-
+        // Creating module
         homePage.getManageModulesButton().doClick();
         manageModules.getAddModuleButton().doClick();
         addModule.setModuleNameInput(moduleName);
@@ -108,7 +124,11 @@ public class DeleteSessionPageTest {
         return testModule;
     }
 
-    public void createSession() {
+    public void createSession(String hours, String mins, Module module) {
+        addSession.setDropDown(module.getName());
 
+        addSession.setHours(hours);
+        addSession.setMins(mins);
+        addSession.getEnterButton().doClick();
     }
 }

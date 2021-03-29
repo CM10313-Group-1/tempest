@@ -11,19 +11,15 @@ import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;
 
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
-
 public class AddModulePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    ActionButtonPanel actionButtonPanel = modulePage.getActionButtons();
+    ActionButtonPanel actionButtonPanel = addModule.getActionButtons();
 
     @Before
     public void turnOffErrorMessages() {
@@ -32,18 +28,13 @@ public class AddModulePageTest {
     }
 
     @Test
-    public void moduleBackButton() {
+    public void backButton() {
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getAddModuleButton().doClick();
+        manageModules.getAddModuleButton().doClick();
+
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
-    }
-
-    public void createModule(String moduleName) {
-        manageModulesPage.getAddModuleButton().doClick(); // Needed for the back button in the duplicate test to work
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
+        assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }
 
     @Test
@@ -81,5 +72,11 @@ public class AddModulePageTest {
         createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);
+    }
+
+    public void createModule(String moduleName) {
+        manageModules.getAddModuleButton().doClick();
+        addModule.setModuleNameInput(moduleName);
+        addModule.getEnterButton().doClick();
     }
 }

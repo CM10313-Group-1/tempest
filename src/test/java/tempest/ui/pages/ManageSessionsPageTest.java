@@ -2,6 +2,7 @@ package tempest.ui.pages;
 
 import org.junit.Before;
 import org.junit.Test;
+import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.ErrorMessage;
@@ -11,15 +12,14 @@ import static org.junit.Assert.*;
 
 public class ManageSessionsPageTest {
 
-    //TODO:
-    // - Helper class contains methods to create modules and sessions
-
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageSessionsPage manageSessionsPage = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-    AddSessionPage addSessionPage = (AddSessionPage) manager.getPage(AddSessionPage.class);
+    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+    AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
+
+    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
 
     @Before
     public void turnOffErrorMessages() {
@@ -27,49 +27,67 @@ public class ManageSessionsPageTest {
         errorMessage.setMessagesShown(false);
     }
 
-    // Buttons
-
     @Test
     public void backButton() {
         homePage.getManageSessionsButton().doClick();
-        manageSessionsPage.getBackButton().doClick();
+        manageSessions.getBackButton().doClick();
 
-        assertEquals(homePage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
     }
 
     @Test
-    public void deleteSessionButtonNoSessions() {
+    public void addSessionButton_NoModules() {
         assertEquals(0, state.getModules().length);
 
         homePage.getManageSessionsButton().doClick();
-
-        manageSessionsPage.getDelSessionsButton().doClick();
-
-        // Delete sessions button is disabled as no sessions so current page is still manage sessions
+        manageSessions.getAddSessionsButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
-    public void deleteSessionButtonSessions() {
-        // Add a module
-
-        // Add a session for this module
+    public void addSessionButton_Modules() {
+        createModule("test");
 
         homePage.getManageSessionsButton().doClick();
+        manageSessions.getAddSessionsButton().doClick();
 
-        manageSessionsPage.getDelSessionsButton().doClick();
+        assertEquals(PageNames.ADD_SESSION, manager.getCurrentCard());
+    }
+
+
+    @Test
+    public void deleteSessionButton_NoSessions() {
+        for (Module m : state.getModules()) {
+            assertEquals(0, m.getStudySessions().length);
+        }
+
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
+
+        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
+    }
+
+    @Test
+    public void deleteSessionButton_Sessions() {
+        createModule("test");
+
+        createSession("1", "5");
+
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
 
         assertEquals(PageNames.DELETE_SESSION, manager.getCurrentCard());
     }
 
-    @Test
-    public void addSessionButton() {
-        homePage.getManageSessionsButton().doClick();
+    public void createModule(String moduleName) {
+        addModule.setModuleNameInput(moduleName);
+        addModule.getEnterButton().doClick();
+    }
 
-        //FIXME: Won't work when greying out implemented
-        manageSessionsPage.getAddSessionsButton().doClick();
-
-        assertEquals(PageNames.ADD_SESSION, manager.getCurrentCard());
+    public void createSession(String hours, String mins) {
+        addSession.setHours(hours);
+        addSession.setMins(mins);
+        addSession.getEnterButton().doClick();
     }
 }

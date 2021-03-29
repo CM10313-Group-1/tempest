@@ -7,46 +7,38 @@ import org.junit.Test;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.DeleteModulePage;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
 
 public class DeleteModulePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
-    AddModulePage addModulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-
-    public void createModule(String moduleName) {
-        // Creating a new module called test
-        addModulePage.setModuleNameInput(moduleName);
-        addModulePage.getEnterButton().doClick();
-    }
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
+    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
 
     @Test
     public void backButton() {
         createModule("test");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getBackButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getBackButton().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+        assertEquals(manageModules.getName(), manager.getCurrentCard());
     }
 
     @Test
     public void deleteModule() {
         createModule("test");
 
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        int length = state.getModules().length;
 
-        assertEquals(0, state.getModules().length);
+        homePage.getManageModulesButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
+
+        assertEquals(length - 1, state.getModules().length);
     }
 
     @Test
@@ -54,10 +46,10 @@ public class DeleteModulePageTest {
         createModule("test");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }
 
     @Test
@@ -66,9 +58,15 @@ public class DeleteModulePageTest {
         createModule("test2");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
 
-        assertEquals(deleteModulePage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
+    }
+
+    public void createModule(String moduleName) {
+        // Creating a new module called test
+        addModule.setModuleNameInput(moduleName);
+        addModule.getEnterButton().doClick();
     }
 }

@@ -23,6 +23,7 @@ public class DeleteSessionPage extends Page {
     private final ErrorMessage errorMessage = new ErrorMessage();
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
+    private JButton deleteButton;
     private BackButton backButton;
     private JComboBox<Object> dropDown;
 
@@ -69,7 +70,7 @@ public class DeleteSessionPage extends Page {
         optionsPanel.add(backButton);
 
         // Delete Button
-        JButton deleteButton = new JButton("Delete Session");
+        deleteButton = new JButton("Delete Session");
         deleteButton.setFocusable(false);
         optionsPanel.add(deleteButton);
 
@@ -187,7 +188,6 @@ public class DeleteSessionPage extends Page {
      * Without this if the first module in the drop down has had its
      * sessions changed they wouldn't be seen
      */
-    //TODO: Use this
     public void updateTable() {
         tableModel.setRowCount(0); // Clearing the table
         populateTable();
@@ -195,5 +195,21 @@ public class DeleteSessionPage extends Page {
 
     public BackButton getBackButton() {
         return backButton;
+    }
+
+    public void selectRow(int row) {
+        table.setRowSelectionInterval(row, row);
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void setDropDown(String moduleName) {
+        dropDown.setSelectedItem(moduleName);
+    }
+
+    public int getRowCount() {
+        return table.getRowCount();
     }
 }

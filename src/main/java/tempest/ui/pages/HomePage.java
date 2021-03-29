@@ -49,4 +49,8 @@ public class HomePage extends Page {
     public LinkButton getManageSessionsButton() {
         return manageSessionsLink;
     }
+
+    public LinkButton getChartViewButton() {
+        return chartsLink;
+    }
 }

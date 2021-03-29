@@ -70,16 +70,16 @@ public class DeleteModulePage extends Page {
      * Handles deleting the module and updating the module drop down
      */
     private void handleDeletingModule() {
-        // Swaps to prev card if no modules to delete
-        if (dropDown.getItemCount() == 0) {
-            System.err.println("Attempting to delete modules when there are none");
-            return;
-        }
-
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
 
         state.deleteModule(moduleName);
         moduleDropDown.removeModule(moduleName);
+
+        // Swaps to prev card if no modules to delete
+        if (dropDown.getItemCount() == 0) {
+            manager.swapToPrevCard();
+            return;
+        }
 
         System.out.println(moduleName + " successfully deleted.");
     }
