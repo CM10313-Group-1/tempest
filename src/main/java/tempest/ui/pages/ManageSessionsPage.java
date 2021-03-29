@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ManageSessionsPage extends Page implements ActionListener {
-    private final GUIManager manager;
 
     private JButton delSessionsButton;
     private JButton addSessionsButton;
@@ -18,7 +17,7 @@ public class ManageSessionsPage extends Page implements ActionListener {
     private BackButton backButton;
 
     public ManageSessionsPage(GUIManager guiManager){
-        this.manager = guiManager;
+        super(guiManager);
 
         setupUI();
     }

@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 public class DeleteSessionPage extends Page {
 
     private final State state;
-    private final GUIManager manager;
 
     private final ErrorMessage errorMessage = new ErrorMessage();
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
@@ -30,8 +29,9 @@ public class DeleteSessionPage extends Page {
     private DefaultTableModel tableModel;
 
     public DeleteSessionPage(State state, GUIManager manager) {
+        super(manager);
+
         this.state = state;
-        this.manager = manager;
 
         setupUI();
     }

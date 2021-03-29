@@ -17,7 +17,6 @@ public class HomePage extends Page {
 
     public HomePage(GUIManager guiManager) {
         super(guiManager);
-        this.manager = guiManager;
         addNavButtons();
     }
 

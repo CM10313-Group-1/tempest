@@ -26,7 +26,6 @@ public class DeleteModulePage extends Page {
     public DeleteModulePage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
-        this.manager = guiManager;
         setupUI();
     }
 
