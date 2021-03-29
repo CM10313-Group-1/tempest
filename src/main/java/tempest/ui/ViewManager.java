@@ -8,10 +8,9 @@ import javax.swing.JPanel;
 
 public class ViewManager<T extends View> extends JPanel {
   private static final long serialVersionUID = -7163717383346091663L;
-
-  private CardLayout layout = new CardLayout();
-  private HashMap<String, T> views = new HashMap<String, T>();
-  private Stack<String> history = new Stack<String>();
+  private final CardLayout layout = new CardLayout();
+  private final HashMap<String, T> views = new HashMap<>();
+  private final Stack<String> history = new Stack<>();
 
   public ViewManager(T[] views, T initialView) {
     super();

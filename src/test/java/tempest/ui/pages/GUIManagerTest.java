@@ -16,8 +16,6 @@ public class GUIManagerTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
 
-    // *** Button Tests ***
-
     // Turns off the error message popups so the tests are not blocked
     @Before
     public void turnOffErrorMessages() {
@@ -26,16 +24,16 @@ public class GUIManagerTest {
     }
 
     @Test
-    public void addModuleButton() {
+    public void manageModulesButton() {
         homePage.getManageModulesButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(ManageModulesPage.class));
+        assertEquals(manager.getCurrentCard(), PageNames.MANAGE_MODULES);
     }
 
     @Test
     public void addSessionButton() {
         homePage.getAddSessionButton().doClick();
 
-        assertEquals(manager.getCurrentCard(), manager.getPageName(AddSessionPage.class));
+        assertEquals(manager.getCurrentCard(), PageNames.ADD_SESSION);
     }
 }
