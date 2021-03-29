@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class State {
-    private List<Module> modules;
+    private final List<Module> modules;
 
     public State() {
         this.modules = new ArrayList<>();
