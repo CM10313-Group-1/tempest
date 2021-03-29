@@ -10,14 +10,13 @@ import tempest.ui.components.LinkButton;
 public class HomePage extends Page {
     private static final long serialVersionUID = -6085163013456560971L;
 
-    private final GUIManager manager;
 
     private final LinkButton manageModulesLink = new LinkButton("Add a new module", PageNames.MANAGE_MODULES, this);
     private final LinkButton addSessionLink = new LinkButton("Add a new session", PageNames.ADD_SESSION, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
 
     public HomePage(GUIManager guiManager) {
-        super();
+        super(guiManager);
         this.manager = guiManager;
         addNavButtons();
     }

@@ -19,7 +19,6 @@ import tempest.ui.components.ModuleDropDown;
 public class AddModulePage extends Page {
     private static final long serialVersionUID = -6175924935345590918L;
     private final State state;
-    private final GUIManager manager;
     private final ModuleDropDown dropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
@@ -28,7 +27,7 @@ public class AddModulePage extends Page {
     private JButton enterButton;
 
     public AddModulePage(State state, GUIManager guiManager) {
-        super();
+        super(guiManager);
         this.state = state;
         this.manager = guiManager;
         this.actionButtonPanel = new ActionButtonPanel(manager, this);

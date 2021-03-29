@@ -16,7 +16,6 @@ import tempest.ui.components.ModuleDropDown;
 public class DeleteModulePage extends Page {
     private static final long serialVersionUID = 2589222088607882971L;
     private final State state;
-    private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private BackButton backButton;
@@ -24,7 +23,7 @@ public class DeleteModulePage extends Page {
     private JComboBox<Object> dropDown;
 
     public DeleteModulePage(State state, GUIManager guiManager) {
-        super();
+        super(guiManager);
         this.state = state;
         this.manager = guiManager;
         setupUI();

@@ -14,7 +14,6 @@ import tempest.ui.components.ModuleDropDown;
 
 public class ManageModulesPage extends Page {
     private static final long serialVersionUID = -3556076472382354523L;
-    private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private final LinkButton addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
@@ -24,7 +23,7 @@ public class ManageModulesPage extends Page {
     private final JComboBox<Object> dropDown = moduleDropDown.getModuleDropDown();
 
     public ManageModulesPage(GUIManager guiManager) {
-        super();
+        super(guiManager);
         this.manager = guiManager;
         setupUI();
     }
