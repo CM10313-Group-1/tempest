@@ -17,7 +17,6 @@ import tempest.ui.components.charts.PieChart;
 
 public class ChartViewPage extends Page {
   private static final long serialVersionUID = -7397536728116537358L;
-  private final GUIManager manager;
   private Chart[] charts;
   private ViewManager<Chart> vm;
 
@@ -27,7 +26,7 @@ public class ChartViewPage extends Page {
   private BackButton backButton;
 
   public ChartViewPage(State state, GUIManager guiManager) {
-    super();
+    super(guiManager);
     this.manager = guiManager;
 
     this.charts = new Chart[] { new BarChart(state, vm), new LineChart(state, vm), new PieChart(state, vm) };
