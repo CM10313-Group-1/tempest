@@ -14,7 +14,8 @@ public class ManageModulesPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
     public void backButton() {
@@ -31,12 +32,6 @@ public class ManageModulesPageTest {
         assertEquals(PageNames.ADD_MODULE, manager.getCurrentCard());
     }
 
-    public void createModule(String moduleName) {
-        // Creating a new module called test
-        addModule.setModuleNameInput(moduleName);
-        addModule.getEnterButton().doClick();
-    }
-
     @Test
     public void deleteModuleButton_NoModules() {
         assertEquals(0, state.getModules().length);
@@ -49,7 +44,7 @@ public class ManageModulesPageTest {
 
     @Test
     public void deleteModuleButton_Modules() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();

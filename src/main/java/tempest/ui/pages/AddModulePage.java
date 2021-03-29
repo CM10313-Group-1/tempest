@@ -131,7 +131,7 @@ public class AddModulePage extends Page {
         return enterButton;
     }
 
-    public void setModuleNameInput(String name) {
+    public void setModuleName(String name) {
         moduleNameInput.setText(name);
     }
 }

@@ -82,7 +82,7 @@ public class DeleteModulePage extends Page {
         System.out.println(moduleName + " successfully deleted.");
     }
 
-    public JButton getBackButton() {
+    public BackButton getBackButton() {
         return backButton;
     }
 

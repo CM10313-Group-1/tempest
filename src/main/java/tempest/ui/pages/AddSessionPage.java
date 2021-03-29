@@ -25,8 +25,8 @@ import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
 public class AddSessionPage extends Page {
-
     private static final long serialVersionUID = 6738660438220363619L;
+
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;

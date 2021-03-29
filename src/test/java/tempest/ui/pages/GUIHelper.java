@@ -27,7 +27,7 @@ public class GUIHelper {
         // Creating module
         homePage.getManageModulesButton().doClick();
         manageModules.getAddModuleButton().doClick();
-        addModule.setModuleNameInput(moduleName);
+        addModule.setModuleName(moduleName);
         addModule.getEnterButton().doClick();
 
         // Getting the created module

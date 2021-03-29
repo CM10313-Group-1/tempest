@@ -10,7 +10,6 @@ import tempest.ui.components.LinkButton;
 public class HomePage extends Page {
     private static final long serialVersionUID = -6085163013456560971L;
 
-
     private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);

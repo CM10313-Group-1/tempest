@@ -5,14 +5,13 @@ import tempest.ui.components.LinkButton;
 import tempest.Module;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ManageSessionsPage extends Page implements ActionListener {
 
-    private JButton delSessionsButton;
-    private JButton addSessionsButton;
+    private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
+    private final LinkButton addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 
     private BackButton backButton;
 
@@ -27,16 +26,13 @@ public class ManageSessionsPage extends Page implements ActionListener {
         return PageNames.MANAGE_SESSIONS;
     }
 
-    public void setupUI(){
+    private void setupUI(){
         JPanel backPanel = new JPanel();
 
         backButton = new BackButton(manager);
         backPanel.add(backButton);
 
         JPanel optionsPanel = new JPanel();
-
-        delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
-        addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 
         optionsPanel.add(delSessionsButton);
         optionsPanel.add(addSessionsButton);
@@ -78,11 +74,11 @@ public class ManageSessionsPage extends Page implements ActionListener {
         delSessionsButton.setEnabled(false);
     }
 
-    public JButton getAddSessionsButton() {
+    public LinkButton getAddSessionsButton() {
         return addSessionsButton;
     }
 
-    public JButton getDelSessionsButton() {
+    public LinkButton getDelSessionsButton() {
         return delSessionsButton;
     }
 
