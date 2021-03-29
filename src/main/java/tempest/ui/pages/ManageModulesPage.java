@@ -14,16 +14,14 @@ import tempest.ui.components.LinkButton;
 public class ManageModulesPage extends Page {
     private static final long serialVersionUID = -3556076472382354523L;
 
-    private final GUIManager manager;
-
     private final LinkButton addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
     private final LinkButton deleteModuleButton = new LinkButton("Delete a module", PageNames.DELETE_MODULE, this);
 
     private BackButton backButton;
 
     public ManageModulesPage(GUIManager guiManager) {
-        super();
-        this.manager = guiManager;
+        super(guiManager);
+
         setupUI();
     }
 

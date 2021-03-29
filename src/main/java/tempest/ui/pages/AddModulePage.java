@@ -24,7 +24,7 @@ public class AddModulePage extends Page {
     private JButton enterButton;
 
     public AddModulePage(State state, GUIManager guiManager) {
-        super();
+        super(guiManager);
 
         this.state = state;
         this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
