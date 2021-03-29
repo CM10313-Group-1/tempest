@@ -14,9 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class DeleteSessionPage extends Page {
 
-    //TODO:
-    // - Convert date to local date - or do we need to store all of date to be able to see time session entered not just day
-
     private final State state;
     private final GUIManager manager;
 

@@ -1,47 +1,66 @@
 package tempest.ui.pages;
 
 import tempest.Module;
-import tempest.Supervisor;
+import tempest.State;
+import tempest.ui.GUIManager;
 
 public class GUIHelper {
 
-    public GUIHelper() {
-        Supervisor supervisor = Supervisor.getInstance();
-        supervisor.start();
+    private final HomePage homePage;
+    private final ManageModulesPage manageModules;
+    private final AddModulePage addModule;
+    private final AddSessionPage addSession;
+    private final State state;
+
+    public GUIHelper(GUIManager manager, State state) {
+        this.state = state;
+
+        homePage = (HomePage) manager.getPage(HomePage.class);
+        manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+        addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+        addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
     }
 
-    public void getState() {
+    public Module createModule(String moduleName) {
+        Module testModule = null;
 
+        // Creating module
+        homePage.getManageModulesButton().doClick();
+        manageModules.getAddModuleButton().doClick();
+        addModule.setModuleNameInput(moduleName);
+        addModule.getEnterButton().doClick();
+
+        // Getting the created module
+        for (Module m : state.getModules()) {
+            if (moduleName.equals(m.getName())) {
+                testModule = m;
+                break;
+            }
+        }
+
+        return testModule;
     }
 
-    public void createModule() {
-//        manageModulesPage.getAddModuleButton().doClick(); // Needed for the back button in the duplicate test to work
-//        modulePage.setModuleNameInput(moduleName);
-//        modulePage.getEnterButton().doClick();
-//
-//        Module testModule = null;
-//
-//        // Creating a new module
-//
-//        //TODO: Test if need to move to the modules page
-//        homePage.getManageModulesButton().doClick();
-//        manageModules.getAddModuleButton().doClick();
-//        modulePage.setModuleNameInput(moduleName);
-//        modulePage.getEnterButton().doClick();
-//
-//        // Getting the created module
-//        for (Module m : state.getModules()) {
-//            if (moduleName.equals(m.getName())) {
-//                testModule = m;
-//                break;
-//            }
-//        }
-//
-//        return testModule;
+    public void createSession(String hours, String mins, Module module) {
+        addSession.setDropDown(module.getName());
+
+        addSession.setHours(hours);
+        addSession.setMins(mins);
+        addSession.getEnterButton().doClick();
     }
 
-    public void createSession() {
+    public int[] createSessionReturn(String hours, String mins, Module testModule) {
+        int prevSessionsLen = testModule.getStudySessions().length;
 
+        // Selecting the  module in the drop down
+        addSession.setDropDown(testModule.getName());
+
+        // Adding a study session
+        addSession.setHours(hours);
+        addSession.setMins(mins);
+        addSession.getEnterButton().doClick();
+
+        // Returns values to test
+        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
-
 }

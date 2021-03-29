@@ -35,7 +35,6 @@ public class ManageSessionsPage extends Page implements ActionListener {
         backPanel.add(backButton);
 
         JPanel optionsPanel = new JPanel();
-        optionsPanel.setLayout(new FlowLayout()); // TODO: Layout needed???
 
         delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
         addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);

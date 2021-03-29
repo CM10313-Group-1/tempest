@@ -2,7 +2,7 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import tempest.State;
@@ -19,22 +19,22 @@ public class AddSessionPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
     AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = addSession.getActionButtons();
 
-    @Before
-    public void turnOffErrorMessages() {
+    GUIHelper helper = new GUIHelper(manager, state);
+
+    @BeforeClass
+    public static void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
 
     @Test
     public void backButton() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
@@ -45,71 +45,71 @@ public class AddSessionPageTest {
 
     @Test
     public void hourMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("1", "47", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("1", "47", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
     public void hourSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("6", "", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("6", "", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
     public void minSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("", "51", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("", "51", testModule);
         assertEquals(result[0] + 1, result[1]);
     }
 
     @Test
     public void emptySession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("", "", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void negHourSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("-8", "", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("-8", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void negMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("", "-123", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("", "-123", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void negHourPosMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("-5", "242", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("-5", "242", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void posHourNegMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("7", "-35", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("7", "-35", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void negHourMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("-5", "-41", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("-5", "-41", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void HourMinOver59Session() {
-        Module testModule = createModule("test");
-        int[] result = createSession("2", "67", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("2", "67", testModule);
         assertEquals(result[0], result[1]);
     }
 
@@ -117,27 +117,27 @@ public class AddSessionPageTest {
 
     @Test
     public void hoursSessionOverADay() {
-        Module testModule = createModule("test");
-        int[] result = createSession("25", "", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("25", "", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void minsSessionOverADay() {
-        Module testModule = createModule("test");
-        int[] result = createSession("", "1448", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("", "1448", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void totalSessionsOverADay() {
-        Module testModule = createModule("test");
+        Module testModule = helper.createModule("test");
 
-        int[] result1 = createSession("23", "58", testModule);
+        int[] result1 = helper.createSessionReturn("23", "58", testModule);
 
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        int[] result2 = createSession("", "3", testModule);
+        int[] result2 = helper.createSessionReturn("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);
     }
@@ -146,66 +146,29 @@ public class AddSessionPageTest {
 
     @Test
     public void nonNumHourSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("a", "42", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("a", "42", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void nonNumMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("12", "ab", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("12", "ab", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void nonNumHourMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("a", "b", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("a", "b", testModule);
         assertEquals(result[0], result[1]);
     }
 
     @Test
     public void decimalHourMinSession() {
-        Module testModule = createModule("test");
-        int[] result = createSession("3.5", "24.7", testModule);
+        Module testModule = helper.createModule("test");
+        int[] result = helper.createSessionReturn("3.5", "24.7", testModule);
         assertEquals(result[0], result[1]);
-    }
-
-    public Module createModule(String moduleName) {
-        Module testModule = null;
-
-        // Creating a new module
-
-        //TODO: Test if need to move to the modules page
-        homePage.getManageModulesButton().doClick();
-        manageModules.getAddModuleButton().doClick();
-        addModule.setModuleNameInput(moduleName);
-        addModule.getEnterButton().doClick();
-
-        // Getting the created module
-        for (Module m : state.getModules()) {
-            if (moduleName.equals(m.getName())) {
-                testModule = m;
-                break;
-            }
-        }
-
-        return testModule;
-    }
-
-    public int[] createSession(String hours, String mins, Module testModule) {
-        int prevSessionsLen = testModule.getStudySessions().length;
-
-        // Selecting the  module in the drop down
-        addSession.setDropDown(testModule.getName());
-
-        // Adding a study session
-        addSession.setHours(hours);
-        addSession.setMins(mins);
-        addSession.getEnterButton().doClick();
-
-        // Returns values to test
-        return new int[] { prevSessionsLen, testModule.getStudySessions().length };
     }
 }

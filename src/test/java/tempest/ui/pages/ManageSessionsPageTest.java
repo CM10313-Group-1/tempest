@@ -1,11 +1,9 @@
 package tempest.ui.pages;
 
-import org.junit.Before;
 import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
-import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
 
 import static org.junit.Assert.*;
@@ -17,15 +15,8 @@ public class ManageSessionsPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-    AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
-    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
-
-    @Before
-    public void turnOffErrorMessages() {
-        ErrorMessage errorMessage = new ErrorMessage();
-        errorMessage.setMessagesShown(false);
-    }
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
     public void backButton() {
@@ -47,7 +38,7 @@ public class ManageSessionsPageTest {
 
     @Test
     public void addSessionButton_Modules() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
@@ -70,24 +61,11 @@ public class ManageSessionsPageTest {
 
     @Test
     public void deleteSessionButton_Sessions() {
-        createModule("test");
-
-        createSession("1", "5");
+        helper.createSession("1", "5", helper.createModule("test"));
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
 
         assertEquals(PageNames.DELETE_SESSION, manager.getCurrentCard());
-    }
-
-    public void createModule(String moduleName) {
-        addModule.setModuleNameInput(moduleName);
-        addModule.getEnterButton().doClick();
-    }
-
-    public void createSession(String hours, String mins) {
-        addSession.setHours(hours);
-        addSession.setMins(mins);
-        addSession.getEnterButton().doClick();
     }
 }

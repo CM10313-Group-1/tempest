@@ -2,7 +2,7 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import tempest.State;
@@ -21,8 +21,10 @@ public class AddModulePageTest {
 
     ActionButtonPanel actionButtonPanel = addModule.getActionButtons();
 
-    @Before
-    public void turnOffErrorMessages() {
+    GUIHelper helper = new GUIHelper(manager, state);
+
+    @BeforeClass
+    public static void turnOffErrorMessages() {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMessagesShown(false);
     }
@@ -40,7 +42,7 @@ public class AddModulePageTest {
     @Test
     public void validModule() {
         int prevModuleNum = state.getModules().length;
-        createModule("test");
+        helper.createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);
     }
@@ -48,7 +50,7 @@ public class AddModulePageTest {
     @Test
     public void nullModule() {
         int prevModuleNum = state.getModules().length;
-        createModule("");
+        helper.createModule("");
 
         assertEquals(prevModuleNum, state.getModules().length);
     }
@@ -56,7 +58,7 @@ public class AddModulePageTest {
     @Test
     public void spaceModule() {
         int prevModuleNum = state.getModules().length;
-        createModule(" ");
+        helper.createModule(" ");
 
         assertEquals(prevModuleNum, state.getModules().length);
     }
@@ -65,18 +67,12 @@ public class AddModulePageTest {
     public void duplicateModules() {
         int prevModuleNum = state.getModules().length;
 
-        createModule("test");
+        helper.createModule("test");
 
         actionButtonPanel.getBackButtonInstance().doClick();
 
-        createModule("test");
+        helper.createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);
-    }
-
-    public void createModule(String moduleName) {
-        manageModules.getAddModuleButton().doClick();
-        addModule.setModuleNameInput(moduleName);
-        addModule.getEnterButton().doClick();
     }
 }

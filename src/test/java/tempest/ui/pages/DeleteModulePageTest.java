@@ -15,11 +15,12 @@ public class DeleteModulePageTest {
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
-    AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
     public void backButton() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
@@ -30,7 +31,7 @@ public class DeleteModulePageTest {
 
     @Test
     public void deleteModule() {
-        createModule("test");
+        helper.createModule("test");
 
         int length = state.getModules().length;
 
@@ -43,7 +44,7 @@ public class DeleteModulePageTest {
 
     @Test
     public void swapToPrevIfNoModules() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
@@ -54,19 +55,13 @@ public class DeleteModulePageTest {
 
     @Test
     public void stayIfMoreModules() {
-        createModule("test");
-        createModule("test2");
+        helper.createModule("test");
+        helper.createModule("test2");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
         deleteModule.getDeleteButton().doClick();
 
         assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
-    }
-
-    public void createModule(String moduleName) {
-        // Creating a new module called test
-        addModule.setModuleNameInput(moduleName);
-        addModule.getEnterButton().doClick();
     }
 }

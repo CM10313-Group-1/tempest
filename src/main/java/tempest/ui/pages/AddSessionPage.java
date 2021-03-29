@@ -24,8 +24,6 @@ import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
-//TODO: Toggle button if no modules
-
 public class AddSessionPage extends Page {
     private static final long serialVersionUID = 6738660438220363619L;
 

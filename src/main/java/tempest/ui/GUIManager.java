@@ -127,4 +127,8 @@ public class GUIManager extends JFrame {
     public String getCurrentCard() {
         return vm.getVisible();
     }
+
+    public void closeGUI() {
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
 }
