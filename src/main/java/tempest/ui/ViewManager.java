@@ -1,8 +1,5 @@
 package tempest.ui;
 
-import tempest.ui.pages.ManageModulesPage;
-import tempest.ui.pages.PageNames;
-
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Stack;
@@ -28,25 +25,18 @@ public class ViewManager<T extends View> extends JPanel {
     history.push(initialView.getName());
   }
 
-  private void pageChanger(String name) {
-
-    if (!viewExists(name)) {
-      System.err.println("The card/page you are trying to swap to doesn't exist");
-      return;
-    }
-
-    layout.show(this, name);
-  }
-
   /**
    * Changes the visible {@link View} to the one named.
    * 
    * @param name The name of the view to be switched to.
    */
   public void changeView(String name) {
-    pageChanger(name);
-
-    history.push(name);
+    if (viewExists(name)) {
+      layout.show(this, name);
+      history.push(name);
+    } else {
+      System.err.println("The card/page you are trying to swap to doesn't exist");
+    }
   }
 
   /**
@@ -55,8 +45,9 @@ public class ViewManager<T extends View> extends JPanel {
   public void changeToPrevious() {
     history.pop();
     String lastView = history.peek();
-
-    pageChanger(lastView);
+    if (!viewExists(lastView))
+      System.err.println("Invalid State");
+    layout.show(this, lastView);
   }
 
   /**
