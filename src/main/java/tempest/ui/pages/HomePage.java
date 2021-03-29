@@ -2,7 +2,6 @@ package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import tempest.ui.GUIManager;
@@ -13,31 +12,28 @@ public class HomePage extends Page {
 
     private final GUIManager manager;
 
-    private JButton manageModulesButton;
-    private JButton manageSessionsButton;
+    private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);
+    private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
+    private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
 
     public HomePage(GUIManager guiManager) {
         super();
         this.manager = guiManager;
+        addNavButtons();
+    }
 
-        setupUI();
+    private void addNavButtons() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(manageModulesLink);
+        buttonPanel.add(manageSessionsLink);
+        buttonPanel.add(chartsLink);
+
+        this.add(buttonPanel);
     }
 
     @Override
     public String getName() {
         return PageNames.HOME;
-    }
-
-    private void setupUI() {
-        JPanel buttonPanel = new JPanel();
-
-        manageModulesButton = new LinkButton("Manage modules", PageNames.MANAGE_MODULES, this);
-        manageSessionsButton = new LinkButton("Manage sessions", PageNames.MANAGE_SESSIONS, this);
-
-        buttonPanel.add(manageModulesButton);
-        buttonPanel.add(manageSessionsButton);
-
-        this.add(buttonPanel);
     }
 
     @Override
@@ -46,11 +42,11 @@ public class HomePage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    public JButton getManageModulesButton() {
-        return manageModulesButton;
+    public LinkButton getManageModulesButton() {
+        return manageModulesLink;
     }
 
-    public JButton getManageSessionsButton() {
-        return manageSessionsButton;
+    public LinkButton getManageSessionsButton() {
+        return manageSessionsLink;
     }
 }

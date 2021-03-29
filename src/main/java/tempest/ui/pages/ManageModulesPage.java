@@ -16,8 +16,9 @@ public class ManageModulesPage extends Page {
 
     private final GUIManager manager;
 
-    private JButton addModuleButton;
-    private JButton deleteModuleButton;
+    private final LinkButton addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
+    private final LinkButton deleteModuleButton = new LinkButton("Delete a module", PageNames.DELETE_MODULE, this);
+
     private BackButton backButton;
 
     public ManageModulesPage(GUIManager guiManager) {
@@ -35,8 +36,6 @@ public class ManageModulesPage extends Page {
         JPanel pageSwapPanel = new JPanel();
         JPanel backPanel = new JPanel();
 
-        addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
-        deleteModuleButton = new LinkButton("Delete a module", PageNames.DELETE_MODULE, this);
         backButton = new BackButton(manager);
 
         pageSwapPanel.add(deleteModuleButton);
@@ -54,7 +53,7 @@ public class ManageModulesPage extends Page {
      *
      * @param modules Array containing all the modules
      */
-    public void toggleDeleteButton(Module[] modules) {
+    public void update(Module[] modules) {
         // If a module/modules have been created then the button is active again
         deleteModuleButton.setEnabled(modules.length != 0);
     }
@@ -65,11 +64,11 @@ public class ManageModulesPage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    public JButton getAddModuleButton() {
+    public LinkButton getAddModuleButton() {
         return addModuleButton;
     }
 
-    public JButton getDeleteModuleButton() {
+    public LinkButton getDeleteModuleButton() {
         return deleteModuleButton;
     }
 

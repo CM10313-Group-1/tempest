@@ -10,8 +10,6 @@ import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
 import tempest.ui.pages.*;
 
-//TODO: Tidy
-
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
@@ -40,7 +38,6 @@ public class GUIManager extends JFrame {
 
                 // All new pages should be added here.
         };
-
         start();
     }
 
@@ -67,6 +64,23 @@ public class GUIManager extends JFrame {
     }
 
     /**
+     * Responsible for calling certain page's methods when they are visible
+     *
+     * @param name Page's name
+     */
+    public void checkPage(String name) {
+        System.out.println(name);
+
+        if (name.equals(PageNames.MANAGE_MODULES)) {
+            ManageModulesPage mmp = (ManageModulesPage) getPage(ManageModulesPage.class);
+            mmp.update();
+
+        } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
+            //I'll put my code here when i push my branch
+        }
+    }
+
+    /**
      * Swaps to the entered card name
      *
      * Used to move back up the tree of cards/pages along the path taken on the way
@@ -75,35 +89,8 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        if (vm.getVisible().equals(cardName)) { //TODO: Want this???
-            System.err.println("You are trying to swap to the same card");
-        }
-
-        if (cardName.equals(PageNames.MANAGE_MODULES)) {
-            ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
-            //p.update();
-        }
         vm.changeView(cardName);
-
-        //        Module[] modules = state.getModules();
-//
-//        if (cardName.equals(getPageName(ManageModulesPage.class))) {
-//            // Toggling "delete a module" button
-//            manageModulesPage.toggleDeleteButton(modules);
-//
-//        } else if (cardName.equals(getPageName(ManageSessionsPage.class))) {
-//            // Toggling "View and delete sessions" button
-//            manageSessionsPage.toggleDeleteButton(modules);
-//
-//        } else if (cardName.equals(getPageName(DeleteSessionPage.class))) {
-//            // Updating the table when its page is active
-//            deleteSessionPage.updateTable();
-//        }
-
-//        if (cardName.equals("manageModulesPage")) {
-//            ManageModulesPage p = (ManageModulesPage) getPage(ManageModulesPage.class);
-//            //p.toggleDeleteButton();
-//        }
+        checkPage(vm.getVisible());
     }
 
     /**
@@ -111,6 +98,7 @@ public class GUIManager extends JFrame {
      */
     public void swapToPrevCard() {
         vm.changeToPrevious();
+        checkPage(vm.getVisible());
     }
 
     /**
@@ -121,16 +109,6 @@ public class GUIManager extends JFrame {
      */
     public Page getPage(Class<? extends Page> classObject) {
         return vm.getView(classObject);
-    }
-
-    /**
-     * Returns the name of a page in the cardLayout
-     *
-     * @param classObject A class extending page (e.g. HomePage.class)
-     * @return String - The name of the page class
-     */
-    public String getPageName(Class<? extends Page> classObject) {
-        return vm.getViewName(classObject);
     }
 
     public String getCurrentCard() {

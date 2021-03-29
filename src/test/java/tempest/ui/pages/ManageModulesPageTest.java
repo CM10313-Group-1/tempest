@@ -21,6 +21,7 @@ public class ManageModulesPageTest {
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     AddModulePage addModulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
 
     ModuleDropDown moduleDropDown = new ModuleDropDown();
 
@@ -64,7 +65,7 @@ public class ManageModulesPageTest {
         homePage.getManageModulesButton().doClick();
         manageModulesPage.getDeleteModuleButton().doClick();
 
-        assertEquals(manager.getPageName(DeleteModulePage.class), manager.getCurrentCard());
+        assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
     }
 
     @Test
@@ -73,5 +74,17 @@ public class ManageModulesPageTest {
         manageModulesPage.getBackButton().doClick();
 
         assertEquals(homePage.getName(), manager.getCurrentCard());
+    }
+
+    @Test
+    public void buttonCorrectlyDisables(){
+        createModule("test");
+
+        homePage.getManageModulesButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+        deleteModulePage.getDeleteButton().doClick();
+        manageModulesPage.getDeleteModuleButton().doClick();
+
+        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
     }
 }

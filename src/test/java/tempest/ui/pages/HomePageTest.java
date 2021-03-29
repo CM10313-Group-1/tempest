@@ -9,17 +9,12 @@ import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
-import tempest.ui.pages.ManageSessionsPage;
 
 public class HomePageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-
-    // *** Button Tests ***
 
     // Turns off the error message popups so the tests are not blocked
     @Before
@@ -32,14 +27,14 @@ public class HomePageTest {
     public void manageModulesButton() {
         homePage.getManageModulesButton().doClick();
 
-        assertEquals(manager.getPageName(ManageModulesPage.class), manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }
 
     @Test
     public void manageSessionsButton() {
         homePage.getManageSessionsButton().doClick();
 
-        assertEquals(manager.getPageName(ManageSessionsPage.class), manager.getCurrentCard());
+        assertEquals(PageNames.ADD_SESSION, manager.getCurrentCard());
     }
 
     //TODO: Chart Test
