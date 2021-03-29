@@ -39,13 +39,15 @@ public class ManageSessionsPageTest {
 
     @Test
     public void deleteSessionButtonNoSessions() {
+        assertEquals(0, state.getModules().length);
+
         homePage.getManageSessionsButton().doClick();
 
         manageSessionsPage.getDelSessionsButton().doClick();
 
         // Delete sessions button is disabled as no sessions so current page is still manage sessions
 
-        assertEquals(manager.getPageName(ManageSessionsPage.class), manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
@@ -58,7 +60,7 @@ public class ManageSessionsPageTest {
 
         manageSessionsPage.getDelSessionsButton().doClick();
 
-        assertEquals(manager.getPageName(DeleteSessionPage.class), manager.getCurrentCard());
+        assertEquals(PageNames.DELETE_SESSION, manager.getCurrentCard());
     }
 
     @Test
@@ -68,15 +70,6 @@ public class ManageSessionsPageTest {
         //FIXME: Won't work when greying out implemented
         manageSessionsPage.getAddSessionsButton().doClick();
 
-        assertEquals(manager.getPageName(AddSessionPage.class), manager.getCurrentCard());
+        assertEquals(PageNames.ADD_SESSION, manager.getCurrentCard());
     }
-
-    //
-
-    // Delete sessions button is disabled when no sessions, otherwise enabled
-
-    //
-
-
-
 }
