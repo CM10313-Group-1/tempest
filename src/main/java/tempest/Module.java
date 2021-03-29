@@ -53,6 +53,12 @@ public class Module {
         studySessions.add(session);
     }
 
+    /**
+     * Removes the passed in session from the studySessions list
+     * for this module
+     *
+     * @param session The StudySession to be removed
+     */
     public void removeSession(StudySession session) {
         studySessions.remove(session);
     }

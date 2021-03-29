@@ -76,7 +76,7 @@ public class GUIManager extends JFrame {
      *
      * @param name Page's name
      */
-    private void checkPage(String name) {
+    private void updatePages(String name) {
         Module[] modules = state.getModules();
 
         switch (name) {
@@ -103,7 +103,7 @@ public class GUIManager extends JFrame {
      */
     public void swapCard(String cardName) {
         vm.changeView(cardName);
-        checkPage(vm.getVisible());
+        updatePages(vm.getVisible());
     }
 
     /**
@@ -111,7 +111,7 @@ public class GUIManager extends JFrame {
      */
     public void swapToPrevCard() {
         vm.changeToPrevious();
-        checkPage(vm.getVisible());
+        updatePages(vm.getVisible());
     }
 
     /**
@@ -128,6 +128,9 @@ public class GUIManager extends JFrame {
         return vm.getVisible();
     }
 
+    /**
+     * Used by tests to close the GUI - saving modules and sessions
+     */
     public void closeGUI() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
