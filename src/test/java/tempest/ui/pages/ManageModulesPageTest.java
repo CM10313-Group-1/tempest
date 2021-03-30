@@ -4,83 +4,51 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ModuleDropDown;
 
 public class ManageModulesPageTest {
-    Supervisor supervisor = Supervisor.getInstance();
     State state = new State();
-    GUIManager manager = new GUIManager(state, supervisor);
+    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
-    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
-    ModuleDropDown moduleDropDown = new ModuleDropDown();
-
-    Module[] modules = state.getModules();
-
-    @Test
-    public void addModuleButton() {
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getAddModuleButton().doClick();
-
-        assertEquals(modulePage.getName(), manager.getCurrentCard());
-    }
-
-    public void clearModules() {
-        for (Module module : modules) {
-            moduleDropDown.removeModule(module.getName());
-        }
-    }
-
-    public void createModule(String moduleName) {
-        // Creating a new module called test
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
-    }
-
-    @Test
-    public void noModulesDeleteModuleButton() {
-        clearModules();
-
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
-    }
-
-    @Test
-    public void onePlusModulesDeleteButton() {
-        createModule("test");
-
-        homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-
-        assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
-    }
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
     public void backButton() {
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getBackButton().doClick();
+        manageModules.getBackButton().doClick();
 
-        assertEquals(homePage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
     }
 
     @Test
-    public void buttonCorrectlyDisables(){
-        createModule("test");
+    public void addModuleButton() {
+        manageModules.getAddModuleButton().doClick();
+
+        assertEquals(PageNames.ADD_MODULE, manager.getCurrentCard());
+    }
+
+    @Test
+    public void deleteModuleButton_NoModules() {
+        assertEquals(0, state.getModules().length);
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
+    }
+
+    @Test
+    public void deleteModuleButton_Modules() {
+        helper.createModule("test");
+
+        homePage.getManageModulesButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+
+        assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
     }
 }

@@ -26,21 +26,22 @@ import tempest.ui.components.ModuleDropDown;
 
 public class AddSessionPage extends Page {
     private static final long serialVersionUID = 6738660438220363619L;
+
     private final State state;
-    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private JComboBox<Object> moduleDropDown;
+    private JComboBox<Object> dropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
     private JButton enterButton;
 
     public AddSessionPage(State state, GUIManager guiManager) {
         super(guiManager);
+
         this.state = state;
-        this.manager = guiManager;
-        this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
         setupUI();
     }
 
@@ -54,8 +55,8 @@ public class AddSessionPage extends Page {
 
         JPanel inputPanel = new JPanel();
 
-        moduleDropDown = dropDown.getModuleDropDown();
-        inputPanel.add(moduleDropDown);
+        dropDown = moduleDropDown.getModuleDropDown();
+        inputPanel.add(dropDown);
 
         hoursInput = new JTextField(2);
         JLabel hoursInputLabel = new JLabel("Hours");
@@ -99,17 +100,17 @@ public class AddSessionPage extends Page {
      * Handles the user trying to enter a session
      */
     private void handleAddingSession() {
-        if (moduleDropDown.getItemCount() < 1) { // No modules created, so can't add a session
+        if (dropDown.getItemCount() < 1) { // No modules created, so can't add a session
             return;
         }
 
-        String moduleName = Objects.requireNonNull(moduleDropDown.getSelectedItem()).toString();
+        String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
 
         String hours = hoursInput.getText();
         String minutes = minutesInput.getText();
 
-        int hoursInt = 0;
-        int minutesInt = 0;
+        int hoursInt;
+        int minutesInt;
 
         hours = hours.strip();
         minutes = minutes.strip();
@@ -214,5 +215,9 @@ public class AddSessionPage extends Page {
 
     public void setMins(String mins) {
         minutesInput.setText(mins);
+    }
+
+    public void setDropDown(String name) {
+        dropDown.setSelectedItem(name);
     }
 }

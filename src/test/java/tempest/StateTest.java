@@ -3,7 +3,9 @@ package tempest;
 import org.junit.Test;
 
 public class StateTest {
-  private State s = new State();
+  private final State s = new State();
+
+  //TODO: This is a sad test class
 
   @Test
   public void addsModule() {

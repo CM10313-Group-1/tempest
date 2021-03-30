@@ -1,12 +1,8 @@
 package tempest.ui.pages;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import tempest.Module;
 import tempest.State;
@@ -18,8 +14,9 @@ import tempest.ui.components.ModuleDropDown;
 
 public class AddModulePage extends Page {
     private static final long serialVersionUID = -6175924935345590918L;
+
     private final State state;
-    private final ModuleDropDown dropDown = new ModuleDropDown();
+    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
@@ -28,9 +25,9 @@ public class AddModulePage extends Page {
 
     public AddModulePage(State state, GUIManager guiManager) {
         super(guiManager);
+
         this.state = state;
-        this.manager = guiManager;
-        this.actionButtonPanel = new ActionButtonPanel(manager, this);
+        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
         setupUI();
     }
 
@@ -51,8 +48,10 @@ public class AddModulePage extends Page {
         inputPanel.add(moduleNameInput);
         inputPanel.add(clearButton);
 
-        this.add(inputPanel, BorderLayout.NORTH);
-        this.add(actionButtonPanel, BorderLayout.SOUTH);
+        this.add(inputPanel);
+        this.add(actionButtonPanel);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override
@@ -69,6 +68,8 @@ public class AddModulePage extends Page {
      */
     private void handleCreatingModule() {
         String moduleName = moduleNameInput.getText();
+
+        moduleName = moduleName.strip();
 
         if (moduleName.equals("")) {
             errorMessage(new Exception("Invalid module name"));
@@ -119,18 +120,7 @@ public class AddModulePage extends Page {
      */
     private void addModule(String moduleName) {
         state.createModule(moduleName);
-        dropDown.addModule(moduleName);
-    }
-
-    /**
-     * Removes the module using state and updates the module drop down in
-     * GUIComponents
-     *
-     * @param moduleName Name of module to be removed
-     */
-    private void removeModule(String moduleName) {
-        state.deleteModule(moduleName);
-        dropDown.removeModule(moduleName);
+        moduleDropDown.addModule(moduleName);
     }
 
     public ActionButtonPanel getActionButtons() {
@@ -141,7 +131,7 @@ public class AddModulePage extends Page {
         return enterButton;
     }
 
-    public void setModuleNameInput(String name) {
+    public void setModuleName(String name) {
         moduleNameInput.setText(name);
     }
 }
