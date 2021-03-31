@@ -25,7 +25,6 @@ public class ActionButtonPanel extends JPanel {
      * @param page    this (instance of class calling getButtonPanel)
      */
     public ActionButtonPanel(GUIManager manager, Page page) {
-        super();
         this.backButton = new BackButton(manager);
         JButton enterButton = new JButton("Enter");
         enterButton.setFocusable(false);

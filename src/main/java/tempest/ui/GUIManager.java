@@ -9,7 +9,16 @@ import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
-import tempest.ui.pages.*;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.ChartViewPage;
+import tempest.ui.pages.DeleteModulePage;
+import tempest.ui.pages.DeleteSessionPage;
+import tempest.ui.pages.HomePage;
+import tempest.ui.pages.ManageModulesPage;
+import tempest.ui.pages.ManageSessionsPage;
+import tempest.ui.pages.Page;
+import tempest.ui.pages.PageNames;
 
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
@@ -28,22 +37,20 @@ public class GUIManager extends JFrame {
     private final DeleteSessionPage deleteSession;
 
     public GUIManager(State state, Supervisor supervisor) {
-        super();
         this.state = state;
         this.supervisor = supervisor;
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        this.pages = new Page[]{
-                new HomePage(this),
-                manageModules  = new ManageModulesPage(this),
-                new AddModulePage(state,this),
-                new DeleteModulePage(state,this),
-                manageSessions = new ManageSessionsPage(this),
-                new AddSessionPage(state, this),
-                deleteSession  = new DeleteSessionPage(state, this),
-                new ChartViewPage(state, this),
-
+        this.pages = new Page[] {
+            new HomePage(this),
+            manageModules = new ManageModulesPage(this),
+            new AddModulePage(state, this),
+            new DeleteModulePage(state, this),
+            manageSessions = new ManageSessionsPage(this),
+            new AddSessionPage(state, this),
+            deleteSession = new DeleteSessionPage(state, this),
+            new ChartViewPage(state, this),
                 // All new pages should be added here.
         };
         start();
@@ -80,16 +87,16 @@ public class GUIManager extends JFrame {
         Module[] modules = state.getModules();
 
         switch (name) {
-            case PageNames.MANAGE_SESSIONS:
-                manageSessions.setDeleteButtonActivity(modules);
-                manageSessions.setAddButtonActivity(modules);
-                break;
-            case PageNames.MANAGE_MODULES:
-                manageModules.setButtonActivity(modules);
-                break;
-            case PageNames.DELETE_SESSION:
-                deleteSession.updateTable();
-                break;
+        case PageNames.MANAGE_SESSIONS:
+            manageSessions.setDeleteButtonActivity(modules);
+            manageSessions.setAddButtonActivity(modules);
+            break;
+        case PageNames.MANAGE_MODULES:
+            manageModules.setButtonActivity(modules);
+            break;
+        case PageNames.DELETE_SESSION:
+            deleteSession.updateTable();
+            break;
         }
     }
 
