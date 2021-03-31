@@ -5,6 +5,10 @@ import javax.swing.JLabel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.Plot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import tempest.State;
@@ -23,7 +27,11 @@ public class PieChart extends Chart {
 
   private ChartPanel createChart(){
     PieDataset<String> dataset = generateDataset(state);
-    return new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
+    ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
+    PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
+    PiePlot plot = (PiePlot) pieChart.getChart().getPlot();
+    plot.setLabelGenerator(labelGenerator);
+    return pieChart;
   }
 
   @Override
@@ -31,6 +39,11 @@ public class PieChart extends Chart {
     return ChartTypes.PIE;
   }
 
+  /**
+   *
+   * @param state
+   * @return The dataset consisting of module names and total study time in minutes
+   */
   @Override
   public PieDataset<String> generateDataset(State state) {
     DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
