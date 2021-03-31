@@ -28,6 +28,7 @@ public class PieChart extends Chart {
   private ChartPanel createChart(){
     PieDataset<String> dataset = generateDataset(state);
     ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
+    // Changes the label formatting to allow minutes to be shown.
     PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
     PiePlot plot = (PiePlot) pieChart.getChart().getPlot();
     plot.setLabelGenerator(labelGenerator);
@@ -40,7 +41,7 @@ public class PieChart extends Chart {
   }
 
   /**
-   *
+   * Creates the dataset used by the pie chart.
    * @param state
    * @return The dataset consisting of module names and total study time in minutes
    */
