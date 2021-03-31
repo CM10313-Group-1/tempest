@@ -1,6 +1,5 @@
 package tempest.ui.components.charts;
 
-import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.Dataset;
 
 import tempest.State;
@@ -19,8 +18,6 @@ public abstract class Chart extends View {
     this.state = state;
     this.vm = manager;
   }
-
-  public abstract JFreeChart getChart();
 
   public abstract Dataset generateDataset(State state);
 }

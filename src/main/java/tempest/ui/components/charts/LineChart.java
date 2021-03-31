@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -20,14 +19,18 @@ public class LineChart extends Chart {
   public LineChart(State state, ViewManager<Chart> manager) {
     super(state, manager);
     this.add(new JLabel(getName()));
-    this.add(new ChartPanel(getChart()));
+    this.add(createChart());
   }
 
-  @Override
-  public JFreeChart getChart() {
-    JFreeChart chart = ChartFactory.createLineChart("Line Chart", "Date", "Time / mins", generateDataset(this.state),
-        PlotOrientation.VERTICAL, true, false, false);
-    return chart;
+  /**
+   * Generates the chart as a panel that can be added to the UI.
+   * 
+   * @return {@link ChartPanel} of the chart.
+   */
+  private ChartPanel createChart() {
+    CategoryDataset dataset = generateDataset(state);
+    return new ChartPanel(ChartFactory.createLineChart("Line Chart", "Date", "Time / mins", dataset,
+        PlotOrientation.VERTICAL, true, false, false));
   }
 
   @Override

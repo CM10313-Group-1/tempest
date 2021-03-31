@@ -2,7 +2,7 @@ package tempest.ui.components.charts;
 
 import javax.swing.JLabel;
 
-import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.Dataset;
 
 import tempest.State;
 import tempest.ui.ViewManager;
@@ -16,14 +16,14 @@ public class BarChart extends Chart {
   }
 
   @Override
-  public JFreeChart getChart() {
-    // TODO Auto-generated method stub
-    return null;
+  public String getName() {
+    return ChartTypes.BAR;
   }
 
   @Override
-  public String getName() {
-    return ChartTypes.BAR;
+  public Dataset generateDataset(State state) {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
