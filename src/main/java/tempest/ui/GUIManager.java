@@ -5,32 +5,45 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.AddSessionPage;
-import tempest.ui.pages.ChartViewPage;
-import tempest.ui.pages.DeleteModulePage;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
-import tempest.ui.pages.Page;
-import tempest.ui.pages.PageNames;
+import tempest.ui.pages.*;
 
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
+
     /** The view manager for the GUI. Handles which page should be visible. */
     private static ViewManager<Page> vm;
+
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
     private final Supervisor supervisor;
 
+    private final State state;
+
+    private final ManageSessionsPage manageSessions;
+    private final ManageModulesPage manageModules;
+    private final DeleteSessionPage deleteSession;
+
     public GUIManager(State state, Supervisor supervisor) {
         super();
+        this.state = state;
         this.supervisor = supervisor;
-        new ModuleDropDown(state);
-        this.pages = new Page[] { new HomePage(this), new AddModulePage(state, this), new AddSessionPage(state, this),
-                new ChartViewPage(state, this), new DeleteModulePage(state, this), new ManageModulesPage(this)
+
+        new ModuleDropDown(state); // Creating the DefaultComboBoxModel
+
+        this.pages = new Page[]{
+                new HomePage(this),
+                manageModules  = new ManageModulesPage(this),
+                new AddModulePage(state,this),
+                new DeleteModulePage(state,this),
+                manageSessions = new ManageSessionsPage(this),
+                new AddSessionPage(state, this),
+                deleteSession  = new DeleteSessionPage(state, this),
+                new ChartViewPage(state, this),
+
                 // All new pages should be added here.
         };
         start();
@@ -40,7 +53,6 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI.
      */
     private void start() {
-        // Creating the module drop down
         vm = new ViewManager<>(pages, pages[0]);
         this.getContentPane().add(vm);
 
@@ -64,15 +76,20 @@ public class GUIManager extends JFrame {
      *
      * @param name Page's name
      */
-    public void checkPage(String name) {
-        System.out.println(name);
+    private void updatePages(String name) {
+        Module[] modules = state.getModules();
 
-        if (name.equals(PageNames.MANAGE_MODULES)) {
-            ManageModulesPage mmp = (ManageModulesPage) getPage(ManageModulesPage.class);
-            mmp.update();
-
-        } else if (name.equals(PageNames.MANAGE_SESSIONS)) {
-            //I'll put my code here when i push my branch
+        switch (name) {
+            case PageNames.MANAGE_SESSIONS:
+                manageSessions.setDeleteButtonActivity(modules);
+                manageSessions.setAddButtonActivity(modules);
+                break;
+            case PageNames.MANAGE_MODULES:
+                manageModules.setButtonActivity(modules);
+                break;
+            case PageNames.DELETE_SESSION:
+                deleteSession.updateTable();
+                break;
         }
     }
 
@@ -86,7 +103,7 @@ public class GUIManager extends JFrame {
      */
     public void swapCard(String cardName) {
         vm.changeView(cardName);
-        checkPage(vm.getVisible());
+        updatePages(vm.getVisible());
     }
 
     /**
@@ -94,7 +111,7 @@ public class GUIManager extends JFrame {
      */
     public void swapToPrevCard() {
         vm.changeToPrevious();
-        checkPage(vm.getVisible());
+        updatePages(vm.getVisible());
     }
 
     /**
@@ -109,5 +126,12 @@ public class GUIManager extends JFrame {
 
     public String getCurrentCard() {
         return vm.getVisible();
+    }
+
+    /**
+     * Used by tests to close the GUI - saving modules and sessions
+     */
+    public void closeGUI() {
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 }

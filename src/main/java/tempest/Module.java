@@ -13,8 +13,8 @@ import tempest.interfaces.CSVInterface;
  *
  */
 public class Module {
-    private UUID id;
-    private String name;
+    private final UUID id;
+    private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
@@ -51,6 +51,16 @@ public class Module {
      */
     public void addSession(StudySession session) {
         studySessions.add(session);
+    }
+
+    /**
+     * Removes the passed in session from the studySessions list
+     * for this module
+     *
+     * @param session The StudySession to be removed
+     */
+    public void removeSession(StudySession session) {
+        studySessions.remove(session);
     }
 
     /**

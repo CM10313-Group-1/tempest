@@ -13,58 +13,55 @@ public class DeleteModulePageTest {
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModulesPage = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    DeleteModulePage deleteModulePage = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
-    AddModulePage modulePage = (AddModulePage) manager.getPage(AddModulePage.class);
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+    DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
 
-    public void createModule(String moduleName) {
-        // Creating a new module called test
-        modulePage.setModuleNameInput(moduleName);
-        modulePage.getEnterButton().doClick();
-    }
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
-    public void cancelButton() {
-        createModule("test");
+    public void backButton() {
+        helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getBackButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getBackButton().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+        assertEquals(manageModules.getName(), manager.getCurrentCard());
     }
 
     @Test
     public void deleteModule() {
-        createModule("test");
+        helper.createModule("test");
+
+        int length = state.getModules().length;
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
 
-        assertEquals(0, state.getModules().length);
+        assertEquals(length - 1, state.getModules().length);
     }
 
     @Test
     public void swapToPrevIfNoModules() {
-        createModule("test");
+        helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
 
-        assertEquals(manageModulesPage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }
 
     @Test
     public void stayIfMoreModules() {
-        createModule("test");
-        createModule("test2");
+        helper.createModule("test");
+        helper.createModule("test2");
 
         homePage.getManageModulesButton().doClick();
-        manageModulesPage.getDeleteModuleButton().doClick();
-        deleteModulePage.getDeleteButton().doClick();
+        manageModules.getDeleteModuleButton().doClick();
+        deleteModule.getDeleteButton().doClick();
 
-        assertEquals(deleteModulePage.getName(), manager.getCurrentCard());
+        assertEquals(PageNames.DELETE_MODULE, manager.getCurrentCard());
     }
 }

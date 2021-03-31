@@ -4,28 +4,24 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import tempest.Module;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
-import tempest.ui.components.ModuleDropDown;
 
 public class ManageModulesPage extends Page {
     private static final long serialVersionUID = -3556076472382354523L;
-    private final GUIManager manager;
-    private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private final LinkButton addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);
     private final LinkButton deleteModuleButton = new LinkButton("Delete a module", PageNames.DELETE_MODULE, this);
 
     private BackButton backButton;
-    private final JComboBox<Object> dropDown = moduleDropDown.getModuleDropDown();
 
     public ManageModulesPage(GUIManager guiManager) {
-        super();
-        this.manager = guiManager;
+        super(guiManager);
+
         setupUI();
     }
 
@@ -50,12 +46,14 @@ public class ManageModulesPage extends Page {
     }
 
     /**
-     * Updates the delete module button to be disabled if there are no modules to
-     * delete.
+     * Disables the delete button if there are no modules, otherwise the
+     * button is enabled
+     *
+     * @param modules Array containing all the modules
      */
-    public void update() {
+    public void setButtonActivity(Module[] modules) {
         // If a module/modules have been created then the button is active again
-        deleteModuleButton.setEnabled(dropDown.getItemCount() != 0);
+        deleteModuleButton.setEnabled(modules.length != 0);
     }
 
     @Override

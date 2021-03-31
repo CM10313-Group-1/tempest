@@ -3,6 +3,7 @@ package tempest.ui.pages;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import tempest.ui.GUIManager;
 import tempest.ui.View;
 
 /**
@@ -10,6 +11,11 @@ import tempest.ui.View;
  */
 public abstract class Page extends View implements ActionListener {
     private static final long serialVersionUID = -7384127634444815527L;
+    public GUIManager manager;
+
+    public Page(GUIManager manager){
+        this.manager = manager;
+    }
 
     // Can't be abstract because there might be a page class that doesn't implement
     // ActionListener

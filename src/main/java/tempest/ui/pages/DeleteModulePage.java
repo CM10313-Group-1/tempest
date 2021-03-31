@@ -15,8 +15,8 @@ import tempest.ui.components.ModuleDropDown;
 
 public class DeleteModulePage extends Page {
     private static final long serialVersionUID = 2589222088607882971L;
+
     private final State state;
-    private final GUIManager manager;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private BackButton backButton;
@@ -24,9 +24,8 @@ public class DeleteModulePage extends Page {
     private JComboBox<Object> dropDown;
 
     public DeleteModulePage(State state, GUIManager guiManager) {
-        super();
+        super(guiManager);
         this.state = state;
-        this.manager = guiManager;
         setupUI();
     }
 
@@ -39,15 +38,15 @@ public class DeleteModulePage extends Page {
         JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
-        this.backButton = new BackButton(manager);
-        this.deleteButton = new JButton("Delete module");
+        backButton = new BackButton(manager);
+        deleteButton = new JButton("Delete module");
 
         deleteButton.addActionListener(this);
 
         buttonPanel.add(backButton);
         buttonPanel.add(deleteButton);
 
-        this.dropDown = moduleDropDown.getModuleDropDown();
+        dropDown = moduleDropDown.getModuleDropDown();
 
         dropDownPanel.add(dropDown);
 
@@ -74,15 +73,16 @@ public class DeleteModulePage extends Page {
         state.deleteModule(moduleName);
         moduleDropDown.removeModule(moduleName);
 
-        // Swaps to the previous card if there are no more modules left
+        // Swaps to prev card if no modules to delete
         if (dropDown.getItemCount() == 0) {
             manager.swapToPrevCard();
+            return;
         }
 
         System.out.println(moduleName + " successfully deleted.");
     }
 
-    public JButton getBackButton() {
+    public BackButton getBackButton() {
         return backButton;
     }
 
