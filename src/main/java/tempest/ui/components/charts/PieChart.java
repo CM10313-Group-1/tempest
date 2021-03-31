@@ -26,6 +26,7 @@ public class PieChart extends Chart {
   }
 
   private ChartPanel createChart(){
+    // TODO: Could get the label to show hours and minutes.
     PieDataset<String> dataset = generateDataset(state);
     ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
     // Changes the label formatting to allow minutes to be shown.
