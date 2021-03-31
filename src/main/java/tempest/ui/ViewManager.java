@@ -14,7 +14,6 @@ public class ViewManager<T extends View> extends JPanel {
   private final Stack<String> history = new Stack<>();
 
   public ViewManager(T[] views, T initialView) {
-    super();
     this.setLayout(layout);
 
     for (T view : views) {
