@@ -17,4 +17,10 @@ public class PieChart extends Chart {
   public String getName() {
     return ChartTypes.PIE;
   }
+
+  @Override
+  public void updateChart(State state) {
+    // TODO Auto-generated method stub
+
+  }
 }
