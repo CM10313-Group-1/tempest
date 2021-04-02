@@ -87,16 +87,16 @@ public class GUIManager extends JFrame {
         Module[] modules = state.getModules();
 
         switch (name) {
-        case PageNames.MANAGE_SESSIONS:
-            manageSessions.setDeleteButtonActivity(modules);
-            manageSessions.setAddButtonActivity(modules);
-            break;
-        case PageNames.MANAGE_MODULES:
-            manageModules.setButtonActivity(modules);
-            break;
-        case PageNames.DELETE_SESSION:
-            deleteSession.updateTable();
-            break;
+            case PageNames.MANAGE_SESSIONS:
+                manageSessions.setDeleteButtonActivity(modules);
+                manageSessions.setAddButtonActivity(modules);
+                break;
+            case PageNames.MANAGE_MODULES:
+                manageModules.setButtonActivity(modules);
+                break;
+            case PageNames.DELETE_SESSION:
+                deleteSession.updateTable();
+                break;
         }
     }
 
