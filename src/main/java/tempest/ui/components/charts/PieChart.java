@@ -45,7 +45,6 @@ public class PieChart extends Chart {
    * @param state
    * @return The dataset consisting of module names and total study time in minutes
    */
-  @Override
   public PieDataset<String> generateDataset(State state) {
     DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
     for(Module module: state.getModules()){
