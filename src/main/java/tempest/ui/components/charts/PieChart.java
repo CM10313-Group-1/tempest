@@ -21,7 +21,7 @@ public class PieChart extends Chart {
     public PieChart(State state, ViewManager<Chart> manager) {
         super(state, manager);
         this.add(new JLabel(getName()));
-        this.add(createChart());
+        setupUI();
     }
 
     private ChartPanel createChart() {
@@ -42,10 +42,15 @@ public class PieChart extends Chart {
         return ChartTypes.PIE;
     }
 
+    private void setupUI() {
+        this.removeAll();
+        this.add(createChart());
+    }
+
     @Override
     public void updateChart(State state) {
-        // TODO Auto-generated method stub
-
+        this.state = state;
+        setupUI();
     }
 
     /**
