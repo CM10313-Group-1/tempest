@@ -16,4 +16,11 @@ public abstract class Chart extends View {
     this.state = state;
     this.vm = manager;
   }
+
+  /**
+   * Update the internal state of the chart with a new state.
+   * 
+   * @param state The current state of recorded data.
+   */
+  public abstract void updateChart(State state);
 }

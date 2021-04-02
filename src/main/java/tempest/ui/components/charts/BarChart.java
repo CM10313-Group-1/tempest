@@ -18,4 +18,10 @@ public class BarChart extends Chart {
     return ChartTypes.BAR;
   }
 
+  @Override
+  public void updateChart(State state) {
+    // TODO Auto-generated method stub
+
+  }
+
 }
