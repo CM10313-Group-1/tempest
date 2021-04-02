@@ -1,5 +1,6 @@
 package tempest.ui;
 
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -36,6 +37,8 @@ public class GUIManager extends JFrame {
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
 
+    private LayoutManager layout;
+
     public GUIManager(State state, Supervisor supervisor) {
         this.state = state;
         this.supervisor = supervisor;
@@ -71,11 +74,13 @@ public class GUIManager extends JFrame {
         });
 
         // Frame Settings
-        this.setSize(500, 150);
+        this.pack();
         this.setTitle("Tempest");
         this.setLocationRelativeTo(null); // Centering GUI
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+
+        layout = vm.getLayout();
     }
 
     /**
@@ -111,6 +116,8 @@ public class GUIManager extends JFrame {
     public void swapCard(String cardName) {
         vm.changeView(cardName);
         updatePages(vm.getVisible());
+
+        resizeGUI();
     }
 
     /**
@@ -119,6 +126,17 @@ public class GUIManager extends JFrame {
     public void swapToPrevCard() {
         vm.changeToPrevious();
         updatePages(vm.getVisible());
+
+        resizeGUI();
+    }
+
+    /**
+     * Resizes the frame for the new card
+     */
+    public void resizeGUI() {
+        layout.preferredLayoutSize(this);
+        this.pack();
+        this.setLocationRelativeTo(null); // Centering GUI
     }
 
     /**
