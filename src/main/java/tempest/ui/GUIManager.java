@@ -74,12 +74,7 @@ public class GUIManager extends JFrame {
         });
 
         // Frame Settings
-
-        //this.setPreferredSize(new Dimension(500, 150));
-
-        //this.setSize(500, 150);
         this.pack();
-
         this.setTitle("Tempest");
         this.setLocationRelativeTo(null); // Centering GUI
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,9 +116,8 @@ public class GUIManager extends JFrame {
     public void swapCard(String cardName) {
         vm.changeView(cardName);
         updatePages(vm.getVisible());
-        layout.preferredLayoutSize(this);
-        this.pack();
-        this.setLocationRelativeTo(null); // Centering GUI
+
+        resizeGUI();
     }
 
     /**
@@ -132,6 +126,14 @@ public class GUIManager extends JFrame {
     public void swapToPrevCard() {
         vm.changeToPrevious();
         updatePages(vm.getVisible());
+
+        resizeGUI();
+    }
+
+    /**
+     * Resizes the frame for the new card
+     */
+    private void resizeGUI() {
         layout.preferredLayoutSize(this);
         this.pack();
         this.setLocationRelativeTo(null); // Centering GUI

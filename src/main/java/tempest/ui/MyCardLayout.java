@@ -1,5 +1,6 @@
 package tempest.ui;
 
+import tempest.ui.components.charts.ChartTypes;
 import tempest.ui.pages.PageNames;
 
 import java.awt.*;
@@ -17,9 +18,7 @@ public class MyCardLayout extends CardLayout {
 
             //System.out.println("Name : " + name);
 
-            // Resizes correctly with graphs - but it means that when in Chart_View the box is very small
-
-            if (name.equals(PageNames.CHART_VIEW) || name.equals(PageNames.DELETE_SESSION) || name.equals("PieChart") || name.equals("LineChart") || name.equals("BarChart")) {
+            if (name.equals(PageNames.CHART_VIEW) || name.equals(PageNames.DELETE_SESSION) || name.equals(ChartTypes.PIE) || name.equals(ChartTypes.LINE) || name.equals(ChartTypes.BAR)) {
                 Insets insets = parent.getInsets();
                 Dimension pref = current.getPreferredSize();
                 pref.width += insets.left + insets.right;
