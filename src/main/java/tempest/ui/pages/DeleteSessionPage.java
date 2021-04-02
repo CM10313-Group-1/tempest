@@ -80,32 +80,37 @@ public class DeleteSessionPage extends Page {
         optionsPanel.add(deleteButton);
 
         // Deleting the selected session
-        deleteButton.addActionListener(e -> {
-            int selectedRow = table.getSelectedRow();
-
-            if (selectedRow < 0) {
-                errorMessage.showMessage(this, new Exception("Please select a row"));
-                return;
-            }
-
-            getModule().removeSession(sessions[selectedRow]);
-
-            sessions = getModule().getStudySessions();
-            tableModel.removeRow(selectedRow);
-
-            for (Module m : state.getModules()) {
-                if (m.getStudySessions().length > 0) {
-                    return; // Still sessions that can be deleted
-                }
-            }
-
-            // No more study sessions for any modules
-            manager.swapToPrevCard();
-        });
+        deleteButton.addActionListener(e -> handleDeletingSession());
 
         this.add(optionsPanel);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    /**
+     * Handles deleting sessions when the delete button is pressed
+     */
+    private void handleDeletingSession() {
+        int selectedRow = table.getSelectedRow();
+
+        if (selectedRow < 0) {
+            errorMessage.showMessage(this, new Exception("Please select a row"));
+            return;
+        }
+
+        getModule().removeSession(sessions[selectedRow]);
+
+        sessions = getModule().getStudySessions();
+        tableModel.removeRow(selectedRow);
+
+        for (Module m : state.getModules()) {
+            if (m.getStudySessions().length > 0) {
+                return; // Still sessions that can be deleted
+            }
+        }
+
+        // No more study sessions for any modules
+        manager.swapToPrevCard();
     }
 
     /**
