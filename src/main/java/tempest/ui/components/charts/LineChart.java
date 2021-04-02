@@ -22,7 +22,18 @@ public class LineChart extends Chart {
 
   public LineChart(State state, ViewManager<Chart> manager) {
     super(state, manager);
+    setupUI();
+  }
+
+  private void setupUI() {
+    this.removeAll();
     this.add(createChart());
+  }
+
+  @Override
+  public void updateChart(State state) {
+    this.state = state;
+    setupUI();
   }
 
   /**

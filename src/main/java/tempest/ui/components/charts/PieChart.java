@@ -42,6 +42,12 @@ public class PieChart extends Chart {
         return ChartTypes.PIE;
     }
 
+    @Override
+    public void updateChart(State state) {
+        // TODO Auto-generated method stub
+
+    }
+
     /**
      * Creates the dataset used by the pie chart.
      *
@@ -50,11 +56,14 @@ public class PieChart extends Chart {
      */
     public PieDataset<String> generateDataset(State state) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+
         for (Module module : state.getModules()) {
             int totalStudyTime = 0;
+
             for (StudySession studySession : module.getStudySessions()) {
                 totalStudyTime += studySession.duration.toMinutes();
             }
+
             dataset.setValue(module.getName(), totalStudyTime);
         }
         return dataset;

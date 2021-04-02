@@ -1,6 +1,6 @@
 package tempest.ui;
 
-import java.awt.*;
+import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -45,15 +45,10 @@ public class GUIManager extends JFrame {
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        this.pages = new Page[] {
-            new HomePage(this),
-            manageModules = new ManageModulesPage(this),
-            new AddModulePage(state, this),
-            new DeleteModulePage(state, this),
-            manageSessions = new ManageSessionsPage(this),
-            new AddSessionPage(state, this),
-            deleteSession = new DeleteSessionPage(state, this),
-            new ChartViewPage(state, this),
+        this.pages = new Page[] { new HomePage(this), manageModules = new ManageModulesPage(this),
+                new AddModulePage(state, this), new DeleteModulePage(state, this),
+                manageSessions = new ManageSessionsPage(this), new AddSessionPage(state, this),
+                deleteSession = new DeleteSessionPage(state, this), new ChartViewPage(state, this),
                 // All new pages should be added here.
         };
         start();
