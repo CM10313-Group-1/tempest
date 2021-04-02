@@ -57,7 +57,7 @@ public class ChartViewPage extends Page {
         System.out.println(source.getDestination());
         vm.changeView(source.getDestination());
 
-        manager.updatePanel();
+        manager.resizeGUI();
     }
 
 }
