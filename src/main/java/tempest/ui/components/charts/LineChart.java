@@ -3,8 +3,6 @@ package tempest.ui.components.charts;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
@@ -55,8 +53,6 @@ public class LineChart extends Chart {
    */
   private XYPlot generatePlot(State state) {
     DateAxis domainAxis = new DateAxis("Date");
-    DateTickUnit domainTickUnit = new DateTickUnit(DateTickUnitType.DAY, 1);
-    domainAxis.setTickUnit(domainTickUnit);
     TimeTableXYDataset dataset = generateDataset(state);
     return new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), new XYSplineRenderer());
   }
