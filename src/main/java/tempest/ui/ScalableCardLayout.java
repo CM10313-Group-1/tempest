@@ -7,7 +7,7 @@ import java.awt.*;
 
 //Coded with help of: https://stackoverflow.com/questions/8277834/how-to-set-a-jframe-size-to-fit-the-cardlayout-displayed-jpanel
 
-public class MyCardLayout extends CardLayout {
+public class ScalableCardLayout extends CardLayout {
 
     @Override
     public Dimension preferredLayoutSize(Container parent) {
