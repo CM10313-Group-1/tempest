@@ -1,18 +1,26 @@
 package tempest.ui.pages;
 
-import tempest.ui.components.BackButton;
-import tempest.ui.ErrorMessage;
-import tempest.ui.GUIManager;
-import tempest.ui.components.ModuleDropDown;
-import tempest.Module;
-import tempest.State;
-import tempest.StudySession;
-
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import tempest.Module;
+import tempest.State;
+import tempest.StudySession;
+import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.components.ModuleDropDown;
+
 public class DeleteSessionPage extends Page {
+    private static final long serialVersionUID = -8474248378801773736L;
 
     private final State state;
 
@@ -130,7 +138,8 @@ public class DeleteSessionPage extends Page {
     }
 
     /**
-     * Populates the table model with all the sessions from the currently selected module
+     * Populates the table model with all the sessions from the currently selected
+     * module
      */
     private void populateTable() {
         sessions = getModule().getStudySessions();
@@ -140,7 +149,7 @@ public class DeleteSessionPage extends Page {
             String date = session.date.toString();
             String duration = session.duration.toMinutes() + " minutes";
 
-            tableModel.addRow(new String[]{date, duration});
+            tableModel.addRow(new String[] { date, duration });
         }
     }
 
@@ -150,9 +159,11 @@ public class DeleteSessionPage extends Page {
      * @return JScrollPane - Containing the created JTable
      */
     private JScrollPane createTable() {
-        String[] columns = new String[]{"Date", "Duration"};
+        String[] columns = new String[] { "Date", "Duration" };
 
         tableModel = new DefaultTableModel(columns, 0) {
+            private static final long serialVersionUID = 5689863494172287549L;
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Setting all cells to be uneditable
@@ -173,7 +184,7 @@ public class DeleteSessionPage extends Page {
 
         // Centering all the cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         table.setDefaultRenderer(Object.class, centerRenderer);
 
         return new JScrollPane(table);
@@ -182,8 +193,8 @@ public class DeleteSessionPage extends Page {
     /**
      * Called when the delete and view sessions button is pressed
      *
-     * Without this if the first module in the drop down has had its
-     * sessions changed they wouldn't be seen
+     * Without this if the first module in the drop down has had its sessions
+     * changed they wouldn't be seen
      */
     public void updateTable() {
         tableModel.setRowCount(0); // Clearing the table
