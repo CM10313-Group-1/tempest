@@ -1,12 +1,16 @@
 package tempest.ui.components.charts;
 
-import javax.swing.JLabel;
-
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.DateTickUnitType;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimePeriod;
+import org.jfree.data.time.TimeTableXYDataset;
 
 import tempest.Module;
 import tempest.State;
@@ -18,7 +22,6 @@ public class LineChart extends Chart {
 
   public LineChart(State state, ViewManager<Chart> manager) {
     super(state, manager);
-    this.add(new JLabel(getName()));
     this.add(createChart());
   }
 
@@ -28,19 +31,41 @@ public class LineChart extends Chart {
    * @return {@link ChartPanel} of the chart.
    */
   private ChartPanel createChart() {
-    CategoryDataset dataset = generateDataset(state);
-    return new ChartPanel(ChartFactory.createLineChart("Line Chart", "Date", "Time / mins", dataset,
-        PlotOrientation.VERTICAL, true, false, false));
+    XYPlot plot = generatePlot(state);
+    JFreeChart chart = new JFreeChart(plot);
+    return new ChartPanel(chart);
   }
 
-  @Override
-  public CategoryDataset generateDataset(State state) {
-    final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+  /**
+   * Generates the plot to be displayed for the chart.
+   * 
+   * @param state The current state of recorded data.
+   * @return A plot showing all data as a line chart.
+   */
+  private XYPlot generatePlot(State state) {
+    DateAxis domainAxis = new DateAxis("Date");
+    DateTickUnit domainTickUnit = new DateTickUnit(DateTickUnitType.DAY, 1);
+    domainAxis.setTickUnit(domainTickUnit);
+    TimeTableXYDataset dataset = generateDataset(state);
+    return new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), new XYSplineRenderer());
+  }
+
+  /**
+   * Generates the dataset to be used for displaying the state information.
+   * 
+   * @param state The current state of recorded data.
+   * @return A dataset recording the number of minutes studied, per day, per
+   *         module.
+   */
+  private TimeTableXYDataset generateDataset(State state) {
+    TimeTableXYDataset dataset = new TimeTableXYDataset();
     for (Module m : state.getModules()) {
       for (StudySession s : m.getStudySessions()) {
-        dataset.addValue(s.duration.toMinutes(), m.getName(), StudySession.STORED_DATE_FORMAT.format(s.date));
+        TimePeriod day = new Day(s.date);
+        dataset.add(day, s.duration.toMinutes(), m.getName());
       }
     }
+
     return dataset;
   }
 

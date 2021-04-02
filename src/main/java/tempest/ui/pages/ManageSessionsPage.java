@@ -1,15 +1,16 @@
 package tempest.ui.pages;
-import tempest.ui.components.BackButton;
-import tempest.ui.GUIManager;
-import tempest.ui.components.LinkButton;
-import tempest.Module;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ManageSessionsPage extends Page implements ActionListener {
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
+import tempest.Module;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.components.LinkButton;
+
+public class ManageSessionsPage extends Page {
+private static final long serialVersionUID = -4290018724813073172L;
     private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
     private final LinkButton addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 
