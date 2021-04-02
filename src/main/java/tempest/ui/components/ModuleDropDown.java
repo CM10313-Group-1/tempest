@@ -1,18 +1,20 @@
 package tempest.ui.components;
 
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
 import tempest.Module;
 import tempest.State;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 public class ModuleDropDown {
 
     private static DefaultComboBoxModel<Object> model;
 
     /**
-     * This constructor should be used by all classes that
-     * need a ModuleDropDown instance
+     * This constructor should be used by all classes that need a ModuleDropDown
+     * instance
      */
     public ModuleDropDown() {
 
@@ -27,11 +29,9 @@ public class ModuleDropDown {
      */
     public ModuleDropDown(State state) {
         ArrayList<Object> names = new ArrayList<>();
-
         for (Module m : state.getModules()) {
             names.add(m.getName());
         }
-
         model = new DefaultComboBoxModel<>(names.toArray());
     }
 

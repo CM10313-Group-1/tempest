@@ -56,6 +56,8 @@ public class ChartViewPage extends Page {
         LinkButton source = (LinkButton) e.getSource();
         System.out.println(source.getDestination());
         vm.changeView(source.getDestination());
+
+        manager.resizeGUI();
     }
 
 }
