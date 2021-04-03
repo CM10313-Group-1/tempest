@@ -18,7 +18,6 @@ import tempest.StudySession;
 import tempest.ui.ViewManager;
 
 import java.awt.*;
-import java.util.*;
 
 public class BarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
@@ -90,8 +89,6 @@ public class BarChart extends Chart {
         TimeTableXYDataset dataset = new TimeTableXYDataset();
 
         // Sorts the study sessions so the biggest sessions are added first
-
-//        //TODO: Only shows smallest time if a module has > 1 study session in a day
 //
 //        ArrayList<StudySession> allSessions = new ArrayList<>();
 //
@@ -121,15 +118,11 @@ public class BarChart extends Chart {
 
         // Adds sessions in the order they are stored - means the colours are the same as line & pie charts
 
-        //TODO: Only shows largest time if a module has > 1 study session in a day
-
         for (Module m : state.getModules()) {
-            for (StudySession s : m.getStudySessions()) {
+            for (StudySession s : m.getPerDaySessions()) {
                 dataset.add(new Day(s.date), s.duration.toMinutes(), m.getName());
             }
         }
-
-        System.out.println(dataset.getItemCount(3));
 
         return dataset;
     }
