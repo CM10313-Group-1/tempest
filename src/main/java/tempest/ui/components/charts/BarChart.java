@@ -6,7 +6,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
+import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeTableXYDataset;
 import org.jfree.data.xy.TableXYDataset;
@@ -15,6 +16,9 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ViewManager;
+
+import java.awt.*;
+import java.util.*;
 
 public class BarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
@@ -49,11 +53,30 @@ public class BarChart extends Chart {
         plot.setDomainAxis(new DateAxis("Date"));
         plot.setRangeAxis(new NumberAxis("Time"));
 
+        Font bold = new Font("Dialog", Font.BOLD, 15);
+        plot.getDomainAxis().setLabelFont(bold);
+        plot.getRangeAxis().setLabelFont(bold);
+
         //Dataset
         plot.setDataset(createDataset());
 
         //Renderer
-        plot.setRenderer(new XYBarRenderer());
+        StackedXYBarRenderer renderer = new StackedXYBarRenderer();
+
+        renderer.setBarPainter(new StandardXYBarPainter());
+
+        renderer.setShadowVisible(false);
+        //renderer.setMargin(0.2);
+        //renderer.setBarAlignmentFactor(0.5); //-> Doesn't work
+
+        // Hours and mins when hovering over bars
+        renderer.setDefaultToolTipGenerator((xyDataset, i, i1) -> {
+            int value = (int) xyDataset.getYValue(i, i1);
+
+            return String.format("%d hrs %02d mins", value / 60, value % 60);
+        });
+
+        plot.setRenderer(renderer);
 
         // Creating the bar chart
         JFreeChart chart = new JFreeChart(plot);
@@ -66,11 +89,47 @@ public class BarChart extends Chart {
     private TableXYDataset createDataset() {
         TimeTableXYDataset dataset = new TimeTableXYDataset();
 
+        // Sorts the study sessions so the biggest sessions are added first
+
+//        //TODO: Only shows smallest time if a module has > 1 study session in a day
+//
+//        ArrayList<StudySession> allSessions = new ArrayList<>();
+//
+//        Map<StudySession, String> dict = new HashMap<>();
+//
+//        for (Module m : state.getModules()) {
+//
+//            StudySession[] sessions = m.getStudySessions();
+//
+//            for (StudySession session : sessions) {
+//                dict.put(session, m.getName());
+//            }
+//
+//            allSessions.addAll(Arrays.asList(sessions));
+//        }
+//
+//        allSessions.sort(Collections.reverseOrder(Comparator.comparing(o -> o.duration)));
+//
+//        for (StudySession allSession : allSessions) {
+//            System.out.println(allSession.duration.toMinutes());
+//        }
+//
+//        for (StudySession s : allSessions) {
+//            dataset.add(new Day(s.date), s.duration.toMinutes(), dict.get(s));
+//        }
+
+
+        // Adds sessions in the order they are stored - means the colours are the same as line & pie charts
+
+        //TODO: Only shows largest time if a module has > 1 study session in a day
+
         for (Module m : state.getModules()) {
             for (StudySession s : m.getStudySessions()) {
                 dataset.add(new Day(s.date), s.duration.toMinutes(), m.getName());
             }
         }
+
+        System.out.println(dataset.getItemCount(3));
 
         return dataset;
     }
@@ -80,3 +139,7 @@ public class BarChart extends Chart {
         return ChartTypes.BAR;
     }
 }
+
+//https://www.tutorialspoint.com/javafx/stacked_bar_chart.htm -> JavaFX
+
+//https://stackoverflow.com/questions/40105094/jfreechart-horizontal-stacked-bar-chart-with-date-axis -> Horizontal - StackedBarRenderer - JFreeChart
