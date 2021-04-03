@@ -15,6 +15,8 @@ import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ViewManager;
 
+import java.awt.Color;
+
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
 
@@ -54,7 +56,11 @@ public class LineChart extends Chart {
     private XYPlot generatePlot(State state) {
         DateAxis domainAxis = new DateAxis("Date");
         TimeTableXYDataset dataset = generateDataset(state);
-        return new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), new XYSplineRenderer());
+
+        XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), new XYSplineRenderer());
+        plot.setBackgroundPaint(Color.DARK_GRAY);
+
+        return plot;
     }
 
     /**

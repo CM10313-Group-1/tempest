@@ -58,6 +58,7 @@ public class BarChart extends Chart {
 
         //Dataset
         plot.setDataset(createDataset());
+        plot.setBackgroundPaint(Color.DARK_GRAY);
 
         //Renderer
         StackedXYBarRenderer renderer = new StackedXYBarRenderer();
