@@ -6,7 +6,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
-import org.jfree.data.time.Day;
+import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.data.time.TimePeriod;
 import org.jfree.data.time.TimeTableXYDataset;
 
@@ -68,7 +68,8 @@ public class LineChart extends Chart {
         TimeTableXYDataset dataset = new TimeTableXYDataset();
         for (Module m : state.getModules()) {
             for (StudySession s : m.getStudySessions()) {
-                TimePeriod day = new Day(s.date);
+                TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+
                 dataset.add(day, s.duration.toMinutes(), m.getName());
             }
         }
