@@ -11,6 +11,7 @@ import tempest.ui.components.LinkButton;
 
 public class ManageSessionsPage extends Page {
 private static final long serialVersionUID = -4290018724813073172L;
+
     private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
     private final LinkButton addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 

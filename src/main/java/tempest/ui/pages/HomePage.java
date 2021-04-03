@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
 
+import tempest.Module;
+import tempest.State;
 import tempest.ui.GUIManager;
 import tempest.ui.components.LinkButton;
 
@@ -14,9 +16,10 @@ public class HomePage extends Page {
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
 
-    public HomePage(GUIManager guiManager) {
+    public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
         addNavButtons();
+        setButtonActivity(state.getModules());
     }
 
     private void addNavButtons() {
@@ -37,6 +40,23 @@ public class HomePage extends Page {
     public void actionPerformed(ActionEvent e) {
         LinkButton source = (LinkButton) e.getSource();
         manager.swapCard(source.getDestination());
+    }
+
+    /**
+     * Disables the view data button if there are no sessions, otherwise
+     * it's enabled
+     *
+     * @param modules Array of modules from state
+     */
+    public void setButtonActivity(Module[] modules) {
+        for (Module m : modules) {
+            if (m.getStudySessions().length > 0) {
+                chartsLink.setEnabled(true);
+                return;
+            }
+        }
+
+        chartsLink.setEnabled(false);
     }
 
     public LinkButton getManageModulesButton() {
