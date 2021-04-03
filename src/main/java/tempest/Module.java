@@ -54,8 +54,7 @@ public class Module {
     }
 
     /**
-     * Removes the passed in session from the studySessions list
-     * for this module
+     * Removes the passed in session from the studySessions list for this module
      *
      * @param session The StudySession to be removed
      */
@@ -132,5 +131,23 @@ public class Module {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Uses the FNV-1a hash function to convert the module name to a long.
+     * 
+     * @return Hash of the module name.
+     * @see <a href=
+     *      "https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1_hash">FNV-1a</a>
+     */
+    public long hash() {
+        byte[] data = this.name.getBytes();
+        long seed = 0xcbf29ce484222325L;
+        for (byte b : data) {
+            seed ^= (b & 0xff);
+            seed *= 1099511628211L;
+        }
+
+        return seed;
     }
 }
