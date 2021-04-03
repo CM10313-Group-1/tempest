@@ -13,6 +13,9 @@ public class HomePageTest {
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+
+    GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
     public void manageModulesButton() {
@@ -29,7 +32,20 @@ public class HomePageTest {
     }
 
     @Test
-    public void chartViewButton() {
+    public void chartViewButton_NoSessions() {
+        homePage.getChartViewButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void chartViewButton_Sessions() {
+        homePage.getManageSessionsButton().doClick();
+
+        helper.createSession("", "5", helper.createModule("test"));
+
+        manageSessions.getBackButton().doClick();
+
         homePage.getChartViewButton().doClick();
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());

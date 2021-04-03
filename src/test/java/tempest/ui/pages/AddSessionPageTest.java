@@ -135,8 +135,6 @@ public class AddSessionPageTest {
 
         int[] result1 = helper.createSessionReturn("23", "58", testModule);
 
-        actionButtonPanel.getBackButtonInstance().doClick();
-
         int[] result2 = helper.createSessionReturn("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);
