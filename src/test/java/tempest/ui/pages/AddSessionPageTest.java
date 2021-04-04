@@ -130,7 +130,7 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void totalSessionsOverADay() {
+    public void totalSessionsOverADay_1Module() {
         Module testModule = helper.createModule("test");
 
         int[] result1 = helper.createSessionReturn("23", "58", testModule);
@@ -138,6 +138,17 @@ public class AddSessionPageTest {
         int[] result2 = helper.createSessionReturn("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);
+    }
+
+    @Test
+    public void totalSessionsOverADay_MultipleModules() {
+        helper.createSession("10", "45",  helper.createModule("test1"));
+
+        helper.createSession("10", "", helper.createModule("test2"));
+
+        int[] result3 = helper.createSessionReturn("4", "50", helper.createModule("test3"));
+
+        assertEquals(result3[0], result3[1]);
     }
 
     // Non-integer
