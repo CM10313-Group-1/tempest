@@ -5,10 +5,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimePeriod;
-import org.jfree.data.time.TimeTableXYDataset;
+import org.jfree.data.time.TimePeriodValues;
+import org.jfree.data.time.TimePeriodValuesCollection;
 
 import tempest.Module;
 import tempest.State;
@@ -53,8 +54,12 @@ public class LineChart extends Chart {
    */
   private XYPlot generatePlot(State state) {
     DateAxis domainAxis = new DateAxis("Date");
-    TimeTableXYDataset dataset = generateDataset(state);
-    return new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), new XYSplineRenderer());
+    TimePeriodValuesCollection dataset = generateDataset(state);
+    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+    renderer.setDrawSeriesLineAsPath(true);
+    XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
+
+    return plot;
   }
 
   /**
@@ -64,13 +69,15 @@ public class LineChart extends Chart {
    * @return A dataset recording the number of minutes studied, per day, per
    *         module.
    */
-  private TimeTableXYDataset generateDataset(State state) {
-    TimeTableXYDataset dataset = new TimeTableXYDataset();
+  private TimePeriodValuesCollection generateDataset(State state) {
+    TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
     for (Module m : state.getModules()) {
+      TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
       for (StudySession s : m.getStudySessions()) {
         TimePeriod day = new Day(s.date);
-        dataset.add(day, s.duration.toMinutes(), m.getName());
+        moduleSeries.add(day, s.duration.toMinutes());
       }
+      dataset.addSeries(moduleSeries);
     }
 
     return dataset;
