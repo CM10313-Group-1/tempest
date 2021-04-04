@@ -15,12 +15,7 @@ public class ChartControls extends JPanel {
   public ChartControls(State state) {
     Module[] modules = state.getModules();
     for (Module m : modules) {
-      try {
-        controls.put(m.hash(), new ModuleControls(this, m));
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-
+      controls.put(m.hash(), new ModuleControls(this, m));
     }
     setupUI();
   }
