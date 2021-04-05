@@ -33,6 +33,7 @@ public class GUIManager extends JFrame {
 
     private final State state;
 
+    private final HomePage home;
     private final ManageSessionsPage manageSessions;
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
@@ -45,7 +46,7 @@ public class GUIManager extends JFrame {
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        this.pages = new Page[] { new HomePage(this), manageModules = new ManageModulesPage(this),
+        this.pages = new Page[] { home = new HomePage(state,this), manageModules = new ManageModulesPage(this),
                 new AddModulePage(state, this), new DeleteModulePage(state, this),
                 manageSessions = new ManageSessionsPage(this), new AddSessionPage(state, this),
                 deleteSession = new DeleteSessionPage(state, this), new ChartViewPage(state, this),
@@ -96,6 +97,9 @@ public class GUIManager extends JFrame {
                 break;
             case PageNames.DELETE_SESSION:
                 deleteSession.updateTable();
+                break;
+            case PageNames.HOME:
+                home.setButtonActivity(modules);
                 break;
         }
     }

@@ -1,9 +1,8 @@
 package tempest;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.*;
 
 import tempest.interfaces.CSVInterface;
 
@@ -97,6 +96,41 @@ public class Module {
      */
     public StudySession[] getStudySessions() {
         return studySessions.toArray(new StudySession[0]);
+    }
+
+    /**
+     * The returned array only contains one session per day - achieved by adding together the
+     * duration of sessions with the same day
+     *
+     * @return An array containing study sessions
+     */
+    public StudySession[] getSessionsPerDay() {
+        ArrayList<StudySession> sessions = new ArrayList<>();
+
+        ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
+
+        ArrayList<StudySession> completed = new ArrayList<>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (StudySession studySession : moduleSessions) {
+            Duration duration = studySession.duration;
+
+            for (StudySession s : moduleSessions) {
+
+                if (dateFormat.format(s.date).equals(dateFormat.format(studySession.date)) && !completed.contains(studySession) && !s.equals(studySession)) {
+                    completed.add(s); // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                    duration = duration.plus(s.duration);
+                }
+            }
+
+            if (!completed.contains(studySession)) {
+                completed.add(studySession);
+                sessions.add(new StudySession(studySession.date, duration));
+            }
+        }
+
+        return sessions.toArray(new StudySession[0]);
     }
 
     /**

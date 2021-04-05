@@ -69,8 +69,6 @@ public class AddModulePageTest {
 
         helper.createModule("test");
 
-        actionButtonPanel.getBackButtonInstance().doClick();
-
         helper.createModule("test");
 
         assertEquals(prevModuleNum + 1, state.getModules().length);

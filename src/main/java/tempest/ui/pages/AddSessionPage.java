@@ -160,9 +160,12 @@ public class AddSessionPage extends Page {
 
             int duration = 0;
 
-            for (StudySession s : module.getStudySessions()) {
-                if (s.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now()))
-                    duration += s.duration.toMinutes();
+            for (Module m : state.getModules()) {
+                for (StudySession s : m.getStudySessions()) {
+                    if (s.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now())) {
+                        duration += s.duration.toMinutes();
+                    }
+                }
             }
 
             if (duration + time.toMinutes() > 1440) {
