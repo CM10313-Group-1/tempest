@@ -48,42 +48,42 @@ public class LineChart extends Chart {
         return new ChartPanel(chart);
     }
 
-  /**
-   * Generates the plot to be displayed for the chart.
-   * 
-   * @param state The current state of recorded data.
-   * @return A plot showing all data as a line chart.
-   */
-  private XYPlot generatePlot(State state) {
-    DateAxis domainAxis = new DateAxis("Date");
-    TimePeriodValuesCollection dataset = generateDataset(state);
-    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-    renderer.setDrawSeriesLineAsPath(true);
-    XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
-    plot.setBackgroundPaint(Color.DARK_GRAY);
-    return plot;
-  }
-
-  /**
-   * Generates the dataset to be used for displaying the state information.
-   * 
-   * @param state The current state of recorded data.
-   * @return A dataset recording the number of minutes studied, per day, per
-   *         module.
-   */
-  private TimePeriodValuesCollection generateDataset(State state) {
-    TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
-    for (Module m : state.getModules()) {
-      TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
-      for (StudySession s : m.getStudySessions()) {
-        TimePeriod day = new SimpleTimePeriod(s.date, s.date);
-        moduleSeries.add(day, s.duration.toMinutes());
-      }
-      dataset.addSeries(moduleSeries);
+    /**
+     * Generates the plot to be displayed for the chart.
+     *
+     * @param state The current state of recorded data.
+     * @return A plot showing all data as a line chart.
+     */
+    private XYPlot generatePlot(State state) {
+        DateAxis domainAxis = new DateAxis("Date");
+        TimePeriodValuesCollection dataset = generateDataset(state);
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setDrawSeriesLineAsPath(true);
+        XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
+        plot.setBackgroundPaint(Color.DARK_GRAY);
+        return plot;
     }
 
-    return dataset;
-  }
+    /**
+     * Generates the dataset to be used for displaying the state information.
+     *
+     * @param state The current state of recorded data.
+     * @return A dataset recording the number of minutes studied, per day, per
+     * module.
+     */
+    private TimePeriodValuesCollection generateDataset(State state) {
+        TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
+        for (Module m : state.getModules()) {
+            TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
+            for (StudySession s : m.getStudySessions()) {
+                TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+                moduleSeries.add(day, s.duration.toMinutes());
+            }
+            dataset.addSeries(moduleSeries);
+        }
+
+        return dataset;
+    }
 
     @Override
     public String getName() {

@@ -58,16 +58,15 @@ public class BarChart extends Chart {
 
         //Dataset
         plot.setDataset(createDataset());
+
+        //Background colour
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
         //Renderer
         StackedXYBarRenderer renderer = new StackedXYBarRenderer();
 
-        renderer.setBarPainter(new StandardXYBarPainter());
-
         renderer.setShadowVisible(false);
-        //renderer.setMargin(0.2);
-        //renderer.setBarAlignmentFactor(0.5); //-> Doesn't work
+        renderer.setBarPainter(new StandardXYBarPainter());
 
         // Hours and mins when hovering over bars
         renderer.setDefaultToolTipGenerator((xyDataset, i, i1) -> {
@@ -89,38 +88,8 @@ public class BarChart extends Chart {
     private TableXYDataset createDataset() {
         TimeTableXYDataset dataset = new TimeTableXYDataset();
 
-        // Sorts the study sessions so the biggest sessions are added first
-//
-//        ArrayList<StudySession> allSessions = new ArrayList<>();
-//
-//        Map<StudySession, String> dict = new HashMap<>();
-//
-//        for (Module m : state.getModules()) {
-//
-//            StudySession[] sessions = m.getStudySessions();
-//
-//            for (StudySession session : sessions) {
-//                dict.put(session, m.getName());
-//            }
-//
-//            allSessions.addAll(Arrays.asList(sessions));
-//        }
-//
-//        allSessions.sort(Collections.reverseOrder(Comparator.comparing(o -> o.duration)));
-//
-//        for (StudySession allSession : allSessions) {
-//            System.out.println(allSession.duration.toMinutes());
-//        }
-//
-//        for (StudySession s : allSessions) {
-//            dataset.add(new Day(s.date), s.duration.toMinutes(), dict.get(s));
-//        }
-
-
-        // Adds sessions in the order they are stored - means the colours are the same as line & pie charts
-
         for (Module m : state.getModules()) {
-            for (StudySession s : m.getPerDaySessions()) {
+            for (StudySession s : m.getSessionsPerDay()) {
                 dataset.add(new Day(s.date), s.duration.toMinutes(), m.getName());
             }
         }
@@ -133,7 +102,3 @@ public class BarChart extends Chart {
         return ChartTypes.BAR;
     }
 }
-
-//https://www.tutorialspoint.com/javafx/stacked_bar_chart.htm -> JavaFX
-
-//https://stackoverflow.com/questions/40105094/jfreechart-horizontal-stacked-bar-chart-with-date-axis -> Horizontal - StackedBarRenderer - JFreeChart

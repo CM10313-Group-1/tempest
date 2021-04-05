@@ -104,7 +104,7 @@ public class Module {
      *
      * @return An array containing study sessions
      */
-    public StudySession[] getPerDaySessions() {
+    public StudySession[] getSessionsPerDay() {
         ArrayList<StudySession> sessions = new ArrayList<>();
 
         ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
