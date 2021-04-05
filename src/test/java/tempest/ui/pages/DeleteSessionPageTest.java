@@ -52,11 +52,7 @@ public class DeleteSessionPageTest {
 
     @Test
     public void deleteLastSession() {
-        Module test = helper.createModule("test");
-
-        helper.createSession("4", "25", test);
-
-        int prevLen = test.getStudySessions().length;
+        helper.createSession("4", "25", helper.createModule("test"));
 
         // Deleting this session
         homePage.getManageSessionsButton().doClick();
@@ -64,9 +60,23 @@ public class DeleteSessionPageTest {
         deleteSession.selectRow(0);
         deleteSession.getDeleteButton().doClick();
 
-        assertEquals(prevLen - 1, test.getStudySessions().length);
-
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
+    }
+
+    @Test
+    public void remainOnPageIfMoreSessions() {
+        Module test = helper.createModule("test");
+
+        helper.createSession("4", "25", test);
+        helper.createSession("", "15", test);
+
+        // Deleting one of the sessions
+        homePage.getManageSessionsButton().doClick();
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.selectRow(0);
+        deleteSession.getDeleteButton().doClick();
+
+        assertEquals(PageNames.DELETE_SESSION, manager.getCurrentCard());
     }
 
     @Test
@@ -84,7 +94,6 @@ public class DeleteSessionPageTest {
         manageSessions.getDelSessionsButton().doClick();
 
         deleteSession.setDropDown(test.getName());
-        assertEquals(test.getStudySessions().length, deleteSession.getRowCount());
 
         deleteSession.setDropDown(test2.getName());
         assertEquals(test2.getStudySessions().length, deleteSession.getRowCount());
