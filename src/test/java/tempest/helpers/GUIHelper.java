@@ -1,8 +1,10 @@
-package tempest.ui.pages;
+package tempest.helpers;
 
 import tempest.Module;
 import tempest.State;
 import tempest.ui.GUIManager;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.AddSessionPage;
 
 public class GUIHelper {
 

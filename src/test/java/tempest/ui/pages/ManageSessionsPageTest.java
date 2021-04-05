@@ -1,12 +1,14 @@
 package tempest.ui.pages;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
+import tempest.helpers.GUIHelper;
 import tempest.ui.GUIManager;
-
-import static org.junit.Assert.*;
 
 public class ManageSessionsPageTest {
 

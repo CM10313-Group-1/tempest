@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
+import tempest.helpers.GUIHelper;
 import tempest.ui.GUIManager;
 
 public class HomePageTest {

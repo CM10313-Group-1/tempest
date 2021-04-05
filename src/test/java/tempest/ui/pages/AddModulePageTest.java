@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
+import tempest.helpers.GUIHelper;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;

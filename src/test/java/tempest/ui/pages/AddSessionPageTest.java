@@ -5,11 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import tempest.State;
 import tempest.Module;
+import tempest.State;
 import tempest.Supervisor;
-import tempest.ui.GUIManager;
+import tempest.helpers.GUIHelper;
 import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {

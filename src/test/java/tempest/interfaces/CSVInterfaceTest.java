@@ -50,7 +50,6 @@ public class CSVInterfaceTest {
     try {
       State s = i.getState(VALID_READ_FIXTURE);
       assertEquals("Module names match", "Programming", s.getModules()[0].getName());
-      // TODO finish testing state.
     } catch (Exception e) {
       System.err.println(e.toString());
       fail("No exceptions should be thrown");
