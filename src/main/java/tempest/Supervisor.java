@@ -4,27 +4,34 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import tempest.interfaces.CSVInterface;
+import tempest.ui.GUIManager;
 
 public class Supervisor {
-    private static final String STORE = "store.csv";
-    private static State state; // Static so the state made in onStart can be used in onClose
-    private CSVInterface csvInterface = new CSVInterface();
 
-    // TODO UserInterface
+    private static final String STORE = "store.csv";
+    public static State state;
+    private final CSVInterface csvInterface = new CSVInterface();
+    private static Supervisor instance;
+
+    private Supervisor() {
+    }
+
+    public static Supervisor getInstance() {
+        if (instance == null) {
+            instance = new Supervisor();
+        }
+        return instance;
+    }
 
     private void onStart() {
         try {
             state = csvInterface.getState(STORE);
         } catch (IOException | ParseException e) {
-            System.err.println("Failed to retrieve state");
+            System.err.println("Failed to retrieve state"); // Want to print an error, what if just the 1st time?
             state = new State();
         }
 
-        // Run CSV code first
-        // - Check if CSV empty/nothing to load ?
-        // - Load all the study session for these modules
-        // Start GUI last - by calling new ModuleView()
-        new ModuleView(state, this);
+        new GUIManager(state, this);
     }
 
     public void onClose() {
@@ -35,16 +42,8 @@ public class Supervisor {
         }
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        Supervisor.state = state;
-    }
-
     public static void main(String[] args) {
-        Supervisor s = new Supervisor();
+        Supervisor s = Supervisor.getInstance();
         s.onStart();
     }
 }

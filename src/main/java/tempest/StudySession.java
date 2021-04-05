@@ -7,7 +7,7 @@ import java.util.Date;
 import tempest.interfaces.CSVInterface;
 
 public class StudySession {
-	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public Date date;
 	public Duration duration;
 
@@ -25,7 +25,7 @@ public class StudySession {
 	 */
 	public String toRow(Module parentModule) {
 		return parentModule.getID() + CSVInterface.DELIMITER + parentModule.getName() + CSVInterface.DELIMITER
-				+ STORED_DATE_FORMAT.format(date) + CSVInterface.DELIMITER + String.valueOf(duration.toMinutes());
+				+ STORED_DATE_FORMAT.format(date) + CSVInterface.DELIMITER + duration.toMinutes();
 	}
 
 	@Override

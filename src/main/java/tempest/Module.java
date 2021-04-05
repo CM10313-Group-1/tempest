@@ -1,10 +1,8 @@
 package tempest;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.*;
 
 import tempest.interfaces.CSVInterface;
 
@@ -14,8 +12,8 @@ import tempest.interfaces.CSVInterface;
  *
  */
 public class Module {
-    private UUID id;
-    private String name;
+    private final UUID id;
+    private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
@@ -55,6 +53,16 @@ public class Module {
     }
 
     /**
+     * Removes the passed in session from the studySessions list
+     * for this module
+     *
+     * @param session The StudySession to be removed
+     */
+    public void removeSession(StudySession session) {
+        studySessions.remove(session);
+    }
+
+    /**
      * Converts a module to an array corresponding to rows that can be stored in the
      * CSV file.
      * 
@@ -91,6 +99,41 @@ public class Module {
     }
 
     /**
+     * The returned array only contains one session per day - achieved by adding together the
+     * duration of sessions with the same day
+     *
+     * @return An array containing study sessions
+     */
+    public StudySession[] getSessionsPerDay() {
+        ArrayList<StudySession> sessions = new ArrayList<>();
+
+        ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
+
+        ArrayList<StudySession> completed = new ArrayList<>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (StudySession studySession : moduleSessions) {
+            Duration duration = studySession.duration;
+
+            for (StudySession s : moduleSessions) {
+
+                if (dateFormat.format(s.date).equals(dateFormat.format(studySession.date)) && !completed.contains(studySession) && !s.equals(studySession)) {
+                    completed.add(s); // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                    duration = duration.plus(s.duration);
+                }
+            }
+
+            if (!completed.contains(studySession)) {
+                completed.add(studySession);
+                sessions.add(new StudySession(studySession.date, duration));
+            }
+        }
+
+        return sessions.toArray(new StudySession[0]);
+    }
+
+    /**
      * Gets the id of the module.
      * 
      * @return A string representing the id of the module.
@@ -119,8 +162,7 @@ public class Module {
             Module other = (Module) obj;
             boolean matchingIDs = this.id.equals(other.id);
             boolean matchingNames = this.name.equals(other.name);
-            boolean matchingSessions = Arrays.deepEquals(this.getStudySessions(), other.getStudySessions());
-            return matchingIDs && matchingNames && matchingSessions;
+            return matchingIDs || matchingNames;
         } else {
             return false;
         }
