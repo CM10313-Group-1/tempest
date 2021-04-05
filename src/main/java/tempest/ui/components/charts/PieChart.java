@@ -15,6 +15,8 @@ import tempest.StudySession;
 import tempest.ui.ViewManager;
 import tempest.Module;
 
+import java.awt.*;
+
 public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
 
@@ -34,6 +36,7 @@ public class PieChart extends Chart {
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
         PiePlot plot = (PiePlot) pieChart.getChart().getPlot();
         plot.setLabelGenerator(labelGenerator);
+        plot.setBackgroundPaint(Color.DARK_GRAY);
         return pieChart;
     }
 
