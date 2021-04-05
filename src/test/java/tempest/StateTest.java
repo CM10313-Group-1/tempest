@@ -11,7 +11,7 @@ public class StateTest {
   public void addsModule() {
     int prevModuleNum = s.getModules().length;
     s.createModule("Test");
-    assertEquals(s.getModules().length, prevModuleNum + 1);
+    assertEquals(prevModuleNum + 1, s.getModules().length);
     assertEquals("Test", s.getModules()[prevModuleNum].getName());
   }
 
@@ -27,6 +27,6 @@ public class StateTest {
   public void failsToRemoveNonExistentModule() {
     int prevModuleNum = s.getModules().length;
     s.deleteModule("Test");
-    assertEquals(s.getModules().length, prevModuleNum);
+    assertEquals(prevModuleNum, s.getModules().length);
   }
 }
