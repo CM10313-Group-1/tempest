@@ -44,7 +44,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void swapToPrevIfNoModules() {
+    public void deleteLastModule() {
         helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
@@ -55,7 +55,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void stayIfMoreModules() {
+    public void remainOnPageIfMoreModules() {
         helper.createModule("test");
         helper.createModule("test2");
 
