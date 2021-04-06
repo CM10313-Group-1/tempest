@@ -30,6 +30,8 @@ public class DeleteModulePageTest {
         assertEquals(manageModules.getName(), manager.getCurrentCard());
     }
 
+    //test
+
     @Test
     public void deletingAModule() {
         helper.createModule("test");
