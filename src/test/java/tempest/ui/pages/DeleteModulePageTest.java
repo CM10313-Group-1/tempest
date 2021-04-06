@@ -31,7 +31,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void deleteModule() {
+    public void deletingAModule() {
         helper.createModule("test");
 
         int length = state.getModules().length;

@@ -33,7 +33,7 @@ public class DeleteSessionPageTest {
     }
 
     @Test
-    public void deleteSession() {
+    public void deletingASession() {
         Module test = helper.createModule("test");
 
         helper.createSession("4", "25", test);
