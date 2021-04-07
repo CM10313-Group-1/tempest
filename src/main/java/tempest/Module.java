@@ -111,15 +111,18 @@ public class Module {
 
         ArrayList<StudySession> completed = new ArrayList<>();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
         for (StudySession studySession : moduleSessions) {
             Duration duration = studySession.duration;
 
             for (StudySession s : moduleSessions) {
 
-                if (dateFormat.format(s.date).equals(dateFormat.format(studySession.date)) && !completed.contains(studySession) && !s.equals(studySession)) {
-                    completed.add(s); // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                if (StudySession.STORED_DATE_FORMAT.format(s.date)
+                        .equals(StudySession.STORED_DATE_FORMAT.format(studySession.date))
+                        && !completed.contains(studySession)
+                        && !s.equals(studySession)) {
+
+                    // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                    completed.add(s);
                     duration = duration.plus(s.duration);
                 }
             }

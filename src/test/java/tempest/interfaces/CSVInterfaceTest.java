@@ -129,8 +129,7 @@ public class CSVInterfaceTest {
   public void exportFullModule() {
     try {
       Module module = ModuleHelper.createTestModule("Test");
-      StudySession studySession = ModuleHelper.createTestSession();
-      module.addSession(studySession);
+      module.addSession(ModuleHelper.createTestSession());
       File destination = i.getFile(WRITE_FIXTURE);
       i.exportModule(module, destination);
       BufferedReader tReader = new BufferedReader(new FileReader(destination));
