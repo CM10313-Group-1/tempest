@@ -1,4 +1,4 @@
-package tempest.ui.components.charts;
+package tempest.ui.pages.charts;
 
 import javax.swing.JLabel;
 
@@ -12,15 +12,19 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import tempest.State;
 import tempest.StudySession;
-import tempest.ui.ViewManager;
+import tempest.ui.GUIManager;
 import tempest.Module;
+import tempest.ui.components.BackButton;
+import tempest.ui.pages.PageNames;
 
 import java.awt.*;
 
 public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
 
-    public PieChart(State state, ViewManager<Chart> manager) {
+    private BackButton backButton;
+
+    public PieChart(State state, GUIManager manager) {
         super(state, manager);
         this.add(new JLabel(getName()));
         setupUI();
@@ -40,14 +44,12 @@ public class PieChart extends Chart {
         return pieChart;
     }
 
-    @Override
-    public String getName() {
-        return ChartTypes.PIE;
-    }
-
     private void setupUI() {
         this.removeAll();
         this.add(createChart());
+
+        backButton = new BackButton(manager);
+        this.add(backButton);
     }
 
     @Override
@@ -77,4 +79,12 @@ public class PieChart extends Chart {
         return dataset;
     }
 
+    @Override
+    public String getName() {
+        return PageNames.PIE;
+    }
+
+    public BackButton getBackButton() {
+        return backButton;
+    }
 }

@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 import tempest.ui.GUIManager;
 import tempest.ui.ViewManager;
-import tempest.ui.components.charts.Chart;
+import tempest.ui.pages.charts.Chart;
 
 public class BackButton extends JButton {
     private static final long serialVersionUID = -349591108764334577L;

@@ -12,7 +12,7 @@ import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class AddModulePage extends Page {
+public class AddModulePage extends Page implements InputPage {
     private static final long serialVersionUID = -6175924935345590918L;
 
     private final State state;

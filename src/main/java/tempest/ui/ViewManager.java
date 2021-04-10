@@ -1,12 +1,14 @@
 package tempest.ui;
 
+import tempest.ui.pages.Page;
+
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Stack;
 
 import javax.swing.JPanel;
 
-public class ViewManager<T extends View> extends JPanel {
+public class ViewManager<T extends Page> extends JPanel {
   private static final long serialVersionUID = -7163717383346091663L;
 
   private final CardLayout layout = new ScalableCardLayout();
@@ -26,7 +28,7 @@ public class ViewManager<T extends View> extends JPanel {
   }
 
   /**
-   * Changes the visible {@link View} to the one named.
+   * Changes the visible {@link Page} to the one named.
    * 
    * @param name The name of the view to be switched to.
    */
@@ -40,7 +42,7 @@ public class ViewManager<T extends View> extends JPanel {
   }
 
   /**
-   * Changes the visible {@link View} to the previous one.
+   * Changes the visible {@link Page} to the previous one.
    */
   public void changeToPrevious() {
     history.pop();
