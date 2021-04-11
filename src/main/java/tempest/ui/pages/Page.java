@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import tempest.ui.GUIManager;
-import tempest.ui.ViewManager;
+import tempest.ui.PageManager;
 
 import javax.swing.*;
 
@@ -23,7 +23,7 @@ public abstract class Page extends JPanel implements ActionListener {
     /**
      * Ensures all pages have a getName() method
      *
-     * The name of the page is used to identify the page in the {@link ViewManager}
+     * The name of the page is used to identify the page in the {@link PageManager}
      *
      * @return String - Name of the page
      */

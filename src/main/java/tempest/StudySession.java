@@ -7,7 +7,7 @@ import java.util.Date;
 import tempest.interfaces.CSVInterface;
 
 public class StudySession {
-	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public Date date;
 	public Duration duration;
 

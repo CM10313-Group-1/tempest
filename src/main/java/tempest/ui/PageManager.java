@@ -8,14 +8,14 @@ import java.util.Stack;
 
 import javax.swing.JPanel;
 
-public class ViewManager extends JPanel {
+public class PageManager extends JPanel {
     private static final long serialVersionUID = -7163717383346091663L;
 
     private final CardLayout layout = new ScalableCardLayout();
     private final HashMap<String, Page> pages = new HashMap<>();
     private final Stack<String> history = new Stack<>();
 
-    public ViewManager(Page[] pages, Page initialView) {
+    public PageManager (Page[] pages, Page initialPage) {
         this.setLayout(layout);
 
         for (Page p : pages) {
@@ -23,17 +23,17 @@ public class ViewManager extends JPanel {
             this.add(p, p.getName());
         }
 
-        layout.show(this, initialView.getName());
-        history.push(initialView.getName());
+        layout.show(this, initialPage.getName());
+        history.push(initialPage.getName());
     }
 
     /**
      * Changes the visible {@link Page} to the one named.
      *
-     * @param name The name of the view to be switched to.
+     * @param name The name of the page to be switched to.
      */
-    public void changeView(String name) {
-        if (viewExists(name)) {
+    public void changePage(String name) {
+        if (pageExists(name)) {
             layout.show(this, name);
             history.push(name);
         } else {
@@ -47,7 +47,7 @@ public class ViewManager extends JPanel {
     public void changeToPrevious() {
         history.pop();
         String lastView = history.peek();
-        if (!viewExists(lastView))
+        if (!pageExists(lastView))
             System.err.println("Invalid State");
         layout.show(this, lastView);
     }
@@ -67,7 +67,7 @@ public class ViewManager extends JPanel {
      * @param name The name of the page.
      * @return boolean true if the page exists.
      */
-    private boolean viewExists(String name) {
+    private boolean pageExists(String name) {
         return pages.containsKey(name);
     }
 
@@ -77,7 +77,7 @@ public class ViewManager extends JPanel {
      * @param classObject The class to be found.
      * @return The page, if it exists; else null.
      */
-    public Page getView(Class<? extends Page> classObject) {
+    public Page getPage(Class<? extends Page> classObject) {
         for (Page p : pages.values()) {
             if (p.getClass() == classObject)
                 return p;
@@ -94,7 +94,7 @@ public class ViewManager extends JPanel {
      * @param classObject The class to be found.
      * @return The page, if it exists; else null.
      */
-    public String getViewName(Class<? extends Page> classObject) {
-        return getView(classObject).getName();
+    public String getPageName(Class<? extends Page> classObject) {
+        return getPage(classObject).getName();
     }
 }

@@ -29,7 +29,7 @@ public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
     /** The view manager for the GUI. Handles which page should be visible. */
-    private static ViewManager vm;
+    private static PageManager vm;
 
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
@@ -82,7 +82,7 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI.
      */
     private void start() {
-        vm = new ViewManager(pages, pages[0]);
+        vm = new PageManager(pages, pages[0]);
         this.getContentPane().add(vm);
 
         this.addWindowListener(new WindowAdapter() {
@@ -139,7 +139,7 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        vm.changeView(cardName);
+        vm.changePage(cardName);
         updatePages(vm.getVisible());
 
         resizeGUI();
@@ -171,7 +171,7 @@ public class GUIManager extends JFrame {
      * @return Page - The instance of the required class
      */
     public Page getPage(Class<? extends Page> classObject) {
-        return vm.getView(classObject);
+        return vm.getPage(classObject);
     }
 
     public String getCurrentCard() {
