@@ -29,7 +29,7 @@ public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
     /** The view manager for the GUI. Handles which page should be visible. */
-    private static ViewManager<Page> vm;
+    private static ViewManager vm;
 
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
@@ -82,7 +82,7 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI.
      */
     private void start() {
-        vm = new ViewManager<>(pages, pages[0]);
+        vm = new ViewManager(pages, pages[0]);
         this.getContentPane().add(vm);
 
         this.addWindowListener(new WindowAdapter() {
