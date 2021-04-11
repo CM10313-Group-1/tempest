@@ -53,7 +53,7 @@ public class ViewManager extends JPanel {
     }
 
     /**
-     * Returns the name of the currently visible view.
+     * Returns the name of the currently visible page.
      *
      * @return String The name of the currently visible view.
      */
@@ -62,20 +62,20 @@ public class ViewManager extends JPanel {
     }
 
     /**
-     * Checks if a given view exists in all possible.
+     * Checks if a given page exists in all possible.
      *
-     * @param name The name of the view.
-     * @return boolean true if the view exists.
+     * @param name The name of the page.
+     * @return boolean true if the page exists.
      */
     private boolean viewExists(String name) {
         return pages.containsKey(name);
     }
 
     /**
-     * Finds the first instance of a particular class in the possible views.
+     * Finds the first instance of a particular class in the possible pages.
      *
      * @param classObject The class to be found.
-     * @return The view, if it exists; else null.
+     * @return The page, if it exists; else null.
      */
     public Page getView(Class<? extends Page> classObject) {
         for (Page p : pages.values()) {
@@ -89,10 +89,10 @@ public class ViewManager extends JPanel {
 
     /**
      * Finds the name of the first instance of a particular class in the possible
-     * views.
+     * pages.
      *
      * @param classObject The class to be found.
-     * @return The view, if it exists; else null.
+     * @return The page, if it exists; else null.
      */
     public String getViewName(Class<? extends Page> classObject) {
         return getView(classObject).getName();
