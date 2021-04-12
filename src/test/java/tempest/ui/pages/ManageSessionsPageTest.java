@@ -14,7 +14,7 @@ public class ManageSessionsPageTest {
 
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
 
@@ -22,20 +22,13 @@ public class ManageSessionsPageTest {
 
     @Test
     public void backButton() {
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
         homePage.getManageSessionsButton().doClick();
         manageSessions.getBackButton().doClick();
 
         assertEquals(PageNames.HOME, manager.getCurrentCard());
-    }
-
-    @Test
-    public void addSessionButton_NoModules() {
-        assertEquals(0, state.getModules().length);
-
-        homePage.getManageSessionsButton().doClick();
-        manageSessions.getAddSessionsButton().doClick();
-
-        assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
@@ -54,7 +47,9 @@ public class ManageSessionsPageTest {
         for (Module m : state.getModules()) {
             assertEquals(0, m.getStudySessions().length);
         }
-
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
         homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
 
