@@ -21,12 +21,12 @@ import tempest.ui.pages.PageNames;
 
 import java.awt.*;
 
-public class BarChart extends Chart {
+public class StackedBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
 
     private BackButton backButton;
 
-    public BarChart(State state, GUIManager manager) {
+    public StackedBarChart(State state, GUIManager manager) {
         super(state, manager);
         this.add(new JLabel(getName()));
 

@@ -10,7 +10,7 @@ import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
-import tempest.ui.pages.charts.BarChart;
+import tempest.ui.pages.charts.StackedBarChart;
 import tempest.ui.pages.charts.Chart;
 import tempest.ui.pages.charts.LineChart;
 import tempest.ui.pages.charts.PieChart;
@@ -53,7 +53,7 @@ public class GUIManager extends JFrame {
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        BarChart barChart;
+        StackedBarChart barChart;
         LineChart lineChart;
         PieChart pieChart;
 
@@ -66,7 +66,7 @@ public class GUIManager extends JFrame {
                 new AddSessionPage(state, this),
                 deleteSession = new DeleteSessionPage(state, this),
                 chartView = new ChartViewPage(this),
-                barChart = new BarChart(state, this),
+                barChart = new StackedBarChart(state, this),
                 lineChart = new LineChart(state, this),
                 pieChart = new PieChart(state, this)
 
