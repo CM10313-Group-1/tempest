@@ -15,7 +15,7 @@ public class HomePageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
@@ -27,11 +27,19 @@ public class HomePageTest {
 
     @Test
     public void manageSessionsButton() {
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
         homePage.getManageSessionsButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
+    @Test
+    public void manageSessionsButton_NoModule() {
+        homePage.getManageSessionsButton().doClick();
 
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
     @Test
     public void chartViewButton_NoSessions() {
         homePage.getChartViewButton().doClick();

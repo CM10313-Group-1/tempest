@@ -54,11 +54,13 @@ public class HomePage extends Page {
                 chartsLink.setEnabled(true);
                 return;
             }
+        if (modules.length > 0){
+            manageSessionsLink.setEnabled(true);
+            return; }
         }
-
+        manageSessionsLink.setEnabled(false);
         chartsLink.setEnabled(false);
     }
-
     public LinkButton getManageModulesButton() {
         return manageModulesLink;
     }
