@@ -169,6 +169,15 @@ public class Module {
         return name;
     }
 
+    /**
+     * Gets the weekly goal of the module.
+     *
+     * @return The weekly goal for the module
+     */
+    public int getWeeklyGoal(){
+        return weeklyGoal;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this)

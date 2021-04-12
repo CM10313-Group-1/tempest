@@ -131,8 +131,8 @@ public class GoalEntryPage extends Page implements InputPage{
             Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
             // Checks the session entered is under 24 hours
-            if (time.toMinutes() > 24 * 60) {
-                throw new Exception("A study session can't be longer than 24 hours");
+            if (time.toMinutes() > 7 * 24 * 60) {
+                throw new Exception("A goal can't be longer than a week");
             }
 
             Module module = null;
@@ -166,5 +166,25 @@ public class GoalEntryPage extends Page implements InputPage{
 
     private void errorMessage(Exception message) {
         errorMessage.showMessage(this, message);
+    }
+
+    public JButton getEnterButton() {
+        return enterButton;
+    }
+
+    public ActionButtonPanel getActionButtons() {
+        return actionButtonPanel;
+    }
+
+    public void setHours(String hours) {
+        hoursInput.setText(hours);
+    }
+
+    public void setMins(String mins) {
+        minutesInput.setText(mins);
+    }
+
+    public void setDropDown(String name) {
+        dropDown.setSelectedItem(name);
     }
 }

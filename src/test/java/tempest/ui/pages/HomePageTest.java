@@ -51,4 +51,11 @@ public class HomePageTest {
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());
     }
+
+    @Test
+    public void manageGoalsButton(){
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.GOAL_ENTRY, manager.getCurrentCard());
+    }
 }

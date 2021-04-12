@@ -15,7 +15,7 @@ public class HomePage extends Page {
     private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
-    private final LinkButton goalEntryLink = new LinkButton("Manage Goals", PageNames.GOAL_ENTRY, this);
+    private final LinkButton goalEntryLink = new LinkButton("Enter Goals", PageNames.GOAL_ENTRY, this);
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
@@ -71,5 +71,9 @@ public class HomePage extends Page {
 
     public LinkButton getChartViewButton() {
         return chartsLink;
+    }
+
+    public LinkButton getEnterGoalsButton() {
+        return goalEntryLink;
     }
 }
