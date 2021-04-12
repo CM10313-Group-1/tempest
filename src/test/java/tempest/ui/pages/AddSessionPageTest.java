@@ -20,7 +20,7 @@ public class AddSessionPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = addSession.getActionButtons();
@@ -35,8 +35,9 @@ public class AddSessionPageTest {
 
     @Test
     public void backButton() {
+        homePage.getManageModulesButton().doClick();
         helper.createModule("test");
-
+        manageModules.getBackButton().doClick();
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();

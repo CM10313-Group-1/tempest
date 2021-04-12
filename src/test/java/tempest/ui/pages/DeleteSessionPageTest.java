@@ -14,7 +14,7 @@ public class DeleteSessionPageTest {
 
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
     DeleteSessionPage deleteSession = (DeleteSessionPage) manager.getPage(DeleteSessionPage.class);
@@ -23,6 +23,9 @@ public class DeleteSessionPageTest {
 
     @Test
     public void backButton() {
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("PreventBlank");
+        manageModules.getBackButton().doClick();
         helper.createSession("1", "", helper.createModule("test"));
 
         homePage.getManageSessionsButton().doClick();
@@ -52,6 +55,9 @@ public class DeleteSessionPageTest {
 
     @Test
     public void deleteLastSession() {
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("PreventBlank");
+        manageModules.getBackButton().doClick();
         helper.createSession("4", "25", helper.createModule("test"));
 
         // Deleting this session
