@@ -13,4 +13,8 @@ public class PageNames {
     public static final String LINE = "LineChart";
     public static final String PIE = "PieChart";
     public static final String BAR = "BarChart";
+
+    public static String[] getCharts() {
+        return new String[] {STACKED_BAR, LINE, PIE, BAR};
+    }
 }

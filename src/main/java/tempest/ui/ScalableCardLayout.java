@@ -20,17 +20,27 @@ public class ScalableCardLayout extends CardLayout {
         if (current.getName() != null) {
             String name = current.getName();
 
-            if (name.equals(PageNames.DELETE_SESSION) || name.equals(PageNames.BAR) || name.equals(PageNames.LINE) || name.equals(PageNames.PIE)) {
-                Insets insets = parent.getInsets();
-                Dimension pref = current.getPreferredSize();
-                pref.width += insets.left + insets.right;
-                pref.height += insets.top + insets.bottom;
-                return pref;
+            for (String s : PageNames.getCharts()) {
+                if (name.equals(s)) {
+                    return dynamicGUI(parent, current);
+                }
+            }
+
+            if (name.equals(PageNames.DELETE_SESSION)) {
+                return dynamicGUI(parent, current);
             }
         }
 
         // The default frame size for panels
         return new Dimension(500, 150);
+    }
+
+    private Dimension dynamicGUI(Container parent, Component current) {
+        Insets insets = parent.getInsets();
+        Dimension pref = current.getPreferredSize();
+        pref.width += insets.left + insets.right;
+        pref.height += insets.top + insets.bottom;
+        return pref;
     }
 
     public Component findCurrentComponent(Container parent) {
