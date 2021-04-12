@@ -49,6 +49,9 @@ public class HomePageTest {
 
     @Test
     public void chartViewButton_Sessions() {
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
         homePage.getManageSessionsButton().doClick();
 
         helper.createSession("", "5", helper.createModule("test"));
