@@ -49,14 +49,15 @@ public class HomePage extends Page {
      * @param modules Array of modules from state
      */
     public void setButtonActivity(Module[] modules) {
-        for (Module m : modules) {
-            if (m.getStudySessions().length > 0) {
-                chartsLink.setEnabled(true);
-                return;
-            }
-        if (modules.length > 0){
+        if (modules.length > 0) {
             manageSessionsLink.setEnabled(true);
-            return; }
+            for (Module m : modules) {
+                if (m.getStudySessions().length > 0) {
+                    chartsLink.setEnabled(true);
+                    return;
+                }
+            return;
+            }
         }
         manageSessionsLink.setEnabled(false);
         chartsLink.setEnabled(false);
