@@ -12,6 +12,7 @@ import tempest.interfaces.CSVInterface;
  *
  */
 public class Module {
+    private Integer weeklyGoal;
     private final UUID id;
     private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
@@ -50,6 +51,20 @@ public class Module {
      */
     public void addSession(StudySession session) {
         studySessions.add(session);
+    }
+
+    /**
+     * This method sets the weekly goal of the module.
+     *
+     * @param minutes The length of the weekly goal entered
+     */
+    public void setGoal(int minutes){
+        if(minutes == 0){
+            weeklyGoal = null;
+        }
+        else{
+            weeklyGoal = null;
+        }
     }
 
     /**
