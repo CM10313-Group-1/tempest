@@ -29,7 +29,7 @@ public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
     /** The view manager for the GUI. Handles which page should be visible. */
-    private static PageManager vm;
+    private static PageManager pm;
 
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
@@ -82,8 +82,8 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI.
      */
     private void start() {
-        vm = new PageManager(pages, pages[0]);
-        this.getContentPane().add(vm);
+        pm = new PageManager(pages, pages[0]);
+        this.getContentPane().add(pm);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -99,7 +99,7 @@ public class GUIManager extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
-        layout = vm.getLayout();
+        layout = pm.getLayout();
     }
 
     /**
@@ -139,8 +139,8 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        vm.changePage(cardName);
-        updatePages(vm.getVisible());
+        pm.changePage(cardName);
+        updatePages(pm.getVisible());
 
         resizeGUI();
     }
@@ -149,8 +149,8 @@ public class GUIManager extends JFrame {
      * Switches to the previous card
      */
     public void swapToPrevCard() {
-        vm.changeToPrevious();
-        updatePages(vm.getVisible());
+        pm.changeToPrevious();
+        updatePages(pm.getVisible());
 
         resizeGUI();
     }
@@ -171,11 +171,11 @@ public class GUIManager extends JFrame {
      * @return Page - The instance of the required class
      */
     public Page getPage(Class<? extends Page> classObject) {
-        return vm.getPage(classObject);
+        return pm.getPage(classObject);
     }
 
     public String getCurrentCard() {
-        return vm.getVisible();
+        return pm.getVisible();
     }
 
     /**
