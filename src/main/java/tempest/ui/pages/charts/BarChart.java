@@ -1,4 +1,4 @@
-package tempest.ui.components.charts;
+package tempest.ui.pages.charts;
 
 import javax.swing.JLabel;
 
@@ -15,14 +15,18 @@ import org.jfree.data.xy.TableXYDataset;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.ui.ViewManager;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.pages.PageNames;
 
 import java.awt.*;
 
 public class BarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
 
-    public BarChart(State state, ViewManager<Chart> manager) {
+    private BackButton backButton;
+
+    public BarChart(State state, GUIManager manager) {
         super(state, manager);
         this.add(new JLabel(getName()));
 
@@ -32,6 +36,9 @@ public class BarChart extends Chart {
     private void setupUI() {
         this.removeAll();
         this.add(createBarChart());
+
+        backButton = new BackButton(manager);
+        this.add(backButton);
     }
 
     @Override
@@ -99,6 +106,10 @@ public class BarChart extends Chart {
 
     @Override
     public String getName() {
-        return ChartTypes.BAR;
+        return PageNames.BAR;
+    }
+
+    public BackButton getBackButton() {
+        return backButton;
     }
 }

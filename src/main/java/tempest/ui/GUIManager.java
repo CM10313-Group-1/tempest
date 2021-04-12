@@ -4,12 +4,16 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
+import tempest.ui.pages.charts.BarChart;
+import tempest.ui.pages.charts.Chart;
+import tempest.ui.pages.charts.LineChart;
+import tempest.ui.pages.charts.PieChart;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
 import tempest.ui.pages.ChartViewPage;
@@ -25,10 +29,11 @@ public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
     /** The view manager for the GUI. Handles which page should be visible. */
-    private static ViewManager<Page> vm;
+    private static PageManager pm;
 
     /** All pages that can be displayed by the view manager. */
     private final Page[] pages;
+    private final Chart[] charts;
     private final Supervisor supervisor;
 
     private final State state;
@@ -38,6 +43,8 @@ public class GUIManager extends JFrame {
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
 
+    private final ChartViewPage chartView;
+
     private LayoutManager layout;
 
     public GUIManager(State state, Supervisor supervisor) {
@@ -46,12 +53,28 @@ public class GUIManager extends JFrame {
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        this.pages = new Page[] { home = new HomePage(state,this), manageModules = new ManageModulesPage(this),
-                new AddModulePage(state, this), new DeleteModulePage(state, this),
-                manageSessions = new ManageSessionsPage(this), new AddSessionPage(state, this),
-                deleteSession = new DeleteSessionPage(state, this), new ChartViewPage(state, this),
+        BarChart barChart;
+        LineChart lineChart;
+        PieChart pieChart;
+
+        this.pages = new Page[] {
+                home = new HomePage(state,this),
+                manageModules = new ManageModulesPage(this),
+                new AddModulePage(state, this),
+                new DeleteModulePage(state, this),
+                manageSessions = new ManageSessionsPage(this),
+                new AddSessionPage(state, this),
+                deleteSession = new DeleteSessionPage(state, this),
+                chartView = new ChartViewPage(this),
+                barChart = new BarChart(state, this),
+                lineChart = new LineChart(state, this),
+                pieChart = new PieChart(state, this)
+
                 // All new pages should be added here.
         };
+
+        this.charts = new Chart[] {barChart, lineChart, pieChart};
+
         start();
     }
 
@@ -59,8 +82,8 @@ public class GUIManager extends JFrame {
      * Sets up and runs the GUI.
      */
     private void start() {
-        vm = new ViewManager<>(pages, pages[0]);
-        this.getContentPane().add(vm);
+        pm = new PageManager(pages, pages[0]);
+        this.getContentPane().add(pm);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -76,7 +99,7 @@ public class GUIManager extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
-        layout = vm.getLayout();
+        layout = pm.getLayout();
     }
 
     /**
@@ -101,6 +124,9 @@ public class GUIManager extends JFrame {
             case PageNames.HOME:
                 home.setButtonActivity(modules);
                 break;
+            case PageNames.CHART_VIEW:
+                chartView.updateCharts(charts, state);
+                break;
         }
     }
 
@@ -113,8 +139,8 @@ public class GUIManager extends JFrame {
      * @param cardName Name of the card to swap to
      */
     public void swapCard(String cardName) {
-        vm.changeView(cardName);
-        updatePages(vm.getVisible());
+        pm.changePage(cardName);
+        updatePages(pm.getVisible());
 
         resizeGUI();
     }
@@ -123,8 +149,8 @@ public class GUIManager extends JFrame {
      * Switches to the previous card
      */
     public void swapToPrevCard() {
-        vm.changeToPrevious();
-        updatePages(vm.getVisible());
+        pm.changeToPrevious();
+        updatePages(pm.getVisible());
 
         resizeGUI();
     }
@@ -132,7 +158,7 @@ public class GUIManager extends JFrame {
     /**
      * Resizes the frame for the new card
      */
-    public void resizeGUI() {
+    private void resizeGUI() {
         layout.preferredLayoutSize(this);
         this.pack();
         this.setLocationRelativeTo(null); // Centering GUI
@@ -145,11 +171,11 @@ public class GUIManager extends JFrame {
      * @return Page - The instance of the required class
      */
     public Page getPage(Class<? extends Page> classObject) {
-        return vm.getView(classObject);
+        return pm.getPage(classObject);
     }
 
     public String getCurrentCard() {
-        return vm.getVisible();
+        return pm.getVisible();
     }
 
     /**

@@ -1,4 +1,4 @@
-package tempest.ui.components.charts;
+package tempest.ui.pages.charts;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,14 +14,18 @@ import org.jfree.data.time.TimePeriodValuesCollection;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.ui.ViewManager;
+import tempest.ui.GUIManager;
+import tempest.ui.components.BackButton;
+import tempest.ui.pages.PageNames;
 
 import java.awt.Color;
 
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
 
-    public LineChart(State state, ViewManager<Chart> manager) {
+    private BackButton backButton;
+
+    public LineChart(State state, GUIManager manager) {
         super(state, manager);
         setupUI();
     }
@@ -29,6 +33,9 @@ public class LineChart extends Chart {
     private void setupUI() {
         this.removeAll();
         this.add(createChart());
+
+        backButton = new BackButton(manager);
+        this.add(backButton);
     }
 
     @Override
@@ -87,7 +94,10 @@ public class LineChart extends Chart {
 
     @Override
     public String getName() {
-        return ChartTypes.LINE;
+        return PageNames.LINE;
     }
 
+    public BackButton getBackButton() {
+        return backButton;
+    }
 }
