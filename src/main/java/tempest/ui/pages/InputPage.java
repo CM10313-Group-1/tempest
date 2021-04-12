@@ -5,6 +5,8 @@ package tempest.ui.pages;
  * clear button
  */
 public interface InputPage {
-    // Used to clear input fields when the clear button is pressed
+    /**
+     * Used to clear input fields when the clear button is pressed
+     */
     void clearInput();
 }
