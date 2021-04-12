@@ -63,7 +63,7 @@ public class Module {
             weeklyGoal = null;
         }
         else{
-            weeklyGoal = null;
+            weeklyGoal = minutes;
         }
     }
 
