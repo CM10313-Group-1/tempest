@@ -111,13 +111,15 @@ public class Module {
 
         ArrayList<StudySession> completed = new ArrayList<>();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         for (StudySession studySession : moduleSessions) {
             Duration duration = studySession.duration;
 
             for (StudySession s : moduleSessions) {
 
-                if (StudySession.STORED_DATE_FORMAT.format(s.date)
-                        .equals(StudySession.STORED_DATE_FORMAT.format(studySession.date))
+                if (dateFormat.format(s.date)
+                        .equals(dateFormat.format(studySession.date))
                         && !completed.contains(studySession)
                         && !s.equals(studySession)) {
 
