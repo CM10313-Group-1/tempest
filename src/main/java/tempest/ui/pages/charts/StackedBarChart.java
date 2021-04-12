@@ -48,7 +48,7 @@ public class StackedBarChart extends Chart {
     }
 
     /**
-     * Creates a ChartPanel containing the Bar Chart
+     * Creates a ChartPanel containing the Stacked Bar Chart
      *
      * @return ChartPanel
      */
@@ -106,7 +106,7 @@ public class StackedBarChart extends Chart {
 
     @Override
     public String getName() {
-        return PageNames.BAR;
+        return PageNames.STACKED_BAR;
     }
 
     public BackButton getBackButton() {

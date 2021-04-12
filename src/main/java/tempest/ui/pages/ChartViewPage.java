@@ -1,6 +1,5 @@
 package tempest.ui.pages;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -16,9 +15,10 @@ public class ChartViewPage extends Page {
 
     private BackButton backButton;
 
-    private final LinkButton barChartLink = new LinkButton("Bar Chart", PageNames.BAR, this);
+    private final LinkButton stackedBarChartLink = new LinkButton("Stacked Bar Chart", PageNames.STACKED_BAR, this);
     private final LinkButton lineChartLink = new LinkButton("Line Chart", PageNames.LINE, this);
     private final LinkButton pieChartLink = new LinkButton("Pie Chart", PageNames.PIE, this);
+    private final LinkButton barChartLink = new LinkButton("Bar Chart", PageNames.BAR, this);
 
     public ChartViewPage(GUIManager guiManager) {
         super(guiManager);
@@ -35,9 +35,10 @@ public class ChartViewPage extends Page {
         JPanel chartButtons = new JPanel();
         JPanel backPanel = new JPanel();
 
-        chartButtons.add(barChartLink);
+        chartButtons.add(stackedBarChartLink);
         chartButtons.add(lineChartLink);
         chartButtons.add(pieChartLink);
+        chartButtons.add(barChartLink);
 
         this.add(chartButtons);
 
