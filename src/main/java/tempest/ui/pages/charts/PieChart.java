@@ -36,11 +36,20 @@ public class PieChart extends Chart {
         PieDataset<String> dataset = generateDataset(state);
         ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
 
-        // Changes the label formatting to allow minutes to be shown.
-        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
         PiePlot plot = (PiePlot) pieChart.getChart().getPlot();
-        plot.setLabelGenerator(labelGenerator);
         plot.setBackgroundPaint(Color.DARK_GRAY);
+
+        // Changes the label formatting to allow minutes to be shown
+        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
+        plot.setLabelGenerator(labelGenerator);
+
+        // When hovering over sections hours are displayed
+        plot.setToolTipGenerator((pieDataset, comparable) -> {
+            int sectionMins = pieDataset.getValue(comparable).intValue();
+
+            return String.format("%s: %d hrs %02d mins", comparable.toString(), sectionMins / 60, sectionMins % 60);
+        });
+
         return pieChart;
     }
 
