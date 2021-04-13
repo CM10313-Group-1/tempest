@@ -5,7 +5,6 @@ import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.pages.*;
 
 public class GUIHelper {
@@ -20,9 +19,6 @@ public class GUIHelper {
 
     protected AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
     protected AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
-
-    protected ActionButtonPanel sessionButtonPanel = addSession.getActionButtons();
-    protected ActionButtonPanel moduleButtonPanel = addModule.getActionButtons();
 
     protected DeleteSessionPage deleteSession = (DeleteSessionPage) manager.getPage(DeleteSessionPage.class);
     protected DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);

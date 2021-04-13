@@ -13,7 +13,7 @@ public class AddModulePageTest extends GUIHelper {
         homePage.getManageModulesButton().doClick();
         manageModules.getAddModuleButton().doClick();
 
-        moduleButtonPanel.getBackButtonInstance().doClick();
+        addModule.getActionButtons().getBackButton().doClick();
 
         assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }
