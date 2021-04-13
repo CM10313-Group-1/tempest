@@ -35,9 +35,11 @@ public class AddSessionPageTest {
 
     @Test
     public void backButton() {
+        // Creating a module to enable the manage sessions button
         homePage.getManageModulesButton().doClick();
         helper.createModule("test");
         manageModules.getBackButton().doClick();
+
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
         actionButtonPanel.getBackButtonInstance().doClick();
