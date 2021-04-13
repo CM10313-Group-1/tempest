@@ -104,7 +104,7 @@ public class TimeBarChart extends Chart {
 
         // Populating dataset with percentages
         for (int i = 0; i < hours.length; i++) {
-            dataset.addValue(hours[i]/totalTime * 100, "studySessions", Integer.toString(i));
+            dataset.addValue(hours[i]/totalTime * 100, "Hours Studied", Integer.toString(i));
         }
 
         return dataset;
