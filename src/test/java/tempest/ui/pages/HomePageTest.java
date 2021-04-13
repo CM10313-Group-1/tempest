@@ -4,19 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class HomePageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class HomePageTest extends GUIHelper{
 
     @Test
     public void manageModulesButton() {
@@ -43,7 +33,7 @@ public class HomePageTest {
     public void chartViewButton_Sessions() {
         homePage.getManageSessionsButton().doClick();
 
-        helper.createSession("", "5", helper.createModule("test"));
+        createSession("", "5", createModule("test"));
 
         manageSessions.getBackButton().doClick();
 

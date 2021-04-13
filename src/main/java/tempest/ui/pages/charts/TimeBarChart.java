@@ -67,10 +67,10 @@ public class TimeBarChart extends Chart {
         });
 
         // Axis
-        NumberAxis time = new NumberAxis("Time");
+        NumberAxis time = new NumberAxis("% Time Studied");
         time.setRange(0, 100);
 
-        CategoryAxis hour = new CategoryAxis("Hour");
+        CategoryAxis hour = new CategoryAxis("Hour of the Day");
 
         // Plot
         CategoryPlot plot = new CategoryPlot(createDataset(), hour, time, renderer);
@@ -112,7 +112,7 @@ public class TimeBarChart extends Chart {
 
     @Override
     public String getName() {
-        return PageNames.BAR;
+        return PageNames.TIME_BAR;
     }
 
     public BackButton getBackButton() {

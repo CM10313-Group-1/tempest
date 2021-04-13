@@ -5,20 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import tempest.Module;
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class ManageSessionsPageTest {
-
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class ManageSessionsPageTest extends GUIHelper {
 
     @Test
     public void backButton() {
@@ -40,7 +29,7 @@ public class ManageSessionsPageTest {
 
     @Test
     public void addSessionButton_Modules() {
-        helper.createModule("test");
+        createModule("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
@@ -63,7 +52,7 @@ public class ManageSessionsPageTest {
 
     @Test
     public void deleteSessionButton_Sessions() {
-        helper.createSession("1", "5", helper.createModule("test"));
+        createSession("1", "5", createModule("test"));
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
