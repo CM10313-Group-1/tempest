@@ -46,6 +46,9 @@ public class HomePage extends Page {
      * Disables the view data button if there are no sessions, otherwise
      * it's enabled
      *
+     * Disables the sessions button if there are no modules, otherwise
+     * it's enabled
+     *
      * @param modules Array of modules from state
      */
     public void setButtonActivity(Module[] modules) {
@@ -56,9 +59,10 @@ public class HomePage extends Page {
                     chartsLink.setEnabled(true);
                     return;
                 }
-            return;
             }
+            return;
         }
+
         manageSessionsLink.setEnabled(false);
         chartsLink.setEnabled(false);
     }
