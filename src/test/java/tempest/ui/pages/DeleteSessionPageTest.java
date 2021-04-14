@@ -94,12 +94,38 @@ public class DeleteSessionPageTest {
         helper.createSession("4", "", test2);
         helper.createSession("2", "12", test2);
 
+        homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
         deleteSession.setDropDown(test.getName()); // Selecting 1st module
         deleteSession.setDropDown(test2.getName()); // Selecting 2nd module
 
         // Asserting the length of sessions displayed matches the selected module's sessions length
         assertEquals(test2.getStudySessions().length, deleteSession.getRowCount());
+    }
+
+    @Test
+    public void allCheckBox() {
+        Module test = helper.createModule("test");
+
+        helper.createSession("", "25", test);
+        helper.createSession("2", "13", test);
+
+        Module test2 = helper.createModule("test2");
+
+        helper.createSession("1", "30", test2);
+        helper.createSession("5", "", test2);
+        helper.createSession("", "5", test2);
+
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.getCheckBox().doClick();
+
+        int totalSessions = 0;
+
+        for (Module m : state.getModules()) {
+            totalSessions += m.getStudySessions().length;
+        }
+
+        assertEquals(totalSessions, deleteSession.getRowCount());
     }
 
     /**
