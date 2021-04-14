@@ -15,6 +15,7 @@ public class HomePage extends Page {
     private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
+    private final LinkButton goalEntryLink = new LinkButton("Enter Goals", PageNames.GOAL_ENTRY, this);
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
@@ -27,6 +28,7 @@ public class HomePage extends Page {
         buttonPanel.add(manageModulesLink);
         buttonPanel.add(manageSessionsLink);
         buttonPanel.add(chartsLink);
+        buttonPanel.add(goalEntryLink);
 
         this.add(buttonPanel);
     }
@@ -54,6 +56,7 @@ public class HomePage extends Page {
     public void setButtonActivity(Module[] modules) {
         if (modules.length > 0) {
             manageSessionsLink.setEnabled(true);
+            goalEntryLink.setEnabled(true);
             for (Module m : modules) {
                 if (m.getStudySessions().length > 0) {
                     chartsLink.setEnabled(true);
@@ -65,6 +68,7 @@ public class HomePage extends Page {
 
         manageSessionsLink.setEnabled(false);
         chartsLink.setEnabled(false);
+        goalEntryLink.setEnabled(false);
     }
     public LinkButton getManageModulesButton() {
         return manageModulesLink;
