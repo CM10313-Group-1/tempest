@@ -12,4 +12,5 @@ public class PageNames {
     public static final String BAR = "BarChart";
     public static final String LINE = "LineChart";
     public static final String PIE = "PieChart";
+    public static final String DATA_PROTECTION = "DataProtection";
 }
