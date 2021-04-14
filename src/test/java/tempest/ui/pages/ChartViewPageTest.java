@@ -10,9 +10,12 @@ public class ChartViewPageTest extends GUIHelper{
 
     @Test
     public void backButton() {
+        // Creating a module so the manage sessions button isn't greyed out
+        Module test = createModuleChangePage("test");
+
         // Creating a session so the chart view button isn't greyed out
         homePage.getManageSessionsButton().doClick();
-        createSession("", "5", createModule("test"));
+        createSession("", "5", test);
         manageSessions.getBackButton().doClick();
 
         // Going to the chart view page and then pressing the back button
