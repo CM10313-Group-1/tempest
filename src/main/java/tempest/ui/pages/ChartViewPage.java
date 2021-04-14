@@ -1,48 +1,29 @@
 package tempest.ui.pages;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import tempest.State;
-import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.ViewManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
-import tempest.ui.components.charts.BarChart;
-import tempest.ui.components.charts.Chart;
-import tempest.ui.components.charts.ChartTypes;
-import tempest.ui.components.charts.LineChart;
-import tempest.ui.components.charts.PieChart;
+import tempest.ui.pages.charts.Chart;
 
 public class ChartViewPage extends Page {
     private static final long serialVersionUID = -7397536728116537358L;
 
-    private Chart[] charts;
-    private BarChart barChart;
-    private LineChart lineChart;
-    private PieChart pieChart;
-
-    private ViewManager<Chart> vm;
-
-    private final LinkButton barChartLink = new LinkButton("Bar Chart", ChartTypes.BAR, this);
-    private final LinkButton lineChartLink = new LinkButton("Line Chart", ChartTypes.LINE, this);
-    private final LinkButton pieChartLink = new LinkButton("Pie Chart", ChartTypes.PIE, this);
     private BackButton backButton;
 
-    public ChartViewPage(State state, GUIManager guiManager) {
-        super(guiManager);
-        this.manager = guiManager;
+    private final LinkButton barChartLink = new LinkButton("Bar Chart", PageNames.BAR, this);
+    private final LinkButton lineChartLink = new LinkButton("Line Chart", PageNames.LINE, this);
+    private final LinkButton pieChartLink = new LinkButton("Pie Chart", PageNames.PIE, this);
 
-        this.charts = new Chart[] { barChart = new BarChart(state, vm), lineChart = new LineChart(state, vm),
-                pieChart = new PieChart(state, vm) };
-        vm = new ViewManager<>(charts, charts[0]);
-        this.add(vm);
+    public ChartViewPage(GUIManager guiManager) {
+        super(guiManager);
+
         addNavButtons();
-        addVisibilityListener();
     }
 
     @Override
@@ -51,50 +32,37 @@ public class ChartViewPage extends Page {
     }
 
     private void addNavButtons() {
-        JPanel buttonPanel = new JPanel();
+        JPanel chartButtons = new JPanel();
+        JPanel backPanel = new JPanel();
+
+        chartButtons.add(barChartLink);
+        chartButtons.add(lineChartLink);
+        chartButtons.add(pieChartLink);
+
+        this.add(chartButtons);
+
         backButton = new BackButton(manager);
+        backPanel.add(backButton);
 
-        buttonPanel.add(barChartLink);
-        buttonPanel.add(lineChartLink);
-        buttonPanel.add(pieChartLink);
-        buttonPanel.add(backButton);
-        this.add(buttonPanel);
-    }
+        this.add(backPanel);
 
-    private void addVisibilityListener() {
-        this.addComponentListener(new ComponentListener() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                return;
-            }
-
-            @Override
-            public void componentMoved(ComponentEvent e) {
-                return;
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e) {
-                State currentState = Supervisor.state;
-                lineChart.updateChart(currentState);
-                barChart.updateChart(currentState);
-                pieChart.updateChart(currentState);
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent e) {
-                return;
-            }
-        });
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         LinkButton source = (LinkButton) e.getSource();
-        String destination = (String) source.getDestination();
+        manager.swapCard(source.getDestination());
+    }
 
-        vm.changeView(destination);
-        manager.resizeGUI();
+    public void updateCharts(Chart[] charts, State state) {
+        for (Chart c : charts) {
+            c.updateChart(state);
+        }
+    }
+
+    public BackButton getBackButton() {
+        return backButton;
     }
 
 }

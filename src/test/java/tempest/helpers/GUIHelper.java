@@ -1,13 +1,13 @@
-package tempest.ui.pages;
+package tempest.helpers;
 
 import tempest.Module;
 import tempest.State;
 import tempest.ui.GUIManager;
+import tempest.ui.pages.AddModulePage;
+import tempest.ui.pages.AddSessionPage;
 
 public class GUIHelper {
 
-    private final HomePage homePage;
-    private final ManageModulesPage manageModules;
     private final AddModulePage addModule;
     private final AddSessionPage addSession;
     private final State state;
@@ -15,8 +15,6 @@ public class GUIHelper {
     public GUIHelper(GUIManager manager, State state) {
         this.state = state;
 
-        homePage = (HomePage) manager.getPage(HomePage.class);
-        manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
         addModule = (AddModulePage) manager.getPage(AddModulePage.class);
         addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
     }
@@ -25,8 +23,6 @@ public class GUIHelper {
         Module testModule = null;
 
         // Creating module
-        homePage.getManageModulesButton().doClick();
-        manageModules.getAddModuleButton().doClick();
         addModule.setModuleName(moduleName);
         addModule.getEnterButton().doClick();
 

@@ -11,6 +11,7 @@ import tempest.ui.components.LinkButton;
 
 public class ManageSessionsPage extends Page {
 private static final long serialVersionUID = -4290018724813073172L;
+
     private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
     private final LinkButton addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
 
@@ -51,20 +52,11 @@ private static final long serialVersionUID = -4290018724813073172L;
     }
 
     /**
-     * Disables the add sessions button if there are no modules
-     *
-     * @param modules Modules array
-     */
-    public void setAddButtonActivity(Module[] modules) {
-        addSessionsButton.setEnabled(modules.length != 0);
-    }
-
-    /**
      * Disables the delete sessions button if there are no sessions
      *
      * @param modules Modules array
      */
-    public void setDeleteButtonActivity(Module[] modules) {
+    public void setButtonActivity(Module[] modules) {
         for (Module m : modules) {
             if (m.getStudySessions().length > 0) {
                 delSessionsButton.setEnabled(true);

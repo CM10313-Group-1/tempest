@@ -50,7 +50,6 @@ public class CSVInterfaceTest {
     try {
       State s = i.getState(VALID_READ_FIXTURE);
       assertEquals("Module names match", "Programming", s.getModules()[0].getName());
-      // TODO finish testing state.
     } catch (Exception e) {
       System.err.println(e.toString());
       fail("No exceptions should be thrown");
@@ -130,8 +129,7 @@ public class CSVInterfaceTest {
   public void exportFullModule() {
     try {
       Module module = ModuleHelper.createTestModule("Test");
-      StudySession studySession = ModuleHelper.createTestSession();
-      module.addSession(studySession);
+      module.addSession(ModuleHelper.createTestSession());
       File destination = i.getFile(WRITE_FIXTURE);
       i.exportModule(module, destination);
       BufferedReader tReader = new BufferedReader(new FileReader(destination));

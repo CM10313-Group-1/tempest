@@ -5,11 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import tempest.State;
 import tempest.Module;
+import tempest.State;
 import tempest.Supervisor;
-import tempest.ui.GUIManager;
+import tempest.helpers.GUIHelper;
 import tempest.ui.ErrorMessage;
+import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;
 
 public class AddSessionPageTest {
@@ -19,7 +20,7 @@ public class AddSessionPageTest {
 
     HomePage homePage = (HomePage) manager.getPage(HomePage.class);
     ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
     AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
 
     ActionButtonPanel actionButtonPanel = addSession.getActionButtons();
@@ -34,7 +35,10 @@ public class AddSessionPageTest {
 
     @Test
     public void backButton() {
+        // Creating a module to enable the manage sessions button
+        homePage.getManageModulesButton().doClick();
         helper.createModule("test");
+        manageModules.getBackButton().doClick();
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
@@ -130,16 +134,25 @@ public class AddSessionPageTest {
     }
 
     @Test
-    public void totalSessionsOverADay() {
+    public void totalSessionsOverADay_1Module() {
         Module testModule = helper.createModule("test");
 
         int[] result1 = helper.createSessionReturn("23", "58", testModule);
 
-        actionButtonPanel.getBackButtonInstance().doClick();
-
         int[] result2 = helper.createSessionReturn("", "3", testModule);
 
         assertEquals(result1[0] + 1, result2[1]);
+    }
+
+    @Test
+    public void totalSessionsOverADay_MultipleModules() {
+        helper.createSession("10", "45",  helper.createModule("test1"));
+
+        helper.createSession("10", "", helper.createModule("test2"));
+
+        int[] result3 = helper.createSessionReturn("4", "50", helper.createModule("test3"));
+
+        assertEquals(result3[0], result3[1]);
     }
 
     // Non-integer

@@ -1,6 +1,9 @@
 package tempest;
 
+import java.io.Serializable;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.UUID;
@@ -12,9 +15,10 @@ import tempest.interfaces.CSVInterface;
  * study sessions
  *
  */
-public class Module {
-    private final UUID id;
-    private final String name;
+public class Module implements Serializable {
+    private static final long serialVersionUID = 4088145156876883901L;
+    private UUID id;
+    private String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
@@ -96,6 +100,44 @@ public class Module {
      */
     public StudySession[] getStudySessions() {
         return studySessions.toArray(new StudySession[0]);
+    }
+
+    /**
+     * The returned array only contains one session per day - achieved by adding
+     * together the duration of sessions with the same day
+     *
+     * @return An array containing study sessions
+     */
+    public StudySession[] getSessionsPerDay() {
+        ArrayList<StudySession> sessions = new ArrayList<>();
+
+        ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
+
+        ArrayList<StudySession> completed = new ArrayList<>();
+
+        for (StudySession studySession : moduleSessions) {
+            Duration duration = studySession.duration;
+
+            for (StudySession s : moduleSessions) {
+
+                if (StudySession.STORED_DATE_FORMAT.format(s.date)
+                        .equals(StudySession.STORED_DATE_FORMAT.format(studySession.date))
+                        && !completed.contains(studySession) && !s.equals(studySession)) {
+
+                    // Added this sessions time to another session w/ the same date -> don't want to
+                    // look at this again
+                    completed.add(s);
+                    duration = duration.plus(s.duration);
+                }
+            }
+
+            if (!completed.contains(studySession)) {
+                completed.add(studySession);
+                sessions.add(new StudySession(studySession.date, duration));
+            }
+        }
+
+        return sessions.toArray(new StudySession[0]);
     }
 
     /**

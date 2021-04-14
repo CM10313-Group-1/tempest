@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import tempest.State;
 import tempest.Supervisor;
+import tempest.helpers.GUIHelper;
 import tempest.ui.GUIManager;
 
 public class DeleteModulePageTest {
@@ -30,7 +31,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void deleteModule() {
+    public void deletingAModule() {
         helper.createModule("test");
 
         int length = state.getModules().length;
@@ -43,7 +44,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void swapToPrevIfNoModules() {
+    public void deleteLastModule() {
         helper.createModule("test");
 
         homePage.getManageModulesButton().doClick();
@@ -54,7 +55,7 @@ public class DeleteModulePageTest {
     }
 
     @Test
-    public void stayIfMoreModules() {
+    public void remainOnPageIfMoreModules() {
         helper.createModule("test");
         helper.createModule("test2");
 

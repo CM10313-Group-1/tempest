@@ -8,12 +8,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import tempest.Module;
 import tempest.State;
@@ -24,7 +19,7 @@ import tempest.ui.components.ActionButtonPanel;
 import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class AddSessionPage extends Page {
+public class AddSessionPage extends Page implements InputPage {
     private static final long serialVersionUID = 6738660438220363619L;
 
     private final State state;
@@ -160,9 +155,12 @@ public class AddSessionPage extends Page {
 
             int duration = 0;
 
-            for (StudySession s : module.getStudySessions()) {
-                if (s.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now()))
-                    duration += s.duration.toMinutes();
+            for (Module m : state.getModules()) {
+                for (StudySession s : m.getStudySessions()) {
+                    if (s.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now())) {
+                        duration += s.duration.toMinutes();
+                    }
+                }
             }
 
             if (duration + time.toMinutes() > 1440) {
