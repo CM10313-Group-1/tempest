@@ -17,6 +17,7 @@ import tempest.interfaces.CSVInterface;
  */
 public class Module implements Serializable {
     private static final long serialVersionUID = 4088145156876883901L;
+    private Integer weeklyGoal;
     private UUID id;
     private String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
@@ -156,6 +157,15 @@ public class Module implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets the weekly goal of the module.
+     *
+     * @return The weekly goal for the module
+     */
+    public int getWeeklyGoal(){
+        return weeklyGoal;
     }
 
     @Override
