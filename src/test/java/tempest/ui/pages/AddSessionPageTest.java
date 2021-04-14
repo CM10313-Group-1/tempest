@@ -11,7 +11,10 @@ public class AddSessionPageTest extends GUIHelper{
 
     @Test
     public void backButton() {
+        // Creating a module to enable the manage sessions button
+        homePage.getManageModulesButton().doClick();
         createModule("test");
+        manageModules.getBackButton().doClick();
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();

@@ -16,7 +16,19 @@ public class HomePageTest extends GUIHelper{
     }
 
     @Test
-    public void manageSessionsButton() {
+    public void manageSessionsButton_NoModules() {
+        homePage.getManageSessionsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageSessionsButton_Modules() {
+        // Creating a module to enable the manage sessions button
+        homePage.getManageModulesButton().doClick();
+        createModule("test");
+        manageModules.getBackButton().doClick();
+
         homePage.getManageSessionsButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
@@ -31,11 +43,10 @@ public class HomePageTest extends GUIHelper{
 
     @Test
     public void chartViewButton_Sessions() {
-        homePage.getManageSessionsButton().doClick();
-
+        // Creating a session to enable the chart view button
+        homePage.getManageModulesButton().doClick();
         createSession("", "5", createModule("test"));
-
-        manageSessions.getBackButton().doClick();
+        manageModules.getBackButton().doClick();
 
         homePage.getChartViewButton().doClick();
 

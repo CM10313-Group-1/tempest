@@ -22,25 +22,25 @@ public class ScalableCardLayout extends CardLayout {
 
             for (String s : PageNames.getCharts()) {
                 if (name.equals(s)) {
-                    return dynamicGUI(parent, current);
+                    Insets insets = parent.getInsets();
+                    Dimension pref = current.getPreferredSize();
+                    pref.width += insets.left + insets.right;
+                    pref.height += insets.top + insets.bottom;
+                    return pref;
                 }
             }
 
             if (name.equals(PageNames.DELETE_SESSION)) {
-                return dynamicGUI(parent, current);
+                Insets insets = parent.getInsets();
+                Dimension pref = current.getPreferredSize();
+                pref.width = 600;
+                pref.height += insets.top + insets.bottom;
+                return pref;
             }
         }
 
         // The default frame size for panels
         return new Dimension(500, 150);
-    }
-
-    private Dimension dynamicGUI(Container parent, Component current) {
-        Insets insets = parent.getInsets();
-        Dimension pref = current.getPreferredSize();
-        pref.width += insets.left + insets.right;
-        pref.height += insets.top + insets.bottom;
-        return pref;
     }
 
     public Component findCurrentComponent(Container parent) {
