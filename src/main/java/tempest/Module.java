@@ -1,8 +1,13 @@
 package tempest;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.UUID;
 
 import tempest.interfaces.CSVInterface;
 
@@ -11,9 +16,10 @@ import tempest.interfaces.CSVInterface;
  * study sessions
  *
  */
-public class Module {
-    private final UUID id;
-    private final String name;
+public class Module implements Serializable {
+    private static final long serialVersionUID = 4088145156876883901L;
+    private UUID id;
+    private String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
@@ -53,8 +59,7 @@ public class Module {
     }
 
     /**
-     * Removes the passed in session from the studySessions list
-     * for this module
+     * Removes the passed in session from the studySessions list for this module
      *
      * @param session The StudySession to be removed
      */
@@ -99,8 +104,8 @@ public class Module {
     }
 
     /**
-     * The returned array only contains one session per day - achieved by adding together the
-     * duration of sessions with the same day
+     * The returned array only contains one session per day - achieved by adding
+     * together the duration of sessions with the same day
      *
      * @return An array containing study sessions
      */
@@ -120,12 +125,11 @@ public class Module {
             Duration duration = studySession.duration;
 
             for (StudySession s : moduleSessions) {
-                if (dateFormat.format(s.date)
-                        .equals(dateFormat.format(studySession.date))
-                        && !completed.contains(studySession)
-                        && !s.equals(studySession)) {
+                if (dateFormat.format(s.date).equals(dateFormat.format(studySession.date))
+                        && !completed.contains(studySession) && !s.equals(studySession)) {
 
-                    // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                    // Added this sessions time to another session w/ the same date -> don't want to
+                    // look at this again
                     completed.add(s);
                     duration = duration.plus(s.duration);
                 }
