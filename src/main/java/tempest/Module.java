@@ -39,6 +39,20 @@ public class Module implements Serializable {
     }
 
     /**
+     * This method sets the weekly goal of the module.
+     *
+     * @param minutes The length of the weekly goal entered
+     */
+    public void setGoal(int minutes){
+        if(minutes == 0){
+            weeklyGoal = null;
+        }
+        else{
+            weeklyGoal = minutes;
+        }
+    }
+
+    /**
      * This method adds a study session to the sessions list of the module. It
      * creates a StudySession using the date and duration arguments.
      * 
