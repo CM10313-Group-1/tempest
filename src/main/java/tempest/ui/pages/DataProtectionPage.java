@@ -9,6 +9,7 @@ import javax.swing.*;
 public class DataProtectionPage extends Page {
     private BackButton backButton;
     static String text;
+
     public DataProtectionPage(State state, GUIManager manager) {
         super(manager);
         setupUI();
@@ -18,6 +19,7 @@ public class DataProtectionPage extends Page {
     public String getName() {
         return PageNames.DATA_PROTECTION;
     }
+
     private void setupUI(){
         JPanel backPanel = new JPanel();
         JPanel textPanel = new JPanel();
@@ -36,6 +38,7 @@ public class DataProtectionPage extends Page {
         this.add(textPanel);
         this.add(backPanel);
     }
+
     public BackButton getBackButton() {
         return backButton;
     }
