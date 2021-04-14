@@ -59,6 +59,8 @@ public class HomePage extends Page {
         }
 
         chartsLink.setEnabled(false);
+
+        goalEntryLink.setEnabled(modules.length != 0);
     }
 
     public LinkButton getManageModulesButton() {

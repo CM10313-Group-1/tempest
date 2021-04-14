@@ -92,7 +92,7 @@ public class GoalEntryPage extends Page implements InputPage{
     }
 
     private void handleSettingGoal(){
-        if (dropDown.getItemCount() < 1) { // No modules created, so can't add a session
+        if (dropDown.getItemCount() < 1) { // No modules created, so can't add a goal
             return;
         }
 
