@@ -2,10 +2,12 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import tempest.Module;
 import tempest.State;
+import tempest.StudySession;
 import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
 import tempest.ui.GUIManager;
@@ -97,5 +99,31 @@ public class DeleteSessionPageTest {
 
         deleteSession.setDropDown(test2.getName());
         assertEquals(test2.getStudySessions().length, deleteSession.getRowCount());
+    }
+
+    @Test
+    public void allCheckBox() {
+        Module test = helper.createModule("test");
+
+        helper.createSession("", "25", test);
+        helper.createSession("2", "13", test);
+
+        Module test2 = helper.createModule("test2");
+
+        helper.createSession("1", "30", test2);
+        helper.createSession("5", "", test2);
+        helper.createSession("", "5", test2);
+
+        manageSessions.getDelSessionsButton().doClick();
+
+        deleteSession.getCheckBox().doClick();
+
+        int totalSessions = 0;
+
+        for (Module m : state.getModules()) {
+            totalSessions += m.getStudySessions().length;
+        }
+
+        assertEquals(totalSessions, deleteSession.getRowCount());
     }
 }

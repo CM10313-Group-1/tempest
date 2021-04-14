@@ -233,7 +233,7 @@ public class DeleteSessionPage extends Page {
         setModel(new String[] { "Module", "Date", "Duration" });
 
         for (Module m : state.getModules()) {
-            for (StudySession s : m.getSessionsPerDay()) {
+            for (StudySession s : m.getStudySessions()) {
                 String date = s.date.toString();
                 String duration = s.duration.toMinutes() + " minutes";
 
@@ -291,6 +291,10 @@ public class DeleteSessionPage extends Page {
 
     public JButton getDeleteButton() {
         return deleteButton;
+    }
+
+    public JCheckBox getCheckBox() {
+        return allCheckBox;
     }
 
     public int getRowCount() {
