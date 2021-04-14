@@ -64,6 +64,6 @@ public class HomePageTest {
     public void DataProtectionButton() {
         homePage.getDataProtectionButton().doClick();
 
-    assertEquals(PageNames.DATA_PROTECTION, manager.getCurrentCard());
+        assertEquals(PageNames.DATA_PROTECTION, manager.getCurrentCard());
     }
 }
