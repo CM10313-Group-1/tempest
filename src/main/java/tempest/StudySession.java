@@ -1,12 +1,14 @@
 package tempest;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
 import tempest.interfaces.CSVInterface;
 
-public class StudySession {
+public class StudySession implements Serializable {
+	private static final long serialVersionUID = 5199659276859098248L;
 	public static final SimpleDateFormat STORED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public Date date;
 	public Duration duration;
