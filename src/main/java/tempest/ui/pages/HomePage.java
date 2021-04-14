@@ -78,4 +78,8 @@ public class HomePage extends Page {
     public LinkButton getChartViewButton() {
         return chartsLink;
     }
+
+    public LinkButton getDataProtectionButton() {
+        return DataLink;
+    }
 }

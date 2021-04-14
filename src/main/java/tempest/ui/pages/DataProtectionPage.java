@@ -37,4 +37,7 @@ public class DataProtectionPage extends Page {
         this.add(textPanel);
         this.add(backPanel);
     }
+    public BackButton getBackButton() {
+        return backButton;
+    }
 }
