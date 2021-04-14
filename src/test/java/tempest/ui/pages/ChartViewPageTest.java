@@ -1,22 +1,19 @@
 package tempest.ui.pages;
 
 import org.junit.Test;
+import tempest.Module;
 import tempest.helpers.GUIHelper;
 
 import static org.junit.Assert.assertEquals;
 
 public class ChartViewPageTest extends GUIHelper{
 
-    private void createSession() {
-        homePage.getManageSessionsButton().doClick();
-        createSession("", "5", createModule("test"));
-        manageSessions.getBackButton().doClick();
-    }
-
     @Test
     public void backButton() {
         // Creating a session so the chart view button isn't greyed out
-        createSession();
+        homePage.getManageSessionsButton().doClick();
+        createSession("", "5", createModule("test"));
+        manageSessions.getBackButton().doClick();
 
         // Going to the chart view page and then pressing the back button
         homePage.getChartViewButton().doClick();
