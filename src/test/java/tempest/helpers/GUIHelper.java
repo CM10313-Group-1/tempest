@@ -49,6 +49,15 @@ public class GUIHelper {
         return testModule;
     }
 
+    protected Module createModuleChangePage(String moduleName) {
+        // Creating a module to enable the manage sessions button
+        homePage.getManageModulesButton().doClick();
+        Module testModule = createModule(moduleName);
+        manageModules.getBackButton().doClick();
+
+        return testModule;
+    }
+
     protected void createSession(String hours, String mins, Module module) {
         addSession.setDropDown(module.getName());
 

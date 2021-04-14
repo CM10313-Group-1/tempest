@@ -12,9 +12,7 @@ public class ManageSessionsPageTest extends GUIHelper {
     @Test
     public void backButton() {
         // Creating a module to enable the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getBackButton().doClick();
@@ -25,9 +23,7 @@ public class ManageSessionsPageTest extends GUIHelper {
     @Test
     public void addSessionButton() {
         // Creating a module to enable the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
@@ -39,9 +35,7 @@ public class ManageSessionsPageTest extends GUIHelper {
     @Test
     public void deleteSessionButton_NoSessions() {
         // Creating a module to enable the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();

@@ -25,9 +25,7 @@ public class HomePageTest extends GUIHelper{
     @Test
     public void manageSessionsButton_Modules() {
         // Creating a module to enable the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
 

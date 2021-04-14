@@ -50,9 +50,7 @@ public class DeleteSessionPageTest extends GUIHelper{
     @Test
     public void remainOnPageIfMoreSessions() {
         // Creating a module - enabling the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        Module test = createModule("test");
-        manageModules.getBackButton().doClick();
+        Module test = createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
 
