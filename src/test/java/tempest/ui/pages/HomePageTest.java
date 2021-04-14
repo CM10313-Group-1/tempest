@@ -60,4 +60,22 @@ public class HomePageTest {
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());
     }
+
+    @Test
+    public void manageGoalsButtonNoModules(){
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageGoalsButtonModules(){
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
+
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.GOAL_ENTRY, manager.getCurrentCard());
+    }
 }

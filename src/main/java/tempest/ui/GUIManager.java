@@ -10,20 +10,11 @@ import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
+import tempest.ui.pages.*;
 import tempest.ui.pages.charts.BarChart;
 import tempest.ui.pages.charts.Chart;
 import tempest.ui.pages.charts.LineChart;
 import tempest.ui.pages.charts.PieChart;
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.AddSessionPage;
-import tempest.ui.pages.ChartViewPage;
-import tempest.ui.pages.DeleteModulePage;
-import tempest.ui.pages.DeleteSessionPage;
-import tempest.ui.pages.HomePage;
-import tempest.ui.pages.ManageModulesPage;
-import tempest.ui.pages.ManageSessionsPage;
-import tempest.ui.pages.Page;
-import tempest.ui.pages.PageNames;
 
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
@@ -42,6 +33,7 @@ public class GUIManager extends JFrame {
     private final ManageSessionsPage manageSessions;
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
+    private final GoalEntryPage goalEntry;
 
     private final ChartViewPage chartView;
 
@@ -68,7 +60,8 @@ public class GUIManager extends JFrame {
                 chartView = new ChartViewPage(this),
                 barChart = new BarChart(state, this),
                 lineChart = new LineChart(state, this),
-                pieChart = new PieChart(state, this)
+                pieChart = new PieChart(state, this),
+                goalEntry = new GoalEntryPage(state, this)
 
                 // All new pages should be added here.
         };
