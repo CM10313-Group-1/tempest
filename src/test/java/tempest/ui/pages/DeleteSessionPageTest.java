@@ -58,9 +58,9 @@ public class DeleteSessionPageTest extends GUIHelper{
 
         // Creating two sessions (enabling the delete session button)
         manageSessions.getAddSessionsButton().doClick();
-        helper.createSession("4", "25", test);
-        helper.createSession("", "15", test);
-        addSessionPage.getActionButtons().getBackButtonInstance().doClick();
+        createSession("4", "25", test);
+        createSession("", "15", test);
+        addSession.getActionButtons().getBackButton().doClick();
 
         // Deleting one of the sessions
         deleteSession(1);
@@ -92,16 +92,16 @@ public class DeleteSessionPageTest extends GUIHelper{
 
     @Test
     public void allCheckBox() {
-        Module test = helper.createModule("test");
+        Module test = createModule("test");
 
-        helper.createSession("", "25", test);
-        helper.createSession("2", "13", test);
+        createSession("", "25", test);
+        createSession("2", "13", test);
 
-        Module test2 = helper.createModule("test2");
+        Module test2 = createModule("test2");
 
-        helper.createSession("1", "30", test2);
-        helper.createSession("5", "", test2);
-        helper.createSession("", "5", test2);
+        createSession("1", "30", test2);
+        createSession("5", "", test2);
+        createSession("", "5", test2);
 
         manageSessions.getDelSessionsButton().doClick();
         deleteSession.getCheckBox().doClick();
@@ -137,14 +137,14 @@ public class DeleteSessionPageTest extends GUIHelper{
     private void createModuleAndSession() {
         // Creating a module - enabling the manage sessions button
         homePage.getManageModulesButton().doClick();
-        Module module = helper.createModule("test");
+        Module module = createModule("test");
         manageModules.getBackButton().doClick();
 
         homePage.getManageSessionsButton().doClick();
 
         // Creating a session - enabling the delete session button
         manageSessions.getAddSessionsButton().doClick();
-        helper.createSession("1", "", module);
-        addSessionPage.getActionButtons().getBackButtonInstance().doClick();
+        createSession("1", "", module);
+        addSession.getActionButtons().getBackButton().doClick();
     }
 }
