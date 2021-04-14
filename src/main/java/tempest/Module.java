@@ -1,5 +1,6 @@
 package tempest;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
@@ -11,10 +12,11 @@ import tempest.interfaces.CSVInterface;
  * study sessions
  *
  */
-public class Module {
+public class Module implements Serializable {
+    private static final long serialVersionUID = 4088145156876883901L;
     private Integer weeklyGoal;
-    private final UUID id;
-    private final String name;
+    private UUID id;
+    private String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
 
     public Module(String name) {
@@ -54,22 +56,7 @@ public class Module {
     }
 
     /**
-     * This method sets the weekly goal of the module.
-     *
-     * @param minutes The length of the weekly goal entered
-     */
-    public void setGoal(int minutes){
-        if(minutes == 0){
-            weeklyGoal = null;
-        }
-        else{
-            weeklyGoal = minutes;
-        }
-    }
-
-    /**
-     * Removes the passed in session from the studySessions list
-     * for this module
+     * Removes the passed in session from the studySessions list for this module
      *
      * @param session The StudySession to be removed
      */
@@ -114,8 +101,8 @@ public class Module {
     }
 
     /**
-     * The returned array only contains one session per day - achieved by adding together the
-     * duration of sessions with the same day
+     * The returned array only contains one session per day - achieved by adding
+     * together the duration of sessions with the same day
      *
      * @return An array containing study sessions
      */
@@ -133,10 +120,10 @@ public class Module {
 
                 if (StudySession.STORED_DATE_FORMAT.format(s.date)
                         .equals(StudySession.STORED_DATE_FORMAT.format(studySession.date))
-                        && !completed.contains(studySession)
-                        && !s.equals(studySession)) {
+                        && !completed.contains(studySession) && !s.equals(studySession)) {
 
-                    // Added this sessions time to another session w/ the same date -> don't want to look at this again
+                    // Added this sessions time to another session w/ the same date -> don't want to
+                    // look at this again
                     completed.add(s);
                     duration = duration.plus(s.duration);
                 }
@@ -170,12 +157,19 @@ public class Module {
     }
 
     /**
-     * Gets the weekly goal of the module.
+     * Returns the weekly goal for the module.
      *
      * @return The weekly goal for the module
      */
-    public int getWeeklyGoal(){
-        return weeklyGoal;
+    public int getWeeklyGoal(){ return weeklyGoal; }
+
+    /**
+     * Sets the weekly goal.
+     *
+     * @param mins The duration in minutes of the entered weekly goal.
+     */
+    public void setGoal(int mins){
+        weeklyGoal = mins;
     }
 
     @Override
