@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.time.Duration;
 import java.util.Objects;
 
-public class GoalEntryPage extends Page implements InputPage{
+public class GoalEntryPage extends Page implements InputPage {
 
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
@@ -26,7 +26,7 @@ public class GoalEntryPage extends Page implements InputPage{
     private JTextField minutesInput;
     private JButton enterButton;
 
-    public GoalEntryPage(State state, GUIManager guiManager){
+    public GoalEntryPage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
 
@@ -86,13 +86,13 @@ public class GoalEntryPage extends Page implements InputPage{
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == enterButton) {
+        if(source == enterButton) {
             handleSettingGoal();
         }
     }
 
-    private void handleSettingGoal(){
-        if (dropDown.getItemCount() < 1) { // No modules created, so can't add a goal
+    private void handleSettingGoal() {
+        if(dropDown.getItemCount() < 1) { // No modules created, so can't add a goal
             return;
         }
 
@@ -108,58 +108,63 @@ public class GoalEntryPage extends Page implements InputPage{
         minutes = minutes.strip();
 
         try {
-            if (hours.equals("")) {
+            if(hours.equals("")) {
                 hours = Integer.toString(0);
 
-            } else if (minutes.equals("")) {
+            }
+            else if(minutes.equals("")) {
                 minutes = Integer.toString(0);
             }
 
             hoursInt = Integer.parseInt(hours);
             minutesInt = Integer.parseInt(minutes);
 
-            if (hoursInt < 0 || minutesInt < 0) {
+            if(hoursInt < 0 || minutesInt < 0) {
                 throw new Exception("Input must be greater than 0");
 
-            } else if (hoursInt == 0 && minutesInt == 0) {
+            }
+            else if(hoursInt == 0 && minutesInt == 0) {
                 throw new Exception("A goal must be >= 1 minutes");
 
-            } else if (hoursInt > 0 && minutesInt > 59) {
+            }
+            else if(hoursInt > 0 && minutesInt > 59) {
                 throw new Exception("If an hour is entered minutes should be < 60");
             }
 
             Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
             // Checks the session entered is under 24 hours
-            if (time.toMinutes() > 7 * 24 * 60) {
+            if(time.toMinutes() > 7 * 24 * 60) {
                 throw new Exception("A goal can't be longer than a week");
             }
 
             Module module = null;
 
-            for (Module m : state.getModules()) {
-                if (moduleName.equals(m.getName())) {
+            for(Module m : state.getModules()) {
+                if(moduleName.equals(m.getName())) {
                     module = m;
                     break;
                 }
             }
 
-            if (module == null) {
+            if(module == null) {
                 throw new Exception("Unable to find this module");
             }
 
             // Checking if study session in one day add up to be > 24hrs
 
-            module.setGoal((int)time.toMinutes());
+            module.setGoal((int) time.toMinutes());
 
             System.out.println("Goal successfully added");
 
             clearInput();
 
-        } catch (NumberFormatException e) {
+        }
+        catch(NumberFormatException e) {
             errorMessage(new NumberFormatException("Please enter positive integers"));
 
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             errorMessage(e);
         }
     }

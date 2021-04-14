@@ -16,19 +16,21 @@ public class GoalEntryPageTest {
     State state = new State();
     GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
-    GoalEntryPage goalEntryPage = new GoalEntryPage(state, manager);
+    GoalEntryPage goalEntryPage = (GoalEntryPage) manager.getPage(GoalEntryPage.class);
+    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
+    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 
     ActionButtonPanel actionButtonPanel = goalEntryPage.getActionButtons();
 
     GUIHelper helper = new GUIHelper(manager, state);
 
     @Test
-    public void validGoalEntry(){
+    public void validGoalEntry() {
         Random random = new Random();
 
         Module testModule = helper.createModule("test");
 
-        int hours = random.nextInt(24*7);
+        int hours = random.nextInt(24 * 7);
         int mins = random.nextInt(60);
 
         goalEntryPage.setDropDown("test");
@@ -38,5 +40,18 @@ public class GoalEntryPageTest {
         goalEntryPage.getEnterButton().doClick();
 
         assertEquals(hours * 60 + mins, testModule.getWeeklyGoal());
+    }
+
+    @Test
+    public void backButton(){
+        homePage.getManageModulesButton().doClick();
+        helper.createModule("test");
+        manageModules.getBackButton().doClick();
+
+        homePage.getEnterGoalsButton().doClick();
+
+        actionButtonPanel.getBackButtonInstance().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
     }
 }
