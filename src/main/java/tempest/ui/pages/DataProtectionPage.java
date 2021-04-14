@@ -21,14 +21,13 @@ public class DataProtectionPage extends Page {
     private void setupUI(){
         JPanel backPanel = new JPanel();
         JPanel textPanel = new JPanel();
-        text = "- All data collected is stored in a CSV file called store.csv\n" +
-                "- Any data inputted by the user from within the program will be stored within this file\n" +
-                "- The data is local to each user therefore can only be visible/accessed by the user\n" +
-                "- Altering the contents of this file may affect the program and cause errors ";
-        String formatted = text.replace("\n", "<br>");
-        formatted = "<html><font size='3'>" + formatted + "</font></html>";
+        text = "<ul><li>All data collected is stored in a CSV file called store.csv\n" +
+                "<li> Any data inputted by the user from within the program will be stored within this file\n" +
+                "<li>The data is local to each user therefore can only be visible/accessed by the user\n" +
+                "<li>Altering the contents of this file may affect the program and cause errors <ul>";
+        text = "<html><font size='2'>" + text + "</font></html>";
         JLabel textLabel = new JLabel();
-        textLabel.setText(formatted);
+        textLabel.setText(text);
         backButton = new BackButton(manager);
         backPanel.add(backButton);
         textPanel.add(textLabel);
