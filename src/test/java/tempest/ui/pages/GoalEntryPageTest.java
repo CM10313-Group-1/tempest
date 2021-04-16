@@ -2,11 +2,14 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
+import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
 import tempest.ui.components.ActionButtonPanel;
 
@@ -23,6 +26,12 @@ public class GoalEntryPageTest {
     ActionButtonPanel actionButtonPanel = goalEntryPage.getActionButtons();
 
     GUIHelper helper = new GUIHelper(manager, state);
+
+    @BeforeClass
+    public static void turnOffErrorMessages() {
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setMessagesShown(false);
+    }
 
     @Test
     public void validGoalEntry() {
@@ -53,5 +62,31 @@ public class GoalEntryPageTest {
         actionButtonPanel.getBackButtonInstance().doClick();
 
         assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void hourGoalOverAWeek(){
+        Module testModule = helper.createModule("test");
+
+        goalEntryPage.setDropDown("test");
+        goalEntryPage.setHours("2000");
+        goalEntryPage.setMins("0");
+
+        goalEntryPage.getEnterButton().doClick();
+
+        assertEquals(0, testModule.getWeeklyGoal());
+    }
+
+    @Test
+    public void minGoalOverAWeek(){
+        Module testModule = helper.createModule("test");
+
+        goalEntryPage.setDropDown("test");
+        goalEntryPage.setHours("0");
+        goalEntryPage.setMins("100000");
+
+        goalEntryPage.getEnterButton().doClick();
+
+        assertEquals(0, testModule.getWeeklyGoal());
     }
 }

@@ -62,14 +62,14 @@ public class HomePageTest {
     }
 
     @Test
-    public void manageGoalsButtonNoModules(){
+    public void manageGoalsButtonNo_Modules(){
         homePage.getEnterGoalsButton().doClick();
 
         assertEquals(PageNames.HOME, manager.getCurrentCard());
     }
 
     @Test
-    public void manageGoalsButtonModules(){
+    public void manageGoalsButton_Modules(){
         homePage.getManageModulesButton().doClick();
         helper.createModule("test");
         manageModules.getBackButton().doClick();
