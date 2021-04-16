@@ -4,24 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class DeleteModulePageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class DeleteModulePageTest extends GUIHelper{
 
     @Test
     public void backButton() {
-        helper.createModule("test");
+        createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
@@ -32,7 +21,7 @@ public class DeleteModulePageTest {
 
     @Test
     public void deletingAModule() {
-        helper.createModule("test");
+        createModule("test");
 
         int length = state.getModules().length;
 
@@ -45,7 +34,7 @@ public class DeleteModulePageTest {
 
     @Test
     public void deleteLastModule() {
-        helper.createModule("test");
+        createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
@@ -56,8 +45,8 @@ public class DeleteModulePageTest {
 
     @Test
     public void remainOnPageIfMoreModules() {
-        helper.createModule("test");
-        helper.createModule("test2");
+        createModule("test");
+        createModule("test2");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();
