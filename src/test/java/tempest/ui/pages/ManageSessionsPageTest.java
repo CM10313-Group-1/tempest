@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.Module;
 import tempest.helpers.GUIHelper;
 
 public class ManageSessionsPageTest extends GUIHelper {
