@@ -113,9 +113,4 @@ public class TimeBarChart extends Chart {
     public BackButton getBackButton() {
         return backButton;
     }
-
-    @Override
-    public void setModuleColors(Module[] modules) {
-        return;
-    }
 }
