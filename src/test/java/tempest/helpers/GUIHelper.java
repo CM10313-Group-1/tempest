@@ -14,6 +14,8 @@ public class GUIHelper {
 
     protected HomePage homePage = (HomePage) manager.getPage(HomePage.class);
 
+    protected GoalEntryPage goalEntry = (GoalEntryPage) manager.getPage(GoalEntryPage.class);
+
     protected ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
     protected ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
 

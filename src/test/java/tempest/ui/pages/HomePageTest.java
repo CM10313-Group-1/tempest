@@ -61,7 +61,7 @@ public class HomePageTest extends GUIHelper{
     @Test
     public void manageGoalsButton_Modules(){
         homePage.getManageModulesButton().doClick();
-        helper.createModule("test");
+        createModule("test");
         manageModules.getBackButton().doClick();
 
         homePage.getEnterGoalsButton().doClick();
