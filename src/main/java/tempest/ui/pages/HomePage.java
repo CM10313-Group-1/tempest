@@ -1,5 +1,6 @@
 package tempest.ui.pages;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
@@ -25,14 +26,11 @@ public class HomePage extends Page {
     }
 
     private void addNavButtons() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(manageModulesLink);
-        buttonPanel.add(manageSessionsLink);
-        buttonPanel.add(chartsLink);
-        buttonPanel.add(goalEntryLink);
-        buttonPanel.add(DataLink);
-
-        this.add(buttonPanel);
+        this.add(manageModulesLink);
+        this.add(manageSessionsLink);
+        this.add(chartsLink);
+        this.add(goalEntryLink);
+        this.add(DataLink);
     }
 
     @Override
