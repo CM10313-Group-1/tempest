@@ -104,6 +104,7 @@ public class LineChart extends Chart {
         return backButton;
     }
 
+    @Override
     public void setModuleColors(Module[] modules) {
         for (Module module : modules) {
             plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());

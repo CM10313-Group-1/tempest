@@ -91,6 +91,7 @@ public class PieChart extends Chart {
         return backButton;
     }
 
+    @Override
     public void setModuleColors(Module[] modules) {
         for (Module module : modules) {
             plot.setSectionPaint(module.getName(), module.getColor());

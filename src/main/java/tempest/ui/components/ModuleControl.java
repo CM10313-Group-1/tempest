@@ -7,13 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import tempest.Module;
 
-public class ModuleControl extends JPanel implements ActionListener {
+public class ModuleControl implements ActionListener {
   private final ChartControls parent;
-  private static final long serialVersionUID = 8860049310284130378L;
   private Module module;
   public JLabel label;
   public JButton colorPicker;
@@ -21,12 +19,8 @@ public class ModuleControl extends JPanel implements ActionListener {
   public ModuleControl(ChartControls chartControls, Module module) {
     this.parent = chartControls;
     this.module = module;
-    setupUI();
-  }
-
-  private void setupUI() {
-    label = new JLabel(module.getName());
-    colorPicker = new JButton();
+    this.label = new JLabel(module.getName());
+    this.colorPicker = new JButton();
     colorPicker.addActionListener(this);
     colorPicker.setBackground(module.getColor());
   }

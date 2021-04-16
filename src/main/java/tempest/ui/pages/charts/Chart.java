@@ -1,5 +1,6 @@
 package tempest.ui.pages.charts;
 
+import tempest.Module;
 import tempest.State;
 import tempest.ui.GUIManager;
 import tempest.ui.pages.Page;
@@ -23,4 +24,11 @@ public abstract class Chart extends Page {
      * @param state The current state of recorded data.
      */
     public abstract void updateChart(State state);
+
+    /**
+     * Updates the colors used to display each module's data on the chart.
+     * 
+     * @param modules The {@link Module} modules to update.
+     */
+    public abstract void setModuleColors(Module[] modules);
 }
