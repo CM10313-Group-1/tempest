@@ -43,6 +43,13 @@ public class PieChart extends Chart {
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
         setModuleColors(state.getModules());
+        // When hovering over sections hours are displayed
+        plot.setToolTipGenerator((pieDataset, comparable) -> {
+            int sectionMins = pieDataset.getValue(comparable).intValue();
+
+            return String.format("%s: %d hrs %02d mins", comparable.toString(), sectionMins / 60, sectionMins % 60);
+        });
+
         return pieChart;
     }
 

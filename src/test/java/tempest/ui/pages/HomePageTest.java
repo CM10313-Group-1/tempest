@@ -4,18 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class HomePageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-    GUIHelper helper = new GUIHelper(manager, state);
+public class HomePageTest extends GUIHelper{
 
     @Test
     public void manageModulesButton() {
@@ -25,22 +16,22 @@ public class HomePageTest {
     }
 
     @Test
-    public void manageSessionsButton() {
+    public void manageSessionsButton_NoModules() {
+        homePage.getManageSessionsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageSessionsButton_Modules() {
         // Creating a module to enable the manage sessions button
-        homePage.getManageModulesButton().doClick();
-        helper.createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getManageSessionsButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
-    @Test
-    public void manageSessionsButton_NoModule() {
-        homePage.getManageSessionsButton().doClick();
 
-        assertEquals(PageNames.HOME, manager.getCurrentCard());
-    }
     @Test
     public void chartViewButton_NoSessions() {
         homePage.getChartViewButton().doClick();
@@ -52,10 +43,9 @@ public class HomePageTest {
     public void chartViewButton_Sessions() {
         // Creating a session to enable the chart view button
         homePage.getManageModulesButton().doClick();
-        helper.createSession("", "5", helper.createModule("test"));
+        createSession("", "5", createModule("test"));
         manageModules.getBackButton().doClick();
 
-        homePage.getManageSessionsButton().doClick();
         homePage.getChartViewButton().doClick();
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());

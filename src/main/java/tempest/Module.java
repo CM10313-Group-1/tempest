@@ -2,6 +2,7 @@ package tempest;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,15 +132,18 @@ public class Module implements Serializable {
 
         ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
 
+        // Holds study sessions that have been dealt with so they aren't dealt with twice
         ArrayList<StudySession> completed = new ArrayList<>();
 
+        // Used to compare just the day of sessions
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Comparing all sessions to each other - adding durations of sessions on the same day
         for (StudySession studySession : moduleSessions) {
             Duration duration = studySession.duration;
 
             for (StudySession s : moduleSessions) {
-
-                if (StudySession.STORED_DATE_FORMAT.format(s.date)
-                        .equals(StudySession.STORED_DATE_FORMAT.format(studySession.date))
+                if (dateFormat.format(s.date).equals(dateFormat.format(studySession.date))
                         && !completed.contains(studySession) && !s.equals(studySession)) {
 
                     // Added this sessions time to another session w/ the same date -> don't want to
@@ -151,6 +155,8 @@ public class Module implements Serializable {
 
             if (!completed.contains(studySession)) {
                 completed.add(studySession);
+
+                // Creating a new session holding the combined duration of sessions for a day
                 sessions.add(new StudySession(studySession.date, duration));
             }
         }

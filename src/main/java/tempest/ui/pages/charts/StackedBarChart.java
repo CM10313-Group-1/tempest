@@ -22,14 +22,14 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
-public class BarChart extends Chart {
+public class StackedBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
 
     private BackButton backButton;
     private XYPlot plot;
     private TimeTableXYDataset dataset;
 
-    public BarChart(State state, GUIManager manager) {
+    public StackedBarChart(State state, GUIManager manager) {
         super(state, manager);
         this.add(new JLabel(getName()));
 
@@ -51,7 +51,7 @@ public class BarChart extends Chart {
     }
 
     /**
-     * Creates a ChartPanel containing the Bar Chart
+     * Creates a ChartPanel containing the Stacked Bar Chart
      *
      * @return ChartPanel
      */
@@ -107,7 +107,7 @@ public class BarChart extends Chart {
 
     @Override
     public String getName() {
-        return PageNames.BAR;
+        return PageNames.STACKED_BAR;
     }
 
     public BackButton getBackButton() {

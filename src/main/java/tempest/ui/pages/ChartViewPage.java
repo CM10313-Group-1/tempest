@@ -16,9 +16,10 @@ public class ChartViewPage extends Page {
 
     private BackButton backButton;
 
-    private final LinkButton barChartLink = new LinkButton("Bar Chart", PageNames.BAR, this);
+    private final LinkButton stackedBarChartLink = new LinkButton("Stacked Bar Chart", PageNames.STACKED_BAR, this);
     private final LinkButton lineChartLink = new LinkButton("Line Chart", PageNames.LINE, this);
     private final LinkButton pieChartLink = new LinkButton("Pie Chart", PageNames.PIE, this);
+    private final LinkButton timeBarChartLink = new LinkButton("% Time Studied per Hour", PageNames.TIME_BAR, this);
 
     public ChartViewPage(GUIManager guiManager) {
         super(guiManager);
@@ -35,9 +36,10 @@ public class ChartViewPage extends Page {
         JPanel chartButtons = new JPanel();
         JPanel backPanel = new JPanel();
 
-        chartButtons.add(barChartLink);
+        chartButtons.add(stackedBarChartLink);
         chartButtons.add(lineChartLink);
         chartButtons.add(pieChartLink);
+        chartButtons.add(timeBarChartLink);
 
         this.add(chartButtons);
 
@@ -64,6 +66,22 @@ public class ChartViewPage extends Page {
 
     public BackButton getBackButton() {
         return backButton;
+    }
+
+    public LinkButton getStackedBarChartButton() {
+        return stackedBarChartLink;
+    }
+
+    public LinkButton getLineChartButton() {
+        return lineChartLink;
+    }
+
+    public LinkButton getPieChartButton() {
+        return pieChartLink;
+    }
+
+    public LinkButton getTimeBarChartButton() {
+        return timeBarChartLink;
     }
 
 }
