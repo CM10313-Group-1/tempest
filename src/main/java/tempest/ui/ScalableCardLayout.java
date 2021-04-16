@@ -30,7 +30,7 @@ public class ScalableCardLayout extends CardLayout {
                 }
             }
 
-            if (name.equals(PageNames.DELETE_SESSION)) {
+            if (name.equals(PageNames.DELETE_SESSION) || name.equals(PageNames.DATA_PROTECTION)) {
                 Insets insets = parent.getInsets();
                 Dimension pref = current.getPreferredSize();
                 pref.width = 600;
