@@ -24,8 +24,8 @@ public class DataProtectionPage extends Page {
         JPanel backPanel = new JPanel();
         JPanel textPanel = new JPanel();
 
-        text = "<ul><li>All data collected (not including goals) is stored in a CSV file called store.csv</li>"+
-
+        text = "<ul><h3><center>Data Protection Information</center></h3>" +
+                "<li>All data collected (not including goals) is stored in a CSV file called store.csv</li>"+
                 "<li> Any data inputted by the user from within the program will be stored within this file</li>" +
                 "<li>The data is local to each user therefore can only be visible/accessed by the user</li>" +
                 "<li>Altering the contents of the csv file may affect the program and cause errors</li>" +
