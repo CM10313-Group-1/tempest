@@ -43,6 +43,8 @@ public class PieChart extends Chart {
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
         plot.setLabelGenerator(labelGenerator);
 
+        plot.setShadowPaint(null); // Removing the shadow
+
         // When hovering over sections hours are displayed
         plot.setToolTipGenerator((pieDataset, comparable) -> {
             int sectionMins = pieDataset.getValue(comparable).intValue();
