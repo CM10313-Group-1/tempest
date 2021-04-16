@@ -68,4 +68,10 @@ public class HomePageTest extends GUIHelper{
 
         assertEquals(PageNames.GOAL_ENTRY, manager.getCurrentCard());
     }
+
+    @Test
+    public void DataProtectionButton() {
+        homePage.getDataProtectionButton().doClick();
+        assertEquals(PageNames.DATA_PROTECTION, manager.getCurrentCard());
+    }
 }

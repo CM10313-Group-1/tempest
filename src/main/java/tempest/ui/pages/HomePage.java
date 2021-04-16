@@ -16,6 +16,7 @@ public class HomePage extends Page {
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
     private final LinkButton goalEntryLink = new LinkButton("Enter Goals", PageNames.GOAL_ENTRY, this);
+    private final LinkButton DataLink = new LinkButton("Data Protection Information", PageNames.DATA_PROTECTION, this);
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
@@ -29,6 +30,7 @@ public class HomePage extends Page {
         buttonPanel.add(manageSessionsLink);
         buttonPanel.add(chartsLink);
         buttonPanel.add(goalEntryLink);
+        buttonPanel.add(DataLink);
 
         this.add(buttonPanel);
     }
@@ -84,5 +86,9 @@ public class HomePage extends Page {
 
     public LinkButton getEnterGoalsButton() {
         return goalEntryLink;
+    }
+
+    public LinkButton getDataProtectionButton() {
+        return DataLink;
     }
 }

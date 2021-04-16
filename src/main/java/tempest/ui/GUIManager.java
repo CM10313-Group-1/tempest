@@ -30,7 +30,6 @@ public class GUIManager extends JFrame {
     private final ManageSessionsPage manageSessions;
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
-
     private final ChartViewPage chartView;
 
     private LayoutManager layout;
@@ -58,8 +57,9 @@ public class GUIManager extends JFrame {
                 stackedBarChart = new StackedBarChart(state, this),
                 lineChart = new LineChart(state, this),
                 pieChart = new PieChart(state, this),
+                timeBarChart = new TimeBarChart(state, this),
                 new GoalEntryPage(state, this),
-                timeBarChart = new TimeBarChart(state, this)
+                new DataProtectionPage(this),
 
                 // All new pages should be added here.
         };
