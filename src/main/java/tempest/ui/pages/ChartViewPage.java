@@ -1,9 +1,9 @@
 package tempest.ui.pages;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 import tempest.State;
 import tempest.ui.GUIManager;
@@ -43,6 +43,7 @@ public class ChartViewPage extends Page {
 
         backButton = new BackButton(manager);
         backPanel.add(backButton);
+        backPanel.add(new LinkButton("Chart Controls", PageNames.CHART_CONTROLS, this));
 
         this.add(backPanel);
 

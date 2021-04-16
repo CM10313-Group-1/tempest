@@ -1,5 +1,7 @@
 package tempest.ui.pages.charts;
 
+import java.awt.Color;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -18,12 +20,12 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
-import java.awt.Color;
-
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
 
     private BackButton backButton;
+    private XYPlot plot;
+    private TimePeriodValuesCollection dataset;
 
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
@@ -50,8 +52,9 @@ public class LineChart extends Chart {
      * @return {@link ChartPanel} of the chart.
      */
     private ChartPanel createChart() {
-        XYPlot plot = generatePlot(state);
+        plot = generatePlot(state);
         JFreeChart chart = new JFreeChart(plot);
+        setModuleColors(state.getModules());
         return new ChartPanel(chart);
     }
 
@@ -63,7 +66,7 @@ public class LineChart extends Chart {
      */
     private XYPlot generatePlot(State state) {
         DateAxis domainAxis = new DateAxis("Date");
-        TimePeriodValuesCollection dataset = generateDataset(state);
+        dataset = generateDataset(state);
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setDrawSeriesLineAsPath(true);
         XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
@@ -76,7 +79,7 @@ public class LineChart extends Chart {
      *
      * @param state The current state of recorded data.
      * @return A dataset recording the number of minutes studied, per day, per
-     * module.
+     *         module.
      */
     private TimePeriodValuesCollection generateDataset(State state) {
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
@@ -99,5 +102,11 @@ public class LineChart extends Chart {
 
     public BackButton getBackButton() {
         return backButton;
+    }
+
+    public void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+        }
     }
 }
