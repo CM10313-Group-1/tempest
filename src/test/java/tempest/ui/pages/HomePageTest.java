@@ -52,7 +52,7 @@ public class HomePageTest extends GUIHelper{
     }
 
     @Test
-    public void manageGoalsButtonNo_Modules(){
+    public void manageGoalsButton_NoModules(){
         homePage.getEnterGoalsButton().doClick();
 
         assertEquals(PageNames.HOME, manager.getCurrentCard());
