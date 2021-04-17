@@ -43,6 +43,8 @@ public class PieChart extends Chart {
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
         setModuleColors(state.getModules());
+        plot.setShadowPaint(null); // Removing the shadow
+
         // When hovering over sections hours are displayed
         plot.setToolTipGenerator((pieDataset, comparable) -> {
             int sectionMins = pieDataset.getValue(comparable).intValue();
