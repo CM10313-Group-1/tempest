@@ -11,6 +11,19 @@ import java.util.Random;
 public class GoalEntryPageTest extends GUIHelper{
 
     @Test
+    public void backButton(){
+        homePage.getManageModulesButton().doClick();
+        createModule("test");
+        manageModules.getBackButton().doClick();
+
+        homePage.getEnterGoalsButton().doClick();
+
+        goalEntry.getActionButtons().getBackButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
     public void validGoalEntry() {
         Random random = new Random();
 
@@ -26,19 +39,6 @@ public class GoalEntryPageTest extends GUIHelper{
         goalEntry.getEnterButton().doClick();
 
         assertEquals(hours * 60 + mins, testModule.getWeeklyGoal());
-    }
-
-    @Test
-    public void backButton(){
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
-
-        homePage.getEnterGoalsButton().doClick();
-
-        goalEntry.getActionButtons().getBackButton().doClick();
-
-        assertEquals(PageNames.HOME, manager.getCurrentCard());
     }
 
     @Test

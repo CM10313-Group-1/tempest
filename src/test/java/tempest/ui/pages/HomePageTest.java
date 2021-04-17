@@ -60,9 +60,7 @@ public class HomePageTest extends GUIHelper{
 
     @Test
     public void manageGoalsButton_Modules(){
-        homePage.getManageModulesButton().doClick();
-        createModule("test");
-        manageModules.getBackButton().doClick();
+        createModuleChangePage("test");
 
         homePage.getEnterGoalsButton().doClick();
 
