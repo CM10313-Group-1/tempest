@@ -3,11 +3,7 @@ package tempest;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.*;
 
 import tempest.interfaces.CSVInterface;
 
@@ -18,6 +14,7 @@ import tempest.interfaces.CSVInterface;
  */
 public class Module implements Serializable {
     private static final long serialVersionUID = 4088145156876883901L;
+    private int weeklyGoal;
     private UUID id;
     private String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
@@ -36,6 +33,15 @@ public class Module implements Serializable {
         this.id = UUID.fromString(id);
         this.name = name;
         this.studySessions = studySessions;
+    }
+
+    /**
+     * This method sets the weekly goal of the module.
+     *
+     * @param minutes The length of the weekly goal entered
+     */
+    public void setGoal(int minutes){
+        weeklyGoal = minutes;
     }
 
     /**
@@ -162,6 +168,15 @@ public class Module implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets the weekly goal of the module.
+     *
+     * @return The weekly goal for the module
+     */
+    public int getWeeklyGoal(){
+        return weeklyGoal;
     }
 
     @Override
