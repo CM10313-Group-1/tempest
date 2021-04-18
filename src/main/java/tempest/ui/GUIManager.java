@@ -112,7 +112,7 @@ public class GUIManager extends JFrame {
                 deleteSession.updateTable();
                 break;
             case PageNames.HOME:
-                home.setButtonActivity(modules);
+                home.updatePage(modules);
                 break;
             case PageNames.CHART_VIEW:
                 chartView.updateCharts(charts, state);
