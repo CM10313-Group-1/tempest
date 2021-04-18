@@ -20,14 +20,17 @@ public class ScalableCardLayout extends CardLayout {
         if (current.getName() != null) {
             String name = current.getName();
 
-            if (name.equals(PageNames.BAR) || name.equals(PageNames.LINE) || name.equals(PageNames.PIE)) {
-                Insets insets = parent.getInsets();
-                Dimension pref = current.getPreferredSize();
-                pref.width += insets.left + insets.right;
-                pref.height += insets.top + insets.bottom;
-                return pref;
+            for (String s : PageNames.getCharts()) {
+                if (name.equals(s)) {
+                    Insets insets = parent.getInsets();
+                    Dimension pref = current.getPreferredSize();
+                    pref.width += insets.left + insets.right;
+                    pref.height += insets.top + insets.bottom;
+                    return pref;
+                }
+            }
 
-            } else if(name.equals(PageNames.DELETE_SESSION)) {
+            if (name.equals(PageNames.DELETE_SESSION) || name.equals(PageNames.DATA_PROTECTION)) {
                 Insets insets = parent.getInsets();
                 Dimension pref = current.getPreferredSize();
                 pref.width = 600;

@@ -34,7 +34,7 @@ public class ActionButtonPanel extends JPanel {
         this.add(enterButton);
     }
 
-    public JButton getBackButtonInstance() {
+    public JButton getBackButton() {
         return backButton;
     }
 }

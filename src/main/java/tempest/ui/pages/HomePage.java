@@ -1,5 +1,6 @@
 package tempest.ui.pages;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ public class HomePage extends Page {
     private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);
     private final LinkButton manageSessionsLink = new LinkButton("Sessions", PageNames.MANAGE_SESSIONS, this);
     private final LinkButton chartsLink = new LinkButton("View Data", PageNames.CHART_VIEW, this);
+    private final LinkButton goalEntryLink = new LinkButton("Enter Goals", PageNames.GOAL_ENTRY, this);
+    private final LinkButton DataLink = new LinkButton("Data Protection Information", PageNames.DATA_PROTECTION, this);
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
@@ -23,12 +26,11 @@ public class HomePage extends Page {
     }
 
     private void addNavButtons() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(manageModulesLink);
-        buttonPanel.add(manageSessionsLink);
-        buttonPanel.add(chartsLink);
-
-        this.add(buttonPanel);
+        this.add(manageModulesLink);
+        this.add(manageSessionsLink);
+        this.add(chartsLink);
+        this.add(goalEntryLink);
+        this.add(DataLink);
     }
 
     @Override
@@ -54,6 +56,7 @@ public class HomePage extends Page {
     public void setButtonActivity(Module[] modules) {
         if (modules.length > 0) {
             manageSessionsLink.setEnabled(true);
+            goalEntryLink.setEnabled(true);
             for (Module m : modules) {
                 if (m.getStudySessions().length > 0) {
                     chartsLink.setEnabled(true);
@@ -65,6 +68,7 @@ public class HomePage extends Page {
 
         manageSessionsLink.setEnabled(false);
         chartsLink.setEnabled(false);
+        goalEntryLink.setEnabled(false);
     }
     public LinkButton getManageModulesButton() {
         return manageModulesLink;
@@ -76,5 +80,13 @@ public class HomePage extends Page {
 
     public LinkButton getChartViewButton() {
         return chartsLink;
+    }
+
+    public LinkButton getEnterGoalsButton() {
+        return goalEntryLink;
+    }
+
+    public LinkButton getDataProtectionButton() {
+        return DataLink;
     }
 }

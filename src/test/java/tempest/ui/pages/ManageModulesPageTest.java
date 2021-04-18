@@ -3,20 +3,9 @@ package tempest.ui.pages;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class ManageModulesPageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class ManageModulesPageTest extends GUIHelper {
 
     @Test
     public void backButton() {
@@ -45,7 +34,7 @@ public class ManageModulesPageTest {
 
     @Test
     public void deleteModuleButton_Modules() {
-        helper.createModule("test");
+        createModule("test");
 
         homePage.getManageModulesButton().doClick();
         manageModules.getDeleteModuleButton().doClick();

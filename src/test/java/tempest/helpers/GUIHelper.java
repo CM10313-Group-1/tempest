@@ -2,24 +2,38 @@ package tempest.helpers;
 
 import tempest.Module;
 import tempest.State;
+import tempest.Supervisor;
+import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.pages.AddModulePage;
-import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.*;
 
 public class GUIHelper {
 
-    private final AddModulePage addModule;
-    private final AddSessionPage addSession;
-    private final State state;
+    protected State state = new State();
+    protected GUIManager manager = new GUIManager(state, Supervisor.getInstance());
 
-    public GUIHelper(GUIManager manager, State state) {
-        this.state = state;
+    protected HomePage homePage = (HomePage) manager.getPage(HomePage.class);
 
-        addModule = (AddModulePage) manager.getPage(AddModulePage.class);
-        addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
+    protected GoalEntryPage goalEntry = (GoalEntryPage) manager.getPage(GoalEntryPage.class);
+
+    protected ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
+    protected ManageModulesPage manageModules = (ManageModulesPage) manager.getPage(ManageModulesPage.class);
+
+    protected AddSessionPage addSession = (AddSessionPage) manager.getPage(AddSessionPage.class);
+    protected AddModulePage addModule = (AddModulePage) manager.getPage(AddModulePage.class);
+
+    protected DeleteSessionPage deleteSession = (DeleteSessionPage) manager.getPage(DeleteSessionPage.class);
+    protected DeleteModulePage deleteModule = (DeleteModulePage) manager.getPage(DeleteModulePage.class);
+
+    protected ChartViewPage chartView = (ChartViewPage) manager.getPage(ChartViewPage.class);
+
+
+    protected GUIHelper() {
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setMessagesShown(false);
     }
 
-    public Module createModule(String moduleName) {
+    protected Module createModule(String moduleName) {
         Module testModule = null;
 
         // Creating module
@@ -37,7 +51,16 @@ public class GUIHelper {
         return testModule;
     }
 
-    public void createSession(String hours, String mins, Module module) {
+    protected Module createModuleChangePage(String moduleName) {
+        // Creating a module to enable the manage sessions button
+        homePage.getManageModulesButton().doClick();
+        Module testModule = createModule(moduleName);
+        manageModules.getBackButton().doClick();
+
+        return testModule;
+    }
+
+    protected void createSession(String hours, String mins, Module module) {
         addSession.setDropDown(module.getName());
 
         addSession.setHours(hours);
@@ -45,7 +68,7 @@ public class GUIHelper {
         addSession.getEnterButton().doClick();
     }
 
-    public int[] createSessionReturn(String hours, String mins, Module testModule) {
+    protected int[] createSessionReturn(String hours, String mins, Module testModule) {
         int prevSessionsLen = testModule.getStudySessions().length;
 
         // Selecting the  module in the drop down
