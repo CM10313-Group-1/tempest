@@ -1,6 +1,7 @@
 package tempest.ui.pages.charts;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -60,9 +61,11 @@ public class TimeBarChart extends Chart {
         renderer.setShadowVisible(false);
         renderer.setDefaultToolTipGenerator((categoryDataset, i, i1) -> {
             int hourVal = hours[i1];
-            int percent = categoryDataset.getValue(i, i1).intValue();
 
-            return String.format("%d%% or %d hrs %02d mins", percent, hourVal / 60, hourVal % 60);
+            DecimalFormat df = new DecimalFormat("#.##");
+            double percent = categoryDataset.getValue(i, i1).doubleValue();
+
+            return String.format("%s%% or %d hrs %02d mins", df.format(percent), hourVal / 60, hourVal % 60);
         });
 
         NumberAxis time = new NumberAxis("% Time Studied");
