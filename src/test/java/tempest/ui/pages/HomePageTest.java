@@ -50,6 +50,23 @@ public class HomePageTest extends GUIHelper{
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());
     }
+
+    @Test
+    public void manageGoalsButton_NoModules(){
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageGoalsButton_Modules(){
+        createModuleChangePage("test");
+
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.GOAL_ENTRY, manager.getCurrentCard());
+    }
+
     @Test
     public void DataProtectionButton() {
         homePage.getDataProtectionButton().doClick();

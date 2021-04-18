@@ -23,6 +23,7 @@ public class Module implements Serializable {
     private final UUID id;
     private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
+    private int weeklyGoal;
     private final Color defaultColor;
     private Color color;
 
@@ -54,6 +55,15 @@ public class Module implements Serializable {
         float g = rand.nextFloat();
         float b = rand.nextFloat();
         return new Color(r, g, b);
+    }
+
+    /**
+     * This method sets the weekly goal of the module.
+     *
+     * @param minutes The length of the weekly goal entered
+     */
+    public void setGoal(int minutes){
+        weeklyGoal = minutes;
     }
 
     /**
@@ -198,6 +208,15 @@ public class Module implements Serializable {
         setColor(getDefaultColor());
     }
 
+    /**
+     * Gets the weekly goal of the module.
+     *
+     * @return The weekly goal for the module
+     */
+    public int getWeeklyGoal(){
+        return weeklyGoal;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this)
@@ -217,7 +236,7 @@ public class Module implements Serializable {
 
     /**
      * Uses the FNV-1a hash function to convert the module name to a long.
-     * 
+     *
      * @return Hash of the module name.
      * @see <a href=
      *      "https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1_hash">FNV-1a</a>

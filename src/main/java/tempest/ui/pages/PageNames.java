@@ -16,6 +16,7 @@ public class PageNames {
     public static final String PIE = "PieChart";
     public static final String TIME_BAR = "TimeBarChart";
     public static final String DATA_PROTECTION = "DataProtection";
+    public static final String GOAL_ENTRY = "GoalEntry";
 
     public static String[] getCharts() {
         return new String[] { STACKED_BAR, LINE, PIE, TIME_BAR };
