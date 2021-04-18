@@ -122,12 +122,7 @@ public class GoalEntryPage extends Page implements InputPage {
             if(hoursInt < 0 || minutesInt < 0) {
                 throw new Exception("Input must be greater than 0");
 
-            }
-            else if(hoursInt == 0 && minutesInt == 0) {
-                throw new Exception("A goal must be >= 1 minutes");
-
-            }
-            else if(hoursInt > 0 && minutesInt > 59) {
+            } else if(hoursInt > 0 && minutesInt > 59) {
                 throw new Exception("If an hour is entered minutes should be < 60");
             }
 
