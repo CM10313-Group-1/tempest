@@ -14,6 +14,7 @@ import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
 import tempest.ui.pages.ChartControlsPage;
 import tempest.ui.pages.ChartViewPage;
+import tempest.ui.pages.DataProtectionPage;
 import tempest.ui.pages.DeleteModulePage;
 import tempest.ui.pages.DeleteSessionPage;
 import tempest.ui.pages.HomePage;
@@ -44,7 +45,6 @@ public class GUIManager extends JFrame {
     private final ManageSessionsPage manageSessions;
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
-
     private final ChartViewPage chartView;
 
     private LayoutManager layout;
@@ -73,7 +73,8 @@ public class GUIManager extends JFrame {
                 lineChart = new LineChart(state, this),
                 pieChart = new PieChart(state, this),
                 timeBarChart = new TimeBarChart(state, this),
-                new ChartControlsPage(state, this)
+                new ChartControlsPage(state, this),
+                new DataProtectionPage(this),
                 // All new pages should be added here.
         };
 
