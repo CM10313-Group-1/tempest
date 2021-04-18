@@ -95,6 +95,14 @@ public class LineChart extends Chart {
         return dataset;
     }
 
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+            }
+        }
+    }
+
     @Override
     public String getName() {
         return PageNames.LINE;
@@ -102,11 +110,5 @@ public class LineChart extends Chart {
 
     public BackButton getBackButton() {
         return backButton;
-    }
-
-    public void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
-        }
     }
 }

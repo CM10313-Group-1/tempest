@@ -89,6 +89,14 @@ public class PieChart extends Chart {
         return dataset;
     }
 
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.setSectionPaint(module.getName(), module.getColor());
+            }
+        }
+    }
+
     @Override
     public String getName() {
         return PageNames.PIE;
@@ -96,11 +104,5 @@ public class PieChart extends Chart {
 
     public BackButton getBackButton() {
         return backButton;
-    }
-
-    public void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            plot.setSectionPaint(module.getName(), module.getColor());
-        }
     }
 }

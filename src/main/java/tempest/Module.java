@@ -20,10 +20,10 @@ import tempest.interfaces.CSVInterface;
  */
 public class Module implements Serializable {
     private static final long serialVersionUID = 4088145156876883901L;
-    private UUID id;
-    private String name;
+    private final UUID id;
+    private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
-    private Color defaultColor;
+    private final Color defaultColor;
     private Color color;
 
     public Module(String name) {
