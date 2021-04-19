@@ -26,12 +26,9 @@ public class GoalEntryPage extends Page implements InputPage {
     private JTextField minutesInput;
     private JButton enterButton;
 
-    private HomePage home;
-
-    public GoalEntryPage(State state, GUIManager guiManager, HomePage home) {
+    public GoalEntryPage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
-        this.home = home;
 
         this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
         setupUI();
@@ -136,7 +133,7 @@ public class GoalEntryPage extends Page implements InputPage {
 
             Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
-            // Checks the session entered is under 24 hours
+            // Checks the goal entered is under 1 week
             if(time.toMinutes() > 7 * 24 * 60) {
                 throw new Exception("A goal can't be longer than a week");
             }
@@ -154,10 +151,10 @@ public class GoalEntryPage extends Page implements InputPage {
                 throw new Exception("Unable to find this module");
             }
 
-            // Checking if study session in one day add up to be > 24hrs
-
             module.setGoal((int) time.toMinutes());
-            home.createBar(module);
+
+            HomePage home = (HomePage) manager.getPage(HomePage.class);
+            home.createNewBar(module);
 
             System.out.println("Goal successfully added");
 

@@ -1,5 +1,6 @@
 package tempest.ui.pages;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,11 +18,6 @@ import tempest.StudySession;
 import tempest.ui.GUIManager;
 import tempest.ui.components.LinkButton;
 
-//TODO:
-// - Decide on how to label the different bars
-//      1. Keep as atm with name in the bar
-//      2. Have a JLabel attached - will need to create layouts to get the labels looking good
-
 public class HomePage extends Page {
     private static final long serialVersionUID = -6085163013456560971L;
 
@@ -36,58 +32,143 @@ public class HomePage extends Page {
     private final HashMap<Module , JProgressBar> progressBars = new HashMap<>();
     private final Date prevMonDate;
 
-    private JPanel progressPanel;
-    private JPanel navPanel;
+    private final JPanel progressPanel;
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
-        this.progressPanel = new JPanel();
-        this.navPanel = new JPanel();
-
-        this.add(navPanel);
 
         addNavButtons();
-        addProgressPanel();
-        updatePage(state.getModules());
+        setButtonActivity(state.getModules()); // Greying out buttons if required
 
+        // Getting date of the most recent Monday
         LocalDate prevMon = LocalDate.now(ZoneId.systemDefault()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         prevMonDate = java.util.Date.from(prevMon.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
-        makeProgressBars();
+        // Setting progress bar text colour
+        UIManager.put("ProgressBar.selectionForeground", Color.darkGray);
+        UIManager.put("ProgressBar.selectionBackground", Color.darkGray);
+        progressPanel = new JPanel();
+
+        // Create progress bars
+        createBarPerModule();
+
+        this.add(progressPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     private void addNavButtons() {
+        JPanel navPanel = new JPanel();
+
         navPanel.add(manageModulesLink);
         navPanel.add(manageSessionsLink);
         navPanel.add(chartsLink);
         navPanel.add(goalEntryLink);
         navPanel.add(DataLink);
+
+        this.add(navPanel);
     }
 
-    private void addProgressPanel(){
-        this.add(progressPanel);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    private void makeProgressBars() {
+    /**
+     * For any modules that have a goal a progress bar is created for this module
+     */
+    private void createBarPerModule() {
         for (Module m : state.getModules()) {
             if (m.getWeeklyGoal() == 0) {
-                continue;
+                continue; // Don't create a bar for modules with no goal
             }
 
             createProgressBar(m);
         }
     }
 
+    /**
+     * Creates a progress bar for Module m
+     *
+     * @param m The module for the bar
+     */
     private void createProgressBar(Module m) {
         JProgressBar bar = new JProgressBar(0, m.getWeeklyGoal());
 
-        updateProgressBar(m, bar);
+        populateBar(m, bar); // Set progress of bar
         bar.setStringPainted(true);
 
         progressBars.put(m, bar);
         progressPanel.add(bar);
+    }
+
+    /**
+     * Populates the bar with the total time of sessions studied from
+     * the most recent Monday
+     *
+     * @param m The module for the bar
+     * @param bar The JProgressBar to be populated
+     */
+    private void populateBar(Module m, JProgressBar bar) {
+        int totalTime = 0;
+
+        for (StudySession s : m.getStudySessions()) {
+            if (s.date.after(prevMonDate) || s.date.equals(prevMonDate)) {
+                totalTime += s.duration.toMinutes();
+            }
+        }
+
+        // Set the bar's progress to be the total time
+        bar.setValue(totalTime);
+        bar.setString(totalTime + " / " + m.getWeeklyGoal() + " mins: " + m.getName());
+    }
+
+    /**
+     * Updates the Progress Bars
+     *
+     * Updates the pages buttons
+     *
+     * @param modules Array of modules from state
+     */
+    public void updatePage(Module[] modules) {
+        updateBars();
+        setButtonActivity(modules);
+    }
+
+    /**
+     * Repopulates each progress bar
+     */
+    private void updateBars() {
+        for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
+            Module m = barMap.getKey();
+            JProgressBar bar = barMap.getValue();
+
+            populateBar(m, bar);
+        }
+    }
+
+    /**
+     * Disables the view data button if there are no sessions, otherwise
+     * it's enabled
+     *
+     * Disables the sessions & enter goals buttons if there are no modules, otherwise
+     * they're enabled
+     *
+     * @param modules Array of modules from state
+     */
+    private void setButtonActivity(Module[] modules) {
+        if (modules.length > 0) {
+            manageSessionsLink.setEnabled(true);
+            goalEntryLink.setEnabled(true);
+
+            for (Module m : modules) {
+                if (m.getStudySessions().length > 0) {
+                    chartsLink.setEnabled(true);
+                    return;
+                }
+                chartsLink.setEnabled(false);
+            }
+            return;
+        }
+
+        manageSessionsLink.setEnabled(false);
+        chartsLink.setEnabled(false);
+        goalEntryLink.setEnabled(false);
     }
 
     @Override
@@ -101,61 +182,7 @@ public class HomePage extends Page {
         manager.swapCard(source.getDestination());
     }
 
-    /**
-     * Updates the Progress Bars
-     *
-     * Disables the view data button if there are no sessions, otherwise
-     * it's enabled
-     *
-     * Disables the sessions & enter goals buttons if there are no modules, otherwise
-     * they're enabled
-     *
-     * @param modules Array of modules from state
-     */
-    public void updatePage(Module[] modules) {
-        for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
-            Module m = barMap.getKey();
-            JProgressBar bar = barMap.getValue();
-
-            updateProgressBar(m, bar);
-        }
-
-        if (modules.length > 0) {
-            manageSessionsLink.setEnabled(true);
-            goalEntryLink.setEnabled(true);
-            for (Module m : modules) {
-                if (m.getStudySessions().length > 0) {
-                    chartsLink.setEnabled(true);
-                    return;
-                }
-            }
-            return;
-        }
-
-        manageSessionsLink.setEnabled(false);
-        chartsLink.setEnabled(false);
-        goalEntryLink.setEnabled(false);
-    }
-
-    private void updateProgressBar(Module m, JProgressBar bar) {
-        int totalTime = 0;
-
-        for (StudySession s : m.getStudySessions()) {
-            if (s.date.after(prevMonDate) || s.date.equals(prevMonDate)) {
-                totalTime += s.duration.toMinutes();
-            }
-        }
-
-//        JLabel name = new JLabel(m.getName());
-//        name.setLabelFor(bar);
-//        this.add(name);
-
-        // Set the progress as total time
-        bar.setValue(totalTime);
-        bar.setString(totalTime + " / " + m.getWeeklyGoal() + " mins: " + m.getName());
-    }
-
-    public void createBar(Module m) {
+    public void createNewBar(Module m) {
         createProgressBar(m);
     }
 
