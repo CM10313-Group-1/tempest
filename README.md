@@ -1,5 +1,5 @@
 # Tempest
-
+[![Automated Testing](https://github.com/CM10313-Group-1/tempest/actions/workflows/maven.yml/badge.svg)](https://github.com/CM10313-Group-1/tempest/actions/workflows/maven.yml)<br/>
 Personal informatics coursework for CM10313, University of Bath 2020.
 
 ## Pre-Requisites
