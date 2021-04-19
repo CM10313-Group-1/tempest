@@ -43,6 +43,8 @@ public class HomePage extends Page {
         addNavButtons();
         updatePage(state.getModules());
 
+        System.out.println("constructor");
+
         LocalDate prevMon = LocalDate.now(ZoneId.systemDefault()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         prevMonDate = java.util.Date.from(prevMon.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
@@ -62,15 +64,19 @@ public class HomePage extends Page {
             if (m.getWeeklyGoal() == 0) {
                 continue;
             }
-
-            JProgressBar bar = new JProgressBar(0, m.getWeeklyGoal());
-
-            updateProgressBar(m, bar);
-            bar.setStringPainted(true);
-
-            progressBars.put(m, bar);
-            this.add(bar);
+            System.out.println("creating bars");
+            createProgressBar(m);
         }
+    }
+
+    private void createProgressBar(Module m) {
+        JProgressBar bar = new JProgressBar(0, m.getWeeklyGoal());
+
+        updateProgressBar(m, bar);
+        bar.setStringPainted(true);
+
+        progressBars.put(m, bar);
+        this.add(bar);
     }
 
     @Override
@@ -136,6 +142,10 @@ public class HomePage extends Page {
         // Set the progress as total time
         bar.setValue(totalTime);
         bar.setString(totalTime + " / " + m.getWeeklyGoal() + " mins: " + m.getName());
+    }
+
+    public void createBar(Module m) {
+        createProgressBar(m);
     }
 
     public LinkButton getManageModulesButton() {

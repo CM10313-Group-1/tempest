@@ -58,7 +58,7 @@ public class GUIManager extends JFrame {
                 lineChart = new LineChart(state, this),
                 pieChart = new PieChart(state, this),
                 timeBarChart = new TimeBarChart(state, this),
-                new GoalEntryPage(state, this),
+                new GoalEntryPage(state, this, home),
                 new DataProtectionPage(this),
 
                 // All new pages should be added here.

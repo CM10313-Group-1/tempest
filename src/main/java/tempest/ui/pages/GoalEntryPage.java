@@ -26,9 +26,12 @@ public class GoalEntryPage extends Page implements InputPage {
     private JTextField minutesInput;
     private JButton enterButton;
 
-    public GoalEntryPage(State state, GUIManager guiManager) {
+    private HomePage home;
+
+    public GoalEntryPage(State state, GUIManager guiManager, HomePage home) {
         super(guiManager);
         this.state = state;
+        this.home = home;
 
         this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
         setupUI();
@@ -154,6 +157,7 @@ public class GoalEntryPage extends Page implements InputPage {
             // Checking if study session in one day add up to be > 24hrs
 
             module.setGoal((int) time.toMinutes());
+            home.createBar(module);
 
             System.out.println("Goal successfully added");
 
