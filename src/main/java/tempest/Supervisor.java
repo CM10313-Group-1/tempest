@@ -1,11 +1,11 @@
 package tempest;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 import tempest.interfaces.BinaryInterface;
 import tempest.interfaces.CSVInterface;
 import tempest.ui.GUIManager;
+
+import java.io.IOException;
+import java.text.ParseException;
 
 public class Supervisor {
 

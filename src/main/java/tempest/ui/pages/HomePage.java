@@ -36,14 +36,20 @@ public class HomePage extends Page {
     private final HashMap<Module , JProgressBar> progressBars = new HashMap<>();
     private final Date prevMonDate;
 
+    private JPanel progressPanel;
+    private JPanel navPanel;
+
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
+        this.progressPanel = new JPanel();
+        this.navPanel = new JPanel();
+
+        this.add(navPanel);
 
         addNavButtons();
+        addProgressPanel();
         updatePage(state.getModules());
-
-        System.out.println("constructor");
 
         LocalDate prevMon = LocalDate.now(ZoneId.systemDefault()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         prevMonDate = java.util.Date.from(prevMon.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -52,11 +58,16 @@ public class HomePage extends Page {
     }
 
     private void addNavButtons() {
-        this.add(manageModulesLink);
-        this.add(manageSessionsLink);
-        this.add(chartsLink);
-        this.add(goalEntryLink);
-        this.add(DataLink);
+        navPanel.add(manageModulesLink);
+        navPanel.add(manageSessionsLink);
+        navPanel.add(chartsLink);
+        navPanel.add(goalEntryLink);
+        navPanel.add(DataLink);
+    }
+
+    private void addProgressPanel(){
+        this.add(progressPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     private void makeProgressBars() {
@@ -64,7 +75,7 @@ public class HomePage extends Page {
             if (m.getWeeklyGoal() == 0) {
                 continue;
             }
-            System.out.println("creating bars");
+
             createProgressBar(m);
         }
     }
@@ -76,7 +87,7 @@ public class HomePage extends Page {
         bar.setStringPainted(true);
 
         progressBars.put(m, bar);
-        this.add(bar);
+        progressPanel.add(bar);
     }
 
     @Override
