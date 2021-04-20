@@ -2,8 +2,11 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
 
+import tempest.Module;
 import tempest.helpers.GUIHelper;
 
 public class AddModulePageTest extends GUIHelper {
