@@ -1,5 +1,6 @@
 package tempest.ui.pages;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -9,7 +10,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.UIManager;
+
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;

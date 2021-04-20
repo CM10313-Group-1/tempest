@@ -51,10 +51,11 @@ public class Module implements Serializable {
 
     private Color generateDefaultColor(String name) {
         Random rand = new Random(hash(name));
-        float r = rand.nextFloat();
-        float g = rand.nextFloat();
-        float b = rand.nextFloat();
-        return new Color(r, g, b);
+        float generated = rand.nextFloat();
+        float minHue = 120 / 360f; // #0f0
+        float maxHue = 305 / 360f; // #ff00ea
+        float hue = generated * maxHue + (1 - generated) * minHue;
+        return new Color(Color.HSBtoRGB(hue, 1, 0.5f));
     }
 
     /**
@@ -62,7 +63,7 @@ public class Module implements Serializable {
      *
      * @param minutes The length of the weekly goal entered
      */
-    public void setGoal(int minutes){
+    public void setGoal(int minutes) {
         weeklyGoal = minutes;
     }
 
@@ -142,13 +143,15 @@ public class Module implements Serializable {
 
         ArrayList<StudySession> moduleSessions = new ArrayList<>(Arrays.asList(this.getStudySessions()));
 
-        // Holds study sessions that have been dealt with so they aren't dealt with twice
+        // Holds study sessions that have been dealt with so they aren't dealt with
+        // twice
         ArrayList<StudySession> completed = new ArrayList<>();
 
         // Used to compare just the day of sessions
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        // Comparing all sessions to each other - adding durations of sessions on the same day
+        // Comparing all sessions to each other - adding durations of sessions on the
+        // same day
         for (StudySession studySession : moduleSessions) {
             Duration duration = studySession.duration;
 
@@ -213,7 +216,7 @@ public class Module implements Serializable {
      *
      * @return The weekly goal for the module
      */
-    public int getWeeklyGoal(){
+    public int getWeeklyGoal() {
         return weeklyGoal;
     }
 
