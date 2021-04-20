@@ -88,7 +88,7 @@ public class HomePage extends Page {
      * @param m The module for the bar
      */
     private void createProgressBar(Module m) {
-        JProgressBar bar = new JProgressBar(0, m.getWeeklyGoal());
+        JProgressBar bar = new JProgressBar();
 
         populateBar(m, bar); // Set progress of bar
         bar.setStringPainted(true);
@@ -112,6 +112,10 @@ public class HomePage extends Page {
                 totalTime += s.duration.toMinutes();
             }
         }
+
+        // Set bar's min and max
+        bar.setMinimum(0);
+        bar.setMaximum(m.getWeeklyGoal());
 
         // Set the bar's progress to be the total time
         bar.setValue(totalTime);
@@ -140,6 +144,22 @@ public class HomePage extends Page {
 
             populateBar(m, bar);
         }
+    }
+
+    public void createNew_OrUpdateBar(Module m) {
+        for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
+            Module module = barMap.getKey();
+
+            // Repopulate existing progress bar
+            if (module == m) {
+                JProgressBar bar = barMap.getValue();
+                populateBar(m, bar);
+                return;
+            }
+        }
+
+        // No progress bar for this module - create one
+        createProgressBar(m);
     }
 
     /**
@@ -180,10 +200,6 @@ public class HomePage extends Page {
     public void actionPerformed(ActionEvent e) {
         LinkButton source = (LinkButton) e.getSource();
         manager.swapCard(source.getDestination());
-    }
-
-    public void createNewBar(Module m) {
-        createProgressBar(m);
     }
 
     public LinkButton getManageModulesButton() {
