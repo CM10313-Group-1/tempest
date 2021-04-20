@@ -1,9 +1,6 @@
 package tempest.ui.pages;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.JPanel;
 
 import tempest.Module;
 import tempest.State;
