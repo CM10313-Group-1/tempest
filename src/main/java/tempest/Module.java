@@ -1,9 +1,15 @@
 package tempest;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.UUID;
 
 import tempest.interfaces.CSVInterface;
 
@@ -14,25 +20,41 @@ import tempest.interfaces.CSVInterface;
  */
 public class Module implements Serializable {
     private static final long serialVersionUID = 4088145156876883901L;
-    private int weeklyGoal;
-    private UUID id;
-    private String name;
+    private final UUID id;
+    private final String name;
     private LinkedList<StudySession> studySessions = new LinkedList<>();
+    private int weeklyGoal;
+    private final Color defaultColor;
+    private Color color;
 
     public Module(String name) {
         this.id = UUID.randomUUID();
         this.name = name;
+        this.defaultColor = generateDefaultColor(name);
+        this.color = defaultColor;
     }
 
     public Module(String id, String name) {
         this.id = UUID.fromString(id);
         this.name = name;
+        this.defaultColor = generateDefaultColor(name);
+        this.color = defaultColor;
     }
 
     public Module(String id, String name, LinkedList<StudySession> studySessions) {
         this.id = UUID.fromString(id);
         this.name = name;
         this.studySessions = studySessions;
+        this.defaultColor = generateDefaultColor(name);
+        this.color = defaultColor;
+    }
+
+    private Color generateDefaultColor(String name) {
+        Random rand = new Random(hash(name));
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        return new Color(r, g, b);
     }
 
     /**
@@ -170,6 +192,22 @@ public class Module implements Serializable {
         return name;
     }
 
+    public Color getDefaultColor() {
+        return this.defaultColor;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void resetToDefaultColor() {
+        setColor(getDefaultColor());
+    }
+
     /**
      * Gets the weekly goal of the module.
      *
@@ -194,5 +232,27 @@ public class Module implements Serializable {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Uses the FNV-1a hash function to convert the module name to a long.
+     *
+     * @return Hash of the module name.
+     * @see <a href=
+     *      "https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1_hash">FNV-1a</a>
+     */
+    private long hash(String name) {
+        byte[] data = name.getBytes();
+        long seed = 0xcbf29ce484222325L;
+        for (byte b : data) {
+            seed ^= (b & 0xff);
+            seed *= 1099511628211L;
+        }
+
+        return seed;
+    }
+
+    public long hash() {
+        return this.hash(this.name);
     }
 }

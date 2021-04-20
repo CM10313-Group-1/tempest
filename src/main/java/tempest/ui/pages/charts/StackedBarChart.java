@@ -1,16 +1,19 @@
 package tempest.ui.pages.charts;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.JLabel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeTableXYDataset;
-import org.jfree.data.xy.TableXYDataset;
 
 import tempest.Module;
 import tempest.State;
@@ -19,12 +22,12 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
-import java.awt.*;
-
 public class StackedBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
 
     private BackButton backButton;
+    private XYPlot plot;
+    private TimeTableXYDataset dataset;
 
     public StackedBarChart(State state, GUIManager manager) {
         super(state, manager);
@@ -53,9 +56,8 @@ public class StackedBarChart extends Chart {
      * @return ChartPanel
      */
     private ChartPanel createBarChart() {
-        XYPlot plot = new XYPlot();
+        plot = new XYPlot();
 
-        //Axis
         plot.setDomainAxis(new DateAxis("Date"));
         plot.setRangeAxis(new NumberAxis("Time"));
 
@@ -63,15 +65,12 @@ public class StackedBarChart extends Chart {
         plot.getDomainAxis().setLabelFont(bold);
         plot.getRangeAxis().setLabelFont(bold);
 
-        //Dataset
-        plot.setDataset(createDataset());
+        dataset = createDataset();
+        plot.setDataset(dataset);
 
-        //Background colour
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
-        //Renderer
         StackedXYBarRenderer renderer = new StackedXYBarRenderer();
-
         renderer.setShadowVisible(false);
         renderer.setBarPainter(new StandardXYBarPainter());
 
@@ -86,13 +85,15 @@ public class StackedBarChart extends Chart {
 
         // Creating the bar chart
         JFreeChart chart = new JFreeChart(plot);
+        setModuleColors(state.getModules());
         return new ChartPanel(chart);
     }
 
     /**
-     * @return A TableXYDataset containing the dates and length of all study sessions
+     * @return A TableXYDataset containing the dates and length of all study
+     *         sessions
      */
-    private TableXYDataset createDataset() {
+    private TimeTableXYDataset createDataset() {
         TimeTableXYDataset dataset = new TimeTableXYDataset();
 
         for (Module m : state.getModules()) {
@@ -102,6 +103,14 @@ public class StackedBarChart extends Chart {
         }
 
         return dataset;
+    }
+
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+            }
+        }
     }
 
     @Override
