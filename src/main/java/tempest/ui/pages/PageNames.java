@@ -9,6 +9,8 @@ public class PageNames {
     public static final String DELETE_MODULE = "DeleteModule";
     public static final String DELETE_SESSION = "DeleteSession";
     public static final String CHART_VIEW = "ChartView";
+    public static final String CHART_CONTROLS = "ChartControls";
+    public static final String BAR = "BarChart";
     public static final String STACKED_BAR = "StackedBarChart";
     public static final String LINE = "LineChart";
     public static final String PIE = "PieChart";
@@ -17,6 +19,6 @@ public class PageNames {
     public static final String GOAL_ENTRY = "GoalEntry";
 
     public static String[] getCharts() {
-        return new String[] {STACKED_BAR, LINE, PIE, TIME_BAR};
+        return new String[] { STACKED_BAR, LINE, PIE, TIME_BAR };
     }
 }

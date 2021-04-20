@@ -1,6 +1,14 @@
 package tempest.ui.pages;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -131,6 +139,8 @@ public class DeleteSessionPage extends Page {
      */
     private void setModel(String[] columns) {
         table.setModel( tableModel = new DefaultTableModel(columns, 0) {
+        private static final long serialVersionUID = 5689863494172287549L;
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Setting all cells to be uneditable

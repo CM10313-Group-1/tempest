@@ -1,25 +1,27 @@
 package tempest.ui.pages.charts;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
+import javax.swing.JLabel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
-
 import org.jfree.data.category.DefaultCategoryDataset;
+
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
-
-import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 public class TimeBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
@@ -55,24 +57,21 @@ public class TimeBarChart extends Chart {
      * @return ChartPanel
      */
     private ChartPanel createBarChart() {
-        // Renderer
         BarRenderer renderer = new BarRenderer();
         renderer.setShadowVisible(false);
-
         renderer.setDefaultToolTipGenerator((categoryDataset, i, i1) -> {
             int hourVal = hours[i1];
-            int percent = categoryDataset.getValue(i, i1).intValue();
 
-            return String.format("%d%% or %d hrs %02d mins", percent, hourVal / 60, hourVal % 60);
+            DecimalFormat df = new DecimalFormat("#.##");
+            double percent = categoryDataset.getValue(i, i1).doubleValue();
+
+            return String.format("%s%% or %d hrs %02d mins", df.format(percent), hourVal / 60, hourVal % 60);
         });
 
-        // Axis
         NumberAxis time = new NumberAxis("% Time Studied");
         time.setRange(0, 100);
-
         CategoryAxis hour = new CategoryAxis("Hour of the Day");
 
-        // Plot
         CategoryPlot plot = new CategoryPlot(createDataset(), hour, time, renderer);
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
@@ -82,12 +81,11 @@ public class TimeBarChart extends Chart {
     }
 
     /**
-     * @return A TableXYDataset containing the dates and length of all study sessions
+     * @return A TableXYDataset containing the dates and length of all study
+     *         sessions
      */
     private CategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        // Used to get just the hour of a session
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
 
         hours = new int[24];
@@ -104,7 +102,7 @@ public class TimeBarChart extends Chart {
 
         // Populating dataset with percentages
         for (int i = 0; i < hours.length; i++) {
-            dataset.addValue(hours[i]/totalTime * 100, "Hours Studied", Integer.toString(i));
+            dataset.addValue(hours[i] / totalTime * 100, "Hours Studied", Integer.toString(i));
         }
 
         return dataset;

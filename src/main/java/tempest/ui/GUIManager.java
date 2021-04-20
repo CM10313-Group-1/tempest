@@ -4,7 +4,7 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import tempest.Module;
 import tempest.State;
@@ -59,6 +59,7 @@ public class GUIManager extends JFrame {
                 pieChart = new PieChart(state, this),
                 timeBarChart = new TimeBarChart(state, this),
                 new GoalEntryPage(state, this),
+                new ChartControlsPage(state, this),
                 new DataProtectionPage(this),
 
                 // All new pages should be added here.
@@ -112,7 +113,7 @@ public class GUIManager extends JFrame {
                 deleteSession.updateTable();
                 break;
             case PageNames.HOME:
-                home.setButtonActivity(modules);
+                home.updatePage(modules);
                 break;
             case PageNames.CHART_VIEW:
                 chartView.updateCharts(charts, state);
@@ -173,5 +174,9 @@ public class GUIManager extends JFrame {
      */
     public void closeGUI() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    public Chart[] getCharts() {
+        return charts;
     }
 }

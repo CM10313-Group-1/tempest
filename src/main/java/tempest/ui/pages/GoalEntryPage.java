@@ -122,18 +122,13 @@ public class GoalEntryPage extends Page implements InputPage {
             if(hoursInt < 0 || minutesInt < 0) {
                 throw new Exception("Input must be greater than 0");
 
-            }
-            else if(hoursInt == 0 && minutesInt == 0) {
-                throw new Exception("A goal must be >= 1 minutes");
-
-            }
-            else if(hoursInt > 0 && minutesInt > 59) {
+            } else if(hoursInt > 0 && minutesInt > 59) {
                 throw new Exception("If an hour is entered minutes should be < 60");
             }
 
             Duration time = Duration.ofMinutes(hoursInt * 60L + minutesInt);
 
-            // Checks the session entered is under 24 hours
+            // Checks the goal entered is under 1 week
             if(time.toMinutes() > 7 * 24 * 60) {
                 throw new Exception("A goal can't be longer than a week");
             }
@@ -151,9 +146,10 @@ public class GoalEntryPage extends Page implements InputPage {
                 throw new Exception("Unable to find this module");
             }
 
-            // Checking if study session in one day add up to be > 24hrs
-
             module.setGoal((int) time.toMinutes());
+
+            HomePage home = (HomePage) manager.getPage(HomePage.class);
+            home.createNew_OrUpdateBar(module);
 
             System.out.println("Goal successfully added");
 
