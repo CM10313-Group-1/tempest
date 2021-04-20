@@ -66,4 +66,32 @@ public class GoalEntryPageTest extends GUIHelper{
 
         assertEquals(0, testModule.getWeeklyGoal());
     }
+
+    @Test
+    public void resetGoalToZero() {
+        Module testModule = createModule("test");
+
+        // Setting the goal to 5 hours
+        goalEntry.setDropDown("test");
+        goalEntry.setHours("5");
+        goalEntry.setMins("");
+
+        goalEntry.getEnterButton().doClick();
+        assertEquals(5 * 60, testModule.getWeeklyGoal());
+
+        // Changing the goal to 0
+        goalEntry.setDropDown("test");
+        goalEntry.setHours("0");
+        goalEntry.setMins("0");
+
+        goalEntry.getEnterButton().doClick();
+        assertEquals(0, testModule.getWeeklyGoal());
+    }
+
+    @Test
+    public void NoGoal() {
+        Module testModule = createModule("test");
+
+        assertEquals(0, testModule.getWeeklyGoal());
+    }
 }

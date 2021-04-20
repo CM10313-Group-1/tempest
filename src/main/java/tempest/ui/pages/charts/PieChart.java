@@ -1,28 +1,29 @@
 package tempest.ui.pages.charts;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-
 import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+
+import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.Module;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
-
-import java.awt.*;
 
 public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
 
     private BackButton backButton;
+    private PiePlot<Integer> plot;
 
     public PieChart(State state, GUIManager manager) {
         super(state, manager);
@@ -30,19 +31,18 @@ public class PieChart extends Chart {
         setupUI();
     }
 
+    @SuppressWarnings("unchecked")
     private ChartPanel createChart() {
-        // TODO: Could get the label to show hours and minutes.
-
         PieDataset<String> dataset = generateDataset(state);
         ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
 
-        PiePlot plot = (PiePlot) pieChart.getChart().getPlot();
+        // Changes the label formatting to allow minutes to be shown.
+        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
+        plot = (PiePlot<Integer>) pieChart.getChart().getPlot();
+        plot.setLabelGenerator(labelGenerator);
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
-        // Changes the label formatting to allow minutes to be shown
-        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
-        plot.setLabelGenerator(labelGenerator);
-
+        setModuleColors(state.getModules());
         plot.setShadowPaint(null); // Removing the shadow
 
         // When hovering over sections hours are displayed
@@ -73,7 +73,8 @@ public class PieChart extends Chart {
      * Creates the dataset used by the pie chart.
      *
      * @param state Instance of state
-     * @return The dataset consisting of module names and total study time in minutes
+     * @return The dataset consisting of module names and total study time in
+     *         minutes
      */
     public PieDataset<String> generateDataset(State state) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
@@ -88,6 +89,14 @@ public class PieChart extends Chart {
             dataset.setValue(module.getName(), totalStudyTime);
         }
         return dataset;
+    }
+
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.setSectionPaint(module.getName(), module.getColor());
+            }
+        }
     }
 
     @Override
