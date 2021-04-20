@@ -146,6 +146,16 @@ public class HomePage extends Page {
         }
     }
 
+    /**
+     * Call this method when a modules goal has been set/changed
+     *
+     * A new bar is created if currently no bar exists for Module m
+     * Otherwise the existing bar is updated with the new goal
+     *
+     * If the new goal is 0 then the bar is deleted
+     *
+     * @param m The module of the progress bar
+     */
     public void createNew_OrUpdateBar(Module m) {
         for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
             Module module = barMap.getKey();
@@ -153,13 +163,24 @@ public class HomePage extends Page {
             // Repopulate existing progress bar
             if (module == m) {
                 JProgressBar bar = barMap.getValue();
+
+                // Goal set to 0, so 'delete' progress bar
+                if (m.getWeeklyGoal() == 0) {
+                    System.out.println("Called");
+                    progressBars.remove(m);
+                    progressPanel.remove(bar);
+                    return;
+                }
+
                 populateBar(m, bar);
                 return;
             }
         }
 
         // No progress bar for this module - create one
-        createProgressBar(m);
+        if (m.getWeeklyGoal() > 0) {
+            createProgressBar(m);
+        }
     }
 
     /**
