@@ -1,5 +1,7 @@
 package tempest.ui;
 
+import tempest.ui.pages.DeleteModulePage;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -18,5 +20,15 @@ public class ErrorMessage {
 
     public void setMessagesShown(boolean show) {
         messagesShown = show;
+    }
+
+    public int showWarningMessage(JPanel parent, String message) {
+        if (messagesShown) {
+            return JOptionPane.showConfirmDialog(parent, message, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        } else {
+            System.err.println(message);
+        }
+
+        return 5;
     }
 }
