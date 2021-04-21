@@ -48,10 +48,31 @@ public class PieChart extends Chart {
         setupUI();
     }
 
+    private void setupUI() {
+        this.removeAll();
+
+        this.add(createChart());
+
+        backButton = new BackButton(manager);
+        JPanel backPanel = new JPanel();
+        backPanel.add(backButton);
+
+        JPanel dropDownPanel = new JPanel();
+        dropDownPanel.add(pieComboBox);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backPanel);
+        buttonPanel.add(dropDownPanel);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        this.add(buttonPanel);
+    }
+
     @SuppressWarnings("unchecked")
     private ChartPanel createChart() {
         PieDataset<String> dataset = generateDataset(state);
-        ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
+        String title = "Total Time Studied Per Module";
+        ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart(title, dataset, true, true, false));
 
         // Changes the label formatting to allow minutes to be shown.
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
@@ -70,16 +91,6 @@ public class PieChart extends Chart {
         });
 
         return pieChart;
-    }
-
-    private void setupUI() {
-        this.removeAll();
-        this.add(createChart());
-
-        backButton = new BackButton(manager);
-        this.add(backButton);
-
-        this.add(pieComboBox);
     }
 
     @Override

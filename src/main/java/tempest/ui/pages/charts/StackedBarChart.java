@@ -59,7 +59,7 @@ public class StackedBarChart extends Chart {
         plot = new XYPlot();
 
         plot.setDomainAxis(new DateAxis("Date"));
-        plot.setRangeAxis(new NumberAxis("Time"));
+        plot.setRangeAxis(new NumberAxis("Minutes Studied"));
 
         Font bold = new Font("Dialog", Font.BOLD, 15);
         plot.getDomainAxis().setLabelFont(bold);
@@ -84,7 +84,7 @@ public class StackedBarChart extends Chart {
         plot.setRenderer(renderer);
 
         // Creating the bar chart
-        JFreeChart chart = new JFreeChart(plot);
+        JFreeChart chart = new JFreeChart("Time Studied Per Day Per Module", plot);
         setModuleColors(state.getModules());
         return new ChartPanel(chart);
     }

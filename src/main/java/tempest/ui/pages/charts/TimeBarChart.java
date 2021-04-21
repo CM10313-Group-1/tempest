@@ -1,6 +1,6 @@
 package tempest.ui.pages.charts;
 
-import java.awt.Color;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -75,7 +75,11 @@ public class TimeBarChart extends Chart {
         CategoryPlot plot = new CategoryPlot(createDataset(), hour, time, renderer);
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
-        JFreeChart barChart = new JFreeChart("Time Studied Per Hour", plot);
+        Font bold = new Font("Dialog", Font.BOLD, 15);
+        plot.getDomainAxis().setLabelFont(bold);
+        plot.getRangeAxis().setLabelFont(bold);
+
+        JFreeChart barChart = new JFreeChart("% Time Studied Per Hour", plot);
 
         return new ChartPanel(barChart);
     }
