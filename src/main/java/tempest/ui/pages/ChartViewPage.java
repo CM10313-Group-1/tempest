@@ -3,8 +3,12 @@ package tempest.ui.pages;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import tempest.State;
 import tempest.Supervisor;
@@ -31,6 +35,7 @@ public class ChartViewPage extends Page {
     private final LinkButton barChartLink = new LinkButton("Bar Chart", ChartTypes.BAR, this);
     private final LinkButton lineChartLink = new LinkButton("Line Chart", ChartTypes.LINE, this);
     private final LinkButton pieChartLink = new LinkButton("Pie Chart", ChartTypes.PIE, this);
+    private JComboBox comboBox = new JComboBox();
     private BackButton backButton;
 
     public ChartViewPage(State state, GUIManager guiManager) {
@@ -42,6 +47,7 @@ public class ChartViewPage extends Page {
         vm = new ViewManager<>(charts, charts[0]);
         this.add(vm);
         addNavButtons();
+        addDropDownMenu();
         addVisibilityListener();
     }
 
@@ -59,6 +65,19 @@ public class ChartViewPage extends Page {
         buttonPanel.add(pieChartLink);
         buttonPanel.add(backButton);
         this.add(buttonPanel);
+    }
+
+    private void addDropDownMenu(){
+        JPanel comboBoxPanel = new JPanel();
+
+        String[] options = {"last week", "last month", "last year", "all"};
+        comboBox = new JComboBox(options);
+        comboBox.setSelectedIndex(3);
+        comboBox.addActionListener(this);
+        comboBox.setVisible(false);
+
+        comboBoxPanel.add(comboBox);
+        this.add(comboBoxPanel);
     }
 
     private void addVisibilityListener() {
@@ -90,11 +109,44 @@ public class ChartViewPage extends Page {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        LinkButton source = (LinkButton) e.getSource();
-        String destination = (String) source.getDestination();
+        Object source = e.getSource();
+        if(source == comboBox){
+            setDateFilter((String) ((JComboBox)source).getSelectedItem());
+            pieChart.updateChart(Supervisor.state);
 
-        vm.changeView(destination);
+        } else {
+            String destination = ((LinkButton)source).getDestination();
+
+            vm.changeView(destination);
+            comboBox.setVisible(destination.equals(ChartTypes.PIE));
+
+        }
         manager.resizeGUI();
+    }
+
+    public void setDateFilter(String selectedItem){
+        if(selectedItem.equals("all")){
+            pieChart.specifiedDate = null;
+        } else {
+            LocalDate localDate = LocalDate.now();
+
+            switch (selectedItem){
+                case "last week":
+                    localDate = localDate.minusWeeks(1);
+                    break;
+
+                case "last month":
+                    localDate = localDate.minusMonths(1);
+                    break;
+
+                case "last year":
+                    localDate = localDate.minusYears(1);
+                    break;
+            }
+
+            pieChart.specifiedDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
     }
 
 }

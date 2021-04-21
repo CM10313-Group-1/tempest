@@ -1,24 +1,25 @@
 package tempest.ui.components.charts;
 
-import javax.swing.JLabel;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-
 import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ViewManager;
-import tempest.Module;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
+import java.util.LinkedList;
 
 public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
+    public Date specifiedDate = null;
 
     public PieChart(State state, ViewManager<Chart> manager) {
         super(state, manager);
@@ -64,17 +65,40 @@ public class PieChart extends Chart {
      */
     public PieDataset<String> generateDataset(State state) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+        LinkedList<StudySession> studySessions;
+        int totalStudyTime;
 
         for (Module module : state.getModules()) {
-            int totalStudyTime = 0;
+            totalStudyTime = 0;
+            // filters the list and picks sessions for the valid time period
+            studySessions = filterList(module.getStudySessionsList());
 
-            for (StudySession studySession : module.getStudySessions()) {
+            for (StudySession studySession : studySessions) {
                 totalStudyTime += studySession.duration.toMinutes();
             }
 
             dataset.setValue(module.getName(), totalStudyTime);
+            //System.out.println("for "  + module.getName() + " : " + totalStudyTime);
         }
+
         return dataset;
+    }
+
+    public LinkedList<StudySession> filterList(LinkedList<StudySession> studySessions) {
+        // if the date is null, return the list. No filtering required
+        if(specifiedDate == null){
+            return studySessions;
+        }
+
+        LinkedList<StudySession> filteredSessions = new LinkedList<>();
+
+        for (StudySession session : studySessions) {
+            if ((session.date).after(specifiedDate)) {
+                filteredSessions.add(session);
+            }
+        }
+
+        return filteredSessions;
     }
 
 }

@@ -92,10 +92,19 @@ public class Module {
     /**
      * Gets the StudySessions related to this module.
      * 
-     * @return The StudySessions related to this module.
+     * @return An array of the StudySessions related to this module.
      */
     public StudySession[] getStudySessions() {
         return studySessions.toArray(new StudySession[0]);
+    }
+
+    /**
+     * Gets the StudySessions related to this module.
+     *
+     * @return A list of the StudySessions related to this module.
+     */
+    public LinkedList<StudySession> getStudySessionsList() {
+        return studySessions;
     }
 
     /**
