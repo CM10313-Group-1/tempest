@@ -55,7 +55,7 @@ public class Module implements Serializable {
         float minHue = 0 / 360f;
         float maxHue = 360 / 360f;
         float hue = generated * maxHue + (1 - generated) * minHue;
-        return new Color(Color.HSBtoRGB(hue, 1, 0.5f));
+        return new Color(Color.HSBtoRGB(hue, 1, 0.8f));
     }
 
     /**
