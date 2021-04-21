@@ -1,7 +1,5 @@
 package tempest.ui.pages.charts;
 
-import java.awt.Color;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -12,24 +10,53 @@ import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.data.time.TimePeriod;
 import org.jfree.data.time.TimePeriodValues;
 import org.jfree.data.time.TimePeriodValuesCollection;
-
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
+import tempest.Supervisor;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Objects;
+
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
+    private String specifiedModule = null;
 
     private BackButton backButton;
     private XYPlot plot;
     private TimePeriodValuesCollection dataset;
 
+    private final JComboBox<String> lineComboBox;
+
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
+
+        lineComboBox = new JComboBox<>();
+        lineComboBox.addItem("All");
+
+        for (Module m : state.getModules()) {
+            lineComboBox.addItem(m.getName());
+        }
+
+        lineComboBox.addActionListener(e -> {
+            setModuleFilter((String) Objects.requireNonNull(lineComboBox.getSelectedItem()));
+            updateChart(Supervisor.state);
+            manager.resizeGUI();
+        });
+
         setupUI();
+    }
+
+    private void setModuleFilter(String selectedItem) {
+        if (selectedItem.equals("All")) {
+            specifiedModule = null;
+        } else {
+            specifiedModule = selectedItem;
+        }
     }
 
     private void setupUI() {
@@ -38,6 +65,7 @@ public class LineChart extends Chart {
 
         backButton = new BackButton(manager);
         this.add(backButton);
+        this.add(lineComboBox);
     }
 
     @Override
@@ -79,17 +107,36 @@ public class LineChart extends Chart {
      *
      * @param state The current state of recorded data.
      * @return A dataset recording the number of minutes studied, per day, per
-     *         module.
+     * module.
      */
     private TimePeriodValuesCollection generateDataset(State state) {
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
-        for (Module m : state.getModules()) {
-            TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
-            for (StudySession s : m.getStudySessions()) {
-                TimePeriod day = new SimpleTimePeriod(s.date, s.date);
-                moduleSeries.add(day, s.duration.toMinutes());
+
+        if (specifiedModule == null) {
+            for (Module m : state.getModules()) {
+                TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
+
+                for (StudySession s : m.getStudySessions()) {
+                    TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+                    moduleSeries.add(day, s.duration.toMinutes());
+                }
+
+                dataset.addSeries(moduleSeries);
             }
-            dataset.addSeries(moduleSeries);
+
+        } else {
+            for (Module m : state.getModules()) {
+                if (m.getName().equals(specifiedModule)) {
+                    TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
+
+                    for (StudySession s : m.getStudySessions()) {
+                        TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+                        moduleSeries.add(day, s.duration.toMinutes());
+                    }
+                    dataset.addSeries(moduleSeries);
+                }
+            }
+
         }
 
         return dataset;
@@ -97,10 +144,14 @@ public class LineChart extends Chart {
 
     private void setModuleColors(Module[] modules) {
         for (Module module : modules) {
-            if (module.getStudySessions().length > 0) {
-                plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+            try {
+                if (module.getStudySessions().length > 0) {
+                    plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+                }
+            } catch (IllegalArgumentException ignored) {
             }
         }
+
     }
 
     @Override

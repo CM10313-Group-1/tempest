@@ -20,6 +20,9 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DeleteSessionPage extends Page {
     private static final long serialVersionUID = -8474248378801773736L;
 
@@ -32,7 +35,7 @@ public class DeleteSessionPage extends Page {
     private BackButton backButton;
     private JComboBox<Object> dropDown;
 
-    private StudySession[] sessions;
+    private ArrayList<StudySession> sessions;
 
     private JTable table;
     private DefaultTableModel tableModel;
@@ -166,16 +169,16 @@ public class DeleteSessionPage extends Page {
 
             for (Module m : state.getModules()) {
                 if (m.getName().equals(moduleName.toString())) {
-                    m.removeSession(sessions[selectedRow]);
+                    m.removeSession(sessions.get(selectedRow));
 
-                    sessions = getModule().getStudySessions();
+                    sessions.remove(sessions.get(selectedRow));
                     tableModel.removeRow(selectedRow);
                 }
             }
         } else {
-            getModule().removeSession(sessions[selectedRow]);
+            getModule().removeSession(sessions.get(selectedRow));
 
-            sessions = getModule().getStudySessions();
+            sessions = new ArrayList<>(Arrays.asList(getModule().getStudySessions()));
             tableModel.removeRow(selectedRow);
         }
 
@@ -225,7 +228,7 @@ public class DeleteSessionPage extends Page {
      * module
      */
     private void populateTable() {
-        sessions = getModule().getStudySessions();
+        sessions = new ArrayList<>(Arrays.asList(getModule().getStudySessions()));
 
         // Populating the table with the modules sessions
         for (StudySession session : sessions) {
@@ -242,8 +245,12 @@ public class DeleteSessionPage extends Page {
     private void populateTableAllSessions() {
         setModel(new String[] { "Module", "Date", "Duration" });
 
+        sessions = new ArrayList<>();
+
         for (Module m : state.getModules()) {
             for (StudySession s : m.getStudySessions()) {
+                sessions.add(s);
+
                 String date = s.date.toString();
                 String duration = s.duration.toMinutes() + " minutes";
 
