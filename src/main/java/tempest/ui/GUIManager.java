@@ -149,7 +149,7 @@ public class GUIManager extends JFrame {
     /**
      * Resizes the frame for the new card
      */
-    private void resizeGUI() {
+    public void resizeGUI() {
         layout.preferredLayoutSize(this);
         this.pack();
         this.setLocationRelativeTo(null); // Centering GUI
