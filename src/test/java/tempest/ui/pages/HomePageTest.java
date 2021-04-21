@@ -4,19 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class HomePageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class HomePageTest extends GUIHelper{
 
     @Test
     public void manageModulesButton() {
@@ -26,7 +16,17 @@ public class HomePageTest {
     }
 
     @Test
-    public void manageSessionsButton() {
+    public void manageSessionsButton_NoModules() {
+        homePage.getManageSessionsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageSessionsButton_Modules() {
+        // Creating a module to enable the manage sessions button
+        createModuleChangePage("test");
+
         homePage.getManageSessionsButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
@@ -41,14 +41,35 @@ public class HomePageTest {
 
     @Test
     public void chartViewButton_Sessions() {
-        homePage.getManageSessionsButton().doClick();
-
-        helper.createSession("", "5", helper.createModule("test"));
-
-        manageSessions.getBackButton().doClick();
+        // Creating a session to enable the chart view button
+        homePage.getManageModulesButton().doClick();
+        createSession("", "5", createModule("test"));
+        manageModules.getBackButton().doClick();
 
         homePage.getChartViewButton().doClick();
 
         assertEquals(PageNames.CHART_VIEW, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageGoalsButton_NoModules(){
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.HOME, manager.getCurrentCard());
+    }
+
+    @Test
+    public void manageGoalsButton_Modules(){
+        createModuleChangePage("test");
+
+        homePage.getEnterGoalsButton().doClick();
+
+        assertEquals(PageNames.GOAL_ENTRY, manager.getCurrentCard());
+    }
+
+    @Test
+    public void DataProtectionButton() {
+        homePage.getDataProtectionButton().doClick();
+        assertEquals(PageNames.DATA_PROTECTION, manager.getCurrentCard());
     }
 }

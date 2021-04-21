@@ -1,6 +1,6 @@
 package tempest.ui.components;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -28,11 +28,8 @@ public class ModuleDropDown {
      * @param state Instance of state from the manager
      */
     public ModuleDropDown(State state) {
-        ArrayList<Object> names = new ArrayList<>();
-        for (Module m : state.getModules()) {
-            names.add(m.getName());
-        }
-        model = new DefaultComboBoxModel<>(names.toArray());
+        String[] names = Arrays.stream(state.getModules()).map(Module::getName).toArray(String[]::new);
+        model = new DefaultComboBoxModel<>(names);
     }
 
     /**

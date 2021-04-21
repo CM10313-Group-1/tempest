@@ -10,24 +10,53 @@ import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.data.time.TimePeriod;
 import org.jfree.data.time.TimePeriodValues;
 import org.jfree.data.time.TimePeriodValuesCollection;
-
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
+import tempest.Supervisor;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Objects;
 
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
+    private String specifiedModule = null;
 
     private BackButton backButton;
+    private XYPlot plot;
+    private TimePeriodValuesCollection dataset;
+
+    private final JComboBox<String> lineComboBox;
 
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
+
+        lineComboBox = new JComboBox<>();
+        lineComboBox.addItem("All");
+
+        for (Module m : state.getModules()) {
+            lineComboBox.addItem(m.getName());
+        }
+
+        lineComboBox.addActionListener(e -> {
+            setModuleFilter((String) Objects.requireNonNull(lineComboBox.getSelectedItem()));
+            updateChart(Supervisor.state);
+            manager.resizeGUI();
+        });
+
         setupUI();
+    }
+
+    private void setModuleFilter(String selectedItem) {
+        if (selectedItem.equals("All")) {
+            specifiedModule = null;
+        } else {
+            specifiedModule = selectedItem;
+        }
     }
 
     private void setupUI() {
@@ -36,6 +65,7 @@ public class LineChart extends Chart {
 
         backButton = new BackButton(manager);
         this.add(backButton);
+        this.add(lineComboBox);
     }
 
     @Override
@@ -50,8 +80,9 @@ public class LineChart extends Chart {
      * @return {@link ChartPanel} of the chart.
      */
     private ChartPanel createChart() {
-        XYPlot plot = generatePlot(state);
+        plot = generatePlot(state);
         JFreeChart chart = new JFreeChart(plot);
+        setModuleColors(state.getModules());
         return new ChartPanel(chart);
     }
 
@@ -63,7 +94,7 @@ public class LineChart extends Chart {
      */
     private XYPlot generatePlot(State state) {
         DateAxis domainAxis = new DateAxis("Date");
-        TimePeriodValuesCollection dataset = generateDataset(state);
+        dataset = generateDataset(state);
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setDrawSeriesLineAsPath(true);
         XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
@@ -80,16 +111,47 @@ public class LineChart extends Chart {
      */
     private TimePeriodValuesCollection generateDataset(State state) {
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
-        for (Module m : state.getModules()) {
-            TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
-            for (StudySession s : m.getStudySessions()) {
-                TimePeriod day = new SimpleTimePeriod(s.date, s.date);
-                moduleSeries.add(day, s.duration.toMinutes());
+
+        if (specifiedModule == null) {
+            for (Module m : state.getModules()) {
+                TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
+
+                for (StudySession s : m.getStudySessions()) {
+                    TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+                    moduleSeries.add(day, s.duration.toMinutes());
+                }
+
+                dataset.addSeries(moduleSeries);
             }
-            dataset.addSeries(moduleSeries);
+
+        } else {
+            for (Module m : state.getModules()) {
+                if (m.getName().equals(specifiedModule)) {
+                    TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
+
+                    for (StudySession s : m.getStudySessions()) {
+                        TimePeriod day = new SimpleTimePeriod(s.date, s.date);
+                        moduleSeries.add(day, s.duration.toMinutes());
+                    }
+                    dataset.addSeries(moduleSeries);
+                }
+            }
+
         }
 
         return dataset;
+    }
+
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            try {
+                if (module.getStudySessions().length > 0) {
+                    plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+                }
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
     }
 
     @Override

@@ -5,27 +5,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import tempest.Module;
-import tempest.State;
-import tempest.Supervisor;
 import tempest.helpers.GUIHelper;
-import tempest.ui.GUIManager;
 
-public class DeleteSessionPageTest {
-
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    ManageSessionsPage manageSessions = (ManageSessionsPage) manager.getPage(ManageSessionsPage.class);
-    DeleteSessionPage deleteSession = (DeleteSessionPage) manager.getPage(DeleteSessionPage.class);
-
-    GUIHelper helper = new GUIHelper(manager, state);
+public class DeleteSessionPageTest extends GUIHelper{
 
     @Test
     public void backButton() {
-        helper.createSession("1", "", helper.createModule("test"));
+        createModuleAndSession();
 
-        homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
         deleteSession.getBackButton().doClick();
 
@@ -34,15 +21,14 @@ public class DeleteSessionPageTest {
 
     @Test
     public void deletingASession() {
-        Module test = helper.createModule("test");
+        Module test = createModule("test");
 
-        helper.createSession("4", "25", test);
-        helper.createSession("", "15", test);
+        createSession("4", "25", test);
+        createSession("", "15", test);
 
         int prevLen = test.getStudySessions().length;
 
         // Deleting one of the sessions
-        homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
         deleteSession.selectRow(1);
         deleteSession.getDeleteButton().doClick();
@@ -52,50 +38,111 @@ public class DeleteSessionPageTest {
 
     @Test
     public void deleteLastSession() {
-        helper.createSession("4", "25", helper.createModule("test"));
+        createModuleAndSession();
 
-        // Deleting this session
-        homePage.getManageSessionsButton().doClick();
-        manageSessions.getDelSessionsButton().doClick();
-        deleteSession.selectRow(0);
-        deleteSession.getDeleteButton().doClick();
+        // Deleting the only session
+        deleteSession(0);
 
+        // Asserting the user was kicked out of the delete session page
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
 
     @Test
     public void remainOnPageIfMoreSessions() {
-        Module test = helper.createModule("test");
+        // Creating a module - enabling the manage sessions button
+        Module test = createModuleChangePage("test");
 
-        helper.createSession("4", "25", test);
-        helper.createSession("", "15", test);
+        homePage.getManageSessionsButton().doClick();
+
+        // Creating two sessions (enabling the delete session button)
+        manageSessions.getAddSessionsButton().doClick();
+        createSession("4", "25", test);
+        createSession("", "15", test);
+        addSession.getActionButtons().getBackButton().doClick();
 
         // Deleting one of the sessions
-        homePage.getManageSessionsButton().doClick();
-        manageSessions.getDelSessionsButton().doClick();
-        deleteSession.selectRow(0);
-        deleteSession.getDeleteButton().doClick();
+        deleteSession(1);
 
+        // Asserting the user remains on the delete session page
         assertEquals(PageNames.DELETE_SESSION, manager.getCurrentCard());
     }
 
     @Test
     public void changeTableDisplay() {
-        Module test = helper.createModule("test");
+        //Creating two modules and adding sessions
+        Module test = createModule("test");
 
-        helper.createSession("", "25", test);
+        createSession("", "25", test);
 
-        Module test2 = helper.createModule("test2");
+        Module test2 = createModule("test2");
 
-        helper.createSession("4", "", test2);
-        helper.createSession("2", "12", test2);
+        createSession("4", "", test2);
+        createSession("2", "12", test2);
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getDelSessionsButton().doClick();
+        deleteSession.setDropDown(test.getName()); // Selecting 1st module
+        deleteSession.setDropDown(test2.getName()); // Selecting 2nd module
 
-        deleteSession.setDropDown(test.getName());
-
-        deleteSession.setDropDown(test2.getName());
+        // Asserting the length of sessions displayed matches the selected module's sessions length
         assertEquals(test2.getStudySessions().length, deleteSession.getRowCount());
+    }
+
+    @Test
+    public void allCheckBox() {
+        Module test = createModule("test");
+
+        createSession("", "25", test);
+        createSession("2", "13", test);
+
+        Module test2 = createModule("test2");
+
+        createSession("1", "30", test2);
+        createSession("5", "", test2);
+        createSession("", "5", test2);
+
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.getCheckBox().doClick();
+
+        int totalSessions = 0;
+
+        for (Module m : state.getModules()) {
+            totalSessions += m.getStudySessions().length;
+        }
+
+        assertEquals(totalSessions, deleteSession.getRowCount());
+    }
+
+    /**
+     * Deletes the session on the row passed in
+     *
+     * @param row The row of the session
+     */
+    private void deleteSession(int row) {
+        manageSessions.getDelSessionsButton().doClick();
+        deleteSession.selectRow(row);
+        deleteSession.getDeleteButton().doClick();
+    }
+
+    /**
+     * Creates 1 module and 1 study sessions, leaving the GUI on
+     * the manageSessionsPage
+     *
+     * This is a useful method for creating a module and session
+     * when the test uses the back button
+     *
+     */
+    private void createModuleAndSession() {
+        // Creating a module - enabling the manage sessions button
+        homePage.getManageModulesButton().doClick();
+        Module module = createModule("test");
+        manageModules.getBackButton().doClick();
+
+        homePage.getManageSessionsButton().doClick();
+
+        // Creating a session - enabling the delete session button
+        manageSessions.getAddSessionsButton().doClick();
+        createSession("1", "", module);
+        addSession.getActionButtons().getBackButton().doClick();
     }
 }

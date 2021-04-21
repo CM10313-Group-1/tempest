@@ -4,26 +4,30 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import tempest.Module;
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.components.ModuleDropDown;
-import tempest.ui.pages.charts.BarChart;
-import tempest.ui.pages.charts.Chart;
-import tempest.ui.pages.charts.LineChart;
-import tempest.ui.pages.charts.PieChart;
 import tempest.ui.pages.AddModulePage;
 import tempest.ui.pages.AddSessionPage;
+import tempest.ui.pages.ChartControlsPage;
 import tempest.ui.pages.ChartViewPage;
+import tempest.ui.pages.DataProtectionPage;
 import tempest.ui.pages.DeleteModulePage;
 import tempest.ui.pages.DeleteSessionPage;
+import tempest.ui.pages.GoalEntryPage;
 import tempest.ui.pages.HomePage;
 import tempest.ui.pages.ManageModulesPage;
 import tempest.ui.pages.ManageSessionsPage;
 import tempest.ui.pages.Page;
 import tempest.ui.pages.PageNames;
+import tempest.ui.pages.charts.Chart;
+import tempest.ui.pages.charts.LineChart;
+import tempest.ui.pages.charts.PieChart;
+import tempest.ui.pages.charts.StackedBarChart;
+import tempest.ui.pages.charts.TimeBarChart;
 
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
@@ -42,8 +46,8 @@ public class GUIManager extends JFrame {
     private final ManageSessionsPage manageSessions;
     private final ManageModulesPage manageModules;
     private final DeleteSessionPage deleteSession;
-
     private final ChartViewPage chartView;
+    private final ChartControlsPage chartControls;
 
     private LayoutManager layout;
 
@@ -53,9 +57,10 @@ public class GUIManager extends JFrame {
 
         new ModuleDropDown(state); // Creating the DefaultComboBoxModel
 
-        BarChart barChart;
+        StackedBarChart stackedBarChart;
         LineChart lineChart;
         PieChart pieChart;
+        TimeBarChart timeBarChart;
 
         this.pages = new Page[] {
                 home = new HomePage(state,this),
@@ -66,14 +71,18 @@ public class GUIManager extends JFrame {
                 new AddSessionPage(state, this),
                 deleteSession = new DeleteSessionPage(state, this),
                 chartView = new ChartViewPage(this),
-                barChart = new BarChart(state, this),
+                stackedBarChart = new StackedBarChart(state, this),
                 lineChart = new LineChart(state, this),
-                pieChart = new PieChart(state, this)
+                pieChart = new PieChart(state, this),
+                timeBarChart = new TimeBarChart(state, this),
+                new GoalEntryPage(state, this),
+                chartControls = new ChartControlsPage(state, this),
+                new DataProtectionPage(this),
 
                 // All new pages should be added here.
         };
 
-        this.charts = new Chart[] {barChart, lineChart, pieChart};
+        this.charts = new Chart[] {stackedBarChart, lineChart, pieChart, timeBarChart};
 
         start();
     }
@@ -112,8 +121,7 @@ public class GUIManager extends JFrame {
 
         switch (name) {
             case PageNames.MANAGE_SESSIONS:
-                manageSessions.setDeleteButtonActivity(modules);
-                manageSessions.setAddButtonActivity(modules);
+                manageSessions.setButtonActivity(modules);
                 break;
             case PageNames.MANAGE_MODULES:
                 manageModules.setButtonActivity(modules);
@@ -122,10 +130,13 @@ public class GUIManager extends JFrame {
                 deleteSession.updateTable();
                 break;
             case PageNames.HOME:
-                home.setButtonActivity(modules);
+                home.updatePage(modules);
                 break;
             case PageNames.CHART_VIEW:
                 chartView.updateCharts(charts, state);
+                break;
+            case PageNames.CHART_CONTROLS:
+                chartControls.updateState(state);
                 break;
         }
     }
@@ -158,7 +169,7 @@ public class GUIManager extends JFrame {
     /**
      * Resizes the frame for the new card
      */
-    private void resizeGUI() {
+    public void resizeGUI() {
         layout.preferredLayoutSize(this);
         this.pack();
         this.setLocationRelativeTo(null); // Centering GUI
@@ -183,5 +194,9 @@ public class GUIManager extends JFrame {
      */
     public void closeGUI() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    public Chart[] getCharts() {
+        return charts;
     }
 }

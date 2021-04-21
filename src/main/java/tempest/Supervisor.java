@@ -1,16 +1,19 @@
 package tempest;
 
-import java.io.IOException;
-import java.text.ParseException;
-
+import tempest.interfaces.BinaryInterface;
 import tempest.interfaces.CSVInterface;
 import tempest.ui.GUIManager;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 public class Supervisor {
 
-    private static final String STORE = "store.csv";
+    private static final String CSV_STORE = "store.csv";
+    public static final String BINARY_STORE = "store.bin";
     public static State state;
     private final CSVInterface csvInterface = new CSVInterface();
+    private final BinaryInterface binInterface = new BinaryInterface();
     private static Supervisor instance;
 
     private Supervisor() {
@@ -25,10 +28,15 @@ public class Supervisor {
 
     private void onStart() {
         try {
-            state = csvInterface.getState(STORE);
-        } catch (IOException | ParseException e) {
-            System.err.println("Failed to retrieve state"); // Want to print an error, what if just the 1st time?
-            state = new State();
+            state = binInterface.loadState(BINARY_STORE); // Try to read from binary.
+        } catch (IOException b) {
+            System.err.println("Failed to retrieve state from binary.");
+            try {
+                state = csvInterface.getState(CSV_STORE); // Try to read from csv.
+            } catch (IOException | ParseException c) {
+                System.err.println("Failed to retrieve state from csv.");
+                state = new State(); // Generate new state.
+            }
         }
 
         new GUIManager(state, this);
@@ -36,9 +44,10 @@ public class Supervisor {
 
     public void onClose() {
         try {
-            csvInterface.saveState(state, STORE);
+            csvInterface.saveState(state, CSV_STORE);
+            binInterface.saveState(state, BINARY_STORE);
         } catch (IOException e) {
-            System.err.println("Failed to save state");
+            System.err.println("Failed to save state.");
         }
     }
 

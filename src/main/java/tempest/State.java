@@ -1,11 +1,13 @@
 package tempest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class State {
-    private final List<Module> modules;
+public class State implements Serializable {
+    private static final long serialVersionUID = 3286962657482468670L;
+    public List<Module> modules;
 
     public State() {
         this.modules = new ArrayList<>();
