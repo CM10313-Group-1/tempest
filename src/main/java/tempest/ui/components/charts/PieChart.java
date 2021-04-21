@@ -14,6 +14,7 @@ import tempest.ui.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -71,14 +72,14 @@ public class PieChart extends Chart {
         for (Module module : state.getModules()) {
             totalStudyTime = 0;
             // filters the list and picks sessions for the valid time period
-            studySessions = filterList(module.getStudySessionsList());
+            studySessions = new LinkedList<>(Arrays.asList(module.getStudySessions()));
+            studySessions = filterList(studySessions);
 
             for (StudySession studySession : studySessions) {
                 totalStudyTime += studySession.duration.toMinutes();
             }
 
             dataset.setValue(module.getName(), totalStudyTime);
-            //System.out.println("for "  + module.getName() + " : " + totalStudyTime);
         }
 
         return dataset;

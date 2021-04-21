@@ -1,26 +1,20 @@
 package tempest.ui.pages;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.swing.*;
-
 import tempest.State;
 import tempest.Supervisor;
 import tempest.ui.GUIManager;
 import tempest.ui.ViewManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
-import tempest.ui.components.charts.BarChart;
-import tempest.ui.components.charts.Chart;
-import tempest.ui.components.charts.ChartTypes;
-import tempest.ui.components.charts.LineChart;
-import tempest.ui.components.charts.PieChart;
+import tempest.ui.components.charts.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class ChartViewPage extends Page {
     private static final long serialVersionUID = -7397536728116537358L;
@@ -35,19 +29,23 @@ public class ChartViewPage extends Page {
     private final LinkButton barChartLink = new LinkButton("Bar Chart", ChartTypes.BAR, this);
     private final LinkButton lineChartLink = new LinkButton("Line Chart", ChartTypes.LINE, this);
     private final LinkButton pieChartLink = new LinkButton("Pie Chart", ChartTypes.PIE, this);
-    private JComboBox comboBox = new JComboBox();
     private BackButton backButton;
+
+    private JComboBox pieComboBox = new JComboBox();
+    private final String[] options = {"All", "Last week", "Last month", "Last year"};
+
+    private String destination;
 
     public ChartViewPage(State state, GUIManager guiManager) {
         super(guiManager);
         this.manager = guiManager;
 
-        this.charts = new Chart[] { barChart = new BarChart(state, vm), lineChart = new LineChart(state, vm),
-                pieChart = new PieChart(state, vm) };
+        this.charts = new Chart[]{barChart = new BarChart(state, vm), lineChart = new LineChart(state, vm),
+                pieChart = new PieChart(state, vm)};
         vm = new ViewManager<>(charts, charts[0]);
         this.add(vm);
         addNavButtons();
-        addDropDownMenu();
+        addDropDownMenus();
         addVisibilityListener();
     }
 
@@ -67,16 +65,16 @@ public class ChartViewPage extends Page {
         this.add(buttonPanel);
     }
 
-    private void addDropDownMenu(){
+    private void addDropDownMenus() {
         JPanel comboBoxPanel = new JPanel();
 
-        String[] options = {"last week", "last month", "last year", "all"};
-        comboBox = new JComboBox(options);
-        comboBox.setSelectedIndex(3);
-        comboBox.addActionListener(this);
-        comboBox.setVisible(false);
+        pieComboBox = new JComboBox(options);
+        pieComboBox.setSelectedIndex(0);
+        pieComboBox.addActionListener(this);
+        pieComboBox.setVisible(false);
 
-        comboBoxPanel.add(comboBox);
+
+        comboBoxPanel.add(pieComboBox);
         this.add(comboBoxPanel);
     }
 
@@ -110,43 +108,46 @@ public class ChartViewPage extends Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if(source == comboBox){
-            setDateFilter((String) ((JComboBox)source).getSelectedItem());
+        System.out.println(source.toString());
+
+        if (source == pieComboBox) {
+            setDateFilter((String) ((JComboBox) source).getSelectedItem());
             pieChart.updateChart(Supervisor.state);
 
         } else {
-            String destination = ((LinkButton)source).getDestination();
+            destination = ((LinkButton) source).getDestination();
 
             vm.changeView(destination);
-            comboBox.setVisible(destination.equals(ChartTypes.PIE));
+            pieComboBox.setVisible(false);
 
+            if (destination.equals(ChartTypes.PIE)) {
+                pieComboBox.setVisible(true);
+            }
         }
         manager.resizeGUI();
     }
 
-    public void setDateFilter(String selectedItem){
-        if(selectedItem.equals("all")){
+    public void setDateFilter(String selectedItem) {
+        if (selectedItem.equals("All")) {
             pieChart.specifiedDate = null;
         } else {
             LocalDate localDate = LocalDate.now();
 
-            switch (selectedItem){
-                case "last week":
+            switch (selectedItem) {
+                case "Last week":
                     localDate = localDate.minusWeeks(1);
                     break;
 
-                case "last month":
+                case "Last month":
                     localDate = localDate.minusMonths(1);
                     break;
 
-                case "last year":
+                case "Last year":
                     localDate = localDate.minusYears(1);
                     break;
             }
 
             pieChart.specifiedDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
-
     }
-
 }
