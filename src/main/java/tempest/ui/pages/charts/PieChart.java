@@ -108,14 +108,6 @@ public class PieChart extends Chart {
         return dataset;
     }
 
-    private void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            if (module.getStudySessions().length > 0) {
-                plot.setSectionPaint(module.getName(), module.getColor());
-            }
-        }
-    }
-
     public LinkedList<StudySession> filterList(LinkedList<StudySession> studySessions) {
         // if the date is null, return the list. No filtering required
         if(specifiedDate == null){
@@ -133,6 +125,14 @@ public class PieChart extends Chart {
         return filteredSessions;
     }
 
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.setSectionPaint(module.getName(), module.getColor());
+            }
+        }
+    }
+
     @Override
     public String getName() {
         return PageNames.PIE;
@@ -146,7 +146,7 @@ public class PieChart extends Chart {
     public void actionPerformed(ActionEvent e) {
         JComboBox source = (JComboBox) e.getSource();
 
-        setDateFilter((String) ((JComboBox) source).getSelectedItem());
+        setDateFilter((String) source.getSelectedItem());
         this.updateChart(Supervisor.state);
 
         manager.resizeGUI();
