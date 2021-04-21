@@ -51,6 +51,14 @@ public class LineChart extends Chart {
         setupUI();
     }
 
+    private void setModuleFilter(String selectedItem) {
+        if (selectedItem.equals("All")) {
+            specifiedModule = null;
+        } else {
+            specifiedModule = selectedItem;
+        }
+    }
+
     private void setupUI() {
         this.removeAll();
         this.add(createChart());
@@ -153,13 +161,5 @@ public class LineChart extends Chart {
 
     public BackButton getBackButton() {
         return backButton;
-    }
-
-    public void setModuleFilter(String selectedItem) {
-        if (selectedItem.equals("All")) {
-            specifiedModule = null;
-        } else {
-            specifiedModule = selectedItem;
-        }
     }
 }
