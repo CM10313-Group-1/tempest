@@ -20,7 +20,7 @@ import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
@@ -30,8 +30,24 @@ public class LineChart extends Chart {
     private XYPlot plot;
     private TimePeriodValuesCollection dataset;
 
+    private final JComboBox<String> lineComboBox;
+
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
+
+        lineComboBox = new JComboBox<>();
+        lineComboBox.addItem("All");
+
+        for (Module m : state.getModules()) {
+            lineComboBox.addItem(m.getName());
+        }
+
+        lineComboBox.addActionListener(e -> {
+            setModuleFilter((String) Objects.requireNonNull(lineComboBox.getSelectedItem()));
+            updateChart(Supervisor.state);
+            manager.resizeGUI();
+        });
+
         setupUI();
     }
 
@@ -41,13 +57,6 @@ public class LineChart extends Chart {
 
         backButton = new BackButton(manager);
         this.add(backButton);
-
-        JComboBox lineComboBox = new JComboBox();
-        lineComboBox.addItem("All");
-        for (Module m : state.getModules()) {
-            lineComboBox.addItem(m.getName());
-        }
-        lineComboBox.addActionListener(this);
         this.add(lineComboBox);
     }
 
@@ -131,7 +140,7 @@ public class LineChart extends Chart {
                 if (module.getStudySessions().length > 0) {
                     plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
@@ -144,16 +153,6 @@ public class LineChart extends Chart {
 
     public BackButton getBackButton() {
         return backButton;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JComboBox source = (JComboBox) e.getSource();
-
-        setModuleFilter((String) source.getSelectedItem());
-        this.updateChart(Supervisor.state);
-
-        manager.resizeGUI();
     }
 
     public void setModuleFilter(String selectedItem) {
