@@ -29,6 +29,6 @@ public class ErrorMessage {
             System.err.println(message);
         }
 
-        return 5;
+        return -2;
     }
 }

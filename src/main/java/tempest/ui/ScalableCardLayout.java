@@ -6,7 +6,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 
-import tempest.ui.pages.HomePage;
 import tempest.ui.pages.PageNames;
 
 //Coded with help of: https://stackoverflow.com/questions/8277834/how-to-set-a-jframe-size-to-fit-the-cardlayout-displayed-jpanel
@@ -48,6 +47,12 @@ public class ScalableCardLayout extends CardLayout {
                     pref.height = 150;
                 }
 
+                return pref;
+            } else if (name.equals(PageNames.CHART_CONTROLS)) {
+                Insets insets = parent.getInsets();
+                Dimension pref = current.getPreferredSize();
+                pref.width = 589;
+                pref.height += insets.top + insets.bottom;
                 return pref;
             }
         }
