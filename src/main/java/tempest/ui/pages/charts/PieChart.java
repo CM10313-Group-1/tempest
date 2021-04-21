@@ -17,12 +17,12 @@ import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
@@ -31,9 +31,20 @@ public class PieChart extends Chart {
     private BackButton backButton;
     private PiePlot<Integer> plot;
 
+    private final JComboBox<String> pieComboBox;
+
     public PieChart(State state, GUIManager manager) {
         super(state, manager);
-        this.add(new JLabel(getName()));
+
+        String[] options = {"All", "Last week", "Last month", "Last year"};
+        pieComboBox = new JComboBox<>(options);
+
+        pieComboBox.addActionListener(e -> {
+            setDateFilter((String) Objects.requireNonNull(pieComboBox.getSelectedItem()));
+            updateChart(Supervisor.state);
+            manager.resizeGUI();
+        });
+
         setupUI();
     }
 
@@ -67,10 +78,6 @@ public class PieChart extends Chart {
 
         backButton = new BackButton(manager);
         this.add(backButton);
-
-        String[] options = {"All", "Last week", "Last month", "Last year"};
-        JComboBox pieComboBox = new JComboBox(options);
-        pieComboBox.addActionListener(this);
         this.add(pieComboBox);
     }
 
@@ -87,14 +94,15 @@ public class PieChart extends Chart {
      * @return The dataset consisting of module names and total study time in
      * minutes
      */
-    public PieDataset<String> generateDataset(State state) {
+    private PieDataset<String> generateDataset(State state) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         LinkedList<StudySession> studySessions;
         int totalStudyTime;
 
         for (Module module : state.getModules()) {
             totalStudyTime = 0;
-            // filters the list and picks sessions for the valid time period
+
+            // Filters the list and picks sessions for the valid time period
             studySessions = new LinkedList<>(Arrays.asList(module.getStudySessions()));
             studySessions = filterList(studySessions);
 
@@ -108,17 +116,9 @@ public class PieChart extends Chart {
         return dataset;
     }
 
-    private void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            if (module.getStudySessions().length > 0) {
-                plot.setSectionPaint(module.getName(), module.getColor());
-            }
-        }
-    }
-
-    public LinkedList<StudySession> filterList(LinkedList<StudySession> studySessions) {
-        // if the date is null, return the list. No filtering required
-        if(specifiedDate == null){
+    private LinkedList<StudySession> filterList(LinkedList<StudySession> studySessions) {
+        // If the date is null, return the list. No filtering required
+        if (specifiedDate == null) {
             return studySessions;
         }
 
@@ -133,26 +133,7 @@ public class PieChart extends Chart {
         return filteredSessions;
     }
 
-    @Override
-    public String getName() {
-        return PageNames.PIE;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JComboBox source = (JComboBox) e.getSource();
-
-        setDateFilter((String) ((JComboBox) source).getSelectedItem());
-        this.updateChart(Supervisor.state);
-
-        manager.resizeGUI();
-    }
-
-    public void setDateFilter(String selectedItem) {
+    private void setDateFilter(String selectedItem) {
         if (selectedItem.equals("All")) {
             this.specifiedDate = null;
         } else {
@@ -174,5 +155,22 @@ public class PieChart extends Chart {
 
             this.specifiedDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
+    }
+
+    private void setModuleColors(Module[] modules) {
+        for (Module module : modules) {
+            if (module.getStudySessions().length > 0) {
+                plot.setSectionPaint(module.getName(), module.getColor());
+            }
+        }
+    }
+
+    @Override
+    public String getName() {
+        return PageNames.PIE;
+    }
+
+    public BackButton getBackButton() {
+        return backButton;
     }
 }
