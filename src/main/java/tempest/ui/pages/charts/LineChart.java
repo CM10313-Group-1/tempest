@@ -44,7 +44,7 @@ public class LineChart extends Chart {
 
         JComboBox lineComboBox = new JComboBox();
         lineComboBox.addItem("All");
-        for (Module m : Supervisor.state.getModules()) {
+        for (Module m : state.getModules()) {
             lineComboBox.addItem(m.getName());
         }
         lineComboBox.addActionListener(this);
