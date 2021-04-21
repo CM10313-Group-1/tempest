@@ -148,9 +148,6 @@ public class GoalEntryPage extends Page implements InputPage {
 
             module.setGoal((int) time.toMinutes());
 
-            HomePage home = (HomePage) manager.getPage(HomePage.class);
-            home.createNew_OrUpdateBar(module);
-
             System.out.println("Goal successfully added");
 
             clearInput();

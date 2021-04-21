@@ -25,6 +25,7 @@ public class ChartControlsPage extends Page {
   }
 
   private void setupUI() {
+    this.removeAll();
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.add(controls = new ChartControls(state));
     JPanel buttonPanel = new JPanel();
@@ -33,6 +34,11 @@ public class ChartControlsPage extends Page {
     resetButton.addActionListener(this);
 
     this.add(buttonPanel);
+  }
+
+  public void updateState(State state) {
+    this.state = state;
+    setupUI();
   }
 
   @Override
