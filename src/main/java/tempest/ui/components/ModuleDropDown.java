@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+import tempest.Module;
 import tempest.State;
 
 public class ModuleDropDown {
@@ -27,7 +28,7 @@ public class ModuleDropDown {
      * @param state Instance of state from the manager
      */
     public ModuleDropDown(State state) {
-        String[] names = Arrays.asList(state.getModules()).stream().map(m -> m.getName()).toArray(String[]::new);
+        String[] names = Arrays.stream(state.getModules()).map(Module::getName).toArray(String[]::new);
         model = new DefaultComboBoxModel<>(names);
     }
 

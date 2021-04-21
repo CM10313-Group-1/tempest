@@ -8,9 +8,11 @@ import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.UIManager;
 
 import tempest.Module;
 import tempest.State;
@@ -30,34 +32,26 @@ public class HomePage extends Page {
     private final State state;
 
     private final HashMap<Module , JProgressBar> progressBars = new HashMap<>();
-    private final Date prevMonDate;
+    private Date prevMonDate;
 
-    private final JPanel progressPanel;
+    private final JPanel progressPanel = new JPanel();
 
     public HomePage(State state, GUIManager guiManager) {
         super(guiManager);
         this.state = state;
 
-        addNavButtons();
+        JPanel panel = new JPanel();
+
         setButtonActivity(state.getModules()); // Greying out buttons if required
+        panel.add(navButtons());
 
-        // Getting date of the most recent Monday
-        LocalDate prevMon = LocalDate.now(ZoneId.systemDefault()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        prevMonDate = java.util.Date.from(prevMon.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        panel.add(progressBars());
 
-        // Setting progress bar text colour
-        UIManager.put("ProgressBar.selectionForeground", Color.darkGray);
-        UIManager.put("ProgressBar.selectionBackground", Color.darkGray);
-        progressPanel = new JPanel();
-
-        // Create progress bars
-        createBarPerModule();
-
-        this.add(progressPanel);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        this.add(panel);
     }
 
-    private void addNavButtons() {
+    private JPanel navButtons() {
         JPanel navPanel = new JPanel();
 
         navPanel.add(manageModulesLink);
@@ -66,7 +60,26 @@ public class HomePage extends Page {
         navPanel.add(goalEntryLink);
         navPanel.add(DataLink);
 
-        this.add(navPanel);
+        return navPanel;
+    }
+
+    private JPanel progressBars() {
+        // Getting date of the most recent Monday
+        LocalDate prevMon = LocalDate.now(ZoneId.systemDefault()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        prevMonDate = java.util.Date.from(prevMon.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+
+        // Setting progress bar text colour
+        UIManager.put("ProgressBar.selectionForeground", Color.darkGray);
+        UIManager.put("ProgressBar.selectionBackground", Color.darkGray);
+
+        // Create progress bars
+        createBarPerModule();
+
+        // Setting grid layout for bars
+        double rows = progressBars.size() / 2.0;
+        progressPanel.setLayout(new GridLayout((int) Math.round(rows), 2, 5, 5));
+
+        return progressPanel;
     }
 
     /**
@@ -92,9 +105,13 @@ public class HomePage extends Page {
 
         populateBar(m, bar); // Set progress of bar
         bar.setStringPainted(true);
+        bar.setFocusable(false);
 
         progressBars.put(m, bar);
         progressPanel.add(bar);
+
+        double rows = progressBars.size() / 2.0;
+        progressPanel.setLayout(new GridLayout((int) Math.round(rows), 2, 5, 5));
     }
 
     /**
@@ -135,52 +152,12 @@ public class HomePage extends Page {
     }
 
     /**
-     * Repopulates each progress bar
+     * Creates new bars for each goal
      */
     private void updateBars() {
-        for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
-            Module m = barMap.getKey();
-            JProgressBar bar = barMap.getValue();
-
-            populateBar(m, bar);
-        }
-    }
-
-    /**
-     * Call this method when a modules goal has been set/changed
-     *
-     * A new bar is created if currently no bar exists for Module m
-     * Otherwise the existing bar is updated with the new goal
-     *
-     * If the new goal is 0 then the bar is deleted
-     *
-     * @param m The module of the progress bar
-     */
-    public void createNew_OrUpdateBar(Module m) {
-        for (Map.Entry<Module, JProgressBar> barMap : progressBars.entrySet()) {
-            Module module = barMap.getKey();
-
-            // Repopulate existing progress bar
-            if (module == m) {
-                JProgressBar bar = barMap.getValue();
-
-                // Goal set to 0, so 'delete' progress bar
-                if (m.getWeeklyGoal() == 0) {
-                    System.out.println("Called");
-                    progressBars.remove(m);
-                    progressPanel.remove(bar);
-                    return;
-                }
-
-                populateBar(m, bar);
-                return;
-            }
-        }
-
-        // No progress bar for this module - create one
-        if (m.getWeeklyGoal() > 0) {
-            createProgressBar(m);
-        }
+        progressPanel.removeAll();
+        progressBars.clear();
+        createBarPerModule();
     }
 
     /**
