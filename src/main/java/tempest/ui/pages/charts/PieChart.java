@@ -32,6 +32,7 @@ public class PieChart extends Chart {
     private PiePlot<Integer> plot;
 
     private final JComboBox<String> pieComboBox;
+    private Boolean labelFlag = false;
 
     public PieChart(State state, GUIManager manager) {
         super(state, manager);
@@ -76,8 +77,13 @@ public class PieChart extends Chart {
         this.removeAll();
         this.add(createChart());
 
+        JLabel noDataLabel = new JLabel("No data to display");
+        noDataLabel.setVisible(labelFlag);
+        this.add(noDataLabel);
+
         backButton = new BackButton(manager);
         this.add(backButton);
+
         this.add(pieComboBox);
     }
 
@@ -128,6 +134,11 @@ public class PieChart extends Chart {
             if ((session.date).after(specifiedDate)) {
                 filteredSessions.add(session);
             }
+        }
+
+        labelFlag = false;
+        if(filteredSessions.size()==0){
+            labelFlag = true;
         }
 
         return filteredSessions;
