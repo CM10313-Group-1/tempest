@@ -3,12 +3,10 @@ package tempest.ui.pages;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import tempest.State;
+import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
@@ -18,6 +16,7 @@ public class DeleteModulePage extends Page {
 
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
+    private final ErrorMessage errorMessage = new ErrorMessage();
 
     private BackButton backButton;
     private JButton deleteButton;
@@ -69,6 +68,11 @@ public class DeleteModulePage extends Page {
      */
     private void handleDeletingModule() {
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
+        int response = errorMessage.showWarningMessage(this, "If you delete \"" + moduleName + "\" all of its study sessions will also be deleted.\nAre you sure you want to continue?");
+
+        if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
 
         state.deleteModule(moduleName);
         moduleDropDown.removeModule(moduleName);
