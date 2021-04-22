@@ -3,6 +3,9 @@ package tempest.ui.pages;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import tempest.Module;
 import tempest.State;
@@ -39,7 +42,9 @@ public class AddModulePage extends Page implements InputPage {
     private void setupUI() {
         enterButton = (JButton) actionButtonPanel.getComponent(1);
 
-        moduleNameInput = new JTextField(20);
+        moduleNameInput = new JTextField(30);
+        moduleNameInput.setDocument(new TextInputLimit(80));
+
         JLabel moduleInputLabel = new JLabel("Enter module name:");
         ClearButton clearButton = new ClearButton(this);
 
@@ -133,5 +138,22 @@ public class AddModulePage extends Page implements InputPage {
 
     public void setModuleName(String name) {
         moduleNameInput.setText(name);
+    }
+}
+
+class TextInputLimit extends PlainDocument {
+    private final int limit;
+
+    TextInputLimit (int limit) {
+        super();
+        this.limit = limit;
+    }
+
+    public void insertString (int offset, String  str, AttributeSet attr) throws BadLocationException {
+        if (str == null) return;
+
+        if ((getLength() + str.length()) <= limit) {
+            super.insertString(offset, str, attr);
+        }
     }
 }
