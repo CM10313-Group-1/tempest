@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.swing.*;
 
+import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
@@ -68,10 +69,24 @@ public class DeleteModulePage extends Page {
      */
     private void handleDeletingModule() {
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
-        int response = errorMessage.showWarningMessage(this, "If you delete \"" + moduleName + "\" all of its study sessions will also be deleted.\nAre you sure you want to continue?");
+        boolean sessions = false;
 
-        if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
-            return;
+        for (Module m : state.getModules()) {
+            if (m.getName().equals(moduleName)) {
+                if (m.getStudySessions().length > 0) {
+                    sessions = true;
+                }
+                break;
+            }
+        }
+
+        // Only showing the warning if the module has sessions
+        if (sessions) {
+            int response = errorMessage.showWarningMessage(this, "If you delete \"" + moduleName + "\" all of its study sessions will also be deleted.\nAre you sure you want to continue?");
+
+            if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
         }
 
         state.deleteModule(moduleName);
