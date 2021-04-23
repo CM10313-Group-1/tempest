@@ -11,19 +11,19 @@ public class Supervisor {
 
     private static final String CSV_STORE = "store.csv";
     public static final String BINARY_STORE = "store.bin";
-    public static State state;
+    private static State state;
     private final CSVInterface csvInterface = new CSVInterface();
     private final BinaryInterface binInterface = new BinaryInterface();
-    private static Supervisor instance;
+    private static Supervisor supervisor;
 
     private Supervisor() {
     }
 
     public static Supervisor getInstance() {
-        if (instance == null) {
-            instance = new Supervisor();
+        if (supervisor == null) {
+            supervisor = new Supervisor();
         }
-        return instance;
+        return supervisor;
     }
 
     private void onStart() {
@@ -50,6 +50,10 @@ public class Supervisor {
             System.err.println("Failed to save state.");
         }
     }
+
+    public State getState() {
+        return state;
+    } //TODO: Delete if not using stress test
 
     public static void main(String[] args) {
         Supervisor s = Supervisor.getInstance();

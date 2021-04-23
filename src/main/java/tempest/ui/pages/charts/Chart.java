@@ -10,7 +10,7 @@ import tempest.ui.pages.Page;
 public abstract class Chart extends Page {
     private static final long serialVersionUID = -2648755806373669402L;
 
-    public State state;
+    protected State state;
 
     public Chart(State state, GUIManager manager) {
         super(manager);
