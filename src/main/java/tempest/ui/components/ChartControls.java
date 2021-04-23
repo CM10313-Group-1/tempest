@@ -14,7 +14,9 @@ public class ChartControls extends JPanel {
 
   public ChartControls(State state) {
     for (Module m : state.getModules()) {
-      moduleControls.put(m.hash(), new ModuleControl(this, m));
+      if (m.getStudySessions().length > 0) {
+        moduleControls.put(m.hash(), new ModuleControl(this, m));
+      }
     }
     setupUI();
   }
