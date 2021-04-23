@@ -139,6 +139,10 @@ public class LineChart extends Chart {
 
         if (specifiedModule == null) {
             for (Module m : state.getModules()) {
+                if (m.getStudySessions().length <= 0) {
+                    continue;
+                }
+
                 TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
 
                 for (StudySession s : m.getStudySessions()) {
@@ -148,7 +152,6 @@ public class LineChart extends Chart {
 
                 dataset.addSeries(moduleSeries);
             }
-
         } else {
             for (Module m : state.getModules()) {
                 if (m.getName().equals(specifiedModule)) {
@@ -162,19 +165,15 @@ public class LineChart extends Chart {
                     break;
                 }
             }
-
         }
 
         return dataset;
     }
 
     private void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            try {
-                if (module.getStudySessions().length > 0) {
-                    plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
-                }
-            } catch (IllegalArgumentException ignored) {
+        for (Module m : modules) {
+            if (m.getStudySessions().length > 0) {
+                plot.getRenderer().setSeriesPaint(dataset.indexOf(m.getName()), m.getColor());
             }
         }
 

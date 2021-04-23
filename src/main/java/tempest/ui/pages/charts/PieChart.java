@@ -106,18 +106,22 @@ public class PieChart extends Chart {
         LinkedList<StudySession> studySessions;
         int totalStudyTime;
 
-        for (Module module : state.getModules()) {
+        for (Module m : state.getModules()) {
+            if (m.getStudySessions().length <= 0) {
+                continue;
+            }
+
             totalStudyTime = 0;
 
             // Filters the list and picks sessions for the valid time period
-            studySessions = new LinkedList<>(Arrays.asList(module.getStudySessions()));
+            studySessions = new LinkedList<>(Arrays.asList(m.getStudySessions()));
             studySessions = filterList(studySessions);
 
             for (StudySession studySession : studySessions) {
                 totalStudyTime += studySession.duration.toMinutes();
             }
 
-            dataset.setValue(module.getName(), totalStudyTime);
+            dataset.setValue(m.getName(), totalStudyTime);
         }
 
         return dataset;
