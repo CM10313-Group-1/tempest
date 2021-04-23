@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 import tempest.Module;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
 
 public class ManageSessionsPage extends Page implements ActionListener {
@@ -15,8 +14,6 @@ private static final long serialVersionUID = -4290018724813073172L;
 
     private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
     private final LinkButton addSessionsButton = new LinkButton("Add study sessions", PageNames.ADD_SESSION, this);
-
-    private BackButton backButton;
 
     public ManageSessionsPage(GUIManager guiManager){
         super(guiManager);
@@ -30,11 +27,6 @@ private static final long serialVersionUID = -4290018724813073172L;
     }
 
     private void setupUI(){
-        JPanel backPanel = new JPanel();
-
-        backButton = new BackButton(manager);
-        backPanel.add(backButton);
-
         JPanel optionsPanel = new JPanel();
 
         optionsPanel.add(delSessionsButton);
@@ -75,13 +67,4 @@ private static final long serialVersionUID = -4290018724813073172L;
     public LinkButton getDelSessionsButton() {
         return delSessionsButton;
     }
-
-    /**
-     * Used by tests to get this pages back button
-     */
-    public BackButton getBackButton() {
-        return backButton;
-    }
-
-
 }

@@ -11,7 +11,6 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
@@ -27,10 +26,11 @@ public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
     public Date specifiedDate = null;
 
-    private BackButton backButton;
     private PiePlot<Integer> plot;
 
     private final JComboBox<String> pieComboBox;
+
+    //TODO: Only populate with modules with sessions
 
     public PieChart(State state, GUIManager manager) {
         super(state, manager);
@@ -51,10 +51,6 @@ public class PieChart extends Chart {
         this.removeAll();
 
         this.add(createChart());
-
-        backButton = new BackButton(manager);
-        JPanel backPanel = new JPanel();
-        backPanel.add(backButton);
 
         JPanel dropDownPanel = new JPanel();
         dropDownPanel.add(pieComboBox);
@@ -179,9 +175,5 @@ public class PieChart extends Chart {
     @Override
     public String getName() {
         return PageNames.PIE;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

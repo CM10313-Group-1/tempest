@@ -14,7 +14,6 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
@@ -25,12 +24,13 @@ public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
     private String specifiedModule = null;
 
-    private BackButton backButton;
     private XYPlot plot;
     private TimePeriodValuesCollection dataset;
 
     private JComboBox<String> lineComboBox;
     private String selectedItem = "";
+
+    //TODO: Only populate with modules with sessions
 
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
@@ -41,10 +41,6 @@ public class LineChart extends Chart {
         this.removeAll();
 
         this.add(createChart());
-
-        backButton = new BackButton(manager);
-        JPanel backPanel = new JPanel();
-        backPanel.add(backButton);
 
         JPanel dropDownPanel = new JPanel();
         createDropDown();
@@ -187,9 +183,5 @@ public class LineChart extends Chart {
     @Override
     public String getName() {
         return PageNames.LINE;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

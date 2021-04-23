@@ -8,14 +8,11 @@ import javax.swing.JPanel;
 
 import tempest.State;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
 import tempest.ui.pages.charts.Chart;
 
 public class ChartViewPage extends Page implements ActionListener {
     private static final long serialVersionUID = -7397536728116537358L;
-
-    private BackButton backButton;
 
     private final LinkButton stackedBarChartLink = new LinkButton("Stacked Bar Chart", PageNames.STACKED_BAR, this);
     private final LinkButton lineChartLink = new LinkButton("Line Chart", PageNames.LINE, this);
@@ -35,7 +32,6 @@ public class ChartViewPage extends Page implements ActionListener {
 
     private void addNavButtons() {
         JPanel chartButtons = new JPanel();
-        JPanel backPanel = new JPanel();
 
         chartButtons.add(stackedBarChartLink);
         chartButtons.add(lineChartLink);
@@ -44,10 +40,7 @@ public class ChartViewPage extends Page implements ActionListener {
 
         this.add(chartButtons);
 
-        backButton = new BackButton(manager);
-        backPanel.add(backButton);
         backPanel.add(new LinkButton("Chart Controls", PageNames.CHART_CONTROLS, this));
-
         this.add(backPanel);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -63,10 +56,6 @@ public class ChartViewPage extends Page implements ActionListener {
         for (Chart c : charts) {
             c.updateChart(state);
         }
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 
     public LinkButton getStackedBarChartButton() {

@@ -10,7 +10,6 @@ import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
 public class DeleteModulePage extends Page implements ActionListener {
@@ -20,7 +19,6 @@ public class DeleteModulePage extends Page implements ActionListener {
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private BackButton backButton;
     private JButton deleteButton;
     private JComboBox<Object> dropDown;
 
@@ -36,23 +34,17 @@ public class DeleteModulePage extends Page implements ActionListener {
     }
 
     private void setupUI() {
-        JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
-        backButton = new BackButton(manager);
         deleteButton = new JButton("Delete module");
-
         deleteButton.addActionListener(this);
-
-        buttonPanel.add(backButton);
-        buttonPanel.add(deleteButton);
+        backPanel.add(deleteButton);
 
         dropDown = moduleDropDown.getModuleDropDown();
-
         dropDownPanel.add(dropDown);
 
         this.add(dropDownPanel);
-        this.add(buttonPanel);
+        this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -100,10 +92,6 @@ public class DeleteModulePage extends Page implements ActionListener {
         }
 
         System.out.println(moduleName + " successfully deleted.");
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 
     public JButton getDeleteButton() {

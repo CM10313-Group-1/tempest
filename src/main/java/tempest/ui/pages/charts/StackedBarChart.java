@@ -19,13 +19,11 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 public class StackedBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
 
-    private BackButton backButton;
     private XYPlot plot;
     private TimeTableXYDataset dataset;
 
@@ -40,8 +38,7 @@ public class StackedBarChart extends Chart {
         this.removeAll();
         this.add(createBarChart());
 
-        backButton = new BackButton(manager);
-        this.add(backButton);
+        this.add(backPanel);
     }
 
     @Override
@@ -116,9 +113,5 @@ public class StackedBarChart extends Chart {
     @Override
     public String getName() {
         return PageNames.STACKED_BAR;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

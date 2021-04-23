@@ -20,13 +20,10 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 public class TimeBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
-
-    private BackButton backButton;
 
     private int[] hours;
 
@@ -41,8 +38,7 @@ public class TimeBarChart extends Chart {
         this.removeAll();
         this.add(createBarChart());
 
-        backButton = new BackButton(manager);
-        this.add(backButton);
+        this.add(backPanel);
     }
 
     @Override
@@ -115,9 +111,5 @@ public class TimeBarChart extends Chart {
     @Override
     public String getName() {
         return PageNames.TIME_BAR;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

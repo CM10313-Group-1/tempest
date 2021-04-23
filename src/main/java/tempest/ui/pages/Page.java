@@ -2,8 +2,9 @@ package tempest.ui.pages;
 
 import tempest.ui.GUIManager;
 import tempest.ui.PageManager;
+import tempest.ui.components.BackButton;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
  * All page classes should extend this class
@@ -11,10 +12,13 @@ import javax.swing.*;
 public abstract class Page extends JPanel {
     private static final long serialVersionUID = -7384127634444815527L;
 
-    public GUIManager manager;
+    protected GUIManager manager;
+    protected JPanel backPanel = new JPanel();
+    private final BackButton backButton;
 
     public Page(GUIManager manager){
         this.manager = manager;
+        backPanel.add(backButton = new BackButton(manager));
     }
 
     /**
@@ -25,4 +29,8 @@ public abstract class Page extends JPanel {
      * @return String - Name of the page
      */
     public abstract String getName();
+
+    public BackButton getBackButton() {
+        return backButton;
+    }
 }
