@@ -10,11 +10,10 @@ import tempest.State;
 
 public class ChartControls extends JPanel {
   private static final long serialVersionUID = -6226829577531742719L;
-  private HashMap<Long, ModuleControl> moduleControls = new HashMap<>();
+  private final HashMap<Long, ModuleControl> moduleControls = new HashMap<>();
 
   public ChartControls(State state) {
-    tempest.Module[] modules = state.getModules();
-    for (Module m : modules) {
+    for (Module m : state.getModules()) {
       moduleControls.put(m.hash(), new ModuleControl(this, m));
     }
     setupUI();
