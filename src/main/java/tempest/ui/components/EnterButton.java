@@ -7,18 +7,13 @@ public class EnterButton extends JButton {
     private static final long serialVersionUID = 9196271090552224373L;
 
     /**
-     * The created instance of ActionButtonPanel is a JPanel So just add it to the
+     * The created instance of EnterButton is a JButton so just add it to one of the
      * page's panel
      *
-     * The panel contains an enter button and a back button
-     *
-     * The enter button needs to be retrieved and handled in the class which calls
-     * this method
-     *
-     * The back button is handled already
+     * The enter button will call the calling pages actionPerformed method when clicked
      *
      * @param page    this (instance of class calling getButtonPanel). The class calling
-     *                needs to implement the inputPage interface
+     *                needs to implement the InputPage interface
      */
     public EnterButton(InputPage page) {
         super("Enter");
