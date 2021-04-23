@@ -16,7 +16,7 @@ public class AddSessionPageTest extends GUIHelper{
 
         homePage.getManageSessionsButton().doClick();
         manageSessions.getAddSessionsButton().doClick();
-        addSession.getActionButtons().getBackButton().doClick();
+        addSession.getBackButton().doClick();
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }

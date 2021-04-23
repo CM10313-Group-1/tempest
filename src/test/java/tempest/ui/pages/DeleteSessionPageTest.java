@@ -58,7 +58,7 @@ public class DeleteSessionPageTest extends GUIHelper{
         manageSessions.getAddSessionsButton().doClick();
         createSession("4", "25", test);
         createSession("", "15", test);
-        addSession.getActionButtons().getBackButton().doClick();
+        addSession.getBackButton().doClick();
 
         // Deleting one of the sessions
         deleteSession(1);
@@ -143,6 +143,6 @@ public class DeleteSessionPageTest extends GUIHelper{
         // Creating a session - enabling the delete session button
         manageSessions.getAddSessionsButton().doClick();
         createSession("1", "", module);
-        addSession.getActionButtons().getBackButton().doClick();
+        addSession.getBackButton().doClick();
     }
 }

@@ -1,15 +1,10 @@
 package tempest.ui.components;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import tempest.ui.GUIManager;
 import tempest.ui.pages.InputPage;
-import tempest.ui.pages.Page;
 
-public class ActionButtonPanel extends JPanel {
+public class EnterButton extends JButton {
     private static final long serialVersionUID = 9196271090552224373L;
-    private final BackButton backButton;
 
     /**
      * The created instance of ActionButtonPanel is a JPanel So just add it to the
@@ -22,21 +17,12 @@ public class ActionButtonPanel extends JPanel {
      *
      * The back button is handled already
      *
-     * @param manager Manager instance
      * @param page    this (instance of class calling getButtonPanel). The class calling
      *                needs to implement the inputPage interface
      */
-    public ActionButtonPanel(GUIManager manager, InputPage page) {
-        this.backButton = new BackButton(manager);
-        JButton enterButton = new JButton("Enter");
-        enterButton.setFocusable(false);
-        enterButton.addActionListener(page);
-
-        this.add(backButton);
-        this.add(enterButton);
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
+    public EnterButton(InputPage page) {
+        super("Enter");
+        this.setFocusable(false);
+        this.addActionListener(page);
     }
 }

@@ -18,7 +18,7 @@ public class GoalEntryPageTest extends GUIHelper{
 
         homePage.getEnterGoalsButton().doClick();
 
-        goalEntry.getActionButtons().getBackButton().doClick();
+        goalEntry.getBackButton().doClick();
 
         assertEquals(PageNames.HOME, manager.getCurrentCard());
     }

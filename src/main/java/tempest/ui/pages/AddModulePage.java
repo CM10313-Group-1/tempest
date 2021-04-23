@@ -11,7 +11,7 @@ import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ActionButtonPanel;
+import tempest.ui.components.EnterButton;
 import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
@@ -20,17 +20,16 @@ public class AddModulePage extends Page implements InputPage {
 
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel;
+    private final EnterButton enterButton;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JTextField moduleNameInput;
-    private JButton enterButton;
 
     public AddModulePage(State state, GUIManager guiManager) {
         super(guiManager);
 
         this.state = state;
-        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
+        this.enterButton = new EnterButton(this);
         setupUI();
     }
 
@@ -40,8 +39,6 @@ public class AddModulePage extends Page implements InputPage {
     }
 
     private void setupUI() {
-        enterButton = (JButton) actionButtonPanel.getComponent(1);
-
         moduleNameInput = new JTextField(30);
         moduleNameInput.setDocument(new TextInputLimit(80));
 
@@ -53,8 +50,10 @@ public class AddModulePage extends Page implements InputPage {
         inputPanel.add(moduleNameInput);
         inputPanel.add(clearButton);
 
+        backPanel.add(enterButton);
+
         this.add(inputPanel);
-        this.add(actionButtonPanel);
+        this.add(backPanel);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
@@ -128,11 +127,7 @@ public class AddModulePage extends Page implements InputPage {
         moduleDropDown.addModule(moduleName);
     }
 
-    public ActionButtonPanel getActionButtons() {
-        return actionButtonPanel;
-    }
-
-    public JButton getEnterButton() {
+    public EnterButton getEnterButton() {
         return enterButton;
     }
 
