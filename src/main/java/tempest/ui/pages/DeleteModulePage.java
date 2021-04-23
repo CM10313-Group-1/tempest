@@ -1,6 +1,7 @@
 package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class DeleteModulePage extends Page {
+public class DeleteModulePage extends Page implements ActionListener {
     private static final long serialVersionUID = 2589222088607882971L;
 
     private final State state;

@@ -1,6 +1,7 @@
 package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,7 +12,7 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
 
-public class ManageModulesPage extends Page {
+public class ManageModulesPage extends Page implements ActionListener {
     private static final long serialVersionUID = -3556076472382354523L;
 
     private final LinkButton addModuleButton = new LinkButton("Add a module", PageNames.ADD_MODULE, this);

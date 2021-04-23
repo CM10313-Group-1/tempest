@@ -10,7 +10,6 @@ import org.jfree.data.general.PieDataset;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.Supervisor;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
@@ -41,7 +40,7 @@ public class PieChart extends Chart {
 
         pieComboBox.addActionListener(e -> {
             setDateFilter((String) Objects.requireNonNull(pieComboBox.getSelectedItem()));
-            updateChart(Supervisor.state);
+            updateChart(state);
             manager.resizeGUI();
         });
 

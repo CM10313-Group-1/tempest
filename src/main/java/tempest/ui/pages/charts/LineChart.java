@@ -13,7 +13,6 @@ import org.jfree.data.time.TimePeriodValuesCollection;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.Supervisor;
 import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
@@ -66,7 +65,7 @@ public class LineChart extends Chart {
         lineComboBox.addActionListener(e -> {
             selectedItem = (String) lineComboBox.getSelectedItem();
             setModuleFilter(Objects.requireNonNull(selectedItem));
-            updateChart(Supervisor.state);
+            updateChart(state);
             manager.resizeGUI();
         });
     }

@@ -1,6 +1,7 @@
 package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,7 +13,7 @@ import tempest.ui.components.BackButton;
 import tempest.ui.components.ChartControls;
 import tempest.ui.components.ModuleControl;
 
-public class ChartControlsPage extends Page {
+public class ChartControlsPage extends Page implements ActionListener {
   private static final long serialVersionUID = -8177080116982919423L;
   private State state;
   private ChartControls controls;

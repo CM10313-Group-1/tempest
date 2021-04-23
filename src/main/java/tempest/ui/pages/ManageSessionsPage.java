@@ -1,5 +1,6 @@
 package tempest.ui.pages;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -9,7 +10,7 @@ import tempest.ui.GUIManager;
 import tempest.ui.components.BackButton;
 import tempest.ui.components.LinkButton;
 
-public class ManageSessionsPage extends Page {
+public class ManageSessionsPage extends Page implements ActionListener {
 private static final long serialVersionUID = -4290018724813073172L;
 
     private final LinkButton delSessionsButton = new LinkButton("View and delete study sessions", PageNames.DELETE_SESSION, this);
