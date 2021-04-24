@@ -172,7 +172,16 @@ public class LineChart extends Chart {
 
     private void setModuleColors(Module[] modules) {
         for (Module m : modules) {
-            if (m.getStudySessions().length > 0) {
+            if (m.getStudySessions().length <= 0) {
+                continue;
+            }
+
+            if (specifiedModule != null) {
+                if (m.getName().equals(specifiedModule)) {
+                    plot.getRenderer().setSeriesPaint(dataset.indexOf(m.getName()), m.getColor());
+                    break;
+                }
+            } else {
                 plot.getRenderer().setSeriesPaint(dataset.indexOf(m.getName()), m.getColor());
             }
         }
