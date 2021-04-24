@@ -62,7 +62,7 @@ public class LineChart extends Chart {
             selectedItem = (String) lineComboBox.getSelectedItem();
             setModuleFilter(Objects.requireNonNull(selectedItem));
             updateChart(state);
-            manager.resizeGUI();
+            manager.revalidate();
         });
     }
 

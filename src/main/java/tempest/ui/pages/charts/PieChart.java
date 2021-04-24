@@ -41,7 +41,7 @@ public class PieChart extends Chart {
         pieComboBox.addActionListener(e -> {
             setDateFilter((String) Objects.requireNonNull(pieComboBox.getSelectedItem()));
             updateChart(state);
-            manager.resizeGUI();
+            manager.revalidate();
         });
 
         setupUI();
