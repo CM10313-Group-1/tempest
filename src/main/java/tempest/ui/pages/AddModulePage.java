@@ -80,23 +80,18 @@ public class AddModulePage extends Page implements InputPage {
             return;
         }
 
-        boolean uniqueName = true;
-
         // Checking if module name is unique
         for (Module m : state.getModules()) {
             if (moduleName.equals(m.getName())) {
                 errorMessage(new Exception("Another module already has this name"));
-                uniqueName = false;
-                break;
+                return;
             }
         }
 
-        if (uniqueName) {
-            addModule(moduleName);
-            clearInput();
+        addModule(moduleName);
+        clearInput();
 
-            System.out.println("Module successfully created");
-        }
+        System.out.println("Module successfully created");
     }
 
     /**
@@ -118,7 +113,7 @@ public class AddModulePage extends Page implements InputPage {
 
     /**
      * Creates a new module using state and updates the module drop down in
-     * GUIComponents
+     * GUIComponents`
      *
      * @param moduleName Name of module to be created
      */
@@ -136,6 +131,7 @@ public class AddModulePage extends Page implements InputPage {
     }
 }
 
+//https://www.tutorialspoint.com/how-can-we-limit-the-number-of-characters-inside-a-jtextfield-in-java
 class TextInputLimit extends PlainDocument {
     private final int limit;
 

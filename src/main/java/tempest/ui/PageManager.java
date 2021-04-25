@@ -86,15 +86,4 @@ public class PageManager extends JPanel {
         System.err.println("Couldn't find a view of this class.");
         return null;
     }
-
-    /**
-     * Finds the name of the first instance of a particular class in the possible
-     * pages.
-     *
-     * @param classObject The class to be found.
-     * @return The page, if it exists; else null.
-     */
-    public String getPageName(Class<? extends Page> classObject) {
-        return getPage(classObject).getName();
-    }
 }
