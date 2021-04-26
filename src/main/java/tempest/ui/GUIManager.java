@@ -33,7 +33,7 @@ public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
     /** The page manager for the GUI. Handles which page should be visible. */
-    private static PageManager pm;
+    private PageManager pm;
 
     /** All pages that can be displayed by the page manager. */
     private final Page[] pages;
