@@ -2,34 +2,25 @@ package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
-
 import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.EnterButton;
-import tempest.ui.components.ClearButton;
+import tempest.ui.TextInputLimit;
 import tempest.ui.components.ModuleDropDown;
 
-public class AddModulePage extends Page implements InputPage {
+import javax.swing.*;
+
+public class AddModulePage extends InputPage {
     private static final long serialVersionUID = -6175924935345590918L;
 
-    private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final EnterButton enterButton;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JTextField moduleNameInput;
 
     public AddModulePage(State state, GUIManager guiManager) {
-        super(guiManager);
-
-        this.state = state;
-        this.enterButton = new EnterButton(this);
+        super(guiManager, state);
         setupUI();
     }
 
@@ -43,7 +34,6 @@ public class AddModulePage extends Page implements InputPage {
         moduleNameInput.setDocument(new TextInputLimit(80));
 
         JLabel moduleInputLabel = new JLabel("Enter module name:");
-        ClearButton clearButton = new ClearButton(this);
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(moduleInputLabel);
@@ -122,29 +112,8 @@ public class AddModulePage extends Page implements InputPage {
         moduleDropDown.addModule(moduleName);
     }
 
-    public EnterButton getEnterButton() {
-        return enterButton;
-    }
-
     public void setModuleName(String name) {
         moduleNameInput.setText(name);
     }
 }
 
-//https://www.tutorialspoint.com/how-can-we-limit-the-number-of-characters-inside-a-jtextfield-in-java
-class TextInputLimit extends PlainDocument {
-    private final int limit;
-
-    TextInputLimit (int limit) {
-        super();
-        this.limit = limit;
-    }
-
-    public void insertString (int offset, String  str, AttributeSet attr) throws BadLocationException {
-        if (str == null) return;
-
-        if ((getLength() + str.length()) <= limit) {
-            super.insertString(offset, str, attr);
-        }
-    }
-}

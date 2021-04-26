@@ -4,8 +4,6 @@ import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.EnterButton;
-import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
 import javax.swing.*;
@@ -14,11 +12,9 @@ import java.awt.event.ActionEvent;
 import java.time.Duration;
 import java.util.Objects;
 
-public class GoalEntryPage extends Page implements InputPage {
+public class GoalEntryPage extends InputPage {
 
-    private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final EnterButton enterButton;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JComboBox<Object> dropDown;
@@ -26,10 +22,7 @@ public class GoalEntryPage extends Page implements InputPage {
     private JTextField minutesInput;
 
     public GoalEntryPage(State state, GUIManager guiManager) {
-        super(guiManager);
-        this.state = state;
-
-        this.enterButton = new EnterButton(this);
+        super(guiManager, state);
         setupUI();
     }
 
@@ -64,8 +57,6 @@ public class GoalEntryPage extends Page implements InputPage {
         timeInputPanel.setLayout(new FlowLayout());
 
         inputPanel.add(timeInputPanel);
-
-        ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
         backPanel.add(enterButton);
@@ -163,10 +154,6 @@ public class GoalEntryPage extends Page implements InputPage {
 
     private void errorMessage(Exception message) {
         errorMessage.showMessage(this, message);
-    }
-
-    public EnterButton getEnterButton() {
-        return enterButton;
     }
 
     public void setHours(String hours) {

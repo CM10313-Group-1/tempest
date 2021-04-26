@@ -15,16 +15,12 @@ import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.EnterButton;
-import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class AddSessionPage extends Page implements InputPage {
+public class AddSessionPage extends InputPage {
     private static final long serialVersionUID = 6738660438220363619L;
 
-    private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final EnterButton enterButton;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JComboBox<Object> dropDown;
@@ -32,10 +28,7 @@ public class AddSessionPage extends Page implements InputPage {
     private JTextField minutesInput;
 
     public AddSessionPage(State state, GUIManager guiManager) {
-        super(guiManager);
-
-        this.state = state;
-        this.enterButton = new EnterButton(this);
+        super(guiManager, state);
         setupUI();
     }
 
@@ -70,8 +63,6 @@ public class AddSessionPage extends Page implements InputPage {
         timeInputPanel.setLayout(new FlowLayout());
 
         inputPanel.add(timeInputPanel);
-
-        ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
         backPanel.add(enterButton);
@@ -196,10 +187,6 @@ public class AddSessionPage extends Page implements InputPage {
     public void clearInput() {
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
-    }
-
-    public EnterButton getEnterButton() {
-        return enterButton;
     }
 
     public void setHours(String hours) {
