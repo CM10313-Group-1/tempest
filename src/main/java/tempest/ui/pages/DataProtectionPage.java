@@ -1,13 +1,10 @@
 package tempest.ui.pages;
 
-
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 
 import javax.swing.*;
 
 public class DataProtectionPage extends Page {
-    private BackButton backButton;
     static String text;
 
     public DataProtectionPage(GUIManager manager) {
@@ -21,7 +18,6 @@ public class DataProtectionPage extends Page {
     }
 
     private void setupUI(){
-        JPanel backPanel = new JPanel();
         JPanel textPanel = new JPanel();
 
         text = "<ul><h3><center>Data Protection Information</center></h3>" +
@@ -39,14 +35,8 @@ public class DataProtectionPage extends Page {
         textLabel.setText(text);
         textPanel.add(textLabel);
 
-        backButton = new BackButton(manager);
-        backPanel.add(backButton);
         this.add(textPanel);
         this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

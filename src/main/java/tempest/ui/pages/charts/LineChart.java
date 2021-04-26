@@ -13,9 +13,7 @@ import org.jfree.data.time.TimePeriodValuesCollection;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
@@ -26,29 +24,57 @@ public class LineChart extends Chart {
     private static final long serialVersionUID = -1275171253819439097L;
     private String specifiedModule = null;
 
-    private BackButton backButton;
     private XYPlot plot;
     private TimePeriodValuesCollection dataset;
 
-    private final JComboBox<String> lineComboBox;
+    private JComboBox<String> lineComboBox;
+    private String selectedItem = "";
 
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
+        setupUI();
+    }
 
+    private void setupUI() {
+        this.removeAll();
+
+        this.add(createChart());
+
+        JPanel dropDownPanel = new JPanel();
+        createDropDown();
+        dropDownPanel.add(lineComboBox);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backPanel);
+        buttonPanel.add(dropDownPanel);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        this.add(buttonPanel);
+    }
+
+    private void createDropDown() {
         lineComboBox = new JComboBox<>();
+        populateDropDown();
+
+        lineComboBox.addActionListener(e -> {
+            selectedItem = (String) lineComboBox.getSelectedItem();
+            setModuleFilter(Objects.requireNonNull(selectedItem));
+            updateChart(state);
+            manager.revalidate();
+        });
+    }
+
+    private void populateDropDown() {
         lineComboBox.addItem("All");
 
         for (Module m : state.getModules()) {
-            lineComboBox.addItem(m.getName());
+            if (m.getStudySessions().length > 0) {
+                lineComboBox.addItem(m.getName());
+            }
         }
 
-        lineComboBox.addActionListener(e -> {
-            setModuleFilter((String) Objects.requireNonNull(lineComboBox.getSelectedItem()));
-            updateChart(Supervisor.state);
-            manager.resizeGUI();
-        });
+        lineComboBox.setSelectedItem(selectedItem);
 
-        setupUI();
     }
 
     private void setModuleFilter(String selectedItem) {
@@ -57,15 +83,6 @@ public class LineChart extends Chart {
         } else {
             specifiedModule = selectedItem;
         }
-    }
-
-    private void setupUI() {
-        this.removeAll();
-        this.add(createChart());
-
-        backButton = new BackButton(manager);
-        this.add(backButton);
-        this.add(lineComboBox);
     }
 
     @Override
@@ -81,7 +98,7 @@ public class LineChart extends Chart {
      */
     private ChartPanel createChart() {
         plot = generatePlot(state);
-        JFreeChart chart = new JFreeChart(plot);
+        JFreeChart chart = new JFreeChart("Study Sessions Across Time", plot);
         setModuleColors(state.getModules());
         return new ChartPanel(chart);
     }
@@ -93,12 +110,18 @@ public class LineChart extends Chart {
      * @return A plot showing all data as a line chart.
      */
     private XYPlot generatePlot(State state) {
-        DateAxis domainAxis = new DateAxis("Date");
         dataset = generateDataset(state);
+
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setDrawSeriesLineAsPath(true);
-        XYPlot plot = new XYPlot(dataset, domainAxis, new NumberAxis("Minutes Studied"), renderer);
+
+        XYPlot plot = new XYPlot(dataset, new DateAxis("Date"), new NumberAxis("Minutes Studied"), renderer);
         plot.setBackgroundPaint(Color.DARK_GRAY);
+
+        Font bold = new Font("Dialog", Font.BOLD, 15);
+        plot.getDomainAxis().setLabelFont(bold);
+        plot.getRangeAxis().setLabelFont(bold);
+
         return plot;
     }
 
@@ -114,6 +137,10 @@ public class LineChart extends Chart {
 
         if (specifiedModule == null) {
             for (Module m : state.getModules()) {
+                if (m.getStudySessions().length <= 0) {
+                    continue;
+                }
+
                 TimePeriodValues moduleSeries = new TimePeriodValues(m.getName());
 
                 for (StudySession s : m.getStudySessions()) {
@@ -123,7 +150,6 @@ public class LineChart extends Chart {
 
                 dataset.addSeries(moduleSeries);
             }
-
         } else {
             for (Module m : state.getModules()) {
                 if (m.getName().equals(specifiedModule)) {
@@ -134,21 +160,27 @@ public class LineChart extends Chart {
                         moduleSeries.add(day, s.duration.toMinutes());
                     }
                     dataset.addSeries(moduleSeries);
+                    break;
                 }
             }
-
         }
 
         return dataset;
     }
 
     private void setModuleColors(Module[] modules) {
-        for (Module module : modules) {
-            try {
-                if (module.getStudySessions().length > 0) {
-                    plot.getRenderer().setSeriesPaint(dataset.indexOf(module.getName()), module.getColor());
+        for (Module m : modules) {
+            if (m.getStudySessions().length <= 0) {
+                continue;
+            }
+
+            if (specifiedModule != null) {
+                if (m.getName().equals(specifiedModule)) {
+                    plot.getRenderer().setSeriesPaint(dataset.indexOf(m.getName()), m.getColor());
+                    break;
                 }
-            } catch (IllegalArgumentException ignored) {
+            } else {
+                plot.getRenderer().setSeriesPaint(dataset.indexOf(m.getName()), m.getColor());
             }
         }
 
@@ -157,9 +189,5 @@ public class LineChart extends Chart {
     @Override
     public String getName() {
         return PageNames.LINE;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

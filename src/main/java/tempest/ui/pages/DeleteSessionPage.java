@@ -17,7 +17,6 @@ import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class DeleteSessionPage extends Page {
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
 
     private JButton deleteButton;
-    private BackButton backButton;
     private JComboBox<Object> dropDown;
 
     private ArrayList<StudySession> sessions;
@@ -78,11 +76,6 @@ public class DeleteSessionPage extends Page {
         JScrollPane scroll = createTable(); // Scroll contains the JTable
         this.add(scroll);
 
-        JPanel optionsPanel = new JPanel();
-
-        // Back Button
-        backButton = new BackButton(manager);
-
         // Delete Button
         deleteButton = new JButton("Delete Session");
         deleteButton.setFocusable(false);
@@ -90,10 +83,9 @@ public class DeleteSessionPage extends Page {
         // Deleting the selected session
         deleteButton.addActionListener(e -> handleDeletingSession());
 
-        optionsPanel.add(backButton);
-        optionsPanel.add(deleteButton);
+        backPanel.add(deleteButton);
 
-        this.add(optionsPanel);
+        this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -300,10 +292,6 @@ public class DeleteSessionPage extends Page {
         } else {
             populateTable();
         }
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 
     public JButton getDeleteButton() {

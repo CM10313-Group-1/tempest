@@ -15,28 +15,20 @@ import tempest.State;
 import tempest.StudySession;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ActionButtonPanel;
-import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class AddSessionPage extends Page implements InputPage {
+public class AddSessionPage extends InputPage {
     private static final long serialVersionUID = 6738660438220363619L;
 
-    private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JComboBox<Object> dropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
-    private JButton enterButton;
 
     public AddSessionPage(State state, GUIManager guiManager) {
-        super(guiManager);
-
-        this.state = state;
-        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
+        super(guiManager, state);
         setupUI();
     }
 
@@ -46,8 +38,6 @@ public class AddSessionPage extends Page implements InputPage {
     }
 
     private void setupUI() {
-        enterButton = (JButton) actionButtonPanel.getComponent(1);
-
         JPanel inputPanel = new JPanel();
 
         dropDown = moduleDropDown.getModuleDropDown();
@@ -73,12 +63,12 @@ public class AddSessionPage extends Page implements InputPage {
         timeInputPanel.setLayout(new FlowLayout());
 
         inputPanel.add(timeInputPanel);
-
-        ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
+        backPanel.add(enterButton);
+
         this.add(inputPanel);
-        this.add(actionButtonPanel);
+        this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -197,14 +187,6 @@ public class AddSessionPage extends Page implements InputPage {
     public void clearInput() {
         hoursInput.setText(""); // Clearing inputted hours
         minutesInput.setText(""); // Clearing inputted mins
-    }
-
-    public JButton getEnterButton() {
-        return enterButton;
-    }
-
-    public ActionButtonPanel getActionButtons() {
-        return actionButtonPanel;
     }
 
     public void setHours(String hours) {

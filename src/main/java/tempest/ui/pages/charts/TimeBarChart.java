@@ -1,6 +1,6 @@
 package tempest.ui.pages.charts;
 
-import java.awt.Color;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -20,13 +20,10 @@ import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 public class TimeBarChart extends Chart {
     private static final long serialVersionUID = -2288959674462946064L;
-
-    private BackButton backButton;
 
     private int[] hours;
 
@@ -41,8 +38,7 @@ public class TimeBarChart extends Chart {
         this.removeAll();
         this.add(createBarChart());
 
-        backButton = new BackButton(manager);
-        this.add(backButton);
+        this.add(backPanel);
     }
 
     @Override
@@ -75,7 +71,11 @@ public class TimeBarChart extends Chart {
         CategoryPlot plot = new CategoryPlot(createDataset(), hour, time, renderer);
         plot.setBackgroundPaint(Color.DARK_GRAY);
 
-        JFreeChart barChart = new JFreeChart("Time Studied Per Hour", plot);
+        Font bold = new Font("Dialog", Font.BOLD, 15);
+        plot.getDomainAxis().setLabelFont(bold);
+        plot.getRangeAxis().setLabelFont(bold);
+
+        JFreeChart barChart = new JFreeChart("% Time Studied Per Hour", plot);
 
         return new ChartPanel(barChart);
     }
@@ -111,9 +111,5 @@ public class TimeBarChart extends Chart {
     @Override
     public String getName() {
         return PageNames.TIME_BAR;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

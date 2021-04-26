@@ -4,8 +4,6 @@ import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.ActionButtonPanel;
-import tempest.ui.components.ClearButton;
 import tempest.ui.components.ModuleDropDown;
 
 import javax.swing.*;
@@ -14,23 +12,17 @@ import java.awt.event.ActionEvent;
 import java.time.Duration;
 import java.util.Objects;
 
-public class GoalEntryPage extends Page implements InputPage {
+public class GoalEntryPage extends InputPage {
 
-    private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
-    private final ActionButtonPanel actionButtonPanel;
     private final ErrorMessage errorMessage = new ErrorMessage();
 
     private JComboBox<Object> dropDown;
     private JTextField hoursInput;
     private JTextField minutesInput;
-    private JButton enterButton;
 
     public GoalEntryPage(State state, GUIManager guiManager) {
-        super(guiManager);
-        this.state = state;
-
-        this.actionButtonPanel = new ActionButtonPanel(guiManager, this);
+        super(guiManager, state);
         setupUI();
     }
 
@@ -40,8 +32,6 @@ public class GoalEntryPage extends Page implements InputPage {
     }
 
     private void setupUI() {
-        enterButton = (JButton) actionButtonPanel.getComponent(1);
-
         JPanel inputPanel = new JPanel();
 
         dropDown = moduleDropDown.getModuleDropDown();
@@ -67,12 +57,12 @@ public class GoalEntryPage extends Page implements InputPage {
         timeInputPanel.setLayout(new FlowLayout());
 
         inputPanel.add(timeInputPanel);
-
-        ClearButton clearButton = new ClearButton(this);
         inputPanel.add(clearButton);
 
+        backPanel.add(enterButton);
+
         this.add(inputPanel);
-        this.add(actionButtonPanel);
+        this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -164,14 +154,6 @@ public class GoalEntryPage extends Page implements InputPage {
 
     private void errorMessage(Exception message) {
         errorMessage.showMessage(this, message);
-    }
-
-    public JButton getEnterButton() {
-        return enterButton;
-    }
-
-    public ActionButtonPanel getActionButtons() {
-        return actionButtonPanel;
     }
 
     public void setHours(String hours) {

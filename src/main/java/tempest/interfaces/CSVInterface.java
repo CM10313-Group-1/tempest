@@ -189,7 +189,7 @@ public class CSVInterface {
    * @throws IOException    If the reader cannot read the file.
    * @throws ParseException If the file cannot be parsed.
    */
-  protected Module[] parseModules(BufferedReader reader) throws IOException, ParseException {
+  private Module[] parseModules(BufferedReader reader) throws IOException, ParseException {
     HashMap<UUID, Module> modules = new HashMap<UUID, Module>();
     String line;
 
@@ -222,7 +222,7 @@ public class CSVInterface {
    * @param headerRow The headerRow in the database.
    * @return True if the headers match.
    */
-  protected boolean isCorrectFormat(String headerRow) {
+  private boolean isCorrectFormat(String headerRow) {
     String[] headers = headerRow.split(String.valueOf(DELIMITER));
     return Arrays.equals(headers, HEADINGS);
   }

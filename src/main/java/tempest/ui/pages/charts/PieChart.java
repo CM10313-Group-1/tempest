@@ -10,9 +10,7 @@ import org.jfree.data.general.PieDataset;
 import tempest.Module;
 import tempest.State;
 import tempest.StudySession;
-import tempest.Supervisor;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.pages.PageNames;
 
 import javax.swing.*;
@@ -28,7 +26,6 @@ public class PieChart extends Chart {
     private static final long serialVersionUID = 7074811797165362922L;
     public Date specifiedDate = null;
 
-    private BackButton backButton;
     private PiePlot<Integer> plot;
 
     private final JComboBox<String> pieComboBox;
@@ -41,17 +38,34 @@ public class PieChart extends Chart {
 
         pieComboBox.addActionListener(e -> {
             setDateFilter((String) Objects.requireNonNull(pieComboBox.getSelectedItem()));
-            updateChart(Supervisor.state);
-            manager.resizeGUI();
+            updateChart(state);
+            manager.revalidate();
         });
 
         setupUI();
     }
 
+    private void setupUI() {
+        this.removeAll();
+
+        this.add(createChart());
+
+        JPanel dropDownPanel = new JPanel();
+        dropDownPanel.add(pieComboBox);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backPanel);
+        buttonPanel.add(dropDownPanel);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        this.add(buttonPanel);
+    }
+
     @SuppressWarnings("unchecked")
     private ChartPanel createChart() {
         PieDataset<String> dataset = generateDataset(state);
-        ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart("Pie Chart", dataset, true, true, false));
+        String title = "Total Time Studied Per Module";
+        ChartPanel pieChart = new ChartPanel(ChartFactory.createPieChart(title, dataset, true, true, false));
 
         // Changes the label formatting to allow minutes to be shown.
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} mins");
@@ -72,16 +86,6 @@ public class PieChart extends Chart {
         return pieChart;
     }
 
-    private void setupUI() {
-        this.removeAll();
-        this.add(createChart());
-
-        backButton = new BackButton(manager);
-        this.add(backButton);
-
-        this.add(pieComboBox);
-    }
-
     @Override
     public void updateChart(State state) {
         this.state = state;
@@ -100,18 +104,22 @@ public class PieChart extends Chart {
         LinkedList<StudySession> studySessions;
         int totalStudyTime;
 
-        for (Module module : state.getModules()) {
+        for (Module m : state.getModules()) {
+            if (m.getStudySessions().length <= 0) {
+                continue;
+            }
+
             totalStudyTime = 0;
 
             // Filters the list and picks sessions for the valid time period
-            studySessions = new LinkedList<>(Arrays.asList(module.getStudySessions()));
+            studySessions = new LinkedList<>(Arrays.asList(m.getStudySessions()));
             studySessions = filterList(studySessions);
 
             for (StudySession studySession : studySessions) {
                 totalStudyTime += studySession.duration.toMinutes();
             }
 
-            dataset.setValue(module.getName(), totalStudyTime);
+            dataset.setValue(m.getName(), totalStudyTime);
         }
 
         return dataset;
@@ -169,9 +177,5 @@ public class PieChart extends Chart {
     @Override
     public String getName() {
         return PageNames.PIE;
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 }

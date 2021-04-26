@@ -1,23 +1,24 @@
 package tempest.ui.pages;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import tempest.ui.GUIManager;
 import tempest.ui.PageManager;
+import tempest.ui.components.BackButton;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
  * All page classes should extend this class
  */
-public abstract class Page extends JPanel implements ActionListener {
+public abstract class Page extends JPanel {
     private static final long serialVersionUID = -7384127634444815527L;
 
-    public GUIManager manager;
+    protected GUIManager manager;
+    protected JPanel backPanel = new JPanel();
+    private final BackButton backButton;
 
     public Page(GUIManager manager){
         this.manager = manager;
+        backPanel.add(backButton = new BackButton(manager));
     }
 
     /**
@@ -29,7 +30,7 @@ public abstract class Page extends JPanel implements ActionListener {
      */
     public abstract String getName();
 
-    public void actionPerformed(ActionEvent e) {
-        System.err.println("One of the page classes your using needs an actionPerformed() method");
+    public BackButton getBackButton() {
+        return backButton;
     }
 }

@@ -18,9 +18,26 @@ public class DeleteSessionPageTest extends GUIHelper{
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
+    @Test
+    public void deletingASession_Table() {
+        Module test = createModule("test");
+
+        createSession("4", "25", test);
+        createSession("", "15", test);
+
+        // Deleting one of the sessions
+        manageSessions.getDelSessionsButton().doClick();
+
+        int prevLen = deleteSession.getRowCount();
+
+        deleteSession.selectRow(1);
+        deleteSession.getDeleteButton().doClick();
+
+        assertEquals(prevLen - 1, deleteSession.getRowCount());
+    }
 
     @Test
-    public void deletingASession() {
+    public void deletingASession_Module() {
         Module test = createModule("test");
 
         createSession("4", "25", test);
@@ -58,7 +75,7 @@ public class DeleteSessionPageTest extends GUIHelper{
         manageSessions.getAddSessionsButton().doClick();
         createSession("4", "25", test);
         createSession("", "15", test);
-        addSession.getActionButtons().getBackButton().doClick();
+        addSession.getBackButton().doClick();
 
         // Deleting one of the sessions
         deleteSession(1);
@@ -143,6 +160,6 @@ public class DeleteSessionPageTest extends GUIHelper{
         // Creating a session - enabling the delete session button
         manageSessions.getAddSessionsButton().doClick();
         createSession("1", "", module);
-        addSession.getActionButtons().getBackButton().doClick();
+        addSession.getBackButton().doClick();
     }
 }

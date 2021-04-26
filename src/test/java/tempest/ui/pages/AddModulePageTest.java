@@ -2,11 +2,8 @@ package tempest.ui.pages;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Random;
-
 import org.junit.Test;
 
-import tempest.Module;
 import tempest.helpers.GUIHelper;
 
 public class AddModulePageTest extends GUIHelper {
@@ -16,7 +13,7 @@ public class AddModulePageTest extends GUIHelper {
         homePage.getManageModulesButton().doClick();
         manageModules.getAddModuleButton().doClick();
 
-        addModule.getActionButtons().getBackButton().doClick();
+        addModule.getBackButton().doClick();
 
         assertEquals(PageNames.MANAGE_MODULES, manager.getCurrentCard());
     }

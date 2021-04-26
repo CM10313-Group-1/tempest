@@ -32,10 +32,10 @@ import tempest.ui.pages.charts.TimeBarChart;
 public class GUIManager extends JFrame {
     private static final long serialVersionUID = -4398929329322784483L;
 
-    /** The view manager for the GUI. Handles which page should be visible. */
-    private static PageManager pm;
+    /** The page manager for the GUI. Handles which page should be visible. */
+    private PageManager pm;
 
-    /** All pages that can be displayed by the view manager. */
+    /** All pages that can be displayed by the page manager. */
     private final Page[] pages;
     private final Chart[] charts;
     private final Supervisor supervisor;
@@ -169,7 +169,7 @@ public class GUIManager extends JFrame {
     /**
      * Resizes the frame for the new card
      */
-    public void resizeGUI() {
+    private void resizeGUI() {
         layout.preferredLayoutSize(this);
         this.pack();
         this.setLocationRelativeTo(null); // Centering GUI
@@ -178,8 +178,8 @@ public class GUIManager extends JFrame {
     /**
      * Returns an instance of a page in the cardLayout
      *
-     * @param classObject A class extending page (e.g. HomePage.class)
-     * @return Page - The instance of the required class
+     * @param classObject A class extending {@link Page}
+     * @return Page - The instance of the classObject
      */
     public Page getPage(Class<? extends Page> classObject) {
         return pm.getPage(classObject);
@@ -194,9 +194,5 @@ public class GUIManager extends JFrame {
      */
     public void closeGUI() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-    }
-
-    public Chart[] getCharts() {
-        return charts;
     }
 }

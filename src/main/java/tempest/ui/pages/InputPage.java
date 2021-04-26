@@ -1,12 +1,36 @@
 package tempest.ui.pages;
 
+import tempest.State;
+import tempest.ui.GUIManager;
+import tempest.ui.components.ClearButton;
+import tempest.ui.components.EnterButton;
+
+import java.awt.event.ActionListener;
+
 /**
- * Pages should implement this interface if they want to use a
- * clear button
+ * Pages should extend this abstract class if they want to use a
+ * clear button and have an enter button
  */
-public interface InputPage {
+public abstract class InputPage extends Page implements ActionListener {
+
+    protected State state;
+    protected EnterButton enterButton;
+    protected ClearButton clearButton;
+
+    public InputPage(GUIManager manager, State state) {
+        super(manager);
+        this.state = state;
+
+        enterButton = new EnterButton(this);
+        clearButton = new ClearButton(this);
+    }
+
     /**
      * Used to clear input fields when the clear button is pressed
      */
-    void clearInput();
+    public abstract void clearInput();
+
+    public EnterButton getEnterButton() {
+        return enterButton;
+    }
 }

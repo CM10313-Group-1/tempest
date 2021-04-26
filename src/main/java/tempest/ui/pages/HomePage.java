@@ -2,6 +2,7 @@ package tempest.ui.pages;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -20,7 +21,7 @@ import tempest.StudySession;
 import tempest.ui.GUIManager;
 import tempest.ui.components.LinkButton;
 
-public class HomePage extends Page {
+public class HomePage extends Page implements ActionListener {
     private static final long serialVersionUID = -6085163013456560971L;
 
     private final LinkButton manageModulesLink = new LinkButton("Modules", PageNames.MANAGE_MODULES, this);

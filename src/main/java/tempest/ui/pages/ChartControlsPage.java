@@ -1,22 +1,21 @@
 package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import tempest.State;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.ChartControls;
 import tempest.ui.components.ModuleControl;
 
-public class ChartControlsPage extends Page {
+public class ChartControlsPage extends Page implements ActionListener {
   private static final long serialVersionUID = -8177080116982919423L;
   private State state;
   private ChartControls controls;
-  private JButton resetButton = new JButton("Reset All");
+  private final JButton resetButton = new JButton("Reset All");
 
   public ChartControlsPage(State state, GUIManager manager) {
     super(manager);
@@ -28,12 +27,10 @@ public class ChartControlsPage extends Page {
     this.removeAll();
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.add(controls = new ChartControls(state));
-    JPanel buttonPanel = new JPanel();
-    buttonPanel.add(resetButton);
-    buttonPanel.add(new BackButton(manager));
+    backPanel.add(resetButton);
     resetButton.addActionListener(this);
 
-    this.add(buttonPanel);
+    this.add(backPanel);
   }
 
   public void updateState(State state) {

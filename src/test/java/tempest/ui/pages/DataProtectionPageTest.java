@@ -1,19 +1,11 @@
 package tempest.ui.pages;
 
 import org.junit.Test;
-import tempest.State;
-import tempest.Supervisor;
-import tempest.ui.GUIManager;
-
+import tempest.helpers.GUIHelper;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataProtectionPageTest {
-    State state = new State();
-    GUIManager manager = new GUIManager(state, Supervisor.getInstance());
-
-    HomePage homePage = (HomePage) manager.getPage(HomePage.class);
-    DataProtectionPage dataProtection = (DataProtectionPage) manager.getPage(DataProtectionPage.class);
+public class DataProtectionPageTest extends GUIHelper {
 
     @Test
     public void backButtonTest() {

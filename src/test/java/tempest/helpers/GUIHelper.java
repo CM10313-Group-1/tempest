@@ -27,6 +27,7 @@ public class GUIHelper {
 
     protected ChartViewPage chartView = (ChartViewPage) manager.getPage(ChartViewPage.class);
 
+    protected DataProtectionPage dataProtection = (DataProtectionPage) manager.getPage(DataProtectionPage.class);
 
     protected GUIHelper() {
         ErrorMessage errorMessage = new ErrorMessage();

@@ -1,24 +1,24 @@
 package tempest.ui.pages;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 import javax.swing.*;
 
+import tempest.Module;
 import tempest.State;
 import tempest.ui.ErrorMessage;
 import tempest.ui.GUIManager;
-import tempest.ui.components.BackButton;
 import tempest.ui.components.ModuleDropDown;
 
-public class DeleteModulePage extends Page {
+public class DeleteModulePage extends Page implements ActionListener {
     private static final long serialVersionUID = 2589222088607882971L;
 
     private final State state;
     private final ModuleDropDown moduleDropDown = new ModuleDropDown();
     private final ErrorMessage errorMessage = new ErrorMessage();
 
-    private BackButton backButton;
     private JButton deleteButton;
     private JComboBox<Object> dropDown;
 
@@ -34,23 +34,17 @@ public class DeleteModulePage extends Page {
     }
 
     private void setupUI() {
-        JPanel buttonPanel = new JPanel();
         JPanel dropDownPanel = new JPanel();
 
-        backButton = new BackButton(manager);
         deleteButton = new JButton("Delete module");
-
         deleteButton.addActionListener(this);
-
-        buttonPanel.add(backButton);
-        buttonPanel.add(deleteButton);
+        backPanel.add(deleteButton);
 
         dropDown = moduleDropDown.getModuleDropDown();
-
         dropDownPanel.add(dropDown);
 
         this.add(dropDownPanel);
-        this.add(buttonPanel);
+        this.add(backPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -68,10 +62,24 @@ public class DeleteModulePage extends Page {
      */
     private void handleDeletingModule() {
         String moduleName = Objects.requireNonNull(dropDown.getSelectedItem()).toString();
-        int response = errorMessage.showWarningMessage(this, "If you delete \"" + moduleName + "\" all of its study sessions will also be deleted.\nAre you sure you want to continue?");
+        boolean sessions = false;
 
-        if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
-            return;
+        for (Module m : state.getModules()) {
+            if (m.getName().equals(moduleName)) {
+                if (m.getStudySessions().length > 0) {
+                    sessions = true;
+                }
+                break;
+            }
+        }
+
+        // Only showing the warning if the module has sessions
+        if (sessions) {
+            int response = errorMessage.showWarningMessage(this, "If you delete \"" + moduleName + "\" all of its study sessions will also be deleted.\nAre you sure you want to continue?");
+
+            if (response == JOptionPane.NO_OPTION || response == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
         }
 
         state.deleteModule(moduleName);
@@ -84,10 +92,6 @@ public class DeleteModulePage extends Page {
         }
 
         System.out.println(moduleName + " successfully deleted.");
-    }
-
-    public BackButton getBackButton() {
-        return backButton;
     }
 
     public JButton getDeleteButton() {
