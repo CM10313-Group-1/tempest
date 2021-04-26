@@ -18,9 +18,26 @@ public class DeleteSessionPageTest extends GUIHelper{
 
         assertEquals(PageNames.MANAGE_SESSIONS, manager.getCurrentCard());
     }
+    @Test
+    public void deletingASession_Table() {
+        Module test = createModule("test");
+
+        createSession("4", "25", test);
+        createSession("", "15", test);
+
+        // Deleting one of the sessions
+        manageSessions.getDelSessionsButton().doClick();
+
+        int prevLen = deleteSession.getRowCount();
+
+        deleteSession.selectRow(1);
+        deleteSession.getDeleteButton().doClick();
+
+        assertEquals(prevLen - 1, deleteSession.getRowCount());
+    }
 
     @Test
-    public void deletingASession() {
+    public void deletingASession_Module() {
         Module test = createModule("test");
 
         createSession("4", "25", test);
