@@ -30,8 +30,6 @@ public class LineChart extends Chart {
     private JComboBox<String> lineComboBox;
     private String selectedItem = "";
 
-    //TODO: Only populate with modules with sessions
-
     public LineChart(State state, GUIManager manager) {
         super(state, manager);
         setupUI();

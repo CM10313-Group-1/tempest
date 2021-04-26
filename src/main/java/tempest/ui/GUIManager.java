@@ -178,7 +178,7 @@ public class GUIManager extends JFrame {
     /**
      * Returns an instance of a page in the cardLayout
      *
-     * @param classObject A class extending Page (e.g. HomePage.class)
+     * @param classObject A class extending {@link Page}
      * @return Page - The instance of the classObject
      */
     public Page getPage(Class<? extends Page> classObject) {

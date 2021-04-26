@@ -30,8 +30,6 @@ public class PieChart extends Chart {
 
     private final JComboBox<String> pieComboBox;
 
-    //TODO: Only populate with modules with sessions
-
     public PieChart(State state, GUIManager manager) {
         super(state, manager);
 

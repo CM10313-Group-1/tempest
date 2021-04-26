@@ -13,7 +13,11 @@ public class TextInputLimit extends PlainDocument {
         this.limit = limit;
     }
 
-    public void insertString (int offset, String  str, AttributeSet attr) throws BadLocationException {
+    /**
+     * Prevents the user from entering a string longer than limit
+     */
+    @Override
+    public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
         if (str == null) {
             return;
         }
@@ -22,4 +26,5 @@ public class TextInputLimit extends PlainDocument {
             super.insertString(offset, str, attr);
         }
     }
+
 }

@@ -53,7 +53,7 @@ public class Supervisor {
 
     public State getState() {
         return state;
-    } //TODO: Delete if not using stress test
+    }
 
     public static void main(String[] args) {
         Supervisor s = Supervisor.getInstance();
