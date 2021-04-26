@@ -26,5 +26,4 @@ public class TextInputLimit extends PlainDocument {
             super.insertString(offset, str, attr);
         }
     }
-
 }
